@@ -1,0 +1,164 @@
+<h1 id="exact-vortex-corrected-chiral-rings-of-flag-manifold-gauge-theories-at-any-rank">Exact vortex-corrected chiral rings of flag-manifold gauge theories, at any rank</h1>
+<p><em>schubmult computes the twisted-mass-deformed twisted chiral ring of the A-twisted quiver gauge theory whose Higgs branch is a (partial) flag manifold — all vortex corrections, all masses, exactly — at ranks far beyond what Coulomb-branch localization can reach.</em></p>
+<hr />
+<h2 id="the-physics-problem">The physics problem</h2>
+<p>Take the 2d <span class="math inline">\(\mathcal N=(2,2)\)</span> linear quiver gauge theory with gauge group</p>
+<p><span class="math display">\[G = U(1)\times U(2)\times\cdots\times U(n-1),\]</span></p>
+<p>bifundamental chiral multiplets between adjacent nodes, and <span class="math inline">\(n\)</span> fundamental chirals on the last node. At generic Fayet–Iliopoulos parameters its Higgs branch is the complete flag manifold <span class="math inline">\(Fl(n)\)</span>; this is the standard gauged linear sigma model for <span class="math inline">\(Fl(n)\)</span>. Switch on</p>
+<ul>
+<li>a complexified FI parameter <span class="math inline">\(t_i\)</span> at each node, <span class="math inline">\(q_i = e^{-t_i}\)</span>, and</li>
+<li>twisted masses <span class="math inline">\(m_1,\dots,m_n\)</span> for the <span class="math inline">\(U(n)\)</span> flavor symmetry acting on the fundamentals,</li>
+</ul>
+<p>and perform the topological A-twist. The observable is the <strong>twisted chiral ring</strong>: the algebra of twisted chiral operators <span class="math inline">\(\mathcal O_w\)</span>,</p>
+<p><span class="math display">\[\mathcal O_u\,\mathcal O_v=\sum_w c^{\,w}_{uv}(q,m)\,\mathcal O_w ,\]</span></p>
+<p>equivalently the three-point functions <span class="math inline">\(\langle\mathcal O_u\mathcal O_v\mathcal O_w\rangle_{S^2}\)</span> as exact functions of the FI parameters and the twisted masses.</p>
+<p>By the Bethe/gauge correspondence (Nekrasov–Shatashvili) and the Coulomb-branch localization formulas for the A-twist on <span class="math inline">\(S^2\)</span> (Closset–Cremonesi–Park; Benini–Zaffaroni), this ring is the <strong>torus-equivariant quantum cohomology</strong> <span class="math inline">\(QH^*_T(Fl(n))\)</span> of the target: the FI parameters are the quantum parameters and the twisted masses are the equivariant parameters. Its structure constants are three-point, genus-zero, degree-<span class="math inline">\(d\)</span> <strong>equivariant Gromov–Witten invariants</strong>, one for every vortex number <span class="math inline">\(d=(d_1,\dots,d_{n-1})\)</span>.</p>
+<p>That is exactly what <code>schubmult_q_double</code> computes.</p>
+<h2 id="the-dictionary">The dictionary</h2>
+<table>
+<thead>
+<tr class="header">
+<th>gauge theory</th>
+<th>geometry / schubmult</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A-twisted <span class="math inline">\(U(1)\times\cdots\times U(n-1)\)</span> quiver GLSM</td>
+<td><span class="math inline">\(QH^*_T(Fl(n))\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(e^{-t_i}\)</span>, FI parameter of node <span class="math inline">\(i\)</span></td>
+<td>quantum parameter <span class="math inline">\(q_i\)</span></td>
+</tr>
+<tr class="odd">
+<td>twisted mass <span class="math inline">\(m_i\)</span></td>
+<td>equivariant parameter <span class="math inline">\(y_i\)</span></td>
+</tr>
+<tr class="even">
+<td>eigenvalues of the vector-multiplet scalars <span class="math inline">\(\sigma\)</span></td>
+<td>Chern roots <span class="math inline">\(x_i\)</span></td>
+</tr>
+<tr class="odd">
+<td>twisted chiral operator <span class="math inline">\(\mathcal O_w\)</span>, <span class="math inline">\(w\in S_n\)</span></td>
+<td>quantum double Schubert polynomial <span class="math inline">\(\mathfrak S^q_w(x;y)\)</span></td>
+</tr>
+<tr class="even">
+<td>OPE coefficient <span class="math inline">\(c^{\,w}_{uv}(q,m)\)</span></td>
+<td>structure constant output by <code>schubmult_q_double u - v</code></td>
+</tr>
+<tr class="odd">
+<td>coefficient of <span class="math inline">\(q^d=\prod q_i^{d_i}\)</span></td>
+<td>vortex-number-<span class="math inline">\(d\)</span> (worldsheet-instanton) contribution</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(m\to 0\)</span></td>
+<td>ordinary Gromov–Witten invariants, <span class="math inline">\(QH^*(Fl(n))\)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(q\to 0\)</span></td>
+<td>equivariant cohomology, no vortices</td>
+</tr>
+<tr class="even">
+<td>both <span class="math inline">\(\to 0\)</span></td>
+<td>classical Schubert calculus</td>
+</tr>
+</tbody>
+</table>
+<p>Signs and normalizations of <span class="math inline">\(q\)</span> and <span class="math inline">\(m\)</span> are convention-dependent (factors of <span class="math inline">\(2\pi i\)</span>, the sign of <span class="math inline">\(t\)</span>); the ring is the same.</p>
+<h2 id="a-worked-example-fl3-the-u1times-u2-theory">A worked example: <span class="math inline">\(Fl(3)\)</span>, the <span class="math inline">\(U(1)\times U(2)\)</span> theory</h2>
+<p>This theory has six Coulomb vacua, one per permutation <span class="math inline">\(w\in S_3\)</span>. The two degree-one operators are <span class="math inline">\(\mathcal O_{s_1}\)</span> and <span class="math inline">\(\mathcal O_{s_2}\)</span> (permutations <code>2 1 3</code> and <code>1 3 2</code> in one-line notation). Their OPE:</p>
+<pre><code>$ schubmult_q_double 2 1 3 - 2 1 3
+()          q_1
+(2, 1)      -y_1 + y_2
+(3, 1, 2)   1</code></pre>
+<p>Reading the three lines:</p>
+<p><span class="math display">\[\mathcal O_{s_1}\,\mathcal O_{s_1} \;=\; \mathcal O_{s_2 s_1} \;+\; (m_2-m_1)\,\mathcal O_{s_1} \;+\; q_1\,\mathbf 1 .\]</span></p>
+<p>The first term is classical Schubert calculus, the second is the twisted-mass (equivariant) correction, and the third is a single vortex at the <span class="math inline">\(U(1)\)</span> node — the quantum correction that makes the ring deformed. Every term has total degree 2 once <span class="math inline">\(\deg q_i = 2\)</span> and <span class="math inline">\(\deg m_i = 1\)</span>. Products of higher operators have vortices at both nodes:</p>
+<pre><code>$ schubmult_q_double 2 3 1 - 3 1 2
+()          q_1*q_2
+(3, 2, 1)   -y_1 + y_3
+(4, 2, 1, 3) 1</code></pre>
+<p><span class="math display">\[\mathcal O_{s_1 s_2}\,\mathcal O_{s_2 s_1} \;=\; (m_3-m_1)\,\mathcal O_{w_0} \;+\; q_1 q_2\,\mathbf 1 \qquad\text{in } QH^*_T(Fl(3)).\]</span></p>
+<p>The software computes in the stable limit <span class="math inline">\(Fl(\infty)\)</span>, so its output also lists <code>(4, 2, 1, 3)</code>, a class that only exists for <span class="math inline">\(n\ge 4\)</span>; restricting to <span class="math inline">\(Fl(3)\)</span> means discarding every permutation that is not in <span class="math inline">\(S_3\)</span>. The two surviving terms are the two-vortex sector (one vortex at each node) and the top equivariant class.</p>
+<h2 id="fl4-the-u1times-u2times-u3-theory"><span class="math inline">\(Fl(4)\)</span>: the <span class="math inline">\(U(1)\times U(2)\times U(3)\)</span> theory</h2>
+<p>Here rank <span class="math inline">\(G=6\)</span> and there are 24 vacua. The square of the operator <span class="math inline">\(\mathcal O_{s_1 s_3}\)</span> (one-line <code>2 1 4 3</code>):</p>
+<pre><code>$ schubmult_q_double 2 1 4 3 - 2 1 4 3 --display-mode latex
+()             q_{1} q_{3}
+(1, 2, 4, 3)   q_{1} (y_{4} - y_{3})
+(2, 1)         q_{3} (y_{2} - y_{1})
+(1, 2, 5, 3, 4) q_{1}
+(1, 3, 4, 2)   q_{1}
+(2, 1, 4, 3)   (y_{2} - y_{1})(y_{4} - y_{3})
+(3, 1, 2)      q_{3}
+(2, 1, 5, 3, 4) y_{2} - y_{1}
+(2, 3, 4, 1)   y_{2} - y_{1}
+(3, 1, 4, 2)   y_{4} - y_{1}
+(4, 1, 2, 3)   y_{4} - y_{3}
+(3, 1, 5, 2, 4) 1
+(3, 2, 4, 1)   1
+(4, 1, 3, 2)   1
+(5, 1, 2, 3, 4) 1</code></pre>
+<p>Eleven operators of <span class="math inline">\(Fl(4)\)</span> appear (the four lines containing a 5 are <span class="math inline">\(Fl(5)\)</span> classes from the stable limit and are dropped). The vortex expansion is visible by inspection: the <span class="math inline">\(q^0\)</span> terms are the equivariant classical product, the <span class="math inline">\(q_1\)</span> and <span class="math inline">\(q_3\)</span> terms are single vortices at the first and third nodes (the two commuting <span class="math inline">\(\mathfrak{sl}_2\)</span>'s inside <span class="math inline">\(Fl(4)\)</span>, each behaving like the <span class="math inline">\(Fl(3)\)</span> computation above), and <span class="math inline">\(q_1q_3\)</span> is the two-vortex sector. No <span class="math inline">\(q_2\)</span> appears in this product. Every coefficient is a polynomial in the <span class="math inline">\(q_i\)</span> and in the mass differences <span class="math inline">\(m_j - m_i\)</span>, <span class="math inline">\(i&lt;j\)</span>, with <strong>nonnegative</strong> integer coefficients — Mihalcea's equivariant quantum positivity theorem, which is the mathematical statement of the expectation that a vortex expansion with masses has positive weights.</p>
+<h2 id="partial-flags-uk-sqcd-with-n-flavors">Partial flags: <span class="math inline">\(U(k)\)</span> SQCD with <span class="math inline">\(n\)</span> flavors</h2>
+<p>The simplest case physicists actually study is a single node: 2d <span class="math inline">\(\mathcal N=(2,2)\)</span> <span class="math inline">\(U(k)\)</span> gauge theory with <span class="math inline">\(n\)</span> fundamental chirals, Higgs branch the Grassmannian <span class="math inline">\(Gr(k,n)\)</span>, one FI parameter <span class="math inline">\(q=e^{-t}\)</span> of degree <span class="math inline">\(n\)</span>, twisted masses <span class="math inline">\(m_1,\dots,m_n\)</span>. The Coulomb vacua are the <span class="math inline">\(\binom nk\)</span> choices <span class="math inline">\(\sigma=(m_{i_1},\dots,m_{i_k})\)</span>; the operators are the Schubert classes <span class="math inline">\(\sigma_\lambda\)</span>, <span class="math inline">\(\lambda\)</span> a partition in the <span class="math inline">\(k\times(n-k)\)</span> box. In schubmult a partial flag is specified by its block sizes, so <span class="math inline">\(Gr(2,4)\)</span> — <span class="math inline">\(U(2)\)</span> with four flavors — is <code>--parabolic 2 2</code>, and the Schubert classes are the permutations with a single descent at position 2: <code>1324</code> <span class="math inline">\(=\sigma_1\)</span>, <code>2413</code> <span class="math inline">\(=\sigma_{21}\)</span>, <code>3412</code> <span class="math inline">\(=\sigma_{22}\)</span> (the point class), and so on.</p>
+<pre><code>$ schubmult_q_double 1 3 2 4 - 2 4 1 3 --parabolic 2 2 --display-positive
+()            q_1
+(2, 4, 1, 3)  -y_1 + y_4
+(3, 4, 1, 2)  1</code></pre>
+<p><span class="math display">\[\sigma_1\,\sigma_{21} \;=\; \sigma_{22} \;+\; (m_4-m_1)\,\sigma_{21} \;+\; q\,\mathbf 1 .\]</span></p>
+<p>At <span class="math inline">\(m=0\)</span> this is the quantum Pieri relation <span class="math inline">\(\sigma_1\sigma_{21}=\sigma_{22}+q\)</span> that appears in every treatment of <span class="math inline">\(QH^*(Gr(2,4))\)</span>, with the mass correction now included. A more interesting one, the square of the point class:</p>
+<pre><code>$ schubmult_q_double 3 4 1 2 - 3 4 1 2 --parabolic 2 2 --display-positive
+()            q_1**2
+(1, 3, 2)     (-y_1 + y_3)*(-y_2 + y_4)*(-y_2 + y_3)*q_1
+(1, 4, 2, 3)  (-y_2 + y_4)*(-y_2 + y_3)*q_1
+(2, 3, 1)     (-y_1 + y_3)*(-y_2 + y_3)*q_1
+(2, 4, 1, 3)  (-y_1 + y_2 - y_3 + y_4 + 2*(-y_2 + y_3))*q_1
+(3, 4, 1, 2)  (-y_1 + y_3)*(-y_1 + y_4)*(-y_2 + y_4)*(-y_2 + y_3)</code></pre>
+<p>Read physically, vacuum by vacuum. The <span class="math inline">\(q^0\)</span> term is <span class="math inline">\((m_3-m_1)(m_4-m_1)(m_3-m_2)(m_4-m_2)\,\sigma_{22}\)</span>: the point class is supported on the vacuum <span class="math inline">\(\sigma=(m_1,m_2)\)</span>, and the coefficient is exactly the product of the effective masses <span class="math inline">\(m_j-\sigma_a\)</span> of the four fundamentals that are massive there — the one-loop determinant that Coulomb-branch localization produces at that vacuum. The <span class="math inline">\(q^1\)</span> terms are one-vortex corrections weighted by masses (the <span class="math inline">\(\sigma_{21}\)</span> coefficient is <span class="math inline">\((m_3+m_4-m_1-m_2)\,q\)</span>, written by <code>--display-positive</code> in the simple roots <span class="math inline">\(m_{i+1}-m_i\)</span>), and <span class="math inline">\(q^2\,\mathbf 1\)</span> is the two-vortex sector; at <span class="math inline">\(m=0\)</span> the product collapses to <span class="math inline">\(\sigma_{22}^2=q^2\)</span>, which at <span class="math inline">\(q=1\)</span> is the statement that the top field of the <span class="math inline">\(U(2)\)</span> level-<span class="math inline">\(2\)</span> WZW model fuses with itself to the identity.</p>
+<h3 id="stability-and-why-the-block-sizes-must-be-given">Stability, and why the block sizes must be given</h3>
+<p>For complete flags the coefficients are <strong>stable</strong>: <span class="math inline">\(c^{\,w}_{uv}\)</span> computed in <span class="math inline">\(Fl(N)\)</span> for any <span class="math inline">\(N\ge n\)</span> agrees with <span class="math inline">\(Fl(n)\)</span> once permutations outside <span class="math inline">\(S_n\)</span> are discarded. That is what lets the software work in <span class="math inline">\(Fl(\infty)\)</span> with a single set of <span class="math inline">\(q_i\)</span>, and it is why the <span class="math inline">\(Fl(3)\)</span> and <span class="math inline">\(Fl(4)\)</span> outputs above contained a few extra lines. Partial-flag coefficients are <strong>not</strong> stable in this sense: the degree of <span class="math inline">\(q\)</span> is <span class="math inline">\(n\)</span> for <span class="math inline">\(Gr(k,n)\)</span>, so the vortex corrections depend on the number of flavors even when the operators do not. The same two operators in <span class="math inline">\(U(2)\)</span> with five flavors:</p>
+<pre><code>$ schubmult_q_double 1 3 2 4 - 2 4 1 3 --parabolic 2 3 --display-positive
+(2, 4, 1, 3)     -y_1 + y_4
+(2, 5, 1, 3, 4)  1
+(3, 4, 1, 2)     1</code></pre>
+<p><span class="math display">\[\sigma_1\,\sigma_{21} \;=\; \sigma_{22}+\sigma_{31}+(m_4-m_1)\,\sigma_{21}\qquad\text{in }Gr(2,5):\]</span></p>
+<p>no vortex term at all, because <span class="math inline">\(\deg q=5&gt;3\)</span>. So a Grassmannian or partial flag computation must be told the block sizes (<code>--parabolic k n-k</code>, or <code>--parabolic a b c</code> for a two-step flag), whereas a complete-flag computation needs no <span class="math inline">\(n\)</span>. Internally the partial-flag answer is obtained from the complete-flag one by the Peterson–Woodward comparison formula, in the equivariant form due to Huang and Li, which is why the same kernel serves every quiver in the <span class="math inline">\(A\)</span> series.</p>
+<p><code>--display-positive</code> rewrites each coefficient as a manifestly positive expression — for mixed variables, as a sum of products of roots <span class="math inline">\(y_i-z_j\)</span> found by integer programming; for a single set of masses, in the simple roots <span class="math inline">\(m_{i+1}-m_i\)</span> — which is the form in which the localization one-loop factors appear. It is optional and costs a little time; the raw output is the same polynomial.</p>
+<h2 id="what-you-actually-get">What you actually get</h2>
+<p>A single coefficient <span class="math inline">\(c^{\,w}_{uv}(q,m)\)</span> is the natural unit: it is a three-point function (with the third operator in the Poincaré-dual basis; the equivariant two-point pairing, a polynomial in the masses, converts to any other basis), and a three-point function is exactly what one residue computation, one Bethe-ansatz calculation, or one mirror-symmetry prediction produces. Concretely:</p>
+<ul>
+<li><strong>Ground truth for localization.</strong> A Coulomb-branch correlator is a sum over Bethe vacua of one-loop determinants times an inverse Hessian, and beyond <span class="math inline">\(Fl(3)\)</span> the Bethe equations have no closed-form solution, so at rank the residue sum is evaluated at numerical <span class="math inline">\((q,m)\)</span> — one point at a time, with the vacua found numerically. The exact coefficients here turn that into a check: contract <span class="math inline">\(c^{\,w}_{uv}\)</span> with the equivariant pairing to get <span class="math inline">\(\langle\mathcal O_u\mathcal O_v\mathcal O_w\rangle\)</span> as a polynomial in <span class="math inline">\(q\)</span> and <span class="math inline">\(m\)</span>, evaluate at the same numerical point, and compare; the integrality of the coefficients means a handful of points already verifies the polynomial identity.</li>
+</ul>
+<ul>
+<li><strong>Duality checks.</strong> Level–rank duality for Grassmannians and the quiver-mutation dualities of flag quivers (Benini–Park–Zhao) require isomorphic twisted chiral rings once masses and FI parameters are mapped. The equivariant quantum cohomology is the invariant object both sides must reproduce, coefficient by coefficient.</li>
+<li><strong>Surface defects.</strong> Coupled to 4d <span class="math inline">\(\mathcal N=2\)</span> <span class="math inline">\(SU(n)\)</span> gauge theory as a surface operator (Gukov–Witten, Gaiotto–Gukov–Seiberg), the 2d twisted masses become the 4d Coulomb-branch parameters and the ring relations reproduce the Seiberg–Witten curve. The <span class="math inline">\(m\)</span>-dependence of every coefficient is dependence on the 4d moduli.</li>
+<li><strong>Coulomb vacua without solving Bethe equations.</strong> The idempotents of the ring are the vacua; the spectrum of multiplication by <span class="math inline">\(\mathcal O_{s_i}\)</span> gives the <span class="math inline">\(\sigma\)</span>-vevs — the Bethe roots of the Toda or five-vertex model — as exact algebraic functions of <span class="math inline">\((q,m)\)</span>, rather than numerically one vacuum at a time.</li>
+<li><strong>Mirror symmetry.</strong> Rietsch's Landau–Ginzburg mirror of the flag variety predicts each of these coefficients from its Jacobi ring; every coefficient is one check of the mirror, including its equivariant form.</li>
+<li><strong>Data.</strong> Positive combinatorial formulas for these coefficients are known for Grassmannians (Buch–Mihalcea's equivariant quantum puzzles) and unknown for flag manifolds; exact data at <span class="math inline">\(n=7,8\)</span> is where conjectures get made and killed.</li>
+</ul>
+<h2 id="integrable-systems">Integrable systems</h2>
+<p>The same ring has a second life. Kim's theorem (after Givental–Kim) identifies <span class="math inline">\(QH^*_T(Fl(n))\)</span> with the algebra of conserved charges of the <strong>quantum Toda chain</strong>: the relations of the twisted chiral ring are</p>
+<p><span class="math display">\[H_k(\sigma;\,q)=e_k(m_1,\dots,m_n),\qquad k=1,\dots,n,\]</span></p>
+<p>with <span class="math inline">\(H_k\)</span> the quantum Toda Hamiltonians, the twisted masses as the spectrum and <span class="math inline">\(q_i\)</span> the exponentiated Toda coordinates. This is the flag-manifold instance of the Bethe/gauge correspondence. For Grassmannians (<code>--parabolic</code>), Gorbounov–Korff realize the equivariant quantum cohomology as a Bethe algebra of a five-vertex model with the <span class="math inline">\(m_i\)</span> as inhomogeneities, and at <span class="math inline">\(q=1\)</span>, <span class="math inline">\(m=0\)</span> the structure constants become the fusion rules of the <span class="math inline">\(U(k)\)</span> WZW model (Witten; Korff–Stroppel). Structure constants computed here are therefore also matrix elements in those integrable models.</p>
+<h2 id="why-this-is-out-of-reach-by-the-usual-methods">Why this is out of reach by the usual methods</h2>
+<p>The physics route to <span class="math inline">\(c^{\,w}_{uv}(q,m)\)</span> is Coulomb-branch localization: sum Jeffrey–Kirwan residues over the solutions of the vacuum (Bethe) equations <span class="math inline">\(\partial W_{\rm eff}/\partial\sigma_a\in 2\pi i\,\mathbb Z\)</span>. For the <span class="math inline">\(Fl(n)\)</span> quiver, <span class="math inline">\(\operatorname{rank}G=n(n-1)/2\)</span> and there are <span class="math inline">\(n!\)</span> vacua. The literature works out <span class="math inline">\(\mathbb P^{N-1}\)</span>, <span class="math inline">\(Gr(2,4)\)</span> and <span class="math inline">\(Fl(3)\)</span> (rank 3, six vacua); <span class="math inline">\(Fl(4)\)</span> (rank 6, 24 vacua) is already a substantial symbolic computation, and the result still has to be rotated from the <span class="math inline">\(\sigma\)</span> basis into the operator basis in which the coefficients are enumerative.</p>
+<p><code>schubmult_q_double</code> produces the exact OPE of two arbitrary operators in the <span class="math inline">\(Fl(8)\)</span> theory — rank 28, 40 320 vacua — in about 24 seconds on a laptop, and does the same for any partial flag quiver via the Peterson–Woodward comparison formula (Huang–Li for the equivariant case). Since version 5.0 the multiplication kernels are compiled C++; the coefficients themselves are exact symbolic expressions, never numerically evaluated.</p>
+<h2 id="using-it">Using it</h2>
+<pre><code>pip install --pre schubmult</code></pre>
+<p>Binary wheels are provided for Linux, macOS and Windows (CPython 3.10–3.14); no compiler is needed.</p>
+<p>Command line — permutations in one-line notation, separated by <code>-</code>:</p>
+<pre><code>schubmult_q_double 3 1 4 2 - 2 4 1 3                # QH*_T(Fl(4))
+schubmult_q_double 3 4 1 2 - 3 4 1 2 --parabolic 2 2  # QH*_T(Gr(2,4)): U(2), 4 flavors
+schubmult_q_double 2 1 4 3 - 2 1 4 3 --display-positive  # manifestly positive coefficients
+schubmult_q_double --code 1 0 1 - 0 2               # permutations given by Lehmer code
+schubmult_q        2 1 4 3 - 2 1 4 3                # non-equivariant (m = 0)
+schubmult_double   2 1 4 3 - 2 1 4 3                # no vortices (q = 0)</code></pre>
+<p>Python:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> schubmult <span class="im">import</span> QDSx, Permutation</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> QDSx([<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">3</span>]) <span class="op">*</span> QDSx([<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">3</span>])     <span class="co"># element of QH*_T(Fl(4)) in the Schubert basis</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>p[Permutation([<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">3</span>])]                      <span class="co"># -&gt; (-y_3 + y_4)*q_1</span></span></code></pre></div>
+<p>Coefficients are <code>symengine</code> expressions in <code>q_i</code> and <code>y_i</code> and can be substituted, expanded, or exported to LaTeX (<code>--display-mode latex</code> on the command line).</p>
+<hr />
+<p><em>The mathematics: the operators <span class="math inline">\(\mathcal O_w\)</span> are the quantum double Schubert polynomials <span class="math inline">\(\mathfrak S^q_w(x;y)\)</span> of Kirillov–Maeno and Ciocan-Fontanine–Fulton, which represent the equivariant Schubert classes in <span class="math inline">\(QH^*_T(Fl(n))\)</span>; the structure constants are computed by an exact combinatorial algorithm (no localization, no residues) that reduces the product to iterated Pieri/Monk-type steps. Positivity of the output in the <span class="math inline">\(q_i\)</span> and <span class="math inline">\(y_{j}-y_i\)</span> is a theorem of Mihalcea. References: Witten, "The Verlinde algebra and the cohomology of the Grassmannian"; Givental–Kim, "Quantum cohomology of flag manifolds and Toda lattices"; Kim, "Quantum cohomology of flag manifolds G/B and quantum Toda lattices"; Nekrasov–Shatashvili, "Supersymmetric vacua and Bethe ansatz"; Closset–Cremonesi–Park, "The equivariant A-twist and gauged linear sigma models on the two-sphere"; Gorbounov–Korff, "Quantum integrability and generalised quantum Schubert calculus"; Mihalcea, "Positivity in equivariant quantum Schubert calculus"; Woodward, "On D. Peterson's comparison formula for Gromov–Witten invariants of G/P"; Huang–Li, "On equivariant quantum Schubert calculus for G/P".</em></p>
