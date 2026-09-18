@@ -1,0 +1,526 @@
+\documentclass{amsart}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{hyperref}
+\usepackage[margin=1in]{geometry}
+\usepackage{array}
+\usepackage{booktabs}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\DeclareMathOperator{\sch}{\mathfrak{S}}
+\DeclareMathOperator{\groth}{\mathfrak{G}}
+\newcommand{\code}{\mathfrak{c}}
+\newcommand{\tom}[1]{\ensuremath{\xrightarrow{#1}}}
+\newcommand{\Tom}[1]{\ensuremath{\xRightarrow{#1}}}
+\newcommand{\fgl}{\oplus}
+\newcommand{\fgn}{\ominus}
+\newcommand{\Fix}{\mathrm{Fix}}
+\newcommand{\Lft}{\mathrm{Left}}
+\newcommand{\Out}{\mathrm{Out}}
+\newcommand{\Supp}{\mathrm{Supp}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\schubmult}{\textsf{schubmult}}
+\newcommand{\pyid}[1]{\texttt{#1}}
+
+\title[An equivariant $K$-theoretic Molev--Sagan formula]{An equivariant $K$-theoretic Molev--Sagan type formula for double Grothendieck polynomials}
+\author{Matthew J. Samuel}
+\date{\today}
+
+\begin{document}
+
+\begin{abstract}
+We describe the multiplication rule for double Grothendieck polynomials implemented in
+\pyid{schubmult.mult.groth\_double}. It rests on a conjectural closed formula for the
+coefficients of $\prod_{i\le k}(x_i+z)\,\groth_u(x;y)$ in the $\groth$-basis: each coefficient
+is a factorial elementary symmetric polynomial $E_{n,n}(\mathcal{Y};-z)$ in an alphabet
+$\mathcal{Y}$ built from the formal inverses $\fgn y_a$ of the fixed window values and one copy
+of $-1/\beta$ per left-moving value, times a prefactor of powers of $\beta$ and atoms
+$(1+\beta y_a)^{-1}$. At $\beta=0$ this is the Pieri formula of
+\cite[Theorem~7.1]{samuelmolev}. Because the coefficient is itself a factorial elementary
+symmetric polynomial, its $z$-divided differences are again of that form, which gives a
+closed Pieri rule for every $E_{p,k}(x;z)$ and, through the elementary-symmetric expansion of
+double Schubert polynomials, a Molev--Sagan type expansion of $\groth_u(x;y)\,\groth_v(x;z)$
+in the basis $\{\groth_w(x;y)\}$. The formula has been verified exhaustively on $S_4$ and
+sampled through $S_6$.
+\end{abstract}
+
+\maketitle
+
+\section{Conventions}
+
+Throughout, $\beta$ is a formal parameter and we write
+\[
+a \fgl b = a + b + \beta ab, \qquad \fgn a = \frac{-a}{1+\beta a},
+\]
+for the multiplicative formal group law and its formal inverse, so that
+$a \fgl (\fgn a) = 0$ and $1+\beta(a\fgl b) = (1+\beta a)(1+\beta b)$. Two identities are used
+repeatedly:
+\begin{equation}\label{eq:fgl-ids}
+    1 + \beta(\fgn a) = \frac{1}{1+\beta a},
+    \qquad
+    z \fgl (\fgn a) = \frac{z - a}{1+\beta a}.
+\end{equation}
+
+Permutations are written in one-line notation and $\ell(w)$ is the length (number of
+inversions). For $u\le w$ in Bruhat order we write $\ell(u,w) = \ell(w)-\ell(u)$. The
+transposition exchanging positions $a<b$ is $t_{ab}$.
+
+\subsection*{Double Schubert polynomials}
+$\sch_w(x;y)$ is the double Schubert polynomial in the convention of \cite{samuelmolev}: for
+$w_0\in S_n$ the longest element,
+$\sch_{w_0}(x;y) = \prod_{i+j\le n}(x_i - y_j)$, and $\sch_{ws_i} = \partial_i^x \sch_w$ when
+$\ell(ws_i)<\ell(w)$. Thus $\sch_w(x;y)$ vanishes at $x_i = y_{w(i)}$ for all $i$, i.e.\ at the
+torus fixed point indexed by $w$. This is the convention of \schubmult's \pyid{DSx}.
+
+\subsection*{Double Grothendieck polynomials}
+$\groth_w(x;y)$ is the double $\beta$-Grothendieck polynomial \cite{fomin1994grothendieck}
+normalized so that
+\[
+\groth_{w_0}(x;y) = \prod_{i+j\le n}(x_i \fgl y_j),
+\qquad
+\groth_{ws_i} = \pi_i^x\,\groth_w \ \text{ if } \ell(ws_i)<\ell(w),
+\]
+where $\pi_i^x f = \partial_i^x\bigl((1+\beta x_{i+1}) f\bigr)$ is the isobaric divided
+difference. This is the convention of \schubmult's \pyid{DGx}: for example
+\[
+\groth_{21}(x;y) = x_1\fgl y_1,\qquad
+\groth_{312}(x;y) = (x_1\fgl y_1)(x_1\fgl y_2),\qquad
+\groth_{231}(x;y) = (x_1\fgl y_1)(x_2\fgl y_1).
+\]
+With this normalization $\groth_w(x;y)$ vanishes at the point $x_i = \fgn y_{w(i)}$, and the
+lowest-degree part of $\groth_w(x;y)$ is $\sch_w(x;-y)$. In particular
+\begin{equation}\label{eq:beta0}
+\groth_w(x;y)\big|_{\beta=0} = \sch_w(x;-y),
+\end{equation}
+so a formula for $\groth$ specializes to one for $\sch$ after $y\mapsto -y$.
+
+\subsection*{Factorial elementary symmetric polynomials}
+For $0\le p\le k$, $E_{p,k}(x;z)$ is the factorial elementary symmetric polynomial
+\[
+E_{p,k}(x;z) = \sum_{1\le i_1<\dots<i_p\le k}\ \prod_{j=1}^{p}\bigl(x_{i_j} - z_{i_j-j+1}\bigr)
+= \sch_{c[p,k]}(x;z),
+\qquad c[p,k] = s_{k-p+1}\cdots s_{k-1}s_k,
+\]
+so $E_{0,k}=1$ and $E_{k,k}(x;z) = \prod_{i=1}^{k}(x_i - z_1)$. In the variable $t=z_1$ the top
+one is a generating function for the ordinary elementary symmetric polynomials,
+\begin{equation}\label{eq:top-gen}
+E_{k,k}(x;t) = \prod_{i=1}^{k}(x_i - t) = \sum_{p=0}^{k} (-t)^{k-p}\,e_p(x_1,\dots,x_k),
+\end{equation}
+and the others are obtained from it by divided differences in $z$:
+\begin{equation}\label{eq:E-from-top}
+E_{p,k}(x;z) = (-1)^{k-p}\,\partial^{z}_{k-p}\cdots\partial^{z}_{2}\partial^{z}_{1}\,E_{k,k}(x;z_1),
+\qquad
+\partial^z_{j} f = \frac{f - s^z_j f}{z_j - z_{j+1}}.
+\end{equation}
+On monomials in $t=z_1$ the operator $\partial^z_{q}\cdots\partial^z_1$ acts by
+$t^m \mapsto h_{m-q}(z_1,\dots,z_{q+1})$, the complete homogeneous symmetric polynomial
+(zero when $m<q$).
+
+\section{The classical Pieri formula}
+
+Sottile's $k$-Bruhat relation $u\tom{k} w$ holds when there are transpositions
+$t_{a_1b_1},\dots,t_{a_pb_p}$ with $a_i\le k<b_i$, the lower indices $a_i$ pairwise distinct,
+the upper indices $b_1\ge b_2\ge\cdots\ge b_p$, each step a Bruhat cover, and
+$w = u t_{a_1b_1}\cdots t_{a_pb_p}$; then $\ell(u,w)=p$. Write
+\[
+P_k(u,w) = \{\,u(i)\ :\ i\le k,\ u(i)=w(i)\,\}
+\]
+for the values in the window $\{1,\dots,k\}$ that are left in place.
+
+\begin{theorem}[{\cite[Theorem~7.1]{samuelmolev}}]\label{thm:pieri}
+For $u\in S_\infty$, $k\ge1$ and $0\le p\le k$,
+\[
+\sch_u(x;y)\,E_{p,k}(x;z) \;=\; \sum_{u\tom{k} w} E_{p-\ell(u,w),\,k-\ell(u,w)}\bigl(y_{P_k(u,w)};z\bigr)\,\sch_w(x;y),
+\]
+where $y_{P_k(u,w)}$ denotes the alphabet $\{y_a : a\in P_k(u,w)\}$ ($E_{p,k}$ is symmetric in its
+first alphabet, so the order is immaterial).
+\end{theorem}
+
+The case $p=k$ is a product formula: $E_{k-\ell,k-\ell}(y_P;z) = \prod_{a\in P}(y_a - z_1)$, i.e.
+\begin{equation}\label{eq:pieri-top}
+\sch_u(x;y)\prod_{i=1}^{k}(x_i - z) = \sum_{u\tom{k} w}\ \prod_{a\in P_k(u,w)}(y_a - z)\ \sch_w(x;y).
+\end{equation}
+Each factor has a localization meaning: at a fixed window position $i$ the polynomial $\sch_u$
+``knows'' $x_i = y_{u(i)}$, and the factor $(x_i - z)$ contributes its value there. Moved
+positions contribute $1$, and $u\tom{k}w$ forces exactly one unit of length per moved position.
+
+\section{The $K$-theoretic top-block formula}
+
+Fix $u$, $k$, and $w$ and look at the $k$ window positions. Each $i\le k$ falls into exactly
+one of three classes according to the fate of the value $u(i)$ in $w$:
+\begin{align*}
+\Fix_k(u,w) &= \{\,i\le k : w(i) = u(i)\,\},\\
+\Lft_k(u,w) &= \{\,i\le k : u(i) = w(j)\text{ for some } j<i,\ j\le k\,\}
+\quad\text{(moves left inside the window)},\\
+\Out_k(u,w) &= \{\,i\le k\,\}\setminus(\Fix_k\cup\Lft_k)
+\quad\text{(leaves the window, or moves right inside it)}.
+\end{align*}
+Let $m_k(u,w) = k - |\Fix_k(u,w)|$ be the number of moved window positions and
+$d = \ell(u,w)$. Attach to the pair $(u,w)$ the \emph{prefactor}
+\begin{equation}\label{eq:pref}
+\rho_k(u,w) \;=\; \beta^{\,\ell(u,w) - m_k(u,w)}\ (-\beta)^{|\Lft_k(u,w)|}\ \prod_{i\in\Out_k(u,w)}\frac{1}{1+\beta y_{u(i)}},
+\end{equation}
+and the alphabet of size $n_k(u,w) = |\Fix_k(u,w)| + |\Lft_k(u,w)| = k - |\Out_k(u,w)|$
+\begin{equation}\label{eq:alphabet}
+\mathcal{Y}_k(u,w) \;=\; \bigl(\fgn y_{u(i)}\bigr)_{i\in\Fix_k(u,w)}\ \cup\ \Bigl(-\tfrac{1}{\beta}\Bigr)^{|\Lft_k(u,w)|},
+\end{equation}
+the fixed values run through the formal inverse and each left-mover contributes the constant
+$-1/\beta$.
+
+\begin{definition}[The support]\label{def:supp}
+$\Supp_k(u)$ is the set of $w$ such that $\groth_w(x)$ occurs in
+$\prod_{i\le k}(x_i+z)\,\groth_u(x)$, the product of \emph{single} Grothendieck polynomials
+with $z$ a formal variable. Equivalently, $\Supp_k(u) = \bigcup_{p=0}^{k}\Supp\bigl(e_p(x_1,\dots,x_k)\groth_u(x)\bigr)$,
+which is the set of endpoints of the marked $k$-Pieri chains of Lenart--Sottile
+\cite{lenart2007pieri}.
+\end{definition}
+
+\begin{conjecture}[Equivariant $K$-theoretic Pieri formula, top block]\label{conj:top}
+For every $u\in S_\infty$, $k\ge1$ and formal $z$,
+\begin{equation}\label{eq:top}
+\prod_{i=1}^{k}(x_i + z)\ \groth_u(x;y)
+\;=\;
+\sum_{w\in\Supp_k(u)} \rho_k(u,w)\ E_{n,n}\bigl(\mathcal{Y}_k(u,w);\,-z\bigr)\ \groth_w(x;y),
+\qquad n = n_k(u,w).
+\end{equation}
+\end{conjecture}
+
+Since $E_{n,n}(\mathcal{Y};-z) = \prod_{Y\in\mathcal{Y}}(Y+z)$, and
+$(-\beta)\bigl(-\tfrac1\beta + z\bigr) = 1-\beta z$, the summand of \eqref{eq:top} is the product
+\begin{equation}\label{eq:top-product}
+\beta^{\,\ell(u,w) - m_k(u,w)}
+\prod_{i\in\Fix_k(u,w)}\bigl(z + \fgn y_{u(i)}\bigr)
+\prod_{i\in\Lft_k(u,w)}\bigl(1 - \beta z\bigr)
+\prod_{i\in\Out_k(u,w)}\frac{1}{1+\beta y_{u(i)}},
+\end{equation}
+which is the form in which the rule is implemented. Using \eqref{eq:fgl-ids} the three kinds of
+factors can be written uniformly as
+\[
+z + \fgn y_{u(i)} = \frac{z(1+\beta y_{u(i)}) - y_{u(i)}}{1+\beta y_{u(i)}},
+\qquad
+1 - \beta z = 1 + \beta(-z),
+\qquad
+\frac{1}{1+\beta y_{u(i)}} = 1 + \beta(\fgn y_{u(i)}).
+\]
+In particular every coefficient is a polynomial in $\beta, z, y$ divided by a product of the
+atoms $1+\beta y_a$, one for each moved-or-fixed window value except the left-movers; the
+$\beta^{-1}$ in the alphabet is always cancelled by the $(-\beta)^{|\Lft|}$ in $\rho_k$.
+
+\begin{remark}[Why $-1/\beta$ and not $1$]
+One is tempted to write the left-mover factor $1-\beta z$ as ``$1 - (\beta z)$'' and use the
+alphabet $(\fgn y_{\Fix}, 1^{|\Lft|})$ against a second alphabet mixing $-z$ and $\beta z$. That
+product is not a factorial elementary symmetric polynomial in a single $z$-alphabet, and the
+divided differences of Section~\ref{sec:Epk} would then have to be worked out term by term.
+Rescaling instead by $-\beta$ puts every factor in the shape $Y - (-z)$ with a common second
+variable, which is exactly what makes $E_{n,n}(\mathcal{Y};-z)$ available and, with it, the
+closed form of Corollary~\ref{cor:Epk}.
+\end{remark}
+
+\begin{remark}[Consistency checks]
+\begin{enumerate}
+\item \emph{Specialization $\beta=0$.} In the product form \eqref{eq:top-product} the powers $\beta^{\ell(u,w)-m_k(u,w)}$ kill every $w$ with
+$\ell(u,w) > m_k(u,w)$; what survives are the $w$ reached by exactly one Bruhat cover per moved
+window position, which are Sottile's chains $u\tom{k}w$. The fixed factors become $z - y_{u(i)}$ and the others $1$. Substituting
+$y\mapsto -y$ and $z\mapsto -z$ and using \eqref{eq:beta0} gives \eqref{eq:pieri-top}, i.e.\
+Theorem~\ref{thm:pieri} with $p=k$.
+\item \emph{The diagonal term.} Evaluating both sides of \eqref{eq:top} at the fixed point
+$x_i=\fgn y_{u(i)}$ kills every $\groth_w$ with $w\ne u$ on the right (only $w\le u$ survive
+localization at $u$, and $w\in\Supp_k(u)$ forces $w\ge u$). The left side becomes
+$\prod_{i\le k}(z+\fgn y_{u(i)})\,\groth_u(\fgn y_u;y)$, which is the $w=u$ term of
+\eqref{eq:top}. So the coefficient of $\groth_u$ is correct unconditionally; it is the
+$K$-theoretic form of the localization reading of \eqref{eq:pieri-top}.
+\item \emph{Non-equivariant limit.} At $y=0$ the fixed factors are $z$, the out-factors are
+$1$, and \eqref{eq:top} reads
+$\prod(x_i+z)\groth_u = \sum_w \beta^{\ell(u,w)-m}\,z^{|\Fix|}(1-\beta z)^{|\Lft|}\groth_w$.
+Expanding in $z$ recovers the non-equivariant Pieri coefficients of
+\cite{lenart2007pieri}, and shows that the equivariant and non-equivariant supports coincide,
+which is why $\Supp_k(u)$ could be defined non-equivariantly.
+\end{enumerate}
+\end{remark}
+
+\begin{remark}[On the support]
+The support is genuinely smaller than the set of endpoints of Bruhat chains
+$u = w_0 \lessdot w_1 \lessdot \cdots \lessdot w_d = w$ by transpositions $t_{a_jb_j}$ with
+$a_j\le k<b_j$ and weakly decreasing $b_j$ (lower indices may now repeat). For instance with
+$u=1243$ and $k=2$ the permutation $w=3412$ is such an endpoint, but
+$w\notin\Supp_2(1243)$; the product formula would assign it the nonzero value
+$\beta/((1+\beta y_1)(1+\beta y_2))$, so the restriction to $\Supp_k(u)$ in \eqref{eq:top}
+cannot be dropped. The implementation enumerates the marked chains of \cite{lenart2007pieri}
+(\pyid{schub\_lib.elem\_sym\_chains\_groth}) to decide membership.
+\end{remark}
+
+\begin{example}\label{ex:top21}
+$u=21$, $k=2$. The window values are $u(1)=2$, $u(2)=1$, and $\Supp_2(21)=\{21,231,312,321\}$:
+\[
+\begin{array}{c c c c l}
+\toprule
+w & \Fix & \Out & \ell(u,w)-m & \text{coefficient of } \groth_w(x;y) \\
+\midrule
+21  & \{1,2\} & \emptyset & 0 & (z+\fgn y_2)(z+\fgn y_1) \\
+231 & \{1\}   & \{2\}     & 0 & (z+\fgn y_2)\,\dfrac{1}{1+\beta y_1} \\
+312 & \{2\}   & \{1\}     & 0 & (z+\fgn y_1)\,\dfrac{1}{1+\beta y_2} \\
+321 & \emptyset & \{1,2\} & 0 & \dfrac{1}{(1+\beta y_1)(1+\beta y_2)} \\
+\bottomrule
+\end{array}
+\]
+Hence
+\[
+(x_1+z)(x_2+z)\,\groth_{21}(x;y)
+= (z+\fgn y_1)(z+\fgn y_2)\,\groth_{21}
++ \frac{z+\fgn y_2}{1+\beta y_1}\,\groth_{231}
++ \frac{z+\fgn y_1}{1+\beta y_2}\,\groth_{312}
++ \frac{\groth_{321}}{(1+\beta y_1)(1+\beta y_2)}.
+\]
+\end{example}
+
+\begin{example}\label{ex:top1243}
+$u=1243$, $k=2$ shows all three classes and a nontrivial $\beta$-power. Here $u(1)=1$,
+$u(2)=2$, $\ell(u)=1$, and $\Supp_2(1243)$ has seven elements:
+\[
+\begin{array}{c c c c c l}
+\toprule
+w & \Fix & \Lft & \Out & \ell(u,w)-m & \text{coefficient} \\
+\midrule
+1243 & \{1,2\} & & & 0 & (z+\fgn y_1)(z+\fgn y_2) \\
+1342 & \{1\} & & \{2\} & 0 & (z+\fgn y_1)/(1+\beta y_2) \\
+1423 & \{1\} & & \{2\} & 0 & (z+\fgn y_1)/(1+\beta y_2) \\
+1432 & \{1\} & & \{2\} & 1 & \beta\,(z+\fgn y_1)/(1+\beta y_2) \\
+2341 & & \{2\} & \{1\} & 0 & (1-\beta z)/(1+\beta y_1) \\
+2413 & & \{2\} & \{1\} & 0 & (1-\beta z)/(1+\beta y_1) \\
+2431 & & \{2\} & \{1\} & 1 & \beta\,(1-\beta z)/(1+\beta y_1) \\
+\bottomrule
+\end{array}
+\]
+In the last three rows the value $2$ has moved from position $2$ to position $1$, hence is a
+left-mover; the value $1$ has left the window.
+\end{example}
+
+\section{From the top block to every $E_{p,k}$}\label{sec:Epk}
+
+Conjecture~\ref{conj:top} is stated for a single formal variable $z$, but that is enough to
+determine the coefficients of every $E_{p,k}(x;z)\groth_u$, exactly as in the Molev--Sagan
+approach to factorial Schur functions \cite{molev1999littlewood}: by \eqref{eq:E-from-top},
+$E_{p,k}(x;z)$ is obtained from $E_{k,k}(x;z_1)$ by divided differences in $z$, and those
+operators can be pushed onto the coefficients in \eqref{eq:top}. The point of writing the
+coefficient as $\rho_k(u,w)\,E_{n,n}(\mathcal{Y};-z)$ is that its $z$-divided differences are
+again factorial elementary symmetric polynomials, by the very same identity
+\eqref{eq:E-from-top} applied to the alphabet $\mathcal{Y}$ instead of $x$.
+
+\begin{corollary}[Pieri rule for $E_{p,k}$]\label{cor:Epk}
+Assume Conjecture~\ref{conj:top}. For $0\le p\le k$, $q=k-p$, and any alphabet $z_1,z_2,\dots$,
+\[
+E_{p,k}(x;z)\,\groth_u(x;y) \;=\; \sum_{w\in\Supp_k(u)} \kappa_k(u,w;q;z)\ \groth_w(x;y),
+\qquad
+\kappa_k(u,w;q;z) \;=\; \rho_k(u,w)\ E_{\,n-q,\,n}\bigl(\mathcal{Y}_k(u,w);\ z_1,\dots,z_{q+1}\bigr),
+\]
+with $n=n_k(u,w)$ and $\rho_k$, $\mathcal{Y}_k$ as in \eqref{eq:pref}, \eqref{eq:alphabet}
+($E_{n-q,n}=0$ when $q>n$).
+\end{corollary}
+
+\begin{proof}
+Put $t=z_1$ in \eqref{eq:top} (so $-z=-t$): $E_{k,k}(x;t)\,\groth_u = \sum_w \rho_k(u,w)\,E_{n,n}(\mathcal{Y};t)\,\groth_w$,
+an identity of polynomials in $t$ with coefficients in the field generated by $y$ and $\beta$
+(the $\rho_k$ and $\mathcal{Y}$ do not involve $t$). Apply the operator
+$(-1)^{q}\partial^z_{q}\cdots\partial^z_1$ to both sides. On the left it produces
+$E_{p,k}(x;z)\groth_u$ by \eqref{eq:E-from-top}; on the right it acts only on
+$E_{n,n}(\mathcal{Y};z_1)$, where \eqref{eq:E-from-top} with $x$ replaced by $\mathcal{Y}$
+gives $E_{n-q,n}(\mathcal{Y};z_1,\dots,z_{q+1})$. Linear independence of the $\groth_w(x;y)$
+finishes the proof.
+\end{proof}
+
+Setting every $z_j=0$ gives the ordinary elementary symmetric polynomials, since
+$E_{r,n}(\mathcal{Y};0)=e_r(\mathcal{Y})$.
+
+\begin{corollary}[Pieri rule for $e_p$]\label{cor:ep}
+Assume Conjecture~\ref{conj:top}. For $0\le p\le k$,
+\[
+e_p(x_1,\dots,x_k)\,\groth_u(x;y) \;=\; \sum_{w\in\Supp_k(u)} \rho_k(u,w)\ e_{\,p-|\Out_k(u,w)|}\bigl(\mathcal{Y}_k(u,w)\bigr)\ \groth_w(x;y).
+\]
+\end{corollary}
+
+\begin{remark}[Specialization to Theorem~\ref{thm:pieri}]
+At $\beta=0$ only $w$ with $\ell(u,w)=m_k(u,w)$ survive in $\rho_k$. Write $L=|\Lft_k(u,w)|$
+and $P=P_k(u,w)$, so $n = |P|+L$ and $|P| = k-m$. In
+$(-\beta)^{L}E_{n-q,n}(\fgn y_P,(-1/\beta)^{L};z)$ the only terms that survive as $\beta\to0$ are
+those using all $L$ copies of $-1/\beta$, and each such copy contributes
+$(-\beta)(-1/\beta - z_j) = 1+\beta z_j\to1$; what remains is $E_{n-q-L,\,n-L}(-y_P;z)
+= E_{p-m,\,k-m}(-y_P;z)$. Since $u\tom{k}w$ has $\ell(u,w)=m$, after $y\mapsto-y$ this is
+exactly the coefficient $E_{p-\ell,k-\ell}(y_P;z)$ of Theorem~\ref{thm:pieri}.
+Corollary~\ref{cor:Epk} is thus the $K$-theoretic form of Theorem~\ref{thm:pieri}: the
+alphabet $y_P$ of fixed values becomes $\fgn y_P$ padded by one $-1/\beta$ per left-mover, and
+the prefactor $\rho_k$ carries the excess-length power of $\beta$ and one atom
+$(1+\beta y_a)^{-1}$ per value that leaves the window.
+\end{remark}
+
+\begin{example}
+Continuing Example~\ref{ex:top21} ($u=21$, $k=2$; no left-movers, so every alphabet consists of
+formal inverses):
+\[
+\begin{array}{c c c c}
+\toprule
+w & \rho_2(21,w) & \mathcal{Y}_2(21,w) & n \\
+\midrule
+21  & 1 & (\fgn y_2,\fgn y_1) & 2\\
+231 & (1+\beta y_1)^{-1} & (\fgn y_2) & 1\\
+312 & (1+\beta y_2)^{-1} & (\fgn y_1) & 1\\
+321 & \bigl((1+\beta y_1)(1+\beta y_2)\bigr)^{-1} & () & 0\\
+\bottomrule
+\end{array}
+\]
+Corollary~\ref{cor:ep} with $p=1$ reads $e_1(\fgn y_1,\fgn y_2)\groth_{21} + e_0\,\groth_{231}/(1+\beta y_1) + e_0\,\groth_{312}/(1+\beta y_2)$
+($321$ has $p-|\Out| = -1$ and drops out):
+\[
+e_1(x_1,x_2)\,\groth_{21}(x;y) = (\fgn y_1 + \fgn y_2)\,\groth_{21} + \frac{\groth_{231}}{1+\beta y_1} + \frac{\groth_{312}}{1+\beta y_2},
+\]
+while $p=2$ gives $e_2(x_1,x_2)\groth_{21} = (\fgn y_1)(\fgn y_2)\groth_{21} + \frac{\fgn y_2}{1+\beta y_1}\groth_{231}
++ \frac{\fgn y_1}{1+\beta y_2}\groth_{312} + \frac{\groth_{321}}{(1+\beta y_1)(1+\beta y_2)}$.
+For $E_{1,2}(x;z) = x_1+x_2-z_1-z_2$ ($q=1$), Corollary~\ref{cor:Epk} replaces
+$e_1(\fgn y_1,\fgn y_2)$ by $E_{1,2}(\fgn y_1,\fgn y_2;z_1,z_2) = \fgn y_1+\fgn y_2 - z_1 - z_2$
+and leaves the other two coefficients ($E_{0,1}=1$) unchanged:
+\[
+\groth_{21}(x;y)\,E_{1,2}(x;z) = \bigl(\fgn y_1 + \fgn y_2 - z_1 - z_2\bigr)\groth_{21}
++ \frac{\groth_{231}}{1+\beta y_1} + \frac{\groth_{312}}{1+\beta y_2}.
+\]
+A left-mover appears in Example~\ref{ex:top1243}: for $w=2341$ one has $\rho_2 = (-\beta)/(1+\beta y_1)$,
+$\mathcal{Y}_2 = (-1/\beta)$, $n=1$, so the $E_{2,2}(x;z)$ coefficient is
+$(-\beta)(-1/\beta - z_1)/(1+\beta y_1) = (1+\beta z_1)/(1+\beta y_1)$ and the $E_{1,2}(x;z)$
+coefficient is $(-\beta)E_{0,1}/(1+\beta y_1) = -\beta/(1+\beta y_1)$.
+\end{example}
+
+\section{The Molev--Sagan type formula}
+
+The last ingredient is the expansion of a double Schubert polynomial into products of
+factorial elementary symmetric polynomials, which is what drives the double Schubert
+algorithm in \schubmult{} \cite{samuelmolev}. For $v\in S_\infty$ let $\theta(v)$ be the
+code of the dominant permutation $\mathrm{dom}(v)$ obtained by repeatedly sorting the code of
+$v$ (Definition~\ref{def:theta} below), and write $\theta_i = \theta_i(v^{-1})$. For
+permutations $v',v''$ and $i\ge1$ write $v'\Tom{i}v''$ if $v'' = v't_{i,b_1}\cdots t_{i,b_r}$
+with distinct $b_j\ne i$ and each step a Bruhat cover; set $\sigma_i(v',v'') = \#\{j : b_j<i\}$
+and $D_i(v',v'') = \{v'(i)\}\cup\{v'(j) : v'(j)\ne v''(j)\}$.
+
+\begin{definition}\label{def:theta}
+$\mu$ is dominant if $\code_i(\mu)\ge\code_{i+1}(\mu)$ for all $i$. If $v$ is not dominant let
+$i$ be maximal with $\code_i(v)<\code_{i+1}(v)$ and set $\mathrm{dom}(v)=\mathrm{dom}(vs_i)$;
+otherwise $\mathrm{dom}(v)=v$. Then $\theta_i(v) = \code_i(\mathrm{dom}(v))$.
+\end{definition}
+
+\begin{theorem}[{\cite{samuelmolev}}]\label{thm:vpath}
+For $v\in S_\infty$, with $r$ the number of nonzero parts of $\theta(v^{-1})$,
+\[
+\sch_v(x;z) = \sum_{(v_0,\dots,v_r)}\ \prod_{i=1}^{r}(-1)^{\sigma_i(v_{i-1},v_i)}\,
+E_{\theta_i - \ell(v_{i-1},v_i),\ \theta_i}\bigl(x;\ z_{D_i(v_{i-1},v_i)}\bigr),
+\]
+the sum over chains $1 = v_0\Tom{1}v_1\Tom{2}\cdots\Tom{r}v_r = v\,\mathrm{dom}(v^{-1})$, where
+$z_D$ is the alphabet $\{z_a : a\in D\}$ in the order produced by \pyid{call\_zvars}.
+\end{theorem}
+
+Each factor is an $E_{p,k}(x;\cdot)$ with $k=\theta_i$ and $p = \theta_i - \ell(v_{i-1},v_i)$, so
+Corollary~\ref{cor:Epk} can be applied layer by layer.
+
+\begin{theorem}[$K$-theoretic Molev--Sagan formula, conditional on Conjecture~\ref{conj:top}]\label{thm:ms}
+For $u,v\in S_\infty$,
+\[
+\groth_u(x;y)\,\sch_v(x;z) = \sum_{w} c^{w}_{u,v}(y;z)\ \groth_w(x;y),
+\qquad
+c^{w}_{u,v}(y;z) = \sum_{\substack{(v_0,\dots,v_r)\\ (u_0,\dots,u_r)}}\ \prod_{i=1}^{r}
+(-1)^{\sigma_i(v_{i-1},v_i)}\,
+\kappa_{\theta_i}\bigl(u_{i-1},u_i;\ \ell(v_{i-1},v_i);\ z_{D_i(v_{i-1},v_i)}\bigr),
+\]
+where the $v$-chain is as in Theorem~\ref{thm:vpath}, the $u$-chain has $u_0=u$, $u_r=w$ and
+$u_i\in\Supp_{\theta_i}(u_{i-1})$, and $\kappa$ is the closed-form coefficient of
+Corollary~\ref{cor:Epk},
+\[
+\kappa_k(u',u'';q;z) = \rho_k(u',u'')\ E_{\,n_k(u',u'')-q,\ n_k(u',u'')}\bigl(\mathcal{Y}_k(u',u'');\ z_1,\dots,z_{q+1}\bigr).
+\]
+Consequently, if $\groth_v(x;z) = \sum_{v'} a_{v,v'}(z;\beta)\,\sch_{v'}(x;z)$ is the (finite)
+expansion of $\groth_v$ into double Schubert polynomials, then
+\[
+\groth_u(x;y)\,\groth_v(x;z) = \sum_{w}\Bigl(\sum_{v'} a_{v,v'}(z;\beta)\,c^{w}_{u,v'}(y;z)\Bigr)\groth_w(x;y).
+\]
+\end{theorem}
+
+\begin{proof}[Proof, given Conjecture~\ref{conj:top}]
+Substitute Theorem~\ref{thm:vpath} for $\sch_v(x;z)$ and expand $\groth_u\cdot\prod_i E_i$
+one factor at a time from $i=1$ to $r$ using Corollary~\ref{cor:Epk}, which is a formal
+consequence of \eqref{eq:top} and \eqref{eq:E-from-top}. Each application replaces
+$\groth_{u_{i-1}}$ by $\sum_{u_i}\kappa_{\theta_i}(u_{i-1},u_i;\ldots)\groth_{u_i}$. The second
+statement is bilinearity.
+\end{proof}
+
+At $\beta=0$ every $\kappa$ becomes the factorial elementary symmetric polynomial in the fixed
+values, the $u$-chains become chains of Sottile relations $u_{i-1}\tom{\theta_i}u_i$, and
+Theorem~\ref{thm:ms} is the Molev--Sagan type formula of \cite{samuelmolev} (after
+$y\mapsto-y$). The $K$-theoretic novelty is entirely in $\kappa$, and it is of the same shape
+as the classical coefficient: a factorial elementary symmetric polynomial, now in the alphabet
+$\fgn y_{\Fix}$ padded with one $-1/\beta$ per left-mover, times the prefactor $\rho$ carrying
+the excess-length power of $\beta$ and the atoms $(1+\beta y_a)^{-1}$ for values that exit or
+move right; and the $u$-steps are restricted to the marked-chain supports.
+
+\begin{example}[Headline example]\label{ex:full}
+$u=21$, $v=132$. The expansion of $\groth_{132}(x;z)$ into double Schubert polynomials is
+\[
+\groth_{132}(x;z) = (1+\beta z_1)^2(1+\beta z_2)\,\sch_{132}(x;z) + \beta(1+\beta z_1)(1+\beta z_2)\,\sch_{231}(x;z)
++ (z_1\fgl z_2)\bigl(2 + \beta(z_1\fgl z_2)\bigr),
+\]
+and $\theta(132^{-1}) = \theta(231^{-1}) = (2)$, so both $\sch_{132}(x;z) = E_{1,2}(x;z)$ and
+$\sch_{231}(x;z) = E_{2,2}(x;z)$ are single layers with $k=2$. Assembling them with the coefficient
+polynomials of Example~\ref{ex:top21} and simplifying,
+\[
+\groth_{21}(x;y)\,\groth_{132}(x;z) \;=\; \gamma\,\groth_{21}(x;y) + (1+\beta\gamma)\bigl(\groth_{231}(x;y)+\groth_{312}(x;y)+\beta\,\groth_{321}(x;y)\bigr),
+\]
+\[
+\gamma \;=\; z_1\fgl z_2\fgl(\fgn y_1)\fgl(\fgn y_2) \;=\; \frac{(z_1\fgl z_2) - (y_1\fgl y_2)}{(1+\beta y_1)(1+\beta y_2)},
+\qquad
+1+\beta\gamma = \frac{(1+\beta z_1)(1+\beta z_2)}{(1+\beta y_1)(1+\beta y_2)}.
+\]
+At $\beta=0$ this is $\sch_{21}(x;-y)\sch_{132}(x;z) = (z_1+z_2-y_1-y_2)\sch_{21}(x;-y) + \sch_{231}(x;-y)+\sch_{312}(x;-y)$,
+the familiar double Schubert product. The coefficient of $\groth_{21}$ is the formal-group-law
+sum of the same four terms, and the factor $1+\beta\gamma$ multiplying the three higher terms is
+the ``$K$-theoretic $1$''.
+\end{example}
+
+\section{Implementation and verification}
+
+In \pyid{schubmult.mult.groth\_double}:
+\begin{itemize}
+\item \pyid{grothmult\_double\_top} implements \eqref{eq:top} (\pyid{\_top\_block\_coeff} is the
+product of factors, \pyid{\_top\_block\_support} is $\Supp_k(u)$);
+\item \pyid{\_groth\_elem\_sym\_frac} implements $\kappa$ of Theorem~\ref{thm:ms} in the closed form of
+Corollary~\ref{cor:Epk}: it evaluates $E_{n-q,n}(\mathcal{Y};z)$ by the subset expansion
+$\sum_{i_1<\dots<i_p}\prod_j(Y_{i_j}-z_{i_j-j+1})$ as a dynamic program over the alphabet
+\eqref{eq:alphabet}, clearing the denominator of each $\fgn y_a$ entry as it is used so that the
+numerator stays polynomial;
+\item \pyid{\_groth\_schub\_vpath\_mul} implements $c^w_{u,v}$ by running the $u$-chains against
+the precomputed $v$-path dictionaries (\pyid{compute\_vpathdicts}), exactly as
+\pyid{schubmult\_double} does for double Schubert polynomials;
+\item \pyid{grothmult\_double} implements the final displayed formula of Theorem~\ref{thm:ms},
+with \pyid{dgroth\_to\_dschub} supplying the coefficients $a_{v,v'}$.
+\end{itemize}
+Coefficients are carried throughout as ``flat fractions'' (a polynomial numerator together
+with exponents of the atoms $1+\beta y_a$), which is possible precisely because
+\eqref{eq:top} produces no other denominators. The ring interface is
+\pyid{DGx(u) * DGx(v, z)}, and \pyid{.simplify()} returns the coefficients in the factored
+form used above.
+
+Conjecture~\ref{conj:top} was checked against the exact fold
+\pyid{grothmult\_double\_block} (which multiplies by one linear factor $x_i+z$ at a time using the
+$K_T$-Chevalley formula of \cite{lenart2007affine}) for every $u\in S_4$ and $1\le k\le 3$, and for
+samples in $S_5$ and $S_6$ with $k\le5$; Theorem~\ref{thm:ms} was checked by expanding both
+sides as polynomials for every pair $u,v\in S_3$ and for samples of pairs in $S_4$. All checks passed. A proof of
+Conjecture~\ref{conj:top} is expected to follow from the localization characterization of
+the coefficients: the diagonal term is already forced, and the factors for moved positions
+should follow by induction on $\ell(u,w)$ from the $K_T$-Chevalley formula.
+
+\bibliographystyle{acm}
+\bibliography{formschub}
+
+\end{document}
