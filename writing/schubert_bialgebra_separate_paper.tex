@@ -158,7 +158,7 @@
 \begin{document}
 
 \begin{abstract}
-We introduce a \emph{Schubert bialgebra} $\coma=\bigoplus_{n\geq 0}\mathbb{Z}[x_1,\ldots,x_n]$, in which polynomials in different numbers of variables multiply to zero and the coproduct splits the variables into two consecutive blocks, and study its graded dual $\dcoma$, whose product is concatenation of weak compositions. The Schubert polynomials $\sch_u^n$ form a basis of $\coma$; we give an explicit integral formula for the dual Schubert basis $\dsch_u^n$ of $\dcoma$ via a transition formula to an elementary symmetric basis, and show that the Schubert structure constants $c_{u,v}^w$ are the coefficients of the coproduct of $\dcoma$ in the dual Schubert basis. The product of $\dcoma$ is then lifted to an associative product $\sqcupplus$ on the free abelian group $\BRC$ of bounded RC graphs, built from a transition map $\zeromap$ on RC graphs that realizes the Lascoux--Sch\"utzenberger transition formula and generalizes Little's bumping algorithm. Quotienting $\BRC$ by ideals coming from Demazure crystal equivalence, Nadeau--Tewari forest equivalence, and quasi-Yamanouchi equivalence yields manifestly positive Littlewood--Richardson rules for the dual Schubert, dual key, dual forest, and dual slide bases of $\dcoma$. Read on $\coma$, these are branching rules: enumerative formulas for splitting a Schubert, key, forest, or slide polynomial across two blocks of variables, and in the Schubert case they compute the Levi branching coefficients of Ressayre--Richmond for $\mathrm{GL}_p\times\mathrm{GL}_q\hookrightarrow\mathrm{GL}_{p+q}$.
+We introduce a \emph{Schubert bialgebra} $\coma=\bigoplus_{n\geq 0}\mathbb{Z}[x_1,\ldots,x_n]$, in which polynomials in different numbers of variables multiply to zero and the coproduct splits the variables into two consecutive blocks, and study its graded dual $\dcoma$, whose product is concatenation of weak compositions. The Schubert polynomials $\sch_u^n$ form a basis of $\coma$; we give an explicit formula for the dual Schubert basis $\dsch_u^n$ of $\dcoma$ via a transition formula to an elementary symmetric basis, and show that the Schubert structure constants $c_{u,v}^w$ are the coefficients of the coproduct of $\dcoma$ in the dual Schubert basis. The product of $\dcoma$ is then lifted to an associative product $\sqcupplus$ on the free abelian group $\BRC$ of bounded RC graphs, built from a transition map $\zeromap$ on RC graphs that realizes the Lascoux--Sch\"utzenberger transition formula and generalizes Little's bumping algorithm. Quotienting $\BRC$ by ideals coming from Demazure crystal equivalence, Nadeau--Tewari forest equivalence, and quasi-Yamanouchi equivalence yields manifestly positive Littlewood--Richardson rules for the dual Schubert, dual key, dual forest, and dual slide bases of $\dcoma$. Read on $\coma$, these are branching rules: enumerative formulas for splitting a Schubert, key, forest, or slide polynomial across two blocks of variables, and in the Schubert case they compute the Levi branching coefficients of Ressayre--Richmond for $\mathrm{GL}_p\times\mathrm{GL}_q\hookrightarrow\mathrm{GL}_{p+q}$.
 \end{abstract}
 
 	\maketitle
@@ -174,7 +174,7 @@ This allows us to consistently define a ``splitting'' coproduct that is compatib
 
 We focus primarily on the dual $\dcoma$ of this algebra, where the product is derived from this splitting (deconcatenation) coproduct on $\coma$. Specifically, let $\mathrm{Comp}_n$ be the set of weak compositions of length $n$. Then, additively,
 $$\dcoma = \bigoplus_{n=0}^\infty \mathbb{Z}^{\oplus \mathrm{Comp}_n}$$
-and multiplicatively the product of two basis elements indexed by $a\in \mathrm{Comp}_p$ and $b\in \mathrm{Comp}_q$ is the basis element indexed by the concatenation of $a$ and $b$, which is an element of $\mathrm{Comp}_{p+q}$. We will denote this product by $\sqcupplus$, writing $a\sqcupplus b$ for the concatenation, and we wish to flag the choice of symbol: the product on $\dcoma$ is \emph{not} the dual of polynomial multiplication on $\coma$ in any sense one might naively expect, and using a distinguished symbol for it serves as a constant reminder. The coproduct on $\dcoma$ is given by splitting sums of exponents, that is to say
+and multiplicatively the product of two basis elements indexed by $a\in \mathrm{Comp}_p$ and $b\in \mathrm{Comp}_q$ is the basis element indexed by the concatenation of $a$ and $b$, which is an element of $\mathrm{Comp}_{p+q}$. We will denote this product by $\sqcupplus$, writing $a\sqcupplus b$ for the concatenation. The coproduct on $\dcoma$ is given by splitting sums of exponents, that is to say
 $$\Delta(c) = \sum_{a+b=c} a\otimes b$$
 where $a$ and $b$ are weak compositions of lengths $p$ and $q$ respectively, and the equation $a+b=c$ indicates that the pointwise sum of $a$ and $b$ is equal to $c$. The counit is given by $\varepsilon(c)=0$ unless $c$ is the empty composition, in which case $\varepsilon(c)=1$. With these definitions, $\coma$ and $\dcoma$ are dual bialgebras over $\mathbb{Z}$, a fact that is straightforward to verify. Neither $\coma$ nor $\dcoma$ is connected, and neither is a Hopf algebra. A ``Littlewood--Richardson rule'' for a basis of the dual algebra is equivalent to a branching/splitting formula for the corresponding polynomial basis under the partition of variables into two blocks $\{x_1,\ldots,x_p\}$ and $\{x_{p+1},\ldots,x_{p+q}\}$.
 
@@ -190,7 +190,7 @@ In addition, the dual forest basis $\{\forest_a^*\}$ of $\dcoma$ is defined by $
 
 \subsection*{Littlewood--Richardson rules for dual bases}
 
-Each of these dual bases in fact has nonnegative structure constants with $\sqcupplus$, for which we also give rules in terms of RC graphs. For an RC graph $R$ with $n$ rows and an integer $0\leq p\leq n$, we associate to $R$ two RC graphs $\clp^p(R)\in\RC_p$ and $\trm^p(R)\in\RC_{n-p}$, which the reader should picture as a decomposition of $R$ across the horizontal cut between rows $p$ and $p+1$. The map $\trm^p$ is genuinely simple: it discards the top $p$ rows and keeps the remaining $n-p$ rows (suitably reindexed). The map $\clp^p$ is the subtler partner. It is built by iterating an auxiliary map $\zeromap:\RC_n^0\to\RC_{n-1}$ (Definition \ref{definition:zeromap}), where $\RC_n^0$ denotes the set of RC graphs whose last row is empty. The map $\zeromap$ realizes, on the level of RC graphs, the Lascoux--Schützenberger transition formula for Schubert polynomials (see \cite{notes}), and ends up being a generalization of the main result of \cite{little2003combinatorial}, though this was not intentional. The whole construction preserves a wealth of additional structure (crystal operators, forest invariants) that we exploit later. Indeed, the product of $\dcoma$ is lifted to a product $\sqcupplus$ on the free abelian group $\BRC$ of bounded RC graphs using $\clp^p$ and $\trm^p$, for which $\dcoma$ is a quotient (\S\ref{section:brc}). The nonnegativity of the structure constants of all of these bases of $\dcoma$ is a consequence of this quotient structure.
+Each of these dual bases in fact has nonnegative structure constants with $\sqcupplus$, for which we also give rules in terms of RC graphs. For an RC graph $R$ with $n$ rows and an integer $0\leq p\leq n$, we associate to $R$ two RC graphs $\clp^p(R)\in\RC_p$ and $\trm^p(R)\in\RC_{n-p}$, which the reader should picture as a decomposition of $R$ across the horizontal cut between rows $p$ and $p+1$. The map $\trm^p$ is simple: it discards the top $p$ rows and keeps the remaining $n-p$ rows (suitably reindexed). The map $\clp^p$ is subtler. It is built by iterating an auxiliary map $\zeromap:\RC_n^0\to\RC_{n-1}$ (Definition \ref{definition:zeromap}), where $\RC_n^0$ denotes the set of RC graphs whose last row is empty. The map $\zeromap$ realizes, on the level of RC graphs, the Lascoux--Schützenberger transition formula for Schubert polynomials (see \cite{notes}), and ends up being a generalization of the main result of \cite{little2003combinatorial}, though this was not intentional. The whole construction preserves a wealth of additional structure (crystal operators, forest invariants) that we exploit later. Indeed, the product of $\dcoma$ is lifted to a product $\sqcupplus$ on the free abelian group $\BRC$ of bounded RC graphs using $\clp^p$ and $\trm^p$, for which $\dcoma$ is a quotient (\S\ref{section:brc}). The nonnegativity of the structure constants of all of these bases of $\dcoma$ is a consequence of this quotient structure.
 
 For the dual Schubert basis $\{\dsch_u^n\}$ for permutations $u$ with last descent at most $n$, we have the following result.
 
@@ -225,7 +225,34 @@ $$\zeromap(\phi(B)) = \phi(\mathbf{t}(B))$$
 
 This simplicity does not come for free, however; the $\trm^p$ operation on BPDs is no longer trivial.
 
+We conjecture a far stronger result that would result in a generalization of the Schubert bialgebra to $K$-theory. Let $\mathrm{MBPD}(n)$ denote the set of $n$-row marked bumpless pipe dreams and let $\mathrm{Pipe}(n)$ denote the set of $n$-row not-necessarily-reduced pipe dreams. Huang, Shimozono, and Yu in \cite{HuangShimozonoYu2024} present a bijection $\Phi:\mathrm{MBPD}(n)\to\mathrm{Pipe}(n)$.
 
+For $P\in\mathrm{Pipe}(n)$ and $p\leq n$, let 
+$$\clp^p(P) = \Phi(\mathbf{t}^{n-p}(\Phi^{-1}(P))).$$
+Define a function $\sqcupplus:\mathrm{Pipe}(m)\times\mathrm{Pipe}(n)\to\mathbb{Z}^{\mathrm{Pipe}(m+n)}$ by
+$$Q\sqcupplus P = \sum_{R\in \mathrm{Pipe}(m+n), \clp^m(R) = P, \trm^m(R) = Q} R.$$
+Then
+\begin{conjecture}
+Define
+$$\mathrm{BPipe} = \bigoplus_{n=0}^\infty \mathbb{Z}^{\mathrm{Pipe}(n)}.$$
+Then we have the following:
+\begin{itemize}
+\item $\sqcupplus:\mathrm{Pipe}(n)\times\mathrm{Pipe}(m)\to\mathbb{Z}^{\mathrm{Pipe}(n+m)}$ extends to an associative product on $\mathrm{BPipe}$ for which it is a graded ring.
+\item The map $\mathbf{f}:\mathrm{BPipe}\to\BRC$ such that
+$$\mathbf{f}(P)=\begin{cases}
+  P & \text{if } P\text{ is reduced} \\
+  0 & \text{otherwise}
+\end{cases}$$
+induces a surjective homomorphism of rings 
+$$\mathbf{f}:\left(\mathrm{BPipe}, \sqcupplus\right) \to \left(\BRC, \sqcupplus\right).$$
+
+\item Let $G_w^n$ for $w\in S_\infty$ be the basis of $\dcoma$ dual to the basis of Grothendieck polynomials (with the $n$ representing the max number of variables). Then the map $\mathrm{BPipe}\to \dcoma$ defined on the $n$-row pipe dream $P\in\mathrm{Pipe}(w,n)$ for $w\in S_\infty$ by
+$$P\mapsto G_w^n$$
+extends to a surjective homomorphism of rings.
+\end{itemize}
+\end{conjecture}
+
+In effect this would generalize Little's bumping algorithm to the $0$-Hecke words of permutations that come from pipe dreams representing the monomials of Grothendieck polynomials, yielding word-level combinatorial transition algorithm.
 \subsection*{Outline of the paper}
 
 Sections \ref{section:bialgebra} and \ref{section:dualalgebra} establish the algebraic foundations: \S\ref{section:bialgebra} (\nameref{section:bialgebra}) constructs $\coma$, identifies its Schubert basis $\sch_u^n$, and exhibits the elementary basis $\mathcal{E}_n$ of $\coma_n$; \S\ref{section:dualalgebra} (\nameref{section:dualalgebra}) builds the graded dual $\dcoma$, identifies the dual Schubert basis $\dsch_u^n$, and records the coproduct.
