@@ -176,7 +176,7 @@ We focus primarily on the dual $\dcoma$ of this algebra, where the product is de
 $$\dcoma = \bigoplus_{n=0}^\infty \mathbb{Z}^{\oplus \mathrm{Comp}_n}$$
 and multiplicatively the product of two basis elements indexed by $a\in \mathrm{Comp}_p$ and $b\in \mathrm{Comp}_q$ is the basis element indexed by the concatenation of $a$ and $b$, which is an element of $\mathrm{Comp}_{p+q}$. We will denote this product by $\sqcupplus$, writing $a\sqcupplus b$ for the concatenation. The coproduct on $\dcoma$ is given by splitting sums of exponents, that is to say
 $$\Delta(c) = \sum_{a+b=c} a\otimes b$$
-where $a$ and $b$ are weak compositions of lengths $p$ and $q$ respectively, and the equation $a+b=c$ indicates that the pointwise sum of $a$ and $b$ is equal to $c$. The counit is given by $\varepsilon(c)=0$ unless $c$ is the empty composition, in which case $\varepsilon(c)=1$. With these definitions, $\coma$ and $\dcoma$ are dual bialgebras over $\mathbb{Z}$, a fact that is straightforward to verify. Neither $\coma$ nor $\dcoma$ is connected, and neither is a Hopf algebra. A ``Littlewood--Richardson rule'' for a basis of the dual algebra is equivalent to a branching/splitting formula for the corresponding polynomial basis under the partition of variables into two blocks $\{x_1,\ldots,x_p\}$ and $\{x_{p+1},\ldots,x_{p+q}\}$.
+where $a$ and $b$ are weak compositions of the same length as $c$ and $a+b$ denotes the pointwise sum. The counit is given by $\varepsilon(c)=0$ unless $c$ is the empty composition, in which case $\varepsilon(c)=1$. With these definitions, $\coma$ and $\dcoma$ are dual bialgebras over $\mathbb{Z}$ (with $\coma$ non-unital: the constant $1\in\coma_n$ is a unit for $\coma_n$ only), a fact that is straightforward to verify. Neither $\coma$ nor $\dcoma$ is connected, and neither is a Hopf algebra. A ``Littlewood--Richardson rule'' for a basis of the dual algebra is equivalent to a branching/splitting formula for the corresponding polynomial basis under the partition of variables into two blocks $\{x_1,\ldots,x_p\}$ and $\{x_{p+1},\ldots,x_{p+q}\}$.
 
 The algebraic structure of $\dcoma$ is not itself new; what is new is the product on the dual Schubert basis $\dsch_u^n$ of $\dcoma$ indexed by $u\in S_\infty$ and $n$ at least as large as the last descent of $u$, defined by
 $$\langle \dsch_u^m, \sch_v^n\rangle = \delta_{u,v}\delta_{m,n}$$
@@ -268,7 +268,7 @@ The appendix is devoted to the proof of Proposition \ref{proposition:pullindex},
 \section{The Schubert Bialgebra and its dual}\label{section:bialgebra}
 \subsection{Some preliminaries}
 
-\begin{definition}[Two Pieri relations $\tom{k}$ and $\Tom{k}$]
+\begin{definition}[Two Pieri relations $\tom{k}$ and $\Tom{k}$]\label{definition:pieri}
 The relations $\tom{k}$ and $\Tom{k}$ are defined on $S_\infty$ as follows, with different notation, in \cite{sottile}. For $v,w\in S_\infty$, we have $v\tom{k} w$ if there is a sequence of transpositions $t_{a_1b_1},\ldots,t_{a_mb_m}$ such that the following hold:
 \begin{enumerate}
 \item  $a_i \leq k < b_i$ for all $i$.
@@ -371,14 +371,14 @@ See the Appendix for a proof.
 \subsection{Definition}
 
 
-We define a commutative algebra $\coma$ over the integers as follows. For each $n$, define $\coma_n$ to be the polynomial ring over $\mathbb{Z}$ in the variables $x_1,\ldots,x_n$. Then define
+We define a commutative algebra $\coma$ over the integers as follows. For each $n\geq 0$, define $\coma_n$ to be the polynomial ring over $\mathbb{Z}$ in the variables $x_1,\ldots,x_n$ (so $\coma_0=\mathbb{Z}$). Then define
 $$\coma =\bigoplus_{n=0}^\infty \coma_n$$
-The multiplication within $\coma_n$ is as usually defined for the polynomial ring. However, if $a\in \coma_m$ and $b\in \coma_n$ with $m\neq n$ and $m,n>0$,  then
-$$ab = 0$$
-Otherwise, the component for $n=0$ is identified with the coefficient ring.
+The multiplication within each $\coma_n$ is the usual multiplication of polynomials, and if $a\in \coma_m$ and $b\in \coma_n$ with $m\neq n$, then
+$$ab = 0\text{.}$$
+That is, $\coma$ is the direct sum of the rings $\coma_n$, including $\coma_0$; it is a commutative ring without unit, and the constant polynomial $1\in\coma_n$ is a unit for the summand $\coma_n$ only. The $\mathbb{Z}$-module structure is the evident one.
 
 \begin{remark}[Fat identities]\label{remark:fatidentity}
-The constant polynomial $1\in\coma_n$ for $n>0$ acts as a unit on $\coma_n$ itself but is \emph{not} a unit of $\coma$ as a whole: by the rule above it annihilates every $\coma_m$ with $m\neq n$ and $m>0$. We will refer to these length-$n$ units informally as ``fat identities''. This is the conceptual hinge that makes $\coma$ a bialgebra rather than a Hopf algebra. The triviality of cross-length products is what allows the deconcatenation coproduct $\Delta$ defined below to be a homomorphism of rings; conversely, it forces $\coma$ to fail to be connected, so $\coma$ admits no antipode.
+The constant polynomial $1\in\coma_n$ acts as a unit on $\coma_n$ itself but is \emph{not} a unit of $\coma$ as a whole: by the rule above it annihilates every $\coma_m$ with $m\neq n$. We will refer to these length-$n$ units informally as ``fat identities''; $\coma$ itself has no unit. This is the conceptual hinge that makes $\coma$ a bialgebra rather than a Hopf algebra. The triviality of cross-length products is what allows the deconcatenation coproduct $\Delta$ defined below to be a homomorphism of rings (if $1\in\coma_0$ acted as a global unit, $\Delta$ would fail to be multiplicative already on $x_1\cdot x_1x_2=0$); conversely, it forces $\coma$ to fail to be connected, so $\coma$ admits no antipode.
 \end{remark}
 
 Each $\coma_n$ has a basis consisting of elements $x_a$, where $a$ is a weak composition of length $n$, and the notation indicates that
@@ -404,7 +404,10 @@ where the equation $ab=c$ indicates that $a$ concatenated with $b$ is equal to $
 	$\Delta:\coma\to\coma\otimes\coma$ is a homomorphism of rings.
 \end{lemma}
 \begin{proof}
-	This is where the condition that $x_a^px_b^q=0$ unless $p=q$ when both $p,q>0$ comes in. It ensures that only monomials of the same length have nonzero products and preserves the structure of the coproduct as a homomorphism of rings.
+Let $a,b$ be weak compositions of lengths $m$ and $n$, and for a weak composition $c$ of length $r$ and $0\leq k\leq r$ write $c_{\leq k}$ and $c_{>k}$ for the first $k$ and the remaining $r-k$ entries of $c$. Then
+$$\Delta(x_a)\Delta(x_b)=\sum_{j=0}^{m}\sum_{k=0}^{n}x_{a_{\leq j}}x_{b_{\leq k}}\otimes x_{a_{>j}}x_{b_{>k}}\text{.}$$
+The $(j,k)$ term vanishes unless $j=k$ and $m-j=n-k$, that is, unless $m=n$ and $j=k$. Hence $\Delta(x_a)\Delta(x_b)=0=\Delta(x_ax_b)$ when $m\neq n$, while for $m=n$
+$$\Delta(x_a)\Delta(x_b)=\sum_{k=0}^n x_{a_{\leq k}+b_{\leq k}}\otimes x_{a_{>k}+b_{>k}}=\sum_{k=0}^n x_{(a+b)_{\leq k}}\otimes x_{(a+b)_{>k}}=\Delta(x_{a+b})=\Delta(x_ax_b)\text{.}$$
 \end{proof}
 
 \begin{lemma}
@@ -442,7 +445,7 @@ In $\coma$, each $\coma_n$ has a basis of Schubert polynomials $\sch_u^n$, where
 $$\sch_u^n\sch_v^n = \sum_{w}c_{u,v}^w\sch_w^n$$
 These are known to be nonnegative integers by virtue of the fact that they count points of transverse intersections of generic translates of Schubert varieties; however, except in special cases no positive combinatorial formula is known.
 
-\subsection{The elementary basis}
+\subsection{The elementary basis}\label{section:elementary}
 
 An $n$-elementary weak composition is a finite sequence of nonnegative integers $\alpha=(\alpha_1,\alpha_2,\ldots,\alpha_N)$ such that $\alpha_i\leq i$ for all $i<n$ and $\alpha_i\leq n$  for all $i\geq n$, satisfying the additional restriction that $\alpha_i\geq \alpha_{i+1}$ if $i\geq n$.
 
@@ -586,32 +589,28 @@ There is a basis $\dsch_u^{n}$ dual to the Schubert basis for $\dcoma_n$. Specif
 $$\langle \alpha,x_\beta\rangle = \delta_{\alpha\beta}$$
 we define $\dsch_u^n$ to be the unique basis of $\dcoma_n$ such that
 $$\langle \dsch_u^n,\sch_v^n\rangle = \delta_{uv}$$
-We characterize it with an explicit formula.
+We characterize it with an explicit formula, in terms of the chains $\achain{p}(u,w)$ and the statistic $\sigma$ of \S\ref{section:elementary}.
 
-\begin{definition}
-A permutation $\mu$ is said to be a \emph{strict dominant permutation} if $\code(\mu)$ is a strict partition (that is, a strictly decreasing sequence of positive integers, padded at the end with $0$s in our convention).
+\begin{definition}\label{definition:dualpath}
+Let $u\in S_\infty$ with $\maxd(u)\leq n$. A \emph{dual path} for $(u,n)$ is a sequence $P=(C_1,\ldots,C_n)$ of chains $C_i\in\achain{i}(u_{i-1},u_i)$ for some sequence of permutations $1=u_0\leq u_1\leq\cdots\leq u_n=u$; write $\mathrm{Path}^n(u)$ for the set of dual paths. For $P\in\mathrm{Path}^n(u)$ set
+$$\sigma(P)=\sum_{i=1}^n\sigma(C_i),\qquad |P|=(|C_1|,\ldots,|C_n|)\text{,}$$
+so that $|P|$ is a weak composition of length $n$ with $\bigl||P|\bigr|=\ell(u)$.
 \end{definition}
 
-\begin{theorem}
-	For each permutation $u$ and integer $n$ with $\maxd(u)\leq n$ we have the equation
-	$$\dsch_u^{n} = \sum_{\ell(\alpha)=n} E^{\code(\mu)-\alpha;n}_{u\mu^{-1}}\alpha$$
-	where $\mu$ is any strict dominant permutation such that $0\neq \code_n(\mu) \geq \ell(u)$ and $\code_{n+1}(\mu)=0$.
+\begin{theorem}\label{theorem:dualformula}
+	For each permutation $u$ and integer $n$ with $\maxd(u)\leq n$,
+	$$\dsch_u^{n} = \sum_{P\in\mathrm{Path}^n(u)} (-1)^{\sigma(P)}\,[\,|P|\,]\text{.}$$
+	That is, the coefficient of $[\alpha]$ in $\dsch_u^n$ is the signed number of dual paths $P$ for $(u,n)$ with $|C_i|=\alpha_i$ for all $i$.
 \end{theorem}
 \begin{proof}
-	By definition, the coefficient of $\alpha$ in $\dsch_u^n$ is the coefficient of $\sch_u^n$ in $x_\alpha$. The result can be derived from the Cauchy formula for double Schubert polynomials. Recall that for any permutation $w$, we have the formula
-  $$\sch_w(x;-y) = \sum_{u:\ell(u)+\ell(wu^{-1})=\ell(w)} \sch_u(x)\sch_{wu^{-1}}(y)$$
-  Note that for any permutation $\mu$ as laid out in the statement of the theorem, $\ell(u\mu^{-1})=\ell(\mu)-\ell(u)$. This is due to the lattice property of dominant permutations in weak order \cite{bjorner1997shellable}.
-
-  Recall from Definition~\ref{definition:divdiff} that $\delta^v$, acting on the $y$ variables, satisfies $\delta^v[\sch_w(x;-y)]=\sch_{vw}(x;-y)$ whenever $\ell(vw)=\ell(w)-\ell(v)$. Thus,
-	$$\delta^{u\mu^{-1}}\sch_\mu(x;-y) = \sch_u(x;-y)$$
-	We have that
-	$$\sch_\mu(x;-y)=\sum_u \sch_u(x)\sch_{u\mu^{-1}}(y)$$
-	Expressing the second factor in the $e_{\alpha,\lambda}(y)$ basis, we have
-	$$\sch_\mu(x;-y)=\sum_{u,\alpha} \sch_u(x)E_{u\mu^{-1}}^{\code(\mu)-\alpha;n}e_{\code(\mu)-\alpha,\code(\mu)}(y)$$
-	An alternative expression for $\sch_\mu(x;-y)$ is
-	$$\sch_\mu(x;-y)=\sum_{\alpha} x_\alpha e_{\code(\mu)-\alpha,\code(\mu)}(y)$$
-	from which we see that the coefficient is correct.
+	By definition, the coefficient of $[\alpha]$ in $\dsch_u^n$ is the coefficient $c_{\alpha,u}$ of $\sch_u^n$ in the Schubert expansion of $x_\alpha$. Since $\partial^u\sch_v=\delta_{u,v}$ for $\ell(v)=\ell(u)$ and $\partial^u$ kills polynomials of degree less than $\ell(u)$ \cite{notes}, we have $c_{\alpha,u}=\partial^u(x_\alpha)$ when $|\alpha|=\ell(u)$, and $c_{\alpha,u}=0$ otherwise. Writing $x_\alpha=x_1^{\alpha_1}\cdots x_n^{\alpha_n}$ and applying the Leibniz formula of Definition~\ref{definition:divdiff} (in its $x$-variable form) iteratively across the $n$ factors,
+	$$\partial^u(x_\alpha)=\sum_{1=u_0\leq u_1\leq\cdots\leq u_n=u}\ \prod_{i=1}^n\partial_{u_{i-1}}^{u_i}\bigl(x_i^{\alpha_i}\bigr)\text{.}$$
+	Each factor $\partial_{u_{i-1}}^{u_i}(x_i^{\alpha_i})$ is homogeneous of degree $\alpha_i-\ell(u_{i-1},u_i)$ (zero if this is negative), and the degrees sum to $|\alpha|-\ell(u)=0$, so a term is a nonzero constant only if $\ell(u_{i-1},u_i)=\alpha_i$ for every $i$. For such terms Lemma~\ref{lemma:powerdiff}, which holds verbatim for $\partial_u^w(x_p^k)$, gives $\partial_{u_{i-1}}^{u_i}(x_i^{\alpha_i})=\sum_{C_i\in\achain{i}(u_{i-1},u_i)}(-1)^{\sigma(C_i)}$. Multiplying out yields the sum over dual paths $P$ with $|P|=\alpha$ of $(-1)^{\sigma(P)}$.
 \end{proof}
+
+\begin{remark}
+Theorem~\ref{theorem:dualformula} can also be derived from the Cauchy formula $\sch_\mu(x;-y)=\sum_{v}\sch_v(x)\sch_{v\mu^{-1}}(y)$ for a dominant permutation $\mu$ with $\code(\mu)$ strictly decreasing and $\code_n(\mu)\geq\ell(u)$, $\code_{n+1}(\mu)=0$, by expanding $\sch_{u\mu^{-1}}(y)$ in the products $\prod_i e^{\code_i(\mu)}_{\code_i(\mu)-\alpha_i}(y)$ exactly as in the proof of Theorem~\ref{theorem:elemtrans}; the coefficients so obtained are independent of $\mu$.
+\end{remark}
 
 
 This is not stable for fixed $u$ as $n$ increases, and this is expected.
@@ -621,7 +620,7 @@ This is not stable for fixed $u$ as $n$ increases, and this is expected.
 Suppose $w = [1,4,5,2,3]$. Then
 $$\dsch_w^3 = [022] - [013]$$
 If we choose $[1,3,5,7,2,4,6]$ instead, we have
-$$\dsch_{1357246} = [0015] - [0033] - [0114] + [0123]$$
+$$\dsch_{1357246}^4 = [0015] - [0033] - [0114] + [0123]$$
 For $w=[4,2,7,1,3,5,6]$,
 $$\dsch_{4271356}^3 = -[026] + [035] + [125] - [134] + [206] - [215] - [305] + [314]$$
 \end{example}
@@ -633,6 +632,21 @@ $$[a]\cdot \dsch_{w}^{n} = \sum_{\substack{w'\downvar{1} w\\ \ell(w,w')=a}} \dsc
 \end{lemma}
 \begin{proof}
   This follows from Proposition \ref{proposition:pullindex} with $i=1$.
+\end{proof}
+
+More generally, the product of $\dcoma$ is dual to splitting the variables of $\coma$ into two consecutive blocks. For permutations $w,u,v$ with $\maxd(w)\leq p+q$, $\maxd(u)\leq p$, $\maxd(v)\leq q$, define the \emph{branching coefficients} $b_{u,v}^w(p,q)$ by
+\begin{equation}\label{eq:branching}
+\sch_w(x_1,\ldots,x_{p+q})=\sum_{u,v}b_{u,v}^w(p,q)\,\sch_u(x_1,\ldots,x_p)\,\sch_v(x_{p+1},\ldots,x_{p+q})\text{;}
+\end{equation}
+these are well defined since the products $\sch_u(x_1,\ldots,x_p)\sch_v(x_{p+1},\ldots,x_{p+q})$ form a basis of $\mathbb{Z}[x_1,\ldots,x_{p+q}]$.
+
+\begin{lemma}\label{lemma:dualbranch}
+With notation as above,
+$$\dsch_u^p\sqcupplus\dsch_v^q=\sum_{w}b_{u,v}^w(p,q)\,\dsch_w^{p+q}\text{.}$$
+\end{lemma}
+\begin{proof}
+For $\alpha\in\dcoma_p$, $\beta\in\dcoma_q$ and $f\in\coma_{p+q}$ we have $\langle\alpha\sqcupplus\beta,f\rangle=\langle\alpha\otimes\beta,\Delta_{p,q}(f)\rangle$, where $\Delta_{p,q}:\coma_{p+q}\to\coma_p\otimes\coma_q$ is the component of $\Delta$; indeed both sides equal $\delta_{ab,c}$ on $\alpha=[a]$, $\beta=[b]$, $f=x_c$. Identifying $\coma_p\otimes\coma_q$ with polynomials in the two blocks of variables, $\Delta_{p,q}(f)=f(x_1,\ldots,x_{p+q})$ read as a polynomial in $(x_1,\ldots,x_p)$ and $(x_{p+1},\ldots,x_{p+q})$, so $\Delta_{p,q}(\sch_w^{p+q})=\sum_{u,v}b_{u,v}^w(p,q)\sch_u^p\otimes\sch_v^q$ by \eqref{eq:branching}. Hence the coefficient of $\dsch_w^{p+q}$ in $\dsch_u^p\sqcupplus\dsch_v^q$ is
+\[\langle\dsch_u^p\sqcupplus\dsch_v^q,\sch_w^{p+q}\rangle=\langle\dsch_u^p\otimes\dsch_v^q,\Delta_{p,q}(\sch_w^{p+q})\rangle=b_{u,v}^w(p,q)\text{.}\qedhere\]
 \end{proof}
 
 \subsection{The coproduct}
@@ -696,9 +710,9 @@ There is an evident evaluation map $\mathrm{ev}: \BRC\to \coma$ defined on basis
 $$\mathrm{ev}(R) = x_{\wtt(R)}$$
 which is a surjective homomorphism of graded modules. There is also a map $\alpha:\BRC\to\dcoma$ defined by
 $$\alpha(R) = \dsch_{\wof{R}}^{\hr(R)}$$
-which is also a surjective homomorphism of graded modules. In addition, there is $\omega:\BRC\to \dcoma$ defined by
+which is also a surjective homomorphism of graded modules. In addition, there is the weight map $\omega:\BRC\to \dcoma$ defined by
 $$\omega(R) = [\wtt(R)]$$
-which is similarly surjective.
+which is similarly a surjective homomorphism of graded modules.
 
 We can define elements $\mathcal{S}_w(n)$ as
 $$\mathcal{S}_w(n) = \sum_{\substack{\wof{R}=w\\\hr(R)=n}}R$$
@@ -785,7 +799,7 @@ $$\sch_\dcoma(x_1,x_2,\ldots,x_n) = \sch_\dcoma(x_1)\sch_\dcoma(x_2)\cdots \sch_
 	as desired.
 \end{proof}
 
-\begin{corollary}
+\begin{corollary}\label{corollary:evschub}
 	For each $w\in S_\infty$ and valid $n$, we have
 	$$\mathrm{ev}(\mathcal{S}_w(n)) = \sch_w^n(x_1,\ldots,x_n)$$
 \end{corollary}
@@ -1322,7 +1336,7 @@ This ensures that the product remains as desired if the RC graph is valid. Howev
 \end{proof}
 
 
-\begin{lemma}
+\begin{lemma}\label{lemma:zeroweight}
 Given a bounded RC graph $R$ with $\hr(R)=n$ such that row $n$ is empty, Algorithm \ref{algorithm:zero} produces a valid bounded RC graph $R'$ with $\hr(R')=n-1$ satisfying
 $$\wtt(R') = \wtt(R)$$
 \end{lemma}
@@ -1334,7 +1348,7 @@ $$\wtt(R') = \wtt(R)$$
 
 \begin{theorem} \label{theorem:zero_bijection}
 Let $w$ be a permutation with last descent at most $n$. Let $\mathcal{RC}(w,n)^0$ be the set of bounded RC graphs $R$ with $\hr(R)=n$ such that $\wof{R}=w$ and row $n$ is empty. Then
-$$\zeromap:\mathcal{RC}(w, n)^{0}\to \bigcup_{w\downvar{n} w'}\mathcal{RC}(w', n-1)$$
+$$\zeromap:\mathcal{RC}(w, n)^{0}\to \bigcup_{\substack{w\downvar{n} w'\\\ell(w')=\ell(w)}}\mathcal{RC}(w', n-1)$$
 is a weight-preserving bijection.
 \end{theorem}
 
@@ -1375,11 +1389,11 @@ T_n(w)=\{w' : w\downvar{n}w',\ \ell(w')=\ell(w)\}.
 \]
 \end{definition}
 
-By Proposition 2.1.5 with $i=n$ (this is the identity used in the proof of Theorem 4.3),
+By Proposition~\ref{proposition:pullindex} with $i=n$ (this is the identity used in the proof of Theorem~\ref{theorem:zero_bijection}),
 \begin{equation}\label{E:Tn}
 \sch_w(x_1,\dots,x_{n-1},0)=\sum_{w'\in T_n(w)}\sch_{w'}(x_1,\dots,x_{n-1}),
 \end{equation}
-and by Theorem 4.1 together with Corollary 4.1.6 (or Proposition 2.1.5 with $i=1$, $y=0$),
+and by Theorem~\ref{theorem:modactrc} together with Corollary~\ref{corollary:evschub} (or Proposition~\ref{proposition:pullindex} with $i=1$, $y=0$),
 \begin{equation}\label{E:P1}
 \sch_w(x_1,\dots,x_n)=\sum_{v\in P_1(w)}x_1^{\ell(w)-\ell(v)}\,\sch_v(x_2,\dots,x_n).
 \end{equation}
@@ -1394,7 +1408,7 @@ $\sch_u=x_n\sch_{u t_{ns}}+\sum_i \sch_{u t_{ns}t_{in}}$, the sum over all such 
 
 \begin{lemma}\label{L:trim}
 Let $w=c\cdot{\uparrow}v$ with $\ell(w)=\ell(c)+\ell(v)$ and $\maxd(w)\le n$. Then $\maxd(v)\le n-1$.
-In particular, if $R\in\RC(w,n)_0$ with $n\ge2$, then $\trim(R)\in\RC(v,n-1)_0$ with $v=w_{\trim R}\in P_1(w)$;
+In particular, if $R\in\RC(w,n)^0$ with $n\ge2$, then $\trm(R)\in\RC(v,n-1)^0$ with $v=\wof{\trm R}\in P_1(w)$;
 and every $v\in P_1(w)$ has $\maxd(v)\le n-1$.
 \end{lemma}
 \begin{proof}
@@ -1403,9 +1417,9 @@ $w=(cu'')s_j$ and $\ell(cu'')\le \ell(c)+\ell(u)-1<\ell(w)$, so $w(j)>w(j+1)$. H
 ${\uparrow}v$ is a right descent of $w$, so $\maxd({\uparrow}v)\le n$, i.e.\ $\maxd(v)\le n-1$.
 
 For the second statement, the reading word of $R$ is (word of row $1$)$\cdot$(word of rows $\ge2$), which is reduced,
-so $w=c\cdot{\uparrow}w_{\trim R}$ with lengths adding, where $c$ is the permutation of row $1$; and $w\downvar{1}w_{\trim R}$
-by the proof of Theorem 4.1. Row $n-1$ of $\trim R$ is row $n$ of $R$, which is empty.
-The last statement follows from Lemmas 4.1.2 and 4.1.3, which give $w=c\cdot{\uparrow}v$ with lengths adding for every $v\in P_1(w)$.
+so $w=c\cdot{\uparrow}\wof{\trm R}$ with lengths adding, where $c$ is the permutation of row $1$; and $w\downvar{1}\wof{\trm R}$
+by the proof of Theorem~\ref{theorem:modactrc}. Row $n-1$ of $\trm R$ is row $n$ of $R$, which is empty.
+The last statement follows from Lemmas~\ref{lemma:d1desc} and~\ref{lemma:factor}, which give $w=c\cdot{\uparrow}v$ with lengths adding for every $v\in P_1(w)$.
 \end{proof}
 
 
@@ -1456,7 +1470,7 @@ w''(i)=z,\qquad w''(i')=\eta .
 
 \emph{Step 2: what a $1$-chain looks like.}
 Fix $M$ with $w',w''\in S_M$ (the relation $\downvar{1}$ does not depend on this choice).
-Suppose $y\in S_M$ and $y\downvar{1}u'$, and put $Y=\varphi_{1,M}(u')$. By Definitions 2.1.1 and 2.1.3 there are
+Suppose $y\in S_M$ and $y\downvar{1}u'$, and put $Y=\varphi_{1,M}(u')$. By Definitions~\ref{definition:pieri} and~\ref{definition:polysequence} there are
 $y=Y_0,Y_1,\dots,Y_q=Y$ with $Y_t=Y_{t-1}t_{1b_t}$ and $\ell(Y_t)=\ell(Y_{t-1})+1$. Put $x_t=Y_t(1)$, so $x_0<x_1<\dots<x_q$.
 A position that has been used holds a value smaller than the current value in position $1$, so it is never used again. Consequently:
 \begin{enumerate}
@@ -1500,7 +1514,7 @@ and the right side is at most $1$ by Lemma~\ref{L:disjoint}.
 
 \begin{lemma} \label{lemma:zero_injective}
 Let $w$ be a permutation with last descent at most $n$. Let $\mathcal{RC}(w,n)^0$ be the set of bounded RC graphs $R$ with $\hr(R) = n$ such that $\wof{R}=w$ and row $n$ is empty. Then
-$$\zeromap:\mathcal{RC}(w, n)^{0}\to \mathcal{RC}(n-1)$$
+$$\zeromap:\mathcal{RC}(w, n)^{0}\to \mathcal{RC}_{n-1}$$
 is injective.
 \end{lemma}
 \begin{proof}
@@ -1510,34 +1524,33 @@ is injective.
 % $$\zeromap(\trm(R)) = \zeromap(\trm(R'))$$
 % hence $R$ and $R'$ agree on all rows except possibly row $1$ by the inductive hypothesis. Since $\wof{R} = \wof{R'}$, it follows that $R = R'$ from Theorem \ref{theorem:modactrc}, establishing injectivity.
 Induction on $n$. For $n=2$: an element of $\RC(w,2)^0$ is a single row, and a single row is determined by its permutation
-(Theorem 4.1 applied to the empty graph), so $\RC(w,2)^0$ has at most one element.
+(Theorem~\ref{theorem:modactrc} applied to the empty graph), so $\RC(w,2)^0$ has at most one element.
 
-Let $n\ge3$ and assume the statement for $n-1$ \emph{and every permutation}. Let $R,R'\in\RC(w,n)_0$ with $Z(R)=Z(R')=:S$.
-Put $T=\trim R$, $T'=\trim R'$, $v=w_T$, $v'=w_{T'}$.
+Let $n\ge3$ and assume the statement for $n-1$ \emph{and every permutation}. Let $R,R'\in\RC(w,n)^0$ with $\zeromap(R)=\zeromap(R')=:S$.
+Put $T=\trm R$, $T'=\trm R'$, $v=\wof{T}$, $v'=\wof{T'}$.
 \begin{enumerate}
-\item By Lemma~\ref{L:trim}, $T\in\RC(v,n-1)_0$ and $T'\in\RC(v',n-1)_0$ with $v,v'\in P_1(w)$. So $Z(T)$, $Z(T')$ are defined and
-Lemma 4.3.5 applies: $Z(T)=\trim S=Z(T')$.
-\item Let $u'=w_{\trim S}$. By Lemma 4.3.4, $v\downvar{n-1}u'$ and $v'\downvar{n-1}u'$; by Lemma 4.3.3, $|Z(T)|=|T|$ and $|Z(T')|=|T'|$,
+\item By Lemma~\ref{L:trim}, $T\in\RC(v,n-1)^0$ and $T'\in\RC(v',n-1)^0$ with $v,v'\in P_1(w)$. So $\zeromap(T)$, $\zeromap(T')$ are defined and
+Lemma~\ref{lemma:ztrim} applies: $\zeromap(T)=\trm S=\zeromap(T')$.
+\item Let $u'=\wof{\trm S}$. By Lemma~\ref{lemma:zerotransition}, $v\downvar{n-1}u'$ and $v'\downvar{n-1}u'$; by Lemma~\ref{lemma:zeroweight}, $\wtt(\zeromap(T))=\wtt(T)$ and $\wtt(\zeromap(T'))=\wtt(T')$,
 so $\ell(u')=\ell(v)=\ell(v')$. Thus $u'\in T_{n-1}(v)\cap T_{n-1}(v')$.
-\item By Lemma~\ref{L:unique}, $v=v'$. \emph{(This is the step missing from the printed proof.)}
-\item Now $T,T'\in\RC(v,n-1)_0$ with $Z(T)=Z(T')$, so $T=T'$ by the inductive hypothesis.
-\item By Theorem 4.1, $R=\mathrm{row}_1(Q_1(v,w))\cup{\uparrow}T=R'$.\qedhere
+\item By Lemma~\ref{L:unique}, $v=v'$.
+\item Now $T,T'\in\RC(v,n-1)^0$ with $\zeromap(T)=\zeromap(T')$, so $T=T'$ by the inductive hypothesis.
+\item By Theorem~\ref{theorem:modactrc}, $R=\mathrm{row}_1(Q_1(v,w))\cup{\uparrow}T=R'$.\qedhere
 \end{enumerate}
-
 \end{proof}
 
 \begin{proof}[Proof of Theorem \ref{theorem:zero_bijection}]
 By the previous lemma, it suffices to show that $\zeromap$ is surjective. We have by the transition formula that if $\maxd(w)\leq n$, then
 $$\sch_w(x_1,\ldots,x_{n-1},0) = \sum_{\substack{w\downvar{n} w'\\\ell(w)=\ell(w')}}\sch_{w'}(x_1,\ldots,x_{n-1})$$
-Note that this sum is without multiplicity. The right hand side is equal to
+Note that this sum is without multiplicity, by Lemma~\ref{L:leaves}. The right hand side is equal to
 $$\sum_{\substack{w\downvar{n} w'\\\ell(w)=\ell(w')}}\sum_{R'\in \RC_{n-1}(w')}x^{\wtt(R')}$$
 and the left hand side is equal to
 $$\sum_{R\in \mathcal{RC}(w, n)^0}x^{\wtt(R)}$$
 since the only RC graphs that contribute to the left hand side are those with row $n$ empty. This implies that
-$$|\RC_n^0(w)| = \sum_{\substack{w\downvar{n} w'\\\ell(w)=\ell(w')}}|\RC_{n-1}(w')|$$
+$$|\RC(w,n)^0| = \sum_{\substack{w\downvar{n} w'\\\ell(w)=\ell(w')}}|\RC_{n-1}(w')|$$
 Now, the set 
-$$\{\zeromap(R) \mid R\in \mathcal{RC}_n(w)^0\}$$
-has the same cardinality as $\mathcal{RC}_n(w)^0$ by injectivity (Lemma \ref{lemma:zero_injective}), and is a subset of $\bigcup_{w\downvar{n} w'}\mathcal{RC}_{n-1}(w')$. Since the right hand side has the same cardinality as $\mathcal{RC}_n(w)^0$, we conclude that $\zeromap$ is surjective, as desired.
+$$\{\zeromap(R) \mid R\in \mathcal{RC}(w,n)^0\}$$
+has the same cardinality as $\mathcal{RC}(w,n)^0$ by injectivity (Lemma \ref{lemma:zero_injective}), and is a subset of $\bigcup_{w\downvar{n} w',\ \ell(w')=\ell(w)}\mathcal{RC}_{n-1}(w')$ by Lemmas~\ref{lemma:zerotransition} and~\ref{lemma:zeroweight}. Since the right hand side has the same cardinality as $\mathcal{RC}(w,n)^0$, we conclude that $\zeromap$ is surjective, as desired.
 \end{proof}
 
 
@@ -1554,6 +1567,27 @@ We may extend $\zeromap$ to an endomorphism $\BRC\to\BRC$ by defining $\zeromap(
 
 \subsection{Definition of the ring product}\label{section:ringproduct}
 
+We first make the maps $\trm^p$ and $\clp^p$ of the introduction precise. Throughout, $\zeromap^k$ denotes the $k$-fold iterate of $\zeromap$, extended to $\BRC$ as above by declaring $\zeromap(R)=0$ when the last row of $R$ is nonempty. For $a\geq 0$ write $\mathtt{row}(a)=\{(1,1),\ldots,(1,a)\}$ for the bounded RC graph of height $1$ with reading word $s_a s_{a-1}\cdots s_1$.
+
+\begin{lemma}[The last row is determined by its weight]\label{lemma:lastrow}
+Let $R$ be a bounded RC graph with $\hr(R)=n\geq 1$ and let $a=\wtt_n(R)$. Then row $n$ of $R$ is $\{(n,1),\ldots,(n,a)\}$, i.e.\ its word is $s_{n+a-1}s_{n+a-2}\cdots s_n$. In particular $\mathtt{row}(a)$ is the unique bounded RC graph of height $1$ with $a$ crossings, and $R$ is determined by $R_{\leq n-1}$ together with $\wtt_n(R)$.
+\end{lemma}
+\begin{proof}
+By Lemma~\ref{L:trim} applied $n-1$ times, $\trm^{n-1}(R)$ is a bounded RC graph of height $1$; its underlying set is $\{(1,j):(n,j)\in R\}$, so it suffices to treat $n=1$. Let $R$ have height $1$ with crossings in columns $j_1>j_2>\cdots>j_a$. Its reading word $s_{j_1}s_{j_2}\cdots s_{j_a}$ is reduced, and $w=\wof{R}$ satisfies $\maxd(w)\leq 1$, so $w(2)<w(3)<\cdots$ and $w$ has code $(a,0,0,\ldots)$, i.e.\ $w=s_a s_{a-1}\cdots s_1$. This permutation is a cycle with a unique reduced word, so $j_k=a+1-k$ for all $k$.
+\end{proof}
+
+\begin{definition}\label{definition:cliptrim}
+Let $R$ be a bounded RC graph with $\hr(R)=n$ and let $0\leq p\leq n$. For $0\leq k\leq n$ write $R_{\leq k}=\{(i,j)\in R: i\leq k\}$.
+\begin{enumerate}
+\item $\trm^p(R)=\trm(\trm(\cdots\trm(R)))$ ($p$ times) is the bounded RC graph of height $n-p$ with underlying set $\{(i-p,j):(i,j)\in R,\ i>p\}$. (Each single trim is again a bounded RC graph by Lemma~\ref{L:trim}.)
+\item Suppose $n\geq 1$. Let $h=\max\bigl(n-1,\maxd(\wof{R_{\leq n-1}})\bigr)$ and regard $R_{\leq n-1}$ as a bounded RC graph of height $h$; its rows $n,\ldots,h$ are empty. The \emph{one-row clip} of $R$ is
+$$\clp^{n-1}(R)=\zeromap^{\,h-n+1}(R_{\leq n-1})\in\BRC_{n-1}\text{.}$$
+\item Define $\clp^p(R)$ recursively by $\clp^n(R)=R$ and $\clp^p(R)=\clp^p\bigl(\clp^{n-1}(R)\bigr)$ for $p<n$; that is, $\clp^p(R)$ is the result of $n-p$ successive one-row clips.
+\end{enumerate}
+\end{definition}
+
+For the one-row clip to be a single bounded RC graph (rather than $0$) the last row must be empty at every intermediate step. This holds because $\zeromap$ preserves weight vectors (Lemma~\ref{lemma:zeroweight}): if $R'$ has height $h$ and rows $n,\ldots,h$ empty, then $\zeromap(R')$ has height $h-1$ and the same weight, so its rows $n,\ldots,h-1$ are empty. Consequently $\clp^p(R)$ is a bounded RC graph of height $p$ with $\wtt(\clp^p(R))=(\wtt_1(R),\ldots,\wtt_p(R))$. In particular $\clp^{n-1}(R)=R_{\leq n-1}$ whenever $\maxd(\wof{R_{\leq n-1}})\leq n-1$; $\clp^0(R)=\emptyset$ (the empty RC graph of height $0$); and $\clp^1(R)=\mathtt{row}(\wtt_1(R))$ by Lemma~\ref{lemma:lastrow}.
+
 \begin{definition}\label{definition:ringproduct}
 Suppose we have two bounded RC graphs $R_1$ with $\hr(R_1)=m$ and $R_2$ with $\hr(R_2)=n$. The product of these is defined by
 $$R_1\sqcupplus R_2 = \sum_{\substack{\clp^m(R')=R_1\\\trm^m(R')=R_2}}R'$$  
@@ -1567,7 +1601,7 @@ Let $R$ be a bounded RC graph with $\hr(R)=n$, and let $0\leq p\leq p+q\leq n$. 
 $$\clp^p(\clp^{p+q}(R))=\clp^p(R).$$
 \end{lemma}
 \begin{proof}
-By definition, $\clp^k(R')$ is computed by iterating the row-zeroing map $\zeromap$ on the bottom row, one row at a time, until the height drops to $k$. Set $r=n-(p+q)$, so that $\clp^{p+q}(R)$ is obtained from $R$ by $r$ successive applications of $\zeromap$ to the bottom row, and $\clp^p(R)$ is obtained from $R$ by $r+q$ such applications. The first $r$ applications of $\zeromap$ in the computation of $\clp^p(R)$ produce exactly $\clp^{p+q}(R)$; the remaining $q$ applications then produce $\clp^p(\clp^{p+q}(R))$. Hence the two compositions agree.
+Both sides are the composite of $n-p$ one-row clips applied to $R$ (Definition~\ref{definition:cliptrim}(3)).
 \end{proof}
 
 \begin{lemma}[Commutativity of $\clp$ and $\trm$] \label{lemma:clptrm}
@@ -1575,13 +1609,50 @@ Let $R$ be a bounded RC graph with $\hr(R)=p+q+r$. Then
 $$\trm^p(\clp^{p+q}(R))=\clp^q(\trm^p(R)).$$
 \end{lemma}
 \begin{proof}
-Both sides have height $q$. Lemma \ref{lemma:ztrim} asserts $\zeromap(\trm(R'))=\trm(\zeromap(R'))$ for any $R'$ whose last row is empty. Since $\clp^{p+q}$ on a graph of height $p+q+r$ and $\clp^q$ on a graph of height $q+r$ are both equal to the $r$-fold iterate of $\zeromap$ on the bottom row (cf.\ Lemma \ref{lemma:clpfunc}), iterating Lemma \ref{lemma:ztrim} $r$ times gives
-$$\trm^p(\clp^{p+q}(R))=\trm^p(\zeromap^r(R))=\zeromap^r(\trm^p(R))=\clp^q(\trm^p(R)),$$
+Both sides have height $q$. Since $\trm^p$ is a composite of single trims and $\clp^{p+q}$, $\clp^q$ are composites of one-row clips, it suffices to show that a single trim commutes with a one-row clip: for $R$ of height $n\geq 2$,
+$$\trm(\clp^{n-1}(R))=\clp^{n-2}(\trm(R))\text{.}$$
+Let $h=\max(n-1,\maxd(\wof{R_{\leq n-1}}))$, so $\clp^{n-1}(R)=\zeromap^{h-n+1}(R_{\leq n-1})$ with $R_{\leq n-1}$ at height $h$. Then $\trm(R_{\leq n-1})=(\trm R)_{\leq n-2}$ at height $h-1$, and $\maxd(\wof{\trm(R_{\leq n-1})})\leq h-1$ by Lemma~\ref{L:trim}. Set $h'=\max(n-2,\maxd(\wof{(\trm R)_{\leq n-2}}))\leq h-1$, so $\clp^{n-2}(\trm R)=\zeromap^{h'-n+2}((\trm R)_{\leq n-2})$ at height $h'$. Since $\zeromap$ acts on a graph whose permutation has last descent below its height by deleting the empty last row, $\zeromap^{h-1-h'}$ carries $(\trm R)_{\leq n-2}$ at height $h-1$ to the same graph at height $h'$, whence $\clp^{n-2}(\trm R)=\zeromap^{h-n+1}(\trm(R_{\leq n-1}))$. Lemma \ref{lemma:ztrim} gives $\trm(\zeromap(R'))=\zeromap(\trm(R'))$ for any $R'$ with empty last row, and the last row stays empty throughout by weight preservation, so iterating $h-n+1$ times,
+$$\trm(\clp^{n-1}(R))=\trm(\zeromap^{h-n+1}(R_{\leq n-1}))=\zeromap^{h-n+1}(\trm(R_{\leq n-1}))=\clp^{n-2}(\trm(R))\text{,}$$
 as required.
 \end{proof}
 
+The one-row clip erases the last row of $R$ and then rewrites the remaining rows by $\zeromap$, so a priori $\clp^p(R)$ depends on all of $R_{\leq n-1}$, not only on $R_{\leq p}$. In fact the intermediate rows are irrelevant. To state this, define for a bounded RC graph $X$ with $\hr(X)\geq p$
+$$D^p(X)=\zeromap^{\,h_X-p}(X_{\leq p}),\qquad h_X=\max\bigl(p,\maxd(\wof{X_{\leq p}})\bigr)\text{,}$$
+where $X_{\leq p}$ is regarded as a bounded RC graph of height $h_X$. By the weight-preservation argument following Definition~\ref{definition:cliptrim}, $D^p(X)$ is a bounded RC graph of height $p$ with $\wtt(D^p X)=\wtt(X)_{\leq p}$; moreover $D^p(X)=D^p(X_{\leq k})$ for every $k\geq p$, and $D^p(X)=\zeromap^{\,N-p}(X_{\leq p})$ for every $N\geq h_X$, since $\zeromap$ deletes the empty last row whenever the height exceeds $\maxd$.
+
+\begin{lemma}\label{lemma:dtrim}
+Let $X$ be a bounded RC graph with $\hr(X)\geq p\geq 1$. Then $\trm(D^p(X))=D^{p-1}(\trm X)$.
+\end{lemma}
+\begin{proof}
+Let $h=h_X$. Iterating Lemma~\ref{lemma:ztrim} (the last row stays empty at each step by weight preservation),
+$$\trm(D^p(X))=\trm\bigl(\zeromap^{h-p}(X_{\leq p})\bigr)=\zeromap^{h-p}\bigl(\trm(X_{\leq p})\bigr)\text{,}$$
+and $\trm(X_{\leq p})=(\trm X)_{\leq p-1}$ regarded at height $h-1$, which is bounded by Lemma~\ref{L:trim}. Hence $h-1\geq h_{\trm X}$ and the right side is $D^{p-1}(\trm X)$.
+\end{proof}
+
+\begin{lemma}[Locality of $\clp^p$]\label{lemma:cliplocal}
+Let $R$ be a bounded RC graph with $\hr(R)=n$ and let $0\leq p\leq n$. Then
+$$\clp^p(R)=D^p(R)=\zeromap^{\,h_R-p}(R_{\leq p})\text{.}$$
+In particular $\clp^p(R)$ depends only on the top $p$ rows of $R$.
+\end{lemma}
+\begin{proof}
+We show $\clp^p=D^p$ on $\RC_n$ by induction on $n-p$, the case $n=p$ being trivial. For $n>p$, $\clp^p(R)=\clp^p(\clp^{n-1}R)=D^p(\clp^{n-1}R)$ by induction, and $\clp^{n-1}R=\zeromap^{h-n+1}(R_{\leq n-1})$ with $D^p(R)=D^p(R_{\leq n-1})$. It therefore suffices to prove
+\begin{equation}\label{eq:clpzero}
+D^p(\zeromap(Y))=D^p(Y)
+\end{equation}
+for every bounded RC graph $Y$ of height $m>p$ whose last row is empty. If $\maxd(\wof Y)<m$, then $\zeromap(Y)$ is $Y$ with its last row deleted, and \eqref{eq:clpzero} is clear. If $p\leq 1$, both sides of \eqref{eq:clpzero} are determined by their weight $(\wtt_1(Y),\ldots,\wtt_p(Y))$ (Lemmas~\ref{lemma:zeroweight} and~\ref{lemma:lastrow}).
+
+Suppose $p\geq 2$ and $\maxd(\wof Y)=m$, and assume \eqref{eq:clpzero} for $p-1$. By Lemmas~\ref{lemma:dtrim} and~\ref{lemma:ztrim},
+$$\trm\bigl(D^p(\zeromap Y)\bigr)=D^{p-1}(\trm\,\zeromap Y)=D^{p-1}(\zeromap\,\trm Y)=D^{p-1}(\trm Y)=\trm\bigl(D^p(Y)\bigr)\text{,}$$
+where the third equality is \eqref{eq:clpzero} for $p-1$ applied to $\trm Y$ (or the trivial case if $\maxd(\wof{\trm Y})<m-1$). Thus rows $2,\ldots,p$ of the two sides of \eqref{eq:clpzero} coincide. A bounded RC graph $X$ is determined by $\trm X$ together with $\wof X$: the word of row $1$ is the unique strictly decreasing reduced word of $\wof X\cdot({\uparrow}\wof{\trm X})^{-1}$. Consequently \eqref{eq:clpzero} is equivalent to the equality of permutations
+\begin{equation}\label{eq:clpperm}
+\wof{D^p(\zeromap Y)}=\wof{D^p(Y)}\text{.}
+\end{equation}
+
+\textbf{[Identity \eqref{eq:clpperm} for $\maxd(\wof Y)=m$, $p\geq 2$ remains to be written. It has been verified by computer for all bounded RC graphs of height at most $5$ and length at most $5$. Two reductions: (a) it suffices to treat $Y$ with rows $p+2,\ldots,m$ empty, since $D^{p}\circ D^{p+1}=D^{p}$ at every level implies $D^p\circ D^{n}=D^p$ by induction on $n-p$; (b) by Proposition~\ref{proposition:zerocrystal}, $\zeromap$ is a composite of Little bumps at roots $(m',m'+1)$ with $m'>p$, and \eqref{eq:clpzero} is equivalent to the statement that $D^p(T)$ is unchanged by any Little bump of $T\in\RC_{\leq p}$ at an inversion $(a,b)$ with $a>p$ (verified for length $\leq 7$), i.e.\ to the confluence of the rewriting system on $\RC_{\leq p}$ generated by such bumps. Note that the one-step statement ``erasing rows $p+1,\ldots,m$ commutes with $\zeromap$'' is false, and $\wof{D^p(Y)}$ is not a function of $\wof{Y_{\leq p}}$ and $\wtt(Y)$ alone; only the fully iterated identity holds.]}
+\end{proof}
+
 \begin{theorem}
-	 The product $\sqcupplus$ is associative and $\BRC$ is a ring when equipped with $\sqcupplus$.%, and $\Xi:\BRC\to \dcoma$ and $\omega:\BRC\to \dcoma$ are homomorphisms of rings.
+	 The product $\sqcupplus$ is associative and $\BRC$ is a ring when equipped with $\sqcupplus$.
 \end{theorem}
 \begin{proof}
 Let $R_1,R_2,R_3$ be bounded RC graphs of heights $p,q,r$ respectively, and let $R$ be a bounded RC graph with $\hr(R)=p+q+r$. We claim that $R$ appears as a term in $(R_1\sqcupplus R_2)\sqcupplus R_3$ if and only if it appears as a term in $R_1\sqcupplus(R_2\sqcupplus R_3)$, and in both cases with multiplicity $1$. Unwinding the definition of $\sqcupplus$ in each bracketing yields the following conditions on $R$:
@@ -2439,70 +2510,23 @@ We compute the product of two bounded RC graphs $(R_1, 2)\in\BRC(2413,2)$ and $(
 % 0 & \text{otherwise}\end{cases}$$
 \subsection{Proof of the Littlewood-Richardson rule for the dual Schubert basis}
 
+We prove Theorem~\ref{theorem:LR} by comparing two expansions of $\sch_w(x_1,\ldots,x_{p+q})$: the monomial expansion over $\RC_{p+q}(w)$ (Corollary~\ref{corollary:evschub}) and the branching expansion \eqref{eq:branching}. The bridge is the following description of the fibers of $\clp^p$.
 
-\begin{definition}
-Define a map $\Xi:\BRC\to \dcoma$ by
-$$\Xi(R) = \dsch_{\wof{R}}^{\hr(R)}$$
-and $\omega:\BRC\to\dcoma$ by
-$$\omega(R) = [\wtt(R)]$$
+For a permutation $u$ and $p\geq 0$, let $h=\max(p,\maxd(u))$ and let $\RC_{\leq p}(u)\subseteq\RC_h(u)$ be the set of RC graphs of $u$ all of whose crossings lie in rows $1,\ldots,p$. For $k\geq 1$ and a permutation $z$ with $\maxd(z)\leq k$ recall $T_k(z)=\{z':z\downvar{k}z',\ \ell(z')=\ell(z)\}$; by \eqref{E:Tn} and linear independence of Schubert polynomials, $T_k(z)=\{z\}$ when $\maxd(z)<k$. For $u'$ with $\maxd(u')\leq p$ let $N_p(u,u')$ be the number of chains
+$$u=u_h,\quad u_{h-1}\in T_h(u_h),\quad u_{h-2}\in T_{h-1}(u_{h-1}),\quad\ldots,\quad u_p\in T_{p+1}(u_{p+1}),\qquad u_p=u'\text{,}$$
+so that $N_p(u,u')=\delta_{u,u'}$ when $h=p$.
 
-Let $\mathcal{R}$  be the subring of $\BRC$ generated by the single-row RC graphs $\mathtt{row}(i)$ for $i\geq 0$. Let $a$ be a sequence of elements of a ring indexed by the nonnegative integers. For a permutation $w$ and an integer $n\geq \maxd(w)$, define a function $\dsch_w^n(a)$ by
-$$\dsch_w^n(a) = \sum_{\alpha} d_{\alpha, w}^n a_{\alpha_1} \cdots a_{\alpha_n}$$
-where the sum is over all weak compositions $\alpha$ of length $n$, and $d_{\alpha, w}^n$ is the coefficient of $\alpha$ in $\dsch_w^n\in\dcoma$.
-\end{definition}
-
-\begin{lemma} \label{lemma:schubertrow}
-We have that the elements
-$$\dsch_w^n(\mathtt{row})$$
-for integers $n\geq 0$ and $w$ that ranges over all permutations in $S_\infty$ with $n\geq \maxd(w)$ form a $\mathbb{Z}$-basis of $\mathcal{R}$, and $\omega:\mathcal{R}\to \dcoma$ is an isomorphism of graded rings.
+\begin{lemma}\label{lemma:clipfibers}
+Let $u$, $p$, $h$ be as above. For every $u'$ with $\maxd(u')\leq p$ and every $U\in\RC_p(u')$,
+$$\#\{T\in\RC_{\leq p}(u):\zeromap^{h-p}(T)=U\}=N_p(u,u')\text{.}$$
+Consequently
+$$\sum_{T\in\RC_{\leq p}(u)}x^{\wtt(T)}=\sch_u(x_1,\ldots,x_p,0,\ldots,0)=\sum_{u'}N_p(u,u')\,\sch_{u'}(x_1,\ldots,x_p)\text{.}$$
 \end{lemma}
 \begin{proof}
-First, $\omega:\BRC\to\dcoma$ is a ring homomorphism because
-$$
-\omega(R_1\sqcupplus R_2)=\omega(R_1)\sqcupplus\omega(R_2),
-$$
-which follows from the weight concatenation property of $\sqcupplus$ (equivalently, from weight preservation under $\clp$ and $\trm$ in Definition~\ref{definition:ringproduct}). Restricting to $\mathcal{R}$ gives a graded ring map $\omega|_{\mathcal{R}}:\mathcal{R}\to\dcoma$.
-
-Since $\omega(\mathtt{row}(i))=[i]$ for all $i\ge 0$, the image of $\omega|_{\mathcal{R}}$ contains the free generators $[i]$ of $\dcoma$, hence $\omega|_{\mathcal{R}}$ is surjective. Conversely, by freeness of $\dcoma$, there is a unique graded ring homomorphism
-$$
-\iota:\dcoma\to\mathcal{R},\qquad \iota([i])=\mathtt{row}(i).
-$$
-Then $(\omega|_{\mathcal{R}})\circ\iota=\mathrm{id}_{\dcoma}$, so $\omega|_{\mathcal{R}}$ is also injective. Therefore $\omega:\mathcal{R}\xrightarrow{\sim}\dcoma$ is an isomorphism of graded rings.
-
-Finally, the family $\{\dsch_w^n\}_{n\ge 0,\, n\ge\maxd(w)}$ is a $\mathbb{Z}$-basis of $\dcoma$ by construction, and
-$$
-\omega\bigl(\dsch_w^n(\mathtt{row})\bigr)=\dsch_w^n.
-$$
-Applying the inverse isomorphism $\iota$ shows that $\{\dsch_w^n(\mathtt{row})\}$ is a $\mathbb{Z}$-basis of $\mathcal{R}$.
+Induct on $h-p$; if $h=p$ then $\zeromap^0$ is the identity and $\RC_{\leq p}(u)=\RC_p(u)$. Suppose $h>p$. Every $T\in\RC_{\leq p}(u)$ has empty last row, so by Theorem~\ref{theorem:zero_bijection} and Lemma~\ref{lemma:zeroweight}, $\zeromap$ restricts to a weight-preserving injection from $\RC_{\leq p}(u)$ into $\bigsqcup_{u_1\in T_h(u)}\RC_{h-1}(u_1)$ (the length condition $\ell(u_1)=\ell(u)$ is forced by weight preservation). By weight preservation the image consists of graphs whose rows $p+1,\ldots,h-1$ are empty, and conversely every such graph $T'\in\RC_{h-1}(u_1)$ is $\zeromap(T)$ for a unique $T\in\RC_h(u)^0$ by Theorem~\ref{theorem:zero_bijection}, and this $T$ has rows $p+1,\ldots,h$ empty by weight preservation, so $T\in\RC_{\leq p}(u)$. Thus $\zeromap$ is a bijection from $\RC_{\leq p}(u)$ onto the set of $T'\in\bigsqcup_{u_1\in T_h(u)}\RC_{h-1}(u_1)$ with rows $p+1,\ldots,h-1$ empty. For such $T'$ with $\wof{T'}=u_1$, put $h_1=\max(p,\maxd(u_1))\leq h-1$; the first $h-1-h_1$ applications of $\zeromap$ to $T'$ delete empty last rows (Algorithm~\ref{algorithm:zero}), so $\zeromap^{h-1-p}(T')=\zeromap^{h_1-p}(T')$ with $T'$ regarded as an element of $\RC_{\leq p}(u_1)$. Hence
+$$\#\{T\in\RC_{\leq p}(u):\zeromap^{h-p}(T)=U\}=\sum_{u_1\in T_h(u)}\#\{T'\in\RC_{\leq p}(u_1):\zeromap^{h_1-p}(T')=U\}=\sum_{u_1\in T_h(u)}N_p(u_1,u')=N_p(u,u')$$
+by induction. For the second statement, Corollary~\ref{corollary:evschub} gives $\sum_{T\in\RC_h(u)}x^{\wtt(T)}=\sch_u(x_1,\ldots,x_h)$, and setting $x_{p+1}=\cdots=x_h=0$ kills exactly the terms with a crossing in rows $p+1,\ldots,h$; this is the first equality. For the second, sum the fiber count over $U\in\RC_p(u')$ and all $u'$, using $\wtt(\zeromap^{h-p}(T))=\wtt(T)$ and Corollary~\ref{corollary:evschub} for $\RC_p(u')$.
 \end{proof}
-
-\begin{definition}\label{definition:omega}
-Let $\Omega$ be the $\mathbb{Z}$-submodule of $\BRC$ generated by the RC graphs $R_1-R_2$ such that $\wof{R_1}=\wof{R_2}$ and $\hr(R_1)=\hr(R_2)$.
-\end{definition}
-
-\begin{lemma}
-$\Omega$ is a two-sided ideal of $\BRC$.
-\end{lemma}
-\begin{proof}
-  The fact that $\Omega$ is a left ideal follows from the fact that a product $R\sqcupplus R_1$ is uniquely determined by $R\sqcupplus \mathrm{empty}(\hr(R_1))$ and $R_1$, and the contribution of $R_1$ is precisely that it replaces the last $\hr(R_1)$ rows of each term. In particular, precisely the same $\hr(R)$ occur in precisely the same number of terms, to which $\shup^{\hr(R)}R_1$ is added as the last $\hr(R_1)$ rows. It follows that $R\sqcupplus R_1 - R\sqcupplus R_2$ is a linear combination of terms of the form $R_1' - R_2'$ such that $\hr(R_1') = \hr(R_2')$ and $\wof{R_1'} = \wof{R_2'}$, and $\Omega$ is a left ideal.
-
-  The fact that $\Omega$ is a right ideal follows from the fact that a product $R_1\sqcupplus R$ is uniquely determined by $R_1\sqcupplus \mathrm{empty}(\hr(R))$ and $R$, and the contribution of $R$ is precisely that it replaces the last $\hr(R)$ rows of each term. In particular, precisely the same $\hr(R)$ occur in precisely the same number of terms, to which $\shup^{\hr(R)}R$ is added as the last $\hr(R)$ rows. It follows that $R_1\sqcupplus R - R_2\sqcupplus R$ is a linear combination of terms of the form $R_1' - R_2'$ such that $\hr(R_1') = \hr(R_2')$ and $\wof{R_1'} = \wof{R_2'}$, and $\Omega$ is a right ideal.
-\end{proof}
-
-\begin{theorem} \label{theorem:semidirect}
-  We have that $\alpha:\BRC\to \dcoma$ is a surjective homomorphism of rings with kernel $\Omega$, and the homomorphism $\iota:\dcoma\to\BRC$ sending $[i]\mapsto \mathtt{row}(i)$ is a right inverse to $\alpha$. In particular, $\BRC\cong \dcoma\ltimes \Omega$ as rings.
-\end{theorem}
-\begin{proof}
-  We have an exact sequence
-$$0\to \Omega\to \BRC\to \dcoma\to 0$$
-where the map $\BRC\to \dcoma$ is $\alpha$. We have a homomorphism $\iota:\dcoma\to \BRC$ sending $[i]\mapsto \mathtt{row}(i)$ inducing an isomorphism on $\mathcal{R}$ by Lemma \ref{lemma:schubertrow}, and the composition $\dcoma\to \BRC\to \dcoma$ is the identity since $\alpha(\mathtt{row}(i)) = [i]$. Since $\Omega$ is a two-sided ideal, we can conclude that $\alpha$ is in fact a homomorphism of rings. Since $\BRC = \mathcal{R}\oplus \Omega$ by virtue of the fact that the sequence is split (which is due to the evident section $\iota$), and $\mathcal{R}\cong \dcoma$, we have $\BRC\cong \dcoma\ltimes \Omega$ as rings.
-\end{proof}
-
-% \begin{proposition}
-% Let $[c]$ be a weak composition of length $n$. Then
-% $$[c] = \sum_{\substack{w\in S_\infty\\\maxd(w)\leq n}}\#{R\in \RC_n(w)\mid wtt(R)=c} \dsch_{\wof{R}}^n$$
-% \end{proposition}
-
 
 \begin{definition}
 Given RC graphs $U\in \RC_p(u)$ and $V\in\RC_q(v)$ and a permutation $w$, define
@@ -2510,25 +2534,67 @@ $$d_{U, V}^w = \#\{R\in \RC_{p+q}(w): \clp^p(R)=U,\trm^p(R)=V\}$$
 \end{definition}
 
 \begin{proof}[Proof of Theorem \ref{theorem:LR}]
-Fix $u,v\in S_\infty$ with last descents at most $p,q$ respectively. The element
-$$\dsch_u^p\sqcupplus\dsch_v^q\;\in\;\dcoma_{p+q}$$
-depends only on $u,v,p,q$, so its expansion coefficients $d_{u,v}^w(p,q)$ in the dual Schubert basis are well defined and \emph{a priori} independent of any auxiliary RC-graph choices.
+Fix $u,v\in S_\infty$ with $\maxd(u)\leq p$, $\maxd(v)\leq q$, and fix $U\in\RC_p(u)$, $V\in\RC_q(v)$. By Lemma~\ref{lemma:dualbranch}, $d_{u,v}^w(p,q)=b_{u,v}^w(p,q)$, so we must show $d_{U,V}^w=b_{u,v}^w(p,q)$ for every $w$ with $\maxd(w)\leq p+q$.
 
-Choose any $U\in\RC_p(u)$ and $V\in\RC_q(v)$; such graphs exist because $u$ and $v$ have last descents at most $p$ and $q$. By definition of $\alpha$,
-$$\alpha(U)=\dsch_u^p,\qquad \alpha(V)=\dsch_v^q.$$
-By Theorem \ref{theorem:semidirect}, $\alpha:\BRC\to\dcoma$ is a ring homomorphism, hence
-$$\dsch_u^p\sqcupplus\dsch_v^q\;=\;\alpha(U)\sqcupplus\alpha(V)\;=\;\alpha\bigl(U\sqcupplus V\bigr).$$
-By the definition of $\sqcupplus$ on $\BRC$,
-$$U\sqcupplus V\;=\;\sum_{\substack{R\in\RC_{p+q}\\ \clp^p(R)=U,\ \trm^p(R)=V}} R,$$
-and applying $\alpha$ termwise,
-\begin{equation}\label{eq:LRexpansion}
-\dsch_u^p\sqcupplus\dsch_v^q\;=\;\sum_{\substack{R\in\RC_{p+q}\\ \clp^p(R)=U,\ \trm^p(R)=V}}\dsch_{\wof{R}}^{p+q}.
-\end{equation}
-The dual Schubert polynomials $\{\dsch_w^{p+q}\}_{\maxd(w)\leq p+q}$ are linearly independent in $\dcoma_{p+q}$. Comparing coefficients of $\dsch_w^{p+q}$ in \eqref{eq:LRexpansion} with the defining expansion
-$$\dsch_u^p\sqcupplus\dsch_v^q\;=\;\sum_w d_{u,v}^w(p,q)\,\dsch_w^{p+q}$$
-yields
-$$d_{u,v}^w(p,q)\;=\;d_{U,V}^w\;=\;\#\bigl\{R\in\RC_{p+q}(w):\clp^p(R)=U,\ \trm^p(R)=V\bigr\}.$$
-Since the LHS is independent of the choices of $U,V$, so is the RHS; this gives the theorem and shows in particular that $d_{u,v}^w(p,q)\in\mathbb{Z}_{\geq 0}$.
+Let $R\in\RC_{p+q}(w)$ and write $R=T\cup\shup^pV'$ with $T=R_{\leq p}$ and $V'=\trm^p(R)\in\RC_q$ (Lemma~\ref{L:trim}). Reading rows from top to bottom, the word of $R$ is the word of $T$ followed by the word of $\shup^pV'$, so
+$$w=\wof{T}\cdot\shup^p\wof{V'}\qquad\text{with}\qquad\ell(w)=\ell(\wof T)+\ell(\wof{V'})\text{.}$$
+Thus $\wof{T}=u_{v'}:=w\,(\shup^pv')^{-1}$ where $v'=\wof{V'}$, and $\ell(u_{v'})=\ell(w)-\ell(v')$. Conversely, for any $v'$ with $\maxd(v')\leq q$ and $\ell(w(\shup^pv')^{-1})=\ell(w)-\ell(v')$, any $V'\in\RC_q(v')$, and any $T\in\RC_{\leq p}(u_{v'})$, the union $T\cup\shup^pV'$ is a reduced RC graph of $w$ with $p+q$ rows, hence lies in $\RC_{p+q}(w)$. Finally, by Lemma~\ref{lemma:cliplocal}, $\clp^p(T\cup\shup^pV')=\zeromap^{h-p}(T)$ with $h=\max(p,\maxd(u_{v'}))$.
+
+Applying this with $V'=V$ and Lemma~\ref{lemma:clipfibers},
+$$d_{U,V}^w=\#\{T\in\RC_{\leq p}(u_v):\zeromap^{h-p}(T)=U\}=N_p(u_v,u)$$
+if $\ell(u_v)=\ell(w)-\ell(v)$, and $d_{U,V}^w=0$ otherwise. On the other hand, by Corollary~\ref{corollary:evschub}, the decomposition $R=T\cup\shup^pV'$, and Lemma~\ref{lemma:clipfibers},
+\begin{align*}
+\sch_w(x_1,\ldots,x_{p+q})&=\sum_{R\in\RC_{p+q}(w)}x^{\wtt(R)}
+=\sum_{\substack{v':\ \maxd(v')\leq q\\ \ell(u_{v'})=\ell(w)-\ell(v')}}\ \sum_{V'\in\RC_q(v')}x_{p+1}^{\wtt_1(V')}\cdots x_{p+q}^{\wtt_q(V')}\sum_{T\in\RC_{\leq p}(u_{v'})}x^{\wtt(T)}\\
+&=\sum_{\substack{v':\ \maxd(v')\leq q\\ \ell(u_{v'})=\ell(w)-\ell(v')}}\ \sum_{u'}N_p(u_{v'},u')\,\sch_{u'}(x_1,\ldots,x_p)\,\sch_{v'}(x_{p+1},\ldots,x_{p+q})\text{.}
+\end{align*}
+Comparing with \eqref{eq:branching} and using the linear independence of the products $\sch_{u'}(x_1,\ldots,x_p)\sch_{v'}(x_{p+1},\ldots,x_{p+q})$ gives $b_{u,v}^w(p,q)=N_p(u_v,u)$ when $\ell(u_v)=\ell(w)-\ell(v)$ and $b_{u,v}^w(p,q)=0$ otherwise. Hence $d_{U,V}^w=b_{u,v}^w(p,q)=d_{u,v}^w(p,q)$, which is independent of the choice of $U$ and $V$ and nonnegative.
+\end{proof}
+
+We now record the ring-theoretic consequences.
+
+\begin{definition}
+Recall the map $\alpha:\BRC\to\dcoma$, $\alpha(R)=\dsch_{\wof{R}}^{\hr(R)}$. (The weight map $\omega(R)=[\wtt(R)]$ is additive but not multiplicative: every term of $R_1\sqcupplus R_2$ has weight $\wtt(R_1)\wtt(R_2)$, so $\omega(R_1\sqcupplus R_2)$ is a multiple of $\omega(R_1)\sqcupplus\omega(R_2)$ by the number of terms.) Let $\mathcal{R}$  be the subring of $\BRC$ generated by the single-row RC graphs $\mathtt{row}(i)$ for $i\geq 0$. Let $a$ be a sequence of elements of a ring indexed by the nonnegative integers. For a permutation $w$ and an integer $n\geq \maxd(w)$, define a function $\dsch_w^n(a)$ by
+$$\dsch_w^n(a) = \sum_{\alpha} d_{\alpha, w}^n a_{\alpha_1} \cdots a_{\alpha_n}$$
+where the sum is over all weak compositions $\alpha$ of length $n$, and $d_{\alpha, w}^n$ is the coefficient of $\alpha$ in $\dsch_w^n\in\dcoma$.
+\end{definition}
+
+\begin{lemma} \label{lemma:schubertrow}
+We have that the elements
+$$\dsch_w^n(\mathtt{row})$$
+for integers $n\geq 0$ and $w$ that ranges over all permutations in $S_\infty$ with $n\geq \maxd(w)$ form a $\mathbb{Z}$-basis of $\mathcal{R}$, and $\alpha:\mathcal{R}\to \dcoma$ is an isomorphism of graded rings.
+\end{lemma}
+\begin{proof}
+By Theorem~\ref{theorem:LR}, $\alpha$ is multiplicative: for $R_1\in\RC_p(u)$, $R_2\in\RC_q(v)$,
+$$\alpha(R_1\sqcupplus R_2)=\sum_w d_{R_1,R_2}^w\,\dsch_w^{p+q}=\sum_w d_{u,v}^w(p,q)\,\dsch_w^{p+q}=\dsch_u^p\sqcupplus\dsch_v^q=\alpha(R_1)\sqcupplus\alpha(R_2)\text{.}$$
+Restricting to $\mathcal{R}$ gives a graded ring map $\alpha|_{\mathcal{R}}:\mathcal{R}\to\dcoma$.
+
+Since $\alpha(\mathtt{row}(i))=\dsch^1_{s_i\cdots s_1}=[i]$ for all $i\ge 0$, the image of $\alpha|_{\mathcal{R}}$ contains the free generators $[i]$ of $\dcoma$, hence $\alpha|_{\mathcal{R}}$ is surjective. Conversely, by freeness of $\dcoma$, there is a unique graded ring homomorphism
+$$
+\iota:\dcoma\to\mathcal{R},\qquad \iota([i])=\mathtt{row}(i).
+$$
+Then $(\alpha|_{\mathcal{R}})\circ\iota=\mathrm{id}_{\dcoma}$, so $\alpha|_{\mathcal{R}}$ is also injective. Therefore $\alpha:\mathcal{R}\xrightarrow{\sim}\dcoma$ is an isomorphism of graded rings.
+
+Finally, the family $\{\dsch_w^n\}_{n\ge 0,\, n\ge\maxd(w)}$ is a $\mathbb{Z}$-basis of $\dcoma$ by construction, and $\dsch_w^n(\mathtt{row})=\iota(\dsch_w^n)$, so
+$$
+\alpha\bigl(\dsch_w^n(\mathtt{row})\bigr)=\dsch_w^n.
+$$
+Applying the isomorphism $\iota$ shows that $\{\dsch_w^n(\mathtt{row})\}$ is a $\mathbb{Z}$-basis of $\mathcal{R}$.
+\end{proof}
+
+\begin{definition}\label{definition:omega}
+Let $\Omega$ be the $\mathbb{Z}$-submodule of $\BRC$ generated by the RC graphs $R_1-R_2$ such that $\wof{R_1}=\wof{R_2}$ and $\hr(R_1)=\hr(R_2)$.
+\end{definition}
+
+\begin{theorem} \label{theorem:semidirect}
+  The map $\alpha:\BRC\to \dcoma$ is a surjective homomorphism of rings with kernel $\Omega$; in particular $\Omega$ is a two-sided ideal of $\BRC$. The ring homomorphism $\iota:\dcoma\to\BRC$ sending $[i]\mapsto \mathtt{row}(i)$ is a right inverse to $\alpha$, with image $\mathcal{R}$, and $\BRC=\mathcal{R}\oplus\Omega$. Consequently $\BRC\cong \dcoma\ltimes \Omega$ as rings.
+\end{theorem}
+\begin{proof}
+By Lemma~\ref{lemma:schubertrow} (whose first paragraph is the multiplicativity of $\alpha$), $\alpha$ is a ring homomorphism; it is surjective since every $\dsch_w^n$ is $\alpha(R)$ for any $R\in\RC_n(w)$, and $\RC_n(w)\neq\emptyset$ when $\maxd(w)\leq n$.
+
+The kernel of $\alpha$ is $\Omega$: clearly $\Omega\subseteq\ker\alpha$. Conversely, if $x=\sum_R c_RR\in\ker\alpha$, group the terms by $(\wof{R},\hr(R))$; then $\alpha(x)=\sum_{(w,n)}\bigl(\sum_{R\in\RC_n(w)}c_R\bigr)\dsch_w^n=0$ forces $\sum_{R\in\RC_n(w)}c_R=0$ for each $(w,n)$ by linear independence of the $\dsch_w^n$, and an element $\sum_{R\in\RC_n(w)}c_RR$ with $\sum c_R=0$ lies in $\Omega$. As the kernel of a ring homomorphism, $\Omega$ is a two-sided ideal.
+
+By Lemma~\ref{lemma:schubertrow}, $\iota$ is a ring isomorphism $\dcoma\to\mathcal{R}$ with $\alpha\circ\iota=\mathrm{id}$. The split exact sequence $0\to\Omega\to\BRC\xrightarrow{\alpha}\dcoma\to0$ with section $\iota$ gives $\BRC=\mathcal{R}\oplus\Omega$ as abelian groups, with $\mathcal{R}$ a subring and $\Omega$ a two-sided ideal; this is precisely the statement $\BRC\cong\dcoma\ltimes\Omega$.
 \end{proof}
 
 % Let $R$ be an RC graph with $\wof{R}=w$ and $\hr(R)=n$. Then for any $m\leq n$,
@@ -2570,7 +2636,7 @@ The \emph{weight} of $R$ as an element of the crystal is simply $\wtt(R)$, the r
 \end{definition}
 
 The significance of this elaborate structure is the following.
-\begin{theorem} \label{theorem:keykey}
+\begin{theorem}[{\cite{lascoux1990keys,assaf2018demazure}}] \label{theorem:keykey}
 If $A\in\BRC$ is such that $\mathrm{extwt}(A) = a$, then
 $$\kappa_a = \sum_{R\in\mathrm{Dem}(A)} x^{\wtt(R)}$$
 \end{theorem}
@@ -2696,15 +2762,17 @@ $$\kappa^*_c = \sum_{\substack{R=\mathbb{Y}(R)\\ \mathrm{extwt}(R)=c}} \dsch_{\w
 
 \end{definition}
 
-\begin{lemma}
+\begin{lemma}\label{lemma:thetaideal}
   $\Theta$ is a two-sided ideal of $\BRC$.
 \end{lemma}
 \begin{proof}
-  The fact that $\Theta$ is a left ideal follows from the fact that the products $R\sqcupplus R_1$ and $R\sqcupplus R_2$ have the same first $\hr(R)$ rows, and the rows below are simply shifts of $R_1$ and $R_2$. Since the crystal raising/lowering operators act directly on adjacent rows, the same crystal operators will apply to the rows below, so that $R\sqcupplus R_1$ and $R\sqcupplus R_2$ have the same crystal structure in the trailing rows. In passing to highest weights $\mathbb{Y}(R\sqcupplus R_1)$ and $\mathbb{Y}(R\sqcupplus R_2)$, we may pass through the partial highest weights $R\sqcupplus Y(R_1) = R\sqcupplus Y(R_2)$ by independence of path choice to the highest weight, so that in particular the highest weights of the bijectively corresponding terms of $R\sqcupplus R_1$ and $R\sqcupplus R_2$ are the same.
-  
-  %, so that $R\sqcupplus R_1 - R\sqcupplus R_2$ is a linear combination of terms of the form $R_1' - R_2'$ such that $\mathbb{Y}(R_1') = \mathbb{Y}(R_2')$, and $\Theta$ is a left ideal.
+Let $R_1,R_2$ be bounded RC graphs of height $n$ with $\mathbb{Y}(R_1)=\mathbb{Y}(R_2)$, and let $R$ be a bounded RC graph of height $m$. Since crystal operators preserve the permutation, $\wof{R_1}=\wof{R_2}$.
 
-  To prove that $\Theta$ is a right ideal, the same argument applies, but we must invoke Corollary \ref{corollary:crystaliso} to guarantee that the crystals remain isomorphic as needed.
+\emph{Left ideal.} A bounded RC graph $R'$ of height $m+n$ is a term of $R\sqcupplus R_1$ if and only if $\trm^m(R')=R_1$ and $\clp^m(R')=R$. Writing $R'=T\cup\shup^mR_1$ with $T=R'_{\leq m}$, the second condition depends only on $T$ (Lemma~\ref{lemma:cliplocal}), and $T\cup\shup^mR_1$ is a bounded RC graph if and only if the word of $T$ followed by the word of $\shup^m R_1$ is reduced and the resulting permutation has last descent at most $m+n$; this depends on $R_1$ only through $\wof{R_1}=\wof{R_2}$. Hence $T\cup\shup^mR_1\mapsto T\cup\shup^mR_2$ is a bijection from the terms of $R\sqcupplus R_1$ to those of $R\sqcupplus R_2$. For $i>m$ the operators $e_i$ act on rows $i,i+1$ only, so $e_i(T\cup\shup^mR_1)=T\cup\shup^me_{i-m}(R_1)$, with either side defined if and only if the other is. Applying the raising operators that carry $R_1$ to $\mathbb{Y}(R_1)$ and using that the highest weight of a connected component is unique,
+$$\mathbb{Y}(T\cup\shup^mR_1)=\mathbb{Y}(T\cup\shup^m\mathbb{Y}(R_1))=\mathbb{Y}(T\cup\shup^m\mathbb{Y}(R_2))=\mathbb{Y}(T\cup\shup^mR_2)\text{.}$$
+Thus $R\sqcupplus R_1-R\sqcupplus R_2=\sum_T\bigl((T\cup\shup^mR_1)-(T\cup\shup^mR_2)\bigr)\in\Theta$.
+
+\emph{Right ideal.} Since $R_1$ and $R_2$ lie in the same connected component, it suffices to treat $R_2=e_i(R_1)$ for some $1\leq i\leq n-1$ (the case $R_2=f_i(R_1)$ is symmetric). For $R'$ of height $n+m$ with $\trm^n(R')=R$, the operator $e_i$ ($i\leq n-1$) acts on rows $i,i+1\leq n$, so $\trm^n(e_iR')=R$ when $e_iR'$ is defined, and $\clp^n(e_iR')=e_i(\clp^nR')$ by Corollary~\ref{corollary:crystaliso} applied to each $\zeromap$ step of each one-row clip in Definition~\ref{definition:cliptrim} (erasing a last row of index $>n$ commutes with $e_i$, and $\zeromap$ is a crystal isomorphism onto its image by Propositions~\ref{proposition:zeroequal} and~\ref{proposition:zerocrystal}, so $e_i$ is defined on $\clp^nR'$ if and only if it is defined on $R'$). Hence $e_i$ restricts to a bijection from the terms of $R_1\sqcupplus R$ onto the terms of $e_i(R_1)\sqcupplus R$, and corresponding terms $R'$, $e_i(R')$ have the same highest weight. Thus $R_1\sqcupplus R-R_2\sqcupplus R\in\Theta$.
 \end{proof}
 
 \begin{lemma}
@@ -3060,7 +3128,7 @@ $R_1$ & $R_2$ \\[4pt]
 \label{fig:LRkey_example}
 \end{figure}
 
-Both graphs have permutation $w_c=(1,2,3,5,7,4,10,6,8,9)$. They differ only in their first two rows: $R_1$ has row data $[(6,4),(9,),()]$ in the top three rows, while $R_2$ has $[(9,4),(6,),()]$. Applying $\clp^3$ (retaining only the top $3$ rows and re-indexing) to each yields the same $3$-row graph with extremal weight $a=(0,1,2)$:
+Both graphs have permutation $w_c=(1,2,3,5,7,4,10,6,8,9)$. They differ only in their first two rows: $R_1$ has row data $[(6,4),(9,),()]$ in the top three rows, while $R_2$ has $[(9,4),(6,),()]$. Applying $\clp^3$ (four one-row clips, which here amount to retaining the top $3$ rows and applying $\zeromap$ until the height is $3$; see Lemma~\ref{lemma:cliplocal}) to each yields the same $3$-row graph with extremal weight $a=(0,1,2)$:
 $$\clp^3(R_1)=\clp^3(R_2)=
 \begin{tikzpicture}[scale=0.45, baseline=(current bounding box.center)]
   \draw[lightgray, very thin, opacity=0.3] (5.3,0) -- (0.3,0);
@@ -3481,7 +3549,7 @@ Let $\Sigma$ be the $\mathbb{Z}$-submodule of $\BRC$ generated by the elements $
 $\Sigma$ is a two-sided ideal of $\BRC$.
 \end{lemma}
 \begin{proof}
-That $\Sigma$ is a left ideal follows from the same mechanism used for $\Theta$: in $R\sqcupplus R_1$ and $R\sqcupplus R_2$, the first $\hr(R)$ rows agree, while the trailing rows are shifts of $R_1$ and $R_2$. Since the crystal operators act on adjacent rows, they descend in the same way to the trailing block. The quasi-Yamanouchi map $\QY$ is defined by applying a sequence of crystal raising operators determined by the weight (\cite{assaf2017slide}); hence applying $\QY$ to $R\sqcupplus R_1$ and to $R\sqcupplus R_2$ produces graphs whose trailing rows have a common partial quasi-Yamanouchi reduction $R\sqcupplus \QY(R_1)=R\sqcupplus \QY(R_2)$, and so $\QY(R\sqcupplus R_1)=\QY(R\sqcupplus R_2)$.
+That $\Sigma$ is a left ideal follows from the same mechanism used for $\Theta$ (Lemma~\ref{lemma:thetaideal}): the terms of $R\sqcupplus R_1$ and $R\sqcupplus R_2$ are in bijection $T\cup\shup^mR_1\leftrightarrow T\cup\shup^mR_2$, since $\wof{R_1}=\wof{R_2}$, and the crystal operators $e_i$, $i>\hr(R)$, act on the trailing block exactly as on $R_1$, $R_2$. The quasi-Yamanouchi map $\QY$ is defined by applying a sequence of crystal raising operators determined by the weight (\cite{assaf2017slide}); hence applying $\QY$ to $R\sqcupplus R_1$ and to $R\sqcupplus R_2$ produces graphs whose trailing rows have a common partial quasi-Yamanouchi reduction $R\sqcupplus \QY(R_1)=R\sqcupplus \QY(R_2)$, and so $\QY(R\sqcupplus R_1)=\QY(R\sqcupplus R_2)$.
 
 That $\Sigma$ is a right ideal follows from Corollary \ref{corollary:crystaliso}: multiplication on the right by a fixed $R$ induces an isomorphism of crystal graphs on the relevant subblock, and the $\QY$ images of corresponding terms therefore agree.
 \end{proof}
@@ -3601,8 +3669,8 @@ For the reader's convenience we collect here, in one place, the principal symbol
 \subsubsection*{Row maps on RC graphs}
 \begin{description}
 \item[$\zeromap$] The transition map $\RC_n^0\to\RC_{n-1}$ of Definition~\ref{definition:zeromap}; it realizes the Lascoux--Sch\"utzenberger transition formula on the last row.
-\item[$\trm^p(R)$] ``Truncate'': the RC graph obtained from the last $\hr(R)-p$ rows of $R$ (\S\ref{section:ringproduct}).
-\item[$\clp^p(R)$] ``Clip'': the RC graph in $\RC_p$ obtained from $R$ by an insertion algorithm based on $\zeromap$; the dual partner of $\trm^p$ (\S\ref{section:ringproduct}).
+\item[$\trm^p(R)$] ``Truncate'': the RC graph obtained from the last $\hr(R)-p$ rows of $R$ (Definition~\ref{definition:cliptrim}).
+\item[$\clp^p(R)$] ``Clip'': the RC graph in $\RC_p$ obtained from $R$ by $\hr(R)-p$ one-row clips (erase the last row, then apply $\zeromap$ until the height drops by one); depends only on the top $p$ rows of $R$ (Definition~\ref{definition:cliptrim}, Lemma~\ref{lemma:cliplocal}).
 \item[$\shup^p$] Shift indices up by $p$ (applied to permutations or letters).
 \end{description}
 
