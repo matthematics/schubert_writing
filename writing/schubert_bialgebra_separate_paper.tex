@@ -1580,13 +1580,12 @@ By Lemma~\ref{L:trim} applied $n-1$ times, $\trm^{n-1}(R)$ is a bounded RC graph
 Let $R$ be a bounded RC graph with $\hr(R)=n$ and let $0\leq p\leq n$. For $0\leq k\leq n$ write $R_{\leq k}=\{(i,j)\in R: i\leq k\}$.
 \begin{enumerate}
 \item $\trm^p(R)=\trm(\trm(\cdots\trm(R)))$ ($p$ times) is the bounded RC graph of height $n-p$ with underlying set $\{(i-p,j):(i,j)\in R,\ i>p\}$. (Each single trim is again a bounded RC graph by Lemma~\ref{L:trim}.)
-\item Suppose $n\geq 1$. Let $h=\max\bigl(n-1,\maxd(\wof{R_{\leq n-1}})\bigr)$ and regard $R_{\leq n-1}$ as a bounded RC graph of height $h$; its rows $n,\ldots,h$ are empty. The \emph{one-row clip} of $R$ is
-$$\clp^{n-1}(R)=\zeromap^{\,h-n+1}(R_{\leq n-1})\in\BRC_{n-1}\text{.}$$
-\item Define $\clp^p(R)$ recursively by $\clp^n(R)=R$ and $\clp^p(R)=\clp^p\bigl(\clp^{n-1}(R)\bigr)$ for $p<n$; that is, $\clp^p(R)$ is the result of $n-p$ successive one-row clips.
+\item Let $h=\max\bigl(p,\maxd(\wof{R_{\leq p}})\bigr)$ and regard $R_{\leq p}$ as a bounded RC graph of height $h$; its rows $p+1,\ldots,h$ are empty. Then
+$$\clp^p(R)=\zeromap^{\,h-p}(R_{\leq p})\in\BRC_p\text{.}$$
 \end{enumerate}
 \end{definition}
 
-For the one-row clip to be a single bounded RC graph (rather than $0$) the last row must be empty at every intermediate step. This holds because $\zeromap$ preserves weight vectors (Lemma~\ref{lemma:zeroweight}): if $R'$ has height $h$ and rows $n,\ldots,h$ empty, then $\zeromap(R')$ has height $h-1$ and the same weight, so its rows $n,\ldots,h-1$ are empty. Consequently $\clp^p(R)$ is a bounded RC graph of height $p$ with $\wtt(\clp^p(R))=(\wtt_1(R),\ldots,\wtt_p(R))$. In particular $\clp^{n-1}(R)=R_{\leq n-1}$ whenever $\maxd(\wof{R_{\leq n-1}})\leq n-1$; $\clp^0(R)=\emptyset$ (the empty RC graph of height $0$); and $\clp^1(R)=\mathtt{row}(\wtt_1(R))$ by Lemma~\ref{lemma:lastrow}.
+For $\clp^p(R)$ to be a single bounded RC graph (rather than $0$) the last row must be empty at every intermediate step. This holds because $\zeromap$ preserves weight vectors (Lemma~\ref{lemma:zeroweight}): if $R'$ has height $h'$ and rows $p+1,\ldots,h'$ empty, then $\zeromap(R')$ has height $h'-1$ and the same weight, so its rows $p+1,\ldots,h'-1$ are empty. Consequently $\clp^p(R)$ is a bounded RC graph of height $p$ with $\wtt(\clp^p(R))=(\wtt_1(R),\ldots,\wtt_p(R))$; it depends only on $R_{\leq p}$, and $\clp^p(R)=\zeromap^{\,N-p}(R_{\leq p})$ for every $N\geq h$, since $\zeromap$ deletes the empty last row whenever the height exceeds $\maxd$. In particular $\clp^p(R)=R_{\leq p}$ whenever $\maxd(\wof{R_{\leq p}})\leq p$; $\clp^0(R)=\emptyset$ (the empty RC graph of height $0$); and $\clp^1(R)=\mathtt{row}(\wtt_1(R))$ by Lemma~\ref{lemma:lastrow}. We use the same formula to define $\clp^p(X)$ for any bounded RC graph $X$ of height $\geq p$, so that $\clp^p(X)=\clp^p(X_{\leq k})$ for all $k\geq p$.
 
 \begin{definition}\label{definition:ringproduct}
 Suppose we have two bounded RC graphs $R_1$ with $\hr(R_1)=m$ and $R_2$ with $\hr(R_2)=n$. The product of these is defined by
@@ -1594,72 +1593,98 @@ $$R_1\sqcupplus R_2 = \sum_{\substack{\clp^m(R')=R_1\\\trm^m(R')=R_2}}R'$$
 where $R'$ ranges over bounded RC graphs with $\hr(R')=m+n$.
 \end{definition}
 
-Associativity of $\sqcupplus$ rests on two structural identities relating $\clp^p$ and $\trm^p$: a functoriality of $\clp$ under iteration, and a commutativity of $\clp$ with $\trm$.
-
-\begin{lemma} \label{lemma:clpfunc}
-Let $R$ be a bounded RC graph with $\hr(R)=n$, and let $0\leq p\leq p+q\leq n$. Then
-$$\clp^p(\clp^{p+q}(R))=\clp^p(R).$$
-\end{lemma}
-\begin{proof}
-Both sides are the composite of $n-p$ one-row clips applied to $R$ (Definition~\ref{definition:cliptrim}(3)).
-\end{proof}
+Associativity of $\sqcupplus$ rests on two structural identities relating $\clp^p$ and $\trm^p$: a commutativity of $\clp$ with $\trm$, and a functoriality of $\clp$ under iteration.
 
 \begin{lemma}[Commutativity of $\clp$ and $\trm$] \label{lemma:clptrm}
 Let $R$ be a bounded RC graph with $\hr(R)=p+q+r$. Then
 $$\trm^p(\clp^{p+q}(R))=\clp^q(\trm^p(R)).$$
 \end{lemma}
 \begin{proof}
-Both sides have height $q$. Since $\trm^p$ is a composite of single trims and $\clp^{p+q}$, $\clp^q$ are composites of one-row clips, it suffices to show that a single trim commutes with a one-row clip: for $R$ of height $n\geq 2$,
-$$\trm(\clp^{n-1}(R))=\clp^{n-2}(\trm(R))\text{.}$$
-Let $h=\max(n-1,\maxd(\wof{R_{\leq n-1}}))$, so $\clp^{n-1}(R)=\zeromap^{h-n+1}(R_{\leq n-1})$ with $R_{\leq n-1}$ at height $h$. Then $\trm(R_{\leq n-1})=(\trm R)_{\leq n-2}$ at height $h-1$, and $\maxd(\wof{\trm(R_{\leq n-1})})\leq h-1$ by Lemma~\ref{L:trim}. Set $h'=\max(n-2,\maxd(\wof{(\trm R)_{\leq n-2}}))\leq h-1$, so $\clp^{n-2}(\trm R)=\zeromap^{h'-n+2}((\trm R)_{\leq n-2})$ at height $h'$. Since $\zeromap$ acts on a graph whose permutation has last descent below its height by deleting the empty last row, $\zeromap^{h-1-h'}$ carries $(\trm R)_{\leq n-2}$ at height $h-1$ to the same graph at height $h'$, whence $\clp^{n-2}(\trm R)=\zeromap^{h-n+1}(\trm(R_{\leq n-1}))$. Lemma \ref{lemma:ztrim} gives $\trm(\zeromap(R'))=\zeromap(\trm(R'))$ for any $R'$ with empty last row, and the last row stays empty throughout by weight preservation, so iterating $h-n+1$ times,
-$$\trm(\clp^{n-1}(R))=\trm(\zeromap^{h-n+1}(R_{\leq n-1}))=\zeromap^{h-n+1}(\trm(R_{\leq n-1}))=\clp^{n-2}(\trm(R))\text{,}$$
-as required.
+Since $\trm^p$ is a composite of single trims, it suffices to show $\trm(\clp^{k}(X))=\clp^{k-1}(\trm X)$ for $X$ of height $\geq k\geq 1$. Let $h=\max(k,\maxd(\wof{X_{\leq k}}))$. Iterating Lemma~\ref{lemma:ztrim} (the last row stays empty at each step by weight preservation),
+$$\trm(\clp^{k}(X))=\trm\bigl(\zeromap^{h-k}(X_{\leq k})\bigr)=\zeromap^{h-k}\bigl(\trm(X_{\leq k})\bigr)\text{,}$$
+and $\trm(X_{\leq k})=(\trm X)_{\leq k-1}$ regarded at height $h-1$, which is bounded by Lemma~\ref{L:trim}. Hence $h-1\geq\max(k-1,\maxd(\wof{(\trm X)_{\leq k-1}}))$ and the right side is $\clp^{k-1}(\trm X)$ by the padding independence noted after Definition~\ref{definition:cliptrim}.
 \end{proof}
 
-The one-row clip erases the last row of $R$ and then rewrites the remaining rows by $\zeromap$, so a priori $\clp^p(R)$ depends on all of $R_{\leq n-1}$, not only on $R_{\leq p}$. In fact the intermediate rows are irrelevant. To state this, define for a bounded RC graph $X$ with $\hr(X)\geq p$
-$$D^p(X)=\zeromap^{\,h_X-p}(X_{\leq p}),\qquad h_X=\max\bigl(p,\maxd(\wof{X_{\leq p}})\bigr)\text{,}$$
-where $X_{\leq p}$ is regarded as a bounded RC graph of height $h_X$. By the weight-preservation argument following Definition~\ref{definition:cliptrim}, $D^p(X)$ is a bounded RC graph of height $p$ with $\wtt(D^p X)=\wtt(X)_{\leq p}$; moreover $D^p(X)=D^p(X_{\leq k})$ for every $k\geq p$, and $D^p(X)=\zeromap^{\,N-p}(X_{\leq p})$ for every $N\geq h_X$, since $\zeromap$ deletes the empty last row whenever the height exceeds $\maxd$.
+\subsection{Functoriality of \texorpdfstring{$\clp$}{clip} via bumpless pipe dreams}\label{section:bpd}
 
-\begin{lemma}\label{lemma:dtrim}
-Let $X$ be a bounded RC graph with $\hr(X)\geq p\geq 1$. Then $\trm(D^p(X))=D^{p-1}(\trm X)$.
+The identity $\clp^p\circ\clp^{p+q}=\clp^p$ is proved by transporting it along the Gao--Huang bijection to bumpless pipe dreams, where erasing rows is literal. Throughout this subsection an RC graph is a finite set $R\subseteq\mathbb P\times\mathbb P$ with $\ell(\wof R)=|R|$ (a reduced pipe dream); the height assigned to it plays no role until Lemma~\ref{lemma:clpfunc}. We write $R_{\leq p}=\{(i,j)\in R:i\leq p\}$ as before.
+
+\subsubsection*{Bumpless pipe dreams}
+Fix $N$ larger than every row and column index that occurs below. A \emph{bumpless pipe dream} \cite{lam2021back} is a tiling of the $N\times N$ grid by six tiles: the blank tile, the crossing tile, the horizontal and vertical tiles, and two elbow tiles, the \emph{$r$-tile}, in which a pipe enters from the south and leaves to the east, and the \emph{$j$-tile}, in which a pipe enters from the west and leaves to the north, such that the resulting pipes enter the grid from the south edge, one in each column, travel north and east, leave through the east edge, one in each row, and no two pipes cross twice. The pipe entering at the bottom of column $j$ is \emph{pipe $j$}. The permutation $w$ of $B$ is defined by: the pipe leaving through row $i$ is pipe $w(i)$. We write $\mathrm{BPD}(w)$ for the set of bumpless pipe dreams of $w$, $\mathrm{blank}(B)$ for the set of blank tiles of $B$ and $B_{\leq p}$ for rows $1,\ldots,p$ of $B$. By \cite[Theorem~5.13]{lam2021back}, $\sch_w=\sum_{B\in\mathrm{BPD}(w)}\prod_{(i,j)\in\mathrm{blank}(B)}x_i$. Enlarging $N$ appends pipes that travel straight north and turn once, and appends horizontal tiles to the rows already present, so statements about $B_{\leq p}$ do not depend on $N$. Since a pipe travels north and east, the pipe leaving through row $i$ lies entirely in rows $\geq i$; we use this repeatedly.
+
+Gao and Huang \cite{GaoHuang2023} construct, for every $w$, a bijection between $\mathrm{BPD}(w)$ and the RC graphs with permutation $w$ that sends $\mathrm{blank}(B)$ row by row to the crossings, i.e.\ row $i$ of $B$ has as many blank tiles as row $i$ of the RC graph has crossings \cite[Theorem~3.6]{GaoHuang2023}. We write $\Phi(R)\in\mathrm{BPD}(\wof R)$ for the bumpless pipe dream corresponding to the RC graph $R$; $\Phi$ is injective and depends only on the set $R$.
+
+\subsubsection*{Monk moves}
+Monk's rule in the form
+\begin{equation}\label{eq:monk}
+x_\alpha\sch_w+\sum_{\substack{k<\alpha\\ wt_{k\alpha}\gtrdot w}}\sch_{wt_{k\alpha}}=\sum_{\substack{l>\alpha\\ wt_{\alpha l}\gtrdot w}}\sch_{wt_{\alpha l}}
+\end{equation}
+is realized bijectively on RC graphs by Billey--Holroyd--Young \cite{billey2019bijective} and on bumpless pipe dreams by Huang \cite{huang2020monk}: there are maps
+$$x_\alpha\!\rightsquigarrow:\RC(w)\to\bigsqcup_{l}\RC(wt_{\alpha l})\text{,}\qquad m_{k,\alpha}:\RC(wt_{k\alpha})\to\bigsqcup_{l}\RC(wt_{\alpha l})$$
+($l$ ranging over the right side of \eqref{eq:monk}), which together form a bijection from the disjoint union of the sets on the left of \eqref{eq:monk} to the disjoint union of those on the right, with $x_\alpha\!\rightsquigarrow$ adding one crossing in row $\alpha$ and $m_{k,\alpha}$ preserving the number of crossings in every row, and maps with the same names and properties (with blank tiles in place of crossings) on bumpless pipe dreams \cite[Definitions~4.2 and~4.4]{GaoHuang2023}. Gao and Huang prove that $\Phi$ intertwines them \cite[Theorem~4.5]{GaoHuang2023}:
+\begin{equation}\label{eq:GHintertwine}
+\Phi(x_\alpha\!\rightsquigarrow R)=x_\alpha\!\rightsquigarrow\Phi(R)\text{,}\qquad \Phi(m_{k,\alpha}R)=m_{k,\alpha}\Phi(R)\text{.}
+\end{equation}
+We recall the two descriptions to the extent needed. On RC graphs \cite[Definition~4.2]{GaoHuang2023}, $x_\alpha\!\rightsquigarrow R$ is computed by placing a crossing at the leftmost elbow of row $\alpha$; whenever the crossing just placed makes two pipes cross twice, the other crossing of that pair of pipes is replaced by an elbow and a crossing is placed at the nearest elbow to its right in its row, until the result is reduced. For $D\in\RC(wt_{k\alpha})$, $m_{k,\alpha}D$ is computed in the same way after first replacing by an elbow the unique crossing $c\in D$ with $\rtt_D(c)=(k,\alpha)$, i.e.\ the crossing whose removal yields $w$, and placing a crossing at the nearest elbow to its right in its row. Consequently, the inverse of the Monk bijection on an element $X$ of the right side is computed by removing the crossing $c\in X$ whose removal yields $w$, placing a crossing at the nearest elbow to its left in the same row, and whenever this makes two pipes cross twice, removing the other crossing of that pair and placing a crossing at the nearest elbow to its left in its row; if a crossing to be moved has no elbow to its left, it is simply removed and the process stops, and the result lies in $\RC(w)$ (this is the $x_\alpha\!\rightsquigarrow$ case). Moving a crossing one column to the left decrements its letter by one, and moving it across a block of crossings to the nearest elbow decrements the letters of the block one after the other, the two deletable positions of the intermediate words being adjacent equal letters; hence, in terms of the reading word, the inverse Monk move is the Little bump $\ltb_c$ of Definition~\ref{definition:littlebump} at the position of $c$. Here we use Little's lemma \cite[Lemma~4]{little2003combinatorial} in the following form: if a word $\mathbf c$ is not reduced but $\mathbf c\setminus k$ is, then exactly one pair of wires of $\mathbf c$ crosses twice, the positions whose deletion leaves a reduced word are exactly the two crossings of this pair, and since the right root of a position records the two wires crossing there, these two positions have the same right root up to order.
+
+On bumpless pipe dreams \cite[Algorithm~1 and proof of Theorem~2]{huang2020monk}, $x_\alpha\!\rightsquigarrow B$ is computed by repeatedly modifying the pipe $p$ that leaves through row $\alpha$: $p$ is drooped from its current $r$-shaped turn into the nearest available tile to the southeast, and when the drooped pipe meets a pipe $q$ in a bump tile the bump is either replaced by a crossing (if $p$ and $q$ do not cross, in which case the algorithm stops) or exchanged with the existing crossing of $p$ and $q$, after which $p$ is drooped again. For $B\in\mathrm{BPD}(wt_{k\alpha})$, $m_{k,\alpha}B$ is computed by replacing the crossing of the two pipes that leave through rows $k$ and $\alpha$ by a bump tile, after which the pipe leaving through row $\alpha$ has the $r$-shaped turn in this tile and is the pipe $p$ to which the same algorithm is applied. In both cases the permutation of the diagram is $w$ throughout, except for the final step, so $p$ leaves through row $\alpha$ throughout.
+
+\begin{lemma}[Row confinement]\label{lemma:bpdconfine}
+Let $B\in\mathrm{BPD}(w)$ and $B'\in\mathrm{BPD}(wt_{k\alpha})$ with $k<\alpha$ and $wt_{k\alpha}\gtrdot w$. Then $x_\alpha\!\rightsquigarrow B$ agrees with $B$ in rows $1,\ldots,\alpha-1$, and $m_{k,\alpha}B'$ agrees with $B'$ in rows $1,\ldots,\alpha-1$.
 \end{lemma}
 \begin{proof}
-Let $h=h_X$. Iterating Lemma~\ref{lemma:ztrim} (the last row stays empty at each step by weight preservation),
-$$\trm(D^p(X))=\trm\bigl(\zeromap^{h-p}(X_{\leq p})\bigr)=\zeromap^{h-p}\bigl(\trm(X_{\leq p})\bigr)\text{,}$$
-and $\trm(X_{\leq p})=(\trm X)_{\leq p-1}$ regarded at height $h-1$, which is bounded by Lemma~\ref{L:trim}. Hence $h-1\geq h_{\trm X}$ and the right side is $D^{p-1}(\trm X)$.
+Every tile changed by Huang's algorithm lies either on the pipe $p$ that leaves through row $\alpha$ (the tiles of a bump and of a crossing that are exchanged, the final bump replaced by a crossing, and the initial crossing replaced by a bump, which lies on both pipes leaving through rows $k$ and $\alpha$) or in the rectangle spanned by a droop of $p$, whose northwest corner is a turn of $p$. Since $p$ travels north and east and leaves through row $\alpha$, all of $p$ lies in rows $\geq\alpha$, and so does every such rectangle.
 \end{proof}
 
-\begin{lemma}[Locality of $\clp^p$]\label{lemma:cliplocal}
-Let $R$ be a bounded RC graph with $\hr(R)=n$ and let $0\leq p\leq n$. Then
-$$\clp^p(R)=D^p(R)=\zeromap^{\,h_R-p}(R_{\leq p})\text{.}$$
-In particular $\clp^p(R)$ depends only on the top $p$ rows of $R$.
+\begin{lemma}[Little bumps and top rows]\label{lemma:bumpconfine}
+Let $X$ be an RC graph with $\wof X=\tau$ and let $c\in X$ be a crossing with $\rtt_X(c)=(s,\beta)$, $s<\beta$, such that $X\setminus\{c\}$ is reduced. Let $X'$ be the RC graph obtained from $X$ by the Little bump at $c$ (the inverse Monk move described above). Then $\Phi(X)$ and $\Phi(X')$ agree in rows $1,\ldots,s-1$.
 \end{lemma}
 \begin{proof}
-We show $\clp^p=D^p$ on $\RC_n$ by induction on $n-p$, the case $n=p$ being trivial. For $n>p$, $\clp^p(R)=\clp^p(\clp^{n-1}R)=D^p(\clp^{n-1}R)$ by induction, and $\clp^{n-1}R=\zeromap^{h-n+1}(R_{\leq n-1})$ with $D^p(R)=D^p(R_{\leq n-1})$. It therefore suffices to prove
-\begin{equation}\label{eq:clpzero}
-D^p(\zeromap(Y))=D^p(Y)
-\end{equation}
-for every bounded RC graph $Y$ of height $m>p$ whose last row is empty. If $\maxd(\wof Y)<m$, then $\zeromap(Y)$ is $Y$ with its last row deleted, and \eqref{eq:clpzero} is clear. If $p\leq 1$, both sides of \eqref{eq:clpzero} are determined by their weight $(\wtt_1(Y),\ldots,\wtt_p(Y))$ (Lemmas~\ref{lemma:zeroweight} and~\ref{lemma:lastrow}).
-
-Suppose $p\geq 2$ and $\maxd(\wof Y)=m$, and assume \eqref{eq:clpzero} for $p-1$. By Lemmas~\ref{lemma:dtrim} and~\ref{lemma:ztrim},
-$$\trm\bigl(D^p(\zeromap Y)\bigr)=D^{p-1}(\trm\,\zeromap Y)=D^{p-1}(\zeromap\,\trm Y)=D^{p-1}(\trm Y)=\trm\bigl(D^p(Y)\bigr)\text{,}$$
-where the third equality is \eqref{eq:clpzero} for $p-1$ applied to $\trm Y$ (or the trivial case if $\maxd(\wof{\trm Y})<m-1$). Thus rows $2,\ldots,p$ of the two sides of \eqref{eq:clpzero} coincide. A bounded RC graph $X$ is determined by $\trm X$ together with $\wof X$: the word of row $1$ is the unique strictly decreasing reduced word of $\wof X\cdot({\uparrow}\wof{\trm X})^{-1}$. Consequently \eqref{eq:clpzero} is equivalent to the equality of permutations
-\begin{equation}\label{eq:clpperm}
-\wof{D^p(\zeromap Y)}=\wof{D^p(Y)}\text{.}
-\end{equation}
-
-Two further reductions. First, rows $p+2,\ldots,m$ of $Y$ may be assumed empty: writing $D^{p}\circ D^{p+1}=D^{p}$ for the case $m=p+1$ at every level, \eqref{eq:clpzero} for general $m$ follows by induction on $m-p$, since $\zeromap Y$ has rows $p+1,\ldots,m-1$ empty when $Y$ has rows $p+1,\ldots,m$ empty. Second, $Y$ may be assumed to be a highest-weight element for the operators $e_1,\ldots,e_{p-1}$ of Definition~\ref{definition:crystal}. Indeed, let $1\leq i\leq p-1$ and suppose $e_i(Y)\neq\emptyset$. Then $e_i(Y)$ again has height $m$, empty last row and permutation $\wof Y$, so $\zeromap(e_iY)=e_i\zeromap(Y)$ by Corollary~\ref{corollary:crystaliso}. Moreover $D^p$ commutes with $e_i$ and $f_i$ on $\RC_{\leq p}$: erasing rows above $p$ and reassigning the height commute with $e_i$ trivially, and every $\zeromap$ in $D^p$ is applied at a height $\geq p+1>i$, so commutes by Corollary~\ref{corollary:crystaliso}. As $f_ie_i=\mathrm{id}$ wherever $e_i$ is defined,
-$$D^p(\zeromap Y)=D^p\bigl(f_i\,\zeromap\,e_iY\bigr)=f_i\,D^p(\zeromap\,e_iY)\qquad\text{and}\qquad D^p(Y)=f_i\,D^p(e_iY)\text{,}$$
-so \eqref{eq:clpzero} for $e_iY$ implies it for $Y$. Since $e_i(Y)=\emptyset$ automatically for $i\geq p$ (row $i+1$ is empty), the reduced case is that $Y_{\leq p}$ is a highest-weight RC graph.
-
-The same commutation gives an invariant shared by the two sides of \eqref{eq:clpperm}. Let $C(Y)$ be the connected component of $Y$ under $e_1,\ldots,e_{p-1},f_1,\ldots,f_{p-1}$; all its elements have the same rows $p+1,\ldots,m$ as $Y$. By Propositions~\ref{proposition:zeroequal} and~\ref{proposition:zerocrystal}, $\zeromap$ restricts to a crystal isomorphism $C(Y)\to C(\zeromap Y)$; erasing rows above $p$ and reassigning the height is a crystal isomorphism $C(Y)\to C(Y_{\leq p})$; and each $\zeromap$-step inside $D^p$ is a crystal isomorphism onto its image. Hence
-$$C\bigl(D^p(\zeromap Y)\bigr)\cong C(\zeromap Y)\cong C(Y)\cong C\bigl(D^p(Y)\bigr)$$
-as $A_{p-1}$-crystals, and both $D^p(\zeromap Y)$ and $D^p(Y)$ are the highest-weight elements of their components. In particular the two components have the same Demazure character, so $D^p(\zeromap Y)$ and $D^p(Y)$ have the same weight and the same extremal weight (Definition~\ref{definition:crystal}), and by Theorem~\ref{theorem:keykey} the key polynomial $\kappa_{\mathrm{extwt}(D^pY)}$ occurs in both $\sch_{\wof{D^p(\zeromap Y)}}(x_1,\ldots,x_p)$ and $\sch_{\wof{D^pY}}(x_1,\ldots,x_p)$. This does not determine the permutation: distinct highest-weight elements of $\RC_p$ with the same weight and extremal weight exist, with distinct permutations.
-
-\textbf{[Identity \eqref{eq:clpperm} for $\maxd(\wof Y)=m$, $p\geq 2$ remains to be written. It has been verified by computer for all bounded RC graphs of height at most $5$ and length at most $5$. Word-level form: after the two reductions above, $Y=T\cup\shup^p\mathtt{row}_{p+1}(c)$ is a highest-weight RC graph with word $\mathbf a\mathbf s$, $\mathbf a=\mathrm{word}(T)$, $\mathbf s=(p+c,\ldots,p+1)$. For a reduced word $\mathbf u$ and $k\geq 1$ let $L_{\leq k}(\mathbf u)$ denote the result of iterating the Little bump at the crossing of root $(m',m'+1)$, $m'=\maxd$ of the current permutation, until $\maxd\leq k$. By Proposition~\ref{proposition:zerocrystal}, $D^p(Y)=L_{\leq p}(\mathbf a)$, $\zeromap Y=L_{\leq m-1}(\mathbf a\mathbf s)=\mathbf a'\mathbf s'$ with $|\mathbf a'|=|\mathbf a|$, and $D^p(\zeromap Y)=L_{\leq p}(\mathbf a')$, so \eqref{eq:clpperm} reads
-$$L_{\leq p}\bigl(\mathrm{pref}_{|\mathbf a|}\,L_{\leq m-1}(\mathbf a\mathbf s)\bigr)=L_{\leq p}(\mathbf a)\text{,}$$
-required only for $\mathbf a$ the word of a highest-weight RC graph in $\RC_{\leq p}$ and $\mathbf s$ a single row of consecutive letters above $p$. The truncation at $\maxd\leq m-1$ before restarting on the prefix is essential: $\mathrm{pref}_{|\mathbf a|}L_{\leq p}(\mathbf a\mathbf s)\neq L_{\leq p}(\mathbf a)$ in general (already for $\mathbf a=(2)$, $\mathbf s=(3)$, $p=2$). By Proposition~\ref{proposition:zerocrystal}, $\zeromap$ is a composite of Little bumps at roots $(m',m'+1)$ with $m'>p$; each such bump, restricted to the top $p$ rows, is either the identity or a single Little bump of $Y_{\leq p}$ at a position whose root $(a,b)$ is a Bruhat cover of $\wof{Y_{\leq p}}$ with $a>p$ (verified for length $\leq 7$). Little bumps at covers $(a,b)$ with $a>p$ are well defined on $\RC_{\leq p}$: the position is nearly reduced, so the defect after each decrement is unique by \cite[Lemma~4]{little2003combinatorial}, and the resulting word is again a valid RC graph with the same row sequence, with no letter ever decremented from $1$ (verified for length $\leq 7$). Hence \eqref{eq:clpzero} is equivalent to the statement that $D^p(T)$ is unchanged by any such bump of $T\in\RC_{\leq p}$, i.e.\ to the confluence of the rewriting system on $\RC_{\leq p}$ generated by these bumps; the system terminates since each elementary step decreases $\Phi(T)=\sum_{(i,j)\in T}j$ by one, so by Newman's lemma local confluence suffices. Local form: write $L$ for the bump at the last-descent root $(\maxd(\wof T),\maxd(\wof T)+1)$, so $D^p(T)=L^{k}(T)$ for the first $k$ with $\maxd\leq p$. By induction on $\Phi$ it suffices to show that for every other $p$-high cover bump $\beta$ of $T$ some $L^{k}(\beta T)$, $k\geq 0$, is reachable from $L(T)$ by $p$-high cover bumps; then $D^p(\beta T)=D^p(L^k\beta T)=D^p(L T)=D^p(T)$ by the induction hypothesis applied to $L(T)$. In all cases with length $\leq 7$ this holds with $k\leq 3$ and at most two bumps from $L(T)$, in one of the shapes $L(\beta T)=L(T)$; $L(\beta T)=\beta'(LT)$ (the generic case, where $\beta'$ is the bump at the crossing of $LT$ corresponding to that of $\beta$, either by word position or by the pair of pipes it crosses); $\beta T=\beta'(LT)$ (when $\beta$ is at a root $(m,b)$ sharing the position $m$ with $L$); $L(\beta T)=\beta'\beta''(LT)$; or $L^2(\beta T)$, $L^3(\beta T)$ in place of $L(\beta T)$. A proof of the local statement by case analysis on the interaction of the two bump chains is what remains. Highest-weight elements are preserved by these bumps (verified for length $\leq 7$), and a highest-weight $T\in\RC_{\leq p}$ is the RC graph whose row $i$ is the $i$th row of the Edelman--Greene insertion tableau of its reading word taken from the last row upward \cite{morse2016crystal} (verified for length $\leq 7$). The reduced problem is therefore a rewriting system on Edelman--Greene tableaux with at most $p$ rows, each bump subtracting $1$ from a set of cells, with normal forms the tableaux whose permutation has last descent at most $p$; $D^p$ is a shape-preserving map between such tableaux. Negative observations: the one-step statement ``erasing rows $p+1,\ldots,m$ commutes with $\zeromap$'' is false; two bumps applied to the same $T$ need not commute even when they modify disjoint positions; $\wof{D^p(T)}$ is not determined by $\wof{T}$, $\wtt(T)$ and $\wof{\trm D^p(T)}$ (for $p=2$ the graphs $\{(1,2),(2,3)\}$ and $\{(1,4),(2,1)\}$ have the same permutation $13254$, weight and trimmed clip, but clips with permutations $231$ and $1423$), so the first row of $D^p(T)$ cannot be recovered from permutation-level data alone; and for highest-weight $T$ it is not determined by $\wtt(T)$, $\mathrm{extwt}(T)$, the pattern of $\wof{T}$ on positions $1,\ldots,p$, or the cells of the tableau with entries $\leq p$. Hamaker--Young's theorem gives that the Edelman--Greene recording tableau of the word of $T$ is a class invariant (trivial on highest weights, where it is the row superstandard tableau of the shape); a second invariant determining the first row of the normal form is what is missing.]}
+Removing $c$ yields $\pi:=\tau t_{s\beta}$ with $\ell(\pi)=\ell(\tau)-1$, so $X\in\RC(\pi t_{s\beta})$ lies on the right side of the Monk bijection for $(\pi,s)$, and $X'$ is its preimage: $X=x_s\!\rightsquigarrow X'$ with $X'\in\RC(\pi)$, or $X=m_{k,s}X'$ with $X'\in\RC(\pi t_{ks})$ for some $k<s$. By \eqref{eq:GHintertwine} the same relation holds between $\Phi(X)$ and $\Phi(X')$, and Lemma~\ref{lemma:bpdconfine} gives the claim.
 \end{proof}
+
+\begin{lemma}[Bounded completion]\label{lemma:bpdcompletion}
+Let $B\in\mathrm{BPD}(w)$ have no blank tiles in rows $>p$, and suppose $\maxd(w)\leq p$. Then rows $>p$ of $B$ contain no $j$-shaped tiles. Consequently, in rows $>p$ every pipe $c$ travels straight north along column $c$, until it reaches row $p$ or until it reaches its exit row $w^{-1}(c)>p$, where it turns east and travels straight to the east edge; in particular $B$ is determined by $B_{\leq p}$.
+\end{lemma}
+\begin{proof}
+Suppose $(i,c)$ is a $j$-shaped tile with $i>p$, and take $i$ maximal. No pipe enters $(i,c)$ from the south, so pipe $c$ turns east at some tile $(i'',c)$ with $i''>i$; as rows $>i$ contain no $j$-shaped tiles and no blanks, pipe $c$ then travels east along row $i''$ to the edge, so $w(i'')=c$. The pipe $P$ entering $(i,c)$ from the west travels along row $i$ from an $r$-shaped turn $(i,c_0)$, $c_0<c$. The pipe leaving through row $i$ is not $P$; its last turn is an $r$-shaped tile $(i,c_1)$ from which it travels east along row $i$ to the edge. The tiles $(i,c_0),\ldots,(i,c)$ are occupied by $P$ and an $r$-shaped tile cannot be entered from the west, so $c_1>c$. Below row $i$ there are no $j$-shaped tiles, so this pipe traveled straight north along column $c_1$ and is pipe $c_1$: $w(i)=c_1>c=w(i'')$ with $p<i<i''$, contradicting $\maxd(w)\leq p$. The remaining assertions follow: with no blanks and no $j$-shaped tiles in rows $>p$, a pipe in these rows can only travel north in its own column and, after one $r$-shaped turn, east.
+\end{proof}
+
+\begin{proposition}[Top rows]\label{proposition:toprows}
+Let $R$ be an RC graph and $p\geq 0$. Then $\Phi(R)$ and $\Phi(R_{\leq p})$ agree in rows $1,\ldots,p$.
+\end{proposition}
+\begin{proof}
+It suffices to prove: if $\alpha$ is the last nonempty row of $R$ and $x$ is the leftmost crossing in row $\alpha$, then $\Phi(R)$ and $\Phi(R\setminus\{x\})$ agree in rows $1,\ldots,\alpha-1$. Indeed, removing the crossings of rows $>p$ one at a time in this manner never changes rows $1,\ldots,p$ of $\Phi$ and ends at $R_{\leq p}$.
+
+Let $x=(\alpha,j)$, $a=\alpha+j-1$ its letter, $R^-=R\setminus\{x\}$ and $\pi=\wof{R^-}$. As $x$ is the last letter of the reading word, $R^-$ is reduced and $\wof R=\pi s_a$, so $\rtt_R(x)=(a,a+1)$. We induct on $j$. If $j=1$ then $a=\alpha$, the leftmost elbow of $R^-$ in row $\alpha$ is $(\alpha,1)$, and $R=x_\alpha\!\rightsquigarrow R^-$ because $R$ is reduced; by \eqref{eq:GHintertwine} and Lemma~\ref{lemma:bpdconfine}, $\Phi(R)$ and $\Phi(R^-)$ agree in rows $<\alpha$.
+
+Let $j\geq 2$ and let $X'$ be the Little bump of $R$ at $x$. Since $a>\alpha$, row $a$ of $R$ is empty, so $R$ is not in the image of $x_a\!\rightsquigarrow$; hence $R=m_{k,a}X'$ for some $k<a$, and $X'$ has as many crossings as $R$ in every row. By Lemma~\ref{lemma:bumpconfine}, $\Phi(R)$ and $\Phi(X')$ agree in rows $<a$, hence in rows $<\alpha$. During the bump, a crossing moves only within its row and only to the nearest elbow on its left, so the crossings of row $\alpha$ other than $x$ remain to the right of $x$: the last nonempty row of $X'$ is $\alpha$, its leftmost crossing is $x'=(\alpha,j')$ with $j'<j$, and $X'\setminus\{x'\}$ is reduced. By induction, $\Phi(X')$ and $\Phi(X'\setminus\{x'\})$ agree in rows $<\alpha$. It remains to show that $\Phi(X'\setminus\{x'\})$ and $\Phi(R^-)$ agree in rows $<\alpha$.
+
+Write the reading word of $R$ as $\mathbf a\,a$ with $\mathbf a$ the reading word of $R^-$, and follow the Little bump letter by letter. We use the following restriction property, in which $\mathbf a\mathbf b$ is a word that is not reduced but becomes reduced when a position $k$ of $\mathbf a$ is deleted, and $\mathbf a^-$ denotes $\mathbf a$ with the letter at $k$ decremented: (i) if $\mathbf a^-$ is not reduced, then its defect (the unique position $j\neq k$ with $\mathbf a^-\setminus j$ reduced) is also the defect of $\mathbf a^-\mathbf b$; (ii) if $\mathbf a^-$ is reduced, then $\mathbf a^-\mathbf b$ is reduced or its defect lies in $\mathbf b$. For (i), the exchange property applied to the reduced word $\mathbf a^-\setminus k=\mathbf a\setminus k$ gives $\wof{\mathbf a^-\setminus j}=\wof{\mathbf a\setminus k}$, so $(\mathbf a^-\setminus j)\mathbf b$ has the permutation and the length of the reduced word $(\mathbf a\setminus k)\mathbf b$ and is reduced, and $j$ is the defect of $\mathbf a^-\mathbf b$ by uniqueness. For (ii), a defect $j$ of $\mathbf a^-\mathbf b$ in $\mathbf a$ would give $\wof{\mathbf a^-\setminus j}=\wof{\mathbf a\setminus k}=\wof{\mathbf a^-\setminus k}$, so the distinct positions $j,k$ of the reduced word $\mathbf a^-$ would have the same right root. The same holds with the roles of prefix and suffix exchanged.
+
+The bump begins by decrementing the last letter, $a\mapsto a-1$. If the word is reduced we are done with $X'\setminus\{x'\}=R^-$. Otherwise the defect $k$ lies in $\mathbf a$ by (ii) for the suffix, and by Little's lemma the positions $k$ and the last position have the same right root up to order; the last letter $a-1$ has right root $(a-1,a)$, so $\rtt_{\mathbf a}(k)=\{a-1,a\}$ as a set, and $\mathbf a\setminus k$ is reduced, being a prefix of the reduced word $(\mathbf a\,(a-1))\setminus k$. By (i) and (ii) the bump now performs the complete Little bump of $\mathbf a$ at $k$, producing a reduced word $\mathbf a^{(1)}$ (the RC graph $A^{(1)}$, with the rows of $R^-$), and then either stops or continues by decrementing the last letter again, to $a-2$, after which the same analysis applies to $\mathbf a^{(1)}(a-2)$, and so on. Thus $X'\setminus\{x'\}=A^{(m)}$ where $A^{(0)}=R^-$ and $A^{(i+1)}$ is the Little bump of $A^{(i)}$ at a crossing with right root $\{a-i-1,a-i\}$ whose removal leaves a reduced word. The last letter is decremented to $a-i-1$ only if $x$ moves to column $j-i-1\geq 1$, so $a-i-1\geq\alpha$. By Lemma~\ref{lemma:bumpconfine}, $\Phi(A^{(i)})$ and $\Phi(A^{(i+1)})$ agree in rows $<a-i-1$, hence in rows $<\alpha$, for every $i$, and therefore so do $\Phi(R^-)$ and $\Phi(X'\setminus\{x'\})$.
+\end{proof}
+
+\begin{proposition}[$\zeromap$ erases the last row]\label{proposition:zerotrunc}
+Let $Y$ be a bounded RC graph of height $m$ whose last row is empty. Then $\Phi(\zeromap Y)$ and $\Phi(Y)$ agree in rows $1,\ldots,m-1$.
+\end{proposition}
+\begin{proof}
+If $\maxd(\wof Y)<m$ then $\zeromap Y$ is $Y$ with the empty last row deleted, and $\Phi$ depends only on the set of crossings. Otherwise $\zeromap=\lzeromap$ by Proposition~\ref{proposition:zerocrystal}, and $\lzeromap Y$ is computed by iterating $\lmap$: each step replaces the current RC graph $X$, with $d=\maxd(\wof X)\geq m$ and rows $\geq m$ empty (so that $X$ is a bounded RC graph of height $d$ with empty last row), by the Little bump at the crossing $c$ with $\rtt_X(c)=(d,d+1)$ (Proposition~\ref{proposition:little_bump}); as $d$ is a descent of $\wof X$, $X\setminus\{c\}$ is reduced. By Lemma~\ref{lemma:bumpconfine} each step preserves rows $1,\ldots,d-1\supseteq\{1,\ldots,m-1\}$ of $\Phi$, and the final deletion of empty rows does not change $\Phi$.
+\end{proof}
+
+\begin{lemma} \label{lemma:clpfunc}
+Let $R$ be a bounded RC graph with $\hr(R)=n$, and let $0\leq p\leq p+q\leq n$. Then
+$$\clp^p(\clp^{p+q}(R))=\clp^p(R).$$
+\end{lemma}
+\begin{proof}
+For bounded RC graphs $X$ of height $\geq p$, Definition~\ref{definition:cliptrim} gives $\clp^p(X)=\zeromap^{\,h-p}(X_{\leq p})$ with $X_{\leq p}$ at height $h\geq p$, each intermediate RC graph having an empty last row. By Propositions~\ref{proposition:zerotrunc} and~\ref{proposition:toprows},
+$$\Phi(\clp^p X)\ \text{agrees with}\ \Phi(X_{\leq p})\ \text{and hence with}\ \Phi(X)\ \text{in rows }1,\ldots,p\text{.}$$
+Apply this to $X=\clp^{p+q}(R)$, to $X=R$ with $p+q$ in place of $p$, and to $X=R$: in rows $1,\ldots,p$,
+$$\Phi\bigl(\clp^p(\clp^{p+q}R)\bigr)\sim\Phi(\clp^{p+q}R)\sim\Phi(R)\sim\Phi(\clp^pR)\text{,}$$
+where the middle agreement holds in rows $1,\ldots,p+q$. Both $\clp^p(\clp^{p+q}R)$ and $\clp^pR$ are bounded RC graphs of height $p$, so their images under $\Phi$ have no blank tiles in rows $>p$ and permutations with $\maxd\leq p$. By Lemma~\ref{lemma:bpdcompletion} these images are equal, and since $\Phi$ is injective, so are the two RC graphs.
+\end{proof}
+
+\subsection{Associativity}
 
 \begin{theorem}
 	 The product $\sqcupplus$ is associative and $\BRC$ is a ring when equipped with $\sqcupplus$.
@@ -2543,12 +2568,16 @@ Given RC graphs $U\in \RC_p(u)$ and $V\in\RC_q(v)$ and a permutation $w$, define
 $$d_{U, V}^w = \#\{R\in \RC_{p+q}(w): \clp^p(R)=U,\trm^p(R)=V\}$$
 \end{definition}
 
+\begin{definition}\label{definition:omega}
+Let $\Omega$ be the $\mathbb{Z}$-submodule of $\BRC$ generated by the RC graphs $R_1-R_2$ such that $\wof{R_1}=\wof{R_2}$ and $\hr(R_1)=\hr(R_2)$, and let $\mathcal{R}$ be the subring of $\BRC$ generated by the single-row RC graphs $\mathtt{row}(a)$, $a\geq 0$.
+\end{definition}
+
 \begin{proof}[Proof of Theorem \ref{theorem:LR}]
 Fix $u,v\in S_\infty$ with $\maxd(u)\leq p$, $\maxd(v)\leq q$, and fix $U\in\RC_p(u)$, $V\in\RC_q(v)$. By Lemma~\ref{lemma:dualbranch}, $d_{u,v}^w(p,q)=b_{u,v}^w(p,q)$, so we must show $d_{U,V}^w=b_{u,v}^w(p,q)$ for every $w$ with $\maxd(w)\leq p+q$.
 
 Let $R\in\RC_{p+q}(w)$ and write $R=T\cup\shup^pV'$ with $T=R_{\leq p}$ and $V'=\trm^p(R)\in\RC_q$ (Lemma~\ref{L:trim}). Reading rows from top to bottom, the word of $R$ is the word of $T$ followed by the word of $\shup^pV'$, so
 $$w=\wof{T}\cdot\shup^p\wof{V'}\qquad\text{with}\qquad\ell(w)=\ell(\wof T)+\ell(\wof{V'})\text{.}$$
-Thus $\wof{T}=u_{v'}:=w\,(\shup^pv')^{-1}$ where $v'=\wof{V'}$, and $\ell(u_{v'})=\ell(w)-\ell(v')$. Conversely, for any $v'$ with $\maxd(v')\leq q$ and $\ell(w(\shup^pv')^{-1})=\ell(w)-\ell(v')$, any $V'\in\RC_q(v')$, and any $T\in\RC_{\leq p}(u_{v'})$, the union $T\cup\shup^pV'$ is a reduced RC graph of $w$ with $p+q$ rows, hence lies in $\RC_{p+q}(w)$. Finally, by Lemma~\ref{lemma:cliplocal}, $\clp^p(T\cup\shup^pV')=\zeromap^{h-p}(T)$ with $h=\max(p,\maxd(u_{v'}))$.
+Thus $\wof{T}=u_{v'}:=w\,(\shup^pv')^{-1}$ where $v'=\wof{V'}$, and $\ell(u_{v'})=\ell(w)-\ell(v')$. Conversely, for any $v'$ with $\maxd(v')\leq q$ and $\ell(w(\shup^pv')^{-1})=\ell(w)-\ell(v')$, any $V'\in\RC_q(v')$, and any $T\in\RC_{\leq p}(u_{v'})$, the union $T\cup\shup^pV'$ is a reduced RC graph of $w$ with $p+q$ rows, hence lies in $\RC_{p+q}(w)$. Finally, by Definition~\ref{definition:cliptrim}, $\clp^p(T\cup\shup^pV')=\zeromap^{h-p}(T)$ with $h=\max(p,\maxd(u_{v'}))$.
 
 Applying this with $V'=V$ and Lemma~\ref{lemma:clipfibers},
 $$d_{U,V}^w=\#\{T\in\RC_{\leq p}(u_v):\zeromap^{h-p}(T)=U\}=N_p(u_v,u)$$
@@ -2564,7 +2593,7 @@ Comparing with \eqref{eq:branching} and using the linear independence of the pro
 We now record the ring-theoretic consequences.
 
 \begin{definition}
-Recall the map $\alpha:\BRC\to\dcoma$, $\alpha(R)=\dsch_{\wof{R}}^{\hr(R)}$. (The weight map $\omega(R)=[\wtt(R)]$ is additive but not multiplicative: every term of $R_1\sqcupplus R_2$ has weight $\wtt(R_1)\wtt(R_2)$, so $\omega(R_1\sqcupplus R_2)$ is a multiple of $\omega(R_1)\sqcupplus\omega(R_2)$ by the number of terms.) Let $\mathcal{R}$  be the subring of $\BRC$ generated by the single-row RC graphs $\mathtt{row}(i)$ for $i\geq 0$. Let $a$ be a sequence of elements of a ring indexed by the nonnegative integers. For a permutation $w$ and an integer $n\geq \maxd(w)$, define a function $\dsch_w^n(a)$ by
+Recall the map $\alpha:\BRC\to\dcoma$, $\alpha(R)=\dsch_{\wof{R}}^{\hr(R)}$. (The weight map $\omega(R)=[\wtt(R)]$ is additive but not multiplicative: every term of $R_1\sqcupplus R_2$ has weight $\wtt(R_1)\wtt(R_2)$, so $\omega(R_1\sqcupplus R_2)$ is a multiple of $\omega(R_1)\sqcupplus\omega(R_2)$ by the number of terms.) Let $a$ be a sequence of elements of a ring indexed by the nonnegative integers. For a permutation $w$ and an integer $n\geq \maxd(w)$, define a function $\dsch_w^n(a)$ by
 $$\dsch_w^n(a) = \sum_{\alpha} d_{\alpha, w}^n a_{\alpha_1} \cdots a_{\alpha_n}$$
 where the sum is over all weak compositions $\alpha$ of length $n$, and $d_{\alpha, w}^n$ is the coefficient of $\alpha$ in $\dsch_w^n\in\dcoma$.
 \end{definition}
@@ -2577,30 +2606,25 @@ for integers $n\geq 0$ and $w$ that ranges over all permutations in $S_\infty$ w
 \begin{proof}
 By Theorem~\ref{theorem:LR}, $\alpha$ is multiplicative: for $R_1\in\RC_p(u)$, $R_2\in\RC_q(v)$,
 $$\alpha(R_1\sqcupplus R_2)=\sum_w d_{R_1,R_2}^w\,\dsch_w^{p+q}=\sum_w d_{u,v}^w(p,q)\,\dsch_w^{p+q}=\dsch_u^p\sqcupplus\dsch_v^q=\alpha(R_1)\sqcupplus\alpha(R_2)\text{.}$$
-Restricting to $\mathcal{R}$ gives a graded ring map $\alpha|_{\mathcal{R}}:\mathcal{R}\to\dcoma$.
-
-Since $\alpha(\mathtt{row}(i))=\dsch^1_{s_i\cdots s_1}=[i]$ for all $i\ge 0$, the image of $\alpha|_{\mathcal{R}}$ contains the free generators $[i]$ of $\dcoma$, hence $\alpha|_{\mathcal{R}}$ is surjective. Conversely, by freeness of $\dcoma$, there is a unique graded ring homomorphism
-$$
-\iota:\dcoma\to\mathcal{R},\qquad \iota([i])=\mathtt{row}(i).
-$$
-Then $(\alpha|_{\mathcal{R}})\circ\iota=\mathrm{id}_{\dcoma}$, so $\alpha|_{\mathcal{R}}$ is also injective. Therefore $\alpha:\mathcal{R}\xrightarrow{\sim}\dcoma$ is an isomorphism of graded rings.
-
-Finally, the family $\{\dsch_w^n\}_{n\ge 0,\, n\ge\maxd(w)}$ is a $\mathbb{Z}$-basis of $\dcoma$ by construction, and $\dsch_w^n(\mathtt{row})=\iota(\dsch_w^n)$, so
-$$
-\alpha\bigl(\dsch_w^n(\mathtt{row})\bigr)=\dsch_w^n.
-$$
-Applying the isomorphism $\iota$ shows that $\{\dsch_w^n(\mathtt{row})\}$ is a $\mathbb{Z}$-basis of $\mathcal{R}$.
+Restricting to $\mathcal{R}$ gives a graded ring map $\alpha|_{\mathcal{R}}:\mathcal{R}\to\dcoma$. Since $\alpha(\mathtt{row}(i))=\dsch^1_{s_i\cdots s_1}=[i]$, the image contains the free generators $[i]$ of $\dcoma$, so $\alpha|_{\mathcal{R}}$ is surjective; by freeness of $\dcoma$ there is a unique graded ring homomorphism $\iota:\dcoma\to\mathcal{R}$ with $\iota([i])=\mathtt{row}(i)$, and $(\alpha|_{\mathcal{R}})\circ\iota=\mathrm{id}_{\dcoma}$, so $\alpha|_{\mathcal{R}}$ is also injective. The family $\{\dsch_w^n\}_{n\ge 0,\, n\ge\maxd(w)}$ is a $\mathbb{Z}$-basis of $\dcoma$ by construction, and $\dsch_w^n(\mathtt{row})=\iota(\dsch_w^n)$ since $\iota$ is a ring homomorphism; applying $\iota$ to the basis gives the claim.
 \end{proof}
 
-\begin{definition}\label{definition:omega}
-Let $\Omega$ be the $\mathbb{Z}$-submodule of $\BRC$ generated by the RC graphs $R_1-R_2$ such that $\wof{R_1}=\wof{R_2}$ and $\hr(R_1)=\hr(R_2)$.
-\end{definition}
+The section $\iota$ has an explicit description in the RC graph basis.
+
+\begin{lemma}\label{lemma:principalsection}
+Let $\maxd(u)\leq n$ and let $P_u\in\RC_n(u)$ be the principal RC graph of $u$, the unique RC graph of $u$ with weight $\code(u)$. Then
+$$\iota(\dsch_u^n)=\sum_{R\in\RC_n}c_{\wtt(R),u}\,R\text{,}$$
+where $c_{\alpha,u}$ is the coefficient of $\sch_u$ in the Schubert expansion of $x_\alpha$, and the only RC graph of permutation $u$ occurring is $P_u$, with coefficient $1$. In particular $\iota(\dsch_u^n)-P_u\in\Omega$ has no term of permutation $u$.
+\end{lemma}
+\begin{proof}
+We have $\iota([\alpha])=\mathtt{row}(\alpha_1)\sqcupplus\cdots\sqcupplus\mathtt{row}(\alpha_n)=\sum_{\wtt(R)=\alpha}R$: by induction on $n$, the terms of $\mathtt{row}(\alpha_1)\sqcupplus\sum_{\wtt(R')=(\alpha_2,\ldots,\alpha_n)}R'$ are the $R$ with $\trm(R)$ of weight $(\alpha_2,\ldots,\alpha_n)$ and $\clp^1(R)=\mathtt{row}(\alpha_1)$, i.e.\ $\wtt_1(R)=\alpha_1$ (Lemma~\ref{lemma:lastrow}). Since $\dsch_u^n=\sum_\alpha c_{\alpha,u}[\alpha]$ by definition, the formula follows. The Schubert polynomials are unitriangular with respect to the monomials in reverse lexicographic order, $\sch_v=x^{\code(v)}+\text{(lower terms)}$ \cite{notes}, so $c_{\alpha,u}\neq0$ forces $\code(u)\leq\alpha$, while $\alpha=\wtt(R)$ for $R\in\RC_n(u)$ means that $x^\alpha$ occurs in $\sch_u$ (Corollary~\ref{corollary:evschub}), forcing $\alpha\leq\code(u)$. Hence $\alpha=\code(u)$, $R=P_u$, and $c_{\code(u),u}=1$.
+\end{proof}
 
 \begin{theorem} \label{theorem:semidirect}
   The map $\alpha:\BRC\to \dcoma$ is a surjective homomorphism of rings with kernel $\Omega$; in particular $\Omega$ is a two-sided ideal of $\BRC$. The ring homomorphism $\iota:\dcoma\to\BRC$ sending $[i]\mapsto \mathtt{row}(i)$ is a right inverse to $\alpha$, with image $\mathcal{R}$, and $\BRC=\mathcal{R}\oplus\Omega$. Consequently $\BRC\cong \dcoma\ltimes \Omega$ as rings.
 \end{theorem}
 \begin{proof}
-By Lemma~\ref{lemma:schubertrow} (whose first paragraph is the multiplicativity of $\alpha$), $\alpha$ is a ring homomorphism; it is surjective since every $\dsch_w^n$ is $\alpha(R)$ for any $R\in\RC_n(w)$, and $\RC_n(w)\neq\emptyset$ when $\maxd(w)\leq n$.
+By Lemma~\ref{lemma:schubertrow} (whose first sentence is the multiplicativity of $\alpha$), $\alpha$ is a ring homomorphism; it is surjective since every $\dsch_w^n$ is $\alpha(R)$ for any $R\in\RC_n(w)$, and $\RC_n(w)\neq\emptyset$ when $\maxd(w)\leq n$.
 
 The kernel of $\alpha$ is $\Omega$: clearly $\Omega\subseteq\ker\alpha$. Conversely, if $x=\sum_R c_RR\in\ker\alpha$, group the terms by $(\wof{R},\hr(R))$; then $\alpha(x)=\sum_{(w,n)}\bigl(\sum_{R\in\RC_n(w)}c_R\bigr)\dsch_w^n=0$ forces $\sum_{R\in\RC_n(w)}c_R=0$ for each $(w,n)$ by linear independence of the $\dsch_w^n$, and an element $\sum_{R\in\RC_n(w)}c_RR$ with $\sum c_R=0$ lies in $\Omega$. As the kernel of a ring homomorphism, $\Omega$ is a two-sided ideal.
 
@@ -2653,7 +2677,7 @@ $$\kappa_a = \sum_{R\in\mathrm{Dem}(A)} x^{\wtt(R)}$$
 
 It will be advantageous to have an alternative, crystal-friendly definition of the map $\zeromap$ for the purposes of proving results about key polynomials.
 
-\begin{definition}[Little bumps]
+\begin{definition}[Little bumps]\label{definition:littlebump}
   Given a reduced word $a_1\cdots a_m$ for a permutation $w$ and an index $1\leq p\leq m$, the \emph{Little bump} $\ltb_p(a_1\cdots a_m)$ is defined recursively as follows. If $a_p>1$, replace $a_p$ with $a_p-1$, and if $a_p=1$ then instead replace all $a_q$ with $q\neq p$ with $a_q+1$. Denote the new word by $a_1'\cdots a_m'$. If this resulting word is reduced, we are done. Otherwise, there is a unique index $j\neq p$ such that the word obtained by deleting $a_j'$ from the new word is reduced by the deletion property of Coxeter groups. We then define
   $$\ltb_p(a_1\cdots a_m) = \ltb_j(a_1'\cdots a_m')$$
 \end{definition}
@@ -2778,11 +2802,11 @@ $$\kappa^*_c = \sum_{\substack{R=\mathbb{Y}(R)\\ \mathrm{extwt}(R)=c}} \dsch_{\w
 \begin{proof}
 Let $R_1,R_2$ be bounded RC graphs of height $n$ with $\mathbb{Y}(R_1)=\mathbb{Y}(R_2)$, and let $R$ be a bounded RC graph of height $m$. Since crystal operators preserve the permutation, $\wof{R_1}=\wof{R_2}$.
 
-\emph{Left ideal.} A bounded RC graph $R'$ of height $m+n$ is a term of $R\sqcupplus R_1$ if and only if $\trm^m(R')=R_1$ and $\clp^m(R')=R$. Writing $R'=T\cup\shup^mR_1$ with $T=R'_{\leq m}$, the second condition depends only on $T$ (Lemma~\ref{lemma:cliplocal}), and $T\cup\shup^mR_1$ is a bounded RC graph if and only if the word of $T$ followed by the word of $\shup^m R_1$ is reduced and the resulting permutation has last descent at most $m+n$; this depends on $R_1$ only through $\wof{R_1}=\wof{R_2}$. Hence $T\cup\shup^mR_1\mapsto T\cup\shup^mR_2$ is a bijection from the terms of $R\sqcupplus R_1$ to those of $R\sqcupplus R_2$. For $i>m$ the operators $e_i$ act on rows $i,i+1$ only, so $e_i(T\cup\shup^mR_1)=T\cup\shup^me_{i-m}(R_1)$, with either side defined if and only if the other is. Applying the raising operators that carry $R_1$ to $\mathbb{Y}(R_1)$ and using that the highest weight of a connected component is unique,
+\emph{Left ideal.} A bounded RC graph $R'$ of height $m+n$ is a term of $R\sqcupplus R_1$ if and only if $\trm^m(R')=R_1$ and $\clp^m(R')=R$. Writing $R'=T\cup\shup^mR_1$ with $T=R'_{\leq m}$, the second condition depends only on $T$ (Definition~\ref{definition:cliptrim}), and $T\cup\shup^mR_1$ is a bounded RC graph if and only if the word of $T$ followed by the word of $\shup^m R_1$ is reduced and the resulting permutation has last descent at most $m+n$; this depends on $R_1$ only through $\wof{R_1}=\wof{R_2}$. Hence $T\cup\shup^mR_1\mapsto T\cup\shup^mR_2$ is a bijection from the terms of $R\sqcupplus R_1$ to those of $R\sqcupplus R_2$. For $i>m$ the operators $e_i$ act on rows $i,i+1$ only, so $e_i(T\cup\shup^mR_1)=T\cup\shup^me_{i-m}(R_1)$, with either side defined if and only if the other is. Applying the raising operators that carry $R_1$ to $\mathbb{Y}(R_1)$ and using that the highest weight of a connected component is unique,
 $$\mathbb{Y}(T\cup\shup^mR_1)=\mathbb{Y}(T\cup\shup^m\mathbb{Y}(R_1))=\mathbb{Y}(T\cup\shup^m\mathbb{Y}(R_2))=\mathbb{Y}(T\cup\shup^mR_2)\text{.}$$
 Thus $R\sqcupplus R_1-R\sqcupplus R_2=\sum_T\bigl((T\cup\shup^mR_1)-(T\cup\shup^mR_2)\bigr)\in\Theta$.
 
-\emph{Right ideal.} Since $R_1$ and $R_2$ lie in the same connected component, it suffices to treat $R_2=e_i(R_1)$ for some $1\leq i\leq n-1$ (the case $R_2=f_i(R_1)$ is symmetric). For $R'$ of height $n+m$ with $\trm^n(R')=R$, the operator $e_i$ ($i\leq n-1$) acts on rows $i,i+1\leq n$, so $\trm^n(e_iR')=R$ when $e_iR'$ is defined, and $\clp^n(e_iR')=e_i(\clp^nR')$ by Corollary~\ref{corollary:crystaliso} applied to each $\zeromap$ step of each one-row clip in Definition~\ref{definition:cliptrim} (erasing a last row of index $>n$ commutes with $e_i$, and $\zeromap$ is a crystal isomorphism onto its image by Propositions~\ref{proposition:zeroequal} and~\ref{proposition:zerocrystal}, so $e_i$ is defined on $\clp^nR'$ if and only if it is defined on $R'$). Hence $e_i$ restricts to a bijection from the terms of $R_1\sqcupplus R$ onto the terms of $e_i(R_1)\sqcupplus R$, and corresponding terms $R'$, $e_i(R')$ have the same highest weight. Thus $R_1\sqcupplus R-R_2\sqcupplus R\in\Theta$.
+\emph{Right ideal.} Since $R_1$ and $R_2$ lie in the same connected component, it suffices to treat $R_2=e_i(R_1)$ for some $1\leq i\leq n-1$ (the case $R_2=f_i(R_1)$ is symmetric). For $R'$ of height $n+m$ with $\trm^n(R')=R$, the operator $e_i$ ($i\leq n-1$) acts on rows $i,i+1\leq n$, so $\trm^n(e_iR')=R$ when $e_iR'$ is defined, and $\clp^n(e_iR')=e_i(\clp^nR')$ by Corollary~\ref{corollary:crystaliso} applied to each $\zeromap$ step in Definition~\ref{definition:cliptrim} (erasing rows of index $>n$ commutes with $e_i$, and $\zeromap$ is a crystal isomorphism onto its image by Propositions~\ref{proposition:zeroequal} and~\ref{proposition:zerocrystal}, so $e_i$ is defined on $\clp^nR'$ if and only if it is defined on $R'$). Hence $e_i$ restricts to a bijection from the terms of $R_1\sqcupplus R$ onto the terms of $e_i(R_1)\sqcupplus R$, and corresponding terms $R'$, $e_i(R')$ have the same highest weight. Thus $R_1\sqcupplus R-R_2\sqcupplus R\in\Theta$.
 \end{proof}
 
 \begin{lemma}
@@ -3138,7 +3162,7 @@ $R_1$ & $R_2$ \\[4pt]
 \label{fig:LRkey_example}
 \end{figure}
 
-Both graphs have permutation $w_c=(1,2,3,5,7,4,10,6,8,9)$. They differ only in their first two rows: $R_1$ has row data $[(6,4),(9,),()]$ in the top three rows, while $R_2$ has $[(9,4),(6,),()]$. Applying $\clp^3$ (four one-row clips, which here amount to retaining the top $3$ rows and applying $\zeromap$ until the height is $3$; see Lemma~\ref{lemma:cliplocal}) to each yields the same $3$-row graph with extremal weight $a=(0,1,2)$:
+Both graphs have permutation $w_c=(1,2,3,5,7,4,10,6,8,9)$. They differ only in their first two rows: $R_1$ has row data $[(6,4),(9,),()]$ in the top three rows, while $R_2$ has $[(9,4),(6,),()]$. Applying $\clp^3$ (retaining the top $3$ rows and applying $\zeromap$ until the height is $3$) to each yields the same $3$-row graph with extremal weight $a=(0,1,2)$:
 $$\clp^3(R_1)=\clp^3(R_2)=
 \begin{tikzpicture}[scale=0.45, baseline=(current bounding box.center)]
   \draw[lightgray, very thin, opacity=0.3] (5.3,0) -- (0.3,0);
@@ -3680,7 +3704,7 @@ For the reader's convenience we collect here, in one place, the principal symbol
 \begin{description}
 \item[$\zeromap$] The transition map $\RC_n^0\to\RC_{n-1}$ of Definition~\ref{definition:zeromap}; it realizes the Lascoux--Sch\"utzenberger transition formula on the last row.
 \item[$\trm^p(R)$] ``Truncate'': the RC graph obtained from the last $\hr(R)-p$ rows of $R$ (Definition~\ref{definition:cliptrim}).
-\item[$\clp^p(R)$] ``Clip'': the RC graph in $\RC_p$ obtained from $R$ by $\hr(R)-p$ one-row clips (erase the last row, then apply $\zeromap$ until the height drops by one); depends only on the top $p$ rows of $R$ (Definition~\ref{definition:cliptrim}, Lemma~\ref{lemma:cliplocal}).
+\item[$\clp^p(R)$] ``Clip'': the RC graph in $\RC_p$ obtained from the top $p$ rows of $R$ by applying $\zeromap$ until the height is $p$ (Definition~\ref{definition:cliptrim}).
 \item[$\shup^p$] Shift indices up by $p$ (applied to permutations or letters).
 \end{description}
 
@@ -3823,7 +3847,7 @@ Thus $A(v',v)$ is the set of all $v(p)$ such that $p>i$ and $v'(p-1)=v(p)$, whic
 The author is deeply grateful to Zachary Hamaker for many illuminating conversations during the development of this work, and in particular for introducing the author to forest polynomials in the first place, in addition to pointing out the connections of RC graph crystal operators to  Little's bumping algorithm. Thanks are also due to Frank Sottile, whose work, much of it now classical, has been a sustained guiding influence on the author's thinking about Schubert calculus, and whose generosity with his time over the years has shaped the perspective taken here.
 
 \bibliographystyle{acm}
-\bibliography{schubert_bialgebra}
+\bibliography{schubert_bialgebra,schubert_bialgebra_bpd}
 
 
 \end{document}

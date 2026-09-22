@@ -1,0 +1,121 @@
+\documentclass{amsart}
+\usepackage{amsmath,amssymb,amsthm,hyperref,booktabs}
+\usepackage[margin=1in]{geometry}
+
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{proposition}[lemma]{Proposition}
+\newtheorem{claim}[lemma]{Claim}
+\theoremstyle{definition}
+\newtheorem{definition}[lemma]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[lemma]{Remark}
+
+\newcommand{\RC}{\mathcal{RC}}
+\newcommand{\maxd}{\mathrm{maxd}}
+\newcommand{\wof}[1]{w_{#1}}
+\newcommand{\zeromap}{\mathtt{Z}}
+\newcommand{\rt}{\mathrm{rt}}
+
+\title{Scratch: the local confluence lemma behind Lemma \emph{cliplocal}}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\noindent\textbf{Status.} Everything in Sections~\ref{sec:setup}--\ref{sec:reduction} is proved. Section~\ref{sec:clean} states the one class of the local lemma that the computations show to be deterministic; its proof is written as far as it goes and the remaining step is marked. Section~\ref{sec:tree} is the case tree with counts (all bounded RC graphs of length $\leq 7$), and names the sub-cases that are open. Nothing here is in the paper.
+
+\section{Setup}\label{sec:setup}
+
+Fix $p\geq 1$. $\RC_{\leq p}$ is the set of bounded RC graphs all of whose crossings lie in rows $1,\ldots,p$, of any height $\geq\max(p,\maxd)$. For $T\in\RC_{\leq p}$ write $\mathbf a=\mathrm{word}(T)$ (rows top to bottom, each row right to left), $w=\wof{T}$, $m=\maxd(w)$. For a position $q$ of $\mathbf a$, $\rt(q)=(x,y)$, $x<y$, is the right root: the pair of positions of $w$ whose values are exchanged by the crossing at $q$, i.e.\ $\rt(q)=(s_{a_n}\cdots s_{a_{q+1}})(a_q,a_q+1)$. Distinct positions have distinct roots and $\{\rt(q)\}=\mathrm{Inv}(w)$.
+
+\begin{definition}[$p$-high cover bumps]
+A position $q$ with $\rt(q)=(a,b)$ is \emph{$p$-high} if $a>p$, and is a \emph{cover} if $w\,t_{ab}$ is a Bruhat cover of $w$, equivalently $\mathbf a$ with the letter at $q$ deleted is reduced (nearly reduced at $q$). For such $q$, $\beta_q(T)$ is the Little bump: decrement $a_q$; while the word is not reduced, decrement the letter at the unique other position carrying the same root (Little \cite[Lemma~4]{L}). Write $C_\beta$ for the set of positions decremented (the chain) and $q_\beta=q$.
+\end{definition}
+
+\begin{lemma}\label{lem:wd}
+Let $T\in\RC_{\leq p}$, $p\geq 1$, and $q$ a $p$-high cover. Then $\beta_q(T)$ is a valid RC graph in $\RC_{\leq p}$ with the same row lengths as $T$, $|\beta_q T|=|T|$, and no letter is decremented from $1$.
+\end{lemma}
+\begin{proof}[Proof status]
+Uniqueness of the defect is Little's Lemma~4. Validity of the compatible sequence (letters strictly decreasing within a row, letter $\geq$ row index) and the no-shift statement are verified for length $\leq 7$; a proof should follow \cite[Lemma~3.1]{BHY} (stack pushes stay within a row) together with the observation that a letter equal to its row index $i\leq p$ has root $(x,y)$ with $x\leq i\leq p$, so cannot lie on a $p$-high chain. \emph{Not written.}
+\end{proof}
+
+\begin{definition}[Canonical bump, $D^p$]
+For $T\in\RC_{\leq p}$ with $m=\maxd(\wof T)>p$ let $L(T)=\beta_{q}(T)$ where $\rt(q)=(m,m+1)$ (the unique such $q$). Then $D^p(T)=L^{k}(T)$ for the least $k$ with $\maxd\leq p$; this is Proposition~\emph{zerocrystal} of the paper.
+\end{definition}
+
+\section{Reduction of confluence to a local lemma}\label{sec:reduction}
+
+Let $\Phi(T)=\sum_{(i,j)\in T}j$. Every elementary decrement lowers $\Phi$ by one, so every $p$-high cover bump lowers $\Phi$ by $|C_\beta|\geq1$.
+
+\begin{proposition}\label{prop:local}
+Suppose that for every $T\in\RC_{\leq p}$ with $\maxd(\wof T)>p$ and every $p$-high cover bump $\beta\neq L$ of $T$ there exist $k\geq 0$ and a sequence of $p$-high cover bumps $\gamma_1,\ldots,\gamma_r$ ($r\geq0$) with
+\begin{equation}\label{eq:local}
+L^{k}(\beta T)=\gamma_r\cdots\gamma_1\bigl(L(T)\bigr)\text{.}
+\end{equation}
+Then $D^p(\beta T)=D^p(T)$ for every $p$-high cover bump $\beta$ of every $T\in\RC_{\leq p}$; consequently the identity (clpzero) of the paper holds and $\mathrm{clip}^p=D^p$.
+\end{proposition}
+\begin{proof}
+Induction on $\Phi(T)$. If $\maxd(\wof T)\leq p$ there is no $p$-high inversion and nothing to prove. Otherwise let $\beta$ be a $p$-high cover bump; if $\beta=L$ then $D^p(\beta T)=D^p(T)$ by definition. Else take $k,\gamma_i$ as in \eqref{eq:local}. Since $D^p\circ L=D^p$ wherever $L$ is defined, $D^p(\beta T)=D^p(L^k\beta T)$. As $\Phi(LT)<\Phi(T)$ and each $\gamma_i$ is a $p$-high cover bump, the induction hypothesis applied successively to $LT,\gamma_1LT,\ldots$ gives $D^p(\gamma_r\cdots\gamma_1 LT)=D^p(LT)=D^p(T)$. Hence $D^p(\beta T)=D^p(T)$.
+
+For (clpzero): by Proposition~\emph{zerocrystal}, $\zeromap Y$ restricted to the top $p$ rows is a composite of $p$-high cover bumps of $Y_{\leq p}$ (each last-descent bump of $Y$ either leaves $Y_{\leq p}$ unchanged or acts on it as one such bump; verified for length $\leq7$, and this is the content of GAP~2 in the earlier discussion), so $D^p(\zeromap Y)=D^p(Y_{\leq p})=D^p(Y)$.
+\end{proof}
+
+\begin{remark}
+Computations (length $\leq7$, 13\,931 pairs $(T,\beta)$) show \eqref{eq:local} always holds with $k\leq3$ and $r\leq2$; at the coarser level of a full zeroing step $\zeromap$ (all last-descent bumps until $\maxd$ drops) it holds with $\zeromap$ in place of $L$, $k\leq2$, $r\leq2$. Neither $k$ nor the identity of the $\gamma_i$ is uniform, see Section~\ref{sec:tree}.
+\end{remark}
+
+\section{A deterministic class}\label{sec:clean}
+
+\begin{claim}\label{claim:clean}
+Let $T\in\RC_{\leq p}$, $m=\maxd(\wof T)>p$, and let $\beta=\beta_q$ with $\rt(q)=(a,m)$, $p<a<m$ (a cover). Then $\maxd(\wof{\beta T})=m$ and
+$$L(\beta T)=\beta'\bigl(L(T)\bigr)\text{,}$$
+where $\beta'$ is the bump of $L(T)$ at the position with root $(a,m+1)$. (Verified in all $3540$ instances with length $\leq7$; in $1921$ of them the chains $C_\beta$, $C_L$ are disjoint, in $1619$ they overlap.)
+\end{claim}
+
+\begin{proof}[Proof, as far as written]
+Write $w=\wof T$. Since $(a,m)$ and $(m,m+1)$ are inversions, $w(a)>w(m)>w(m+1)$, and $(m,m+1)$ is the last descent so $w(m+1)<w(m+2)<\cdots$.
+
+\emph{Permutations.} $\wof{\beta T}=w\,t_{am}\,t_{ca}$ for some $c<a$ with $\ell$ adding (paper, Lemma~\emph{insertworks}); $c<a$ because the chain moves to earlier positions. So $\wof{\beta T}(m)=w(a)>w(m+1)=\wof{\beta T}(m+1)$ and positions $>m+1$ are untouched: $\maxd(\wof{\beta T})=m$, and $L$ is defined on $\beta T$ at the crossing of positions $(m,m+1)$, i.e.\ of the values $w(a),w(m+1)$. On the other side $\wof{LT}=w\,t_{m,m+1}\,t_{dm}$ for some $d<m$, so $\wof{LT}(m+1)=w(m)$ and $\wof{LT}(a)=w(a)$ unless $d=a$. The root $(a,m+1)$ of $LT$ carries the values $(w(a),w(m))$ (if $d\neq a$), which is an inversion; it is a cover of $\wof{LT}$ because the values strictly between $w(m)$ and $w(a)$ in positions $a<j<m+1$ of $w$ are the same as those blocking $(a,m)$ in $w$, of which there are none. \emph{(The case $d=a$, where $L$'s chain ends at position $a$, needs the same check with $\wof{LT}(a)=w(m+1)$; then $(a,m+1)$ carries $(w(m+1),w(m))$, which is not an inversion, so in that case $\beta'$ must be identified differently. In the data this sub-case does not occur with $\beta$ at $(a,m)$: whenever $d=a$ the two chains coincide from position $a$ on and the shape is $L(\beta T)=L(T)$; see class (ii) below.)}
+
+\emph{Words.} Both sides have the same permutation: $\wof{L\beta T}=w\,t_{am}t_{ca}\,t_{m,m+1}\,t_{em}$ and $\wof{\beta' LT}=w\,t_{m,m+1}t_{dm}\,t_{a,m+1}t_{fa}$ for suitable $c,e,d,f$; equality of these is a statement about the four pipes $w(a),w(m),w(m+1),w(c)$ that has to be checked case by case ($c=d$, $c\neq d$, whether $e=f$). \emph{Not written.} Equality of words then follows from equality of permutations together with equality of rows $2,\ldots,p$ (the trim induction of the paper) only if the first-row letters are also matched, so a direct word-level argument is needed: one has to show that the two decrement sets $C_L(\beta T)\cup C_\beta(T)$ and $C_{\beta'}(LT)\cup C_L(T)$ coincide as multisets of positions. In the disjoint sub-case ($C_\beta\cap C_L=\emptyset$, $1921$ instances) the data show $C_{\beta'}(LT)=C_\beta(T)$ and $C_L(\beta T)=C_L(T)$, so the claim reduces to: \emph{a Little bump chain is unchanged by decrementing letters at positions outside it whose roots do not share a coordinate with the chain roots}. This is the standard non-interaction lemma and should follow from the description of the defect as the other crossing of the same two pipes. \emph{Not written.} In the overlapping sub-case ($1619$ instances) the chains share positions and the multiset identity is a genuine rearrangement. \emph{Open.}
+\end{proof}
+
+\section{Case tree}\label{sec:tree}
+
+Notation: $q_L$ start of $L$, $C_L$ its chain; $q_\beta$, $C_\beta$ for $\beta$; $\rt(q_\beta)=(a,b)$. Shapes: $L^k(\beta T)=\gamma(LT)$ abbreviates \eqref{eq:local} with $r=1$, etc. Counts are over all $(T,\beta)$, length $\leq7$, $\beta\neq L$.
+
+\begin{center}\small
+\begin{tabular}{@{}llrl@{}}
+\toprule
+class & condition & count & shapes observed \\
+\midrule
+(i) & $a=m$ (so $b>m+1$), $q_L\in C_\beta$ & 4828 & $\beta T=\gamma(LT)$: 3917; $L(\beta T)=\gamma(LT)$: 829; $L^2$: 79; $L^3$: 3 \\
+(ii) & $q_\beta\in C_L$ (then $b=m+1$) & 2107 & $L(\beta T)=L(T)$: 1934; $L^{1,2,3}(\beta T)=\gamma(LT)$: 173 \\
+(iii) & $b=m$, $a<m$ & 3540 & $L(\beta T)=\gamma(LT)$ with $\gamma$ at $(a,m+1)$: all (Claim~\ref{claim:clean}) \\
+(iv) & $a=m$, chains disjoint & 1403 & $L(\beta T)=\gamma(LT)$: 1333; $L^2$: 68; $L^3$: 2 \\
+(v) & no shared position, chains disjoint & 1787 & $L(\beta T)=\gamma(LT)$: 1748; $L(\beta T)=\gamma\gamma'(LT)$: 33; $L^2$: 6 \\
+(vi) & no shared position, chains overlap & 174 & $L(\beta T)=\gamma(LT)$: 170; $L^2$: 4 \\
+(vii) & $b=m+1$, $q_\beta\notin C_L$, disjoint & 92 & $L(\beta T)=\gamma(LT)$: 90; $L^2$: 2 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent In class (i) the shape $\beta T=\gamma(LT)$ (with $\gamma$ the bump at the transported crossing) is the case where $\beta$'s chain passes through $q_L$ and then continues: $\beta$ ``contains'' $L$. In the generic shape $L(\beta T)=\gamma(LT)$ the compensating bump $\gamma$ is at the crossing of $LT$ that corresponds to $q_\beta$; when $C_\beta\cap C_L=\emptyset$ this is the same word position (its root having been relabeled by $L$), otherwise it is the crossing of the same pair of pipes; neither rule holds in all cases, so $\gamma$ is not given by one transport rule.
+
+\medskip
+\noindent\textbf{Open sub-cases} (needed for a proof of Proposition~\ref{prop:local}'s hypothesis):
+\begin{enumerate}
+\item The exceptional members of classes (i), (ii), (iv)--(vii) requiring $k\geq2$ or $r=2$. They are not separated from the generic members by any of the first-order features tested (chain disjointness, containment of starts, shared positions/pipes, whether $\beta$ lowers $\maxd$, chain lengths, relative order of chain ends): with all fourteen features combined, 24 of 165 feature classes still contain two shapes. The $k\geq2$ members scale with the length of the descent strip (e.g.\ $T=\{4\,3\mid 5\,4\}$ needs $k=1$, $\{5\,4\,3\mid 6\,5\,4\}$ needs $k=2$), so the correct statement is presumably in terms of the full zeroing step rather than single bumps; at that level the exceptional counts are: $\zeromap^2$ needed in 252 cases, two compensating bumps in 56.
+\item Class (iii), overlapping chains (1619 instances): the multiset identity of decrement positions.
+\item Lemma~\ref{lem:wd} (validity, no shift) in full.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Scripts} (in \texttt{schubmult/\_lscripts}): \texttt{\_diamond.py} (shapes), \texttt{\_shape\_features.py}, \texttt{\_shape\_features2.py} (feature search), \texttt{\_shape\_Z.py} (zeroing-step level), \texttt{\_clean\_class.py} (Claim~\ref{claim:clean}), \texttt{\_gap\_checks.py} (Lemma~\ref{lem:wd} data).
+
+\begin{thebibliography}{9}
+\bibitem{L} D.~Little, Combinatorial aspects of the Lascoux--Sch\"utzenberger tree, Adv.\ Math.\ 174 (2003).
+\bibitem{BHY} S.~Billey, A.~Holroyd, B.~Young, A bijective proof of Macdonald's reduced word formula, Algebr.\ Comb.\ 2 (2019).
+\end{thebibliography}
+\end{document}
