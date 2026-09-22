@@ -93,8 +93,6 @@
 \newcommand{\clp}{\mathtt{clip}}
 \newcommand{\BRC}{\mathcal{BRC}}
 \newcommand{\RC}{\mathcal{RC}}
-\newcommand{\lzeromap}{\mathscr{Z}}
-\newcommand{\lmap}{\mathscr{L}}
 \newcommand{\ltb}{\mathrm{little}}
 \newcommand{\slide}{\mathfrak{F}}
 
@@ -215,13 +213,7 @@ These formulas bear a striking similarity to each other, which is no coincidence
 Beyond this, there is potentially much to explore. For example, the coproduct of $\dcoma$ has as its structure constants the structure constants of Schubert polynomials, which have evaded expression in terms of positive formulas for decades, and at the time of this writing no positive, combinatorial formula is known for the structure constants of Schubert polynomials that applies in all cases. At the very least, this coproduct is a new potential method of attack on this and related problems, since, to our knowledge, it was previously unknown. An expression for $\dsch_w^n$ in the composition basis leads to a simple, purely mechanical method for computing all $c_{u,v}^w$ (generalized Littlewood-Richardson coefficients for Schubert polynomials) by leveraging the extremely simple form the coproduct takes on the weak composition basis, as well as a neat positive formula for the expansion of a weak composition $[a]$ in the Schubert basis.
 %It is a nearly trivial observation that if a basis of the polynomial ring is such that the Schubert polynomials have a nonnegative expression in terms of that basis, then the dual Schubert elements can be expressed nonnegatively in terms of the corresponding dual basis.
 
-For the reader familiar with bumpless pipe dreams \cite{lam2021back}, we state as a conjecture that our apparently complex transition algorithm for RC graphs can be realized almost trivially for bumpless pipe dreams. Specifically, while (reduced) bumpless pipe dreams are typically defined in such a way that they cannot deviate from a square shape, there is indeed a consistent way to remove rows from a bumpless pipe dream unambiguously. This was observed by Yu in \cite[Lemma~3.18]{Yu2025EmbeddingBP} in the definition of a $k$-row BPD. Weigandt in \cite{Weigandt2021} defines a transition formula $\mathbf{t}:\mathrm{BPD}_n\to\mathrm{BPD}_{n-1}$, and while the image is realized as square, it agrees with Yu's notion of an $n-1$-row BPD.
-
-Gao and Huang in \cite{GaoHuang2023} defined a natural bijection between RC graphs and bumpless pipe dreams: given a bumpless pipe dream $B$ with $n$ rows, we define $\phi(B)$ to be the corresponding RC graph under this bijection.
-\begin{conjecture}
-Let $B$ be a $k$-row reduced bumpless pipe dream such that row $k$ has no blanks (``weighty tiles''). Then 
-$$\zeromap(\phi(B)) = \phi(\mathbf{t}(B))$$
-\end{conjecture}
+For the reader familiar with bumpless pipe dreams \cite{lam2021back}, our transition map for RC graphs is realized trivially for bumpless pipe dreams. Specifically, while (reduced) bumpless pipe dreams are typically defined in such a way that they cannot deviate from a square shape, there is indeed a consistent way to remove rows from a bumpless pipe dream unambiguously. This was observed by Yu in \cite[Lemma~3.18]{Yu2025EmbeddingBP} in the definition of a $k$-row BPD. Weigandt in \cite{Weigandt2021} defines a transition formula $\mathbf{t}:\mathrm{BPD}_n\to\mathrm{BPD}_{n-1}$, and while the image is realized as square, it agrees with Yu's notion of an $n-1$-row BPD. Under the Gao--Huang bijection \cite{GaoHuang2023} between RC graphs and bumpless pipe dreams, $\zeromap$ is the deletion of the last row (Proposition~\ref{proposition:zerotrunc}); this is how the properties of $\zeromap$ and the associativity of our product are proved in Section~\ref{section:bpd}.
 
 This simplicity does not come for free, however; the $\trm^p$ operation on BPDs is no longer trivial.
 
@@ -999,98 +991,11 @@ We observe that in the above RC graph, the position $(1,5)$ does not have this c
 \end{tikzpicture}
 \end{figure}
 
-\subsection{Zeroing out the last row}
+\subsection{Zeroing out the last row}\label{section:bpd}
 
-We proceed now to define a product on $\BRC$ turning it into a ring. To do this, we need to be able to define a function $\zeromap:\BRC\to\BRC$ trimming empty rows from the bottom instead of from the top. This is far more complicated.
-
-
-\newcommand{\xleadsto}[2][]{\overset{#2}{\leadsto}}
-
-\newcommand{\ins}[2]{{#2\xleadsto{#1}}}
-
-\begin{algorithm}
-\caption{Basic monk insertion $\ins{k}{i} R$}
-\label{algorithm:monk}
-\begin{algorithmic}[1]
-		\State \textbf{Input:} An RC graph $R$, parameter $k$, and an integer $i$ with $1\leq i\leq k$.
-		\State \textbf{Output:} A modified RC graph $R'$ with $\wtt_j(R')=\wtt_j(R)$  for $j\neq i$ and $\wtt_i(R')=\wtt_i(R)+1$ such that $\wof{R}\tom{k} \wof{R'}$.
-		\State Find leftmost position $(i, j) \notin R$ in row $i$ such that if $\rtt_R(i, j)=(a,b)$, then $a\leq k < b$.
-		\State $R \gets R \cup \{(i, j)\}$
-    \If{there exists $(i', j') \in R$ with $\rtt_R(i', j') \in \Phi^-$}
-        \State $R \gets R \setminus \{(i', j')\}$
-        \State Return to step 3 substituting $i = i'$.
-    \EndIf
-		\State \Return $R$
-	\end{algorithmic}
-\end{algorithm}
-
-\begin{algorithm} 
-	\caption{Pseudo-Pieri insertion $\ins{k}{I} R$}
-	\label{algorithm:insertion}
-	\begin{algorithmic}[1]
-		\State \textbf{Input:} An RC graph $R$, parameter $k$, and sequence $I = \{i_1, \ldots, i_m\}$ with $k\geq i_1 \geq i_2 \geq \cdots \geq i_m \geq 1$.
-		\State \textbf{Output:} A modified RC graph $R'$ with $\wtt_i(R')=\wtt_i(R)$ for $i\notin I$ and $\wtt_i(R')=\wtt_i(R)+\#\{j \mid i_j = i\}$ for $i\in I$ such that $\wof{R}\Tom{k} \wof{R'}$.
-		\State \textbf{Initialize:} Let $L \gets [\,]$ (empty list of pairs $(a, b)$ where $a \leq k < b$), and $U\gets [\,]$ (empty list of positions).
-		\For{each $i \in (i_1, \ldots, i_m)$}
-		\State Find leftmost position $(i, j) \notin R$ in row $i$ satisfying $j>j'$ for all $(i,j')\in U$ such that either:
-		\State \quad a) $\rtt_R(i, j) = (s, q)$ where $s \leq k < q$ and $q \notin \{b \mid (a, b) \in L\}$.
-		\State \quad b) $\rtt_R(i, j) = (b_r, q)$ where $q > k$, $b_r<q$, and $q \notin \{b \mid (a, b) \in L\}$.
-		\State $R \gets R \cup \{(i, j)\}$ and $U\gets U \cup \{(i, j)\}$
-		\State Update $L$ by adding $(s, q)$ or replacing $(a_r, b_r)$ with $(a_r, q)$ and $(a_r, b_r)$.
-		\If{there exists $(i', j') \in R$ with $\rtt_R(i', j') \in \Phi^-$}
-        
-    \State $R \gets R \setminus \{(i', j')\}$
-		\State Let $\rtt_R(i', j') = (q, s)$
-		\If{$(s, q) \in L$}
-		\State Remove $(s, q)$ from $L$
-		\Else
-		\State Remove $(a_r, q)$ from $L$, where $(a_r, q),(a_r,s)\in L$
-		\EndIf
-		\State Return to step 5 to insert $i'$.
-    \EndIf
-		\EndFor
-		\State \Return $R$
-	\end{algorithmic}
-\end{algorithm}
+We proceed now to define a product on $\BRC$ turning it into a ring. To do this, we need a map $\zeromap:\BRC\to\BRC$ trimming empty rows from the bottom instead of from the top, which is far more delicate than trimming from the top. We define $\zeromap$ by Little's bumping algorithm \cite{little2003combinatorial} in its pipe dream form \cite{billey2019bijective}, and we prove its properties by transporting it along the Gao--Huang bijection \cite{GaoHuang2023} to bumpless pipe dreams, where deleting a row is literal. In this subsection an RC graph is a finite set $R\subseteq\mathbb P\times\mathbb P$ with $\ell(\wof R)=|R|$ (a reduced pipe dream); the height enters only where stated. We write $R_{\leq p}=\{(i,j)\in R:i\leq p\}$.
 
 
-\begin{algorithm} 
-	\caption{Map $\zeromap(R)$ zeroing out last row}
-	\label{algorithm:zero}
-	\begin{algorithmic}[1]
-		\State \textbf{Input:} A bounded RC graph $R$ with $\hr(R)=n$ and row $n$ empty.
-		\State \textbf{Output:} A bounded RC graph $R'$ with $\hr(R')=n-1$, $|R'|=|R|$ (same number of crossings), and $\wof{R}\downvar{n} \wof{R'}$.
-		
-		\If{$R$ with last row removed is a valid bounded RC graph}
-		\State \Return $R$ with last row removed
-		\Else
-		\State Let $R_0 \gets R$.
-		\State Find the maximal $p$ and sequence $\{(i_m, j_m)\}_{m=1}^p$ such that:
-		\State \quad $\rtt_{R_{m-1}}(i_m, j_m) = (n+m-1,n+m)$ for each $m$, where $R_m = R_{m-1}\setminus\{(i_m, j_m)\}$ for each $m\geq 1$.
-		\State $R^- \gets R \setminus \{(i_1, j_1), \ldots, (i_p, j_p)\}$.
-		\State Let $I \gets (i_1, i_2, \ldots, i_p)$.
-		\State $D \gets R^- \cup \{(n, 1), (n, 2), \ldots, (n, p)\}$.
-		\State $D' \gets \ins{n-1}{I} D$
-		\State $R' \gets \{(i, j) \in D' \mid i < n\}$ as a bounded RC graph with $n-1$ rows.
-		\State \Return $R'$.
-		\EndIf
-	\end{algorithmic}
-\end{algorithm}
-
-See Figure \ref{fig:zeroing} for an example of the zeroing operation (Algorithm \ref{algorithm:zero}). 
-
-\def\multiset#1#2{\ensuremath{\left(\kern-.3em\left(\genfrac{}{}{0pt}{}{#1}{#2}\right)\kern-.3em\right)}}
-
-
-Note that Algorithm \ref{algorithm:insertion} is \emph{not} a realization of Sottile's Pieri formula for complete symmetric polynomials, despite preserving the relevant Bruhat relation. This is because the map 
-$$\multiset{k}{p}\times\RC(w)\to \RC(n)$$
-given by 
-$$(I, R)\mapsto \ins{k}{I} R$$ 
-need not be injective.
-
-\begin{definition}\label{definition:zeromap}
-Let $R$ be an RC graph with $\hr(R) = n$ such that row $n$ is empty. We define $\zeromap(R)$ to be the output of Algorithm \ref{algorithm:zero}, an RC graph with $n-1$ rows, on input $R$.
-\end{definition}
 
 \begin{figure}[htbp]
 \centering
@@ -1135,146 +1040,9 @@ Let $R$ be an RC graph with $\hr(R) = n$ such that row $n$ is empty. We define $
   \node[font=\scriptsize, text=black, anchor=east] at (-0.3,1.5) {3};
   \draw[black, line width=1.5pt] (0,1) rectangle (4,4);
 \end{tikzpicture}
-\caption*{(a) Initial RC graph $R$}
+\caption*{(a) The RC graph $R$; the crossing $(2,2)$ has right root $(3,4)$}
 \end{minipage}
 \hfill
-% Second diagram
-\begin{minipage}{0.45\textwidth}
-\centering
-\begin{tikzpicture}[scale=0.8]
-  \draw[lightgray, very thin, opacity=0.3] (0,1) -- (4,1);
-  \draw[lightgray, very thin, opacity=0.3] (0,2) -- (4,2);
-  \draw[lightgray, very thin, opacity=0.3] (0,3) -- (4,3);
-  \draw[lightgray, very thin, opacity=0.3] (0,4) -- (4,4);
-  \draw[lightgray, very thin, opacity=0.3] (0,1) -- (0,4);
-  \draw[lightgray, very thin, opacity=0.3] (1,1) -- (1,4);
-  \draw[lightgray, very thin, opacity=0.3] (2,1) -- (2,4);
-  \draw[lightgray, very thin, opacity=0.3] (3,1) -- (3,4);
-  \draw[lightgray, very thin, opacity=0.3] (4,1) -- (4,4);
-  \draw[blue, line width=1.0pt] (0,3.5) .. controls (0.3,3.5) and (0.5,3.7) .. (0.5,4);
-  \draw[blue, line width=1.0pt] (0.5,3) .. controls (0.5,3.3) and (0.7,3.5) .. (1,3.5);
-  \draw[blue, line width=1.0pt, line cap=round] (1,3.5) -- (2,3.5);
-  \draw[blue, line width=1.0pt, line cap=round] (1.5,3) -- (1.5,4);
-  \draw[blue, line width=1.0pt, line cap=round] (2,3.5) -- (3,3.5);
-  \draw[blue, line width=1.0pt, line cap=round] (2.5,3) -- (2.5,4);
-  \draw[blue, line width=1.0pt] (3,3.5) .. controls (3.3,3.5) and (3.5,3.7) .. (3.5,4);
-  \draw[blue, line width=1.0pt] (0,2.5) .. controls (0.3,2.5) and (0.5,2.7) .. (0.5,3);
-  \draw[blue, line width=1.0pt] (0.5,2) .. controls (0.5,2.3) and (0.7,2.5) .. (1,2.5);
-  \draw[blue, line width=1.0pt] (1,2.5) .. controls (1.3,2.5) and (1.5,2.7) .. (1.5,3);
-  \draw[blue, line width=1.0pt] (1.5,2) .. controls (1.5,2.3) and (1.7,2.5) .. (2,2.5);
-  \draw[blue, line width=1.0pt] (2,2.5) .. controls (2.3,2.5) and (2.5,2.7) .. (2.5,3);
-  \draw[blue, line width=1.0pt, line cap=round] (0,1.5) -- (1,1.5);
-  \draw[blue, line width=1.0pt, line cap=round] (0.5,1) -- (0.5,2);
-  \draw[blue, line width=1.0pt] (1,1.5) .. controls (1.3,1.5) and (1.5,1.7) .. (1.5,2);
-  \node[font=\Large\bfseries, text=green!60!black, fill=white, inner sep=0.5pt, circle, transform shape] at (0.5,1.5) {3};
-  \node[font=\Large\bfseries, text=green!60!black, fill=white, inner sep=0.5pt, circle, transform shape] at (1.5,3.5) {2};
-  \node[font=\Large\bfseries, text=green!60!black, fill=white, inner sep=0.5pt, circle, transform shape] at (2.5,3.5) {3};
-  \node[font=\scriptsize, text=black, anchor=south] at (0.5,4.3) {1};
-  \node[font=\scriptsize, text=black, anchor=south] at (1.5,4.3) {4};
-  \node[font=\scriptsize, text=black, anchor=south] at (2.5,4.3) {3};
-  \node[font=\scriptsize, text=black, anchor=south] at (3.5,4.3) {2};
-  \node[font=\scriptsize, text=black, anchor=east] at (-0.3,3.5) {1};
-  \node[font=\scriptsize, text=black, anchor=east] at (-0.3,2.5) {2};
-  \node[font=\scriptsize, text=black, anchor=east] at (-0.3,1.5) {3};
-  \draw[black, line width=1.5pt] (0,1) rectangle (4,4);
-\end{tikzpicture}
-\caption*{(b) After deleting $(2,2)$ with $\rtt_R(2,2)=\alpha_3$ and moving to row $3$}
-\end{minipage}
-
-\vspace{1em}
-
-% Third diagram
-\begin{minipage}{0.45\textwidth}
-\centering
-\begin{tikzpicture}[scale=0.8]
-  \draw[lightgray, very thin, opacity=0.3] (0,1) -- (4,1);
-  \draw[lightgray, very thin, opacity=0.3] (0,2) -- (4,2);
-  \draw[lightgray, very thin, opacity=0.3] (0,3) -- (4,3);
-  \draw[lightgray, very thin, opacity=0.3] (0,4) -- (4,4);
-  \draw[lightgray, very thin, opacity=0.3] (0,1) -- (0,4);
-  \draw[lightgray, very thin, opacity=0.3] (1,1) -- (1,4);
-  \draw[lightgray, very thin, opacity=0.3] (2,1) -- (2,4);
-  \draw[lightgray, very thin, opacity=0.3] (3,1) -- (3,4);
-  \draw[lightgray, very thin, opacity=0.3] (4,1) -- (4,4);
-  \draw[blue, line width=1.0pt] (0,3.5) .. controls (0.3,3.5) and (0.5,3.7) .. (0.5,4);
-  \draw[blue, line width=1.0pt] (0.5,3) .. controls (0.5,3.3) and (0.7,3.5) .. (1,3.5);
-  \draw[blue, line width=1.0pt, line cap=round] (1,3.5) -- (2,3.5);
-  \draw[blue, line width=1.0pt, line cap=round] (1.5,3) -- (1.5,4);
-  \draw[blue, line width=1.0pt, line cap=round] (2,3.5) -- (3,3.5);
-  \draw[blue, line width=1.0pt, line cap=round] (2.5,3) -- (2.5,4);
-  \draw[blue, line width=1.0pt] (3,3.5) .. controls (3.3,3.5) and (3.5,3.7) .. (3.5,4);
-  \draw[blue, line width=1.0pt, line cap=round] (0,2.5) -- (1,2.5);
-  \draw[blue, line width=1.0pt, line cap=round] (0.5,2) -- (0.5,3);
-  \draw[blue, line width=1.0pt] (1,2.5) .. controls (1.3,2.5) and (1.5,2.7) .. (1.5,3);
-  \draw[blue, line width=1.0pt] (1.5,2) .. controls (1.5,2.3) and (1.7,2.5) .. (2,2.5);
-  \draw[blue, line width=1.0pt] (2,2.5) .. controls (2.3,2.5) and (2.5,2.7) .. (2.5,3);
-  \draw[blue, line width=1.0pt, line cap=round] (0,1.5) -- (1,1.5);
-  \draw[blue, line width=1.0pt, line cap=round] (0.5,1) -- (0.5,2);
-  \draw[blue, line width=1.0pt] (1,1.5) .. controls (1.3,1.5) and (1.5,1.7) .. (1.5,2);
-  \node[font=\Large\bfseries, text=green!60!black, fill=white, inner sep=0.5pt, circle, transform shape] at (0.5,1.5) {3};
-  \node[font=\Large\bfseries, text=green!60!black, fill=white, inner sep=0.5pt, circle, transform shape] at (1.5,3.5) {2};
-  \node[font=\Large\bfseries, text=green!60!black, fill=white, inner sep=0.5pt, circle, transform shape] at (2.5,3.5) {3};
-  \node[font=\Large\bfseries, text=green!60!black, fill=white, inner sep=0.5pt, circle, transform shape] at (0.5,2.5) {2};
-  \node[font=\scriptsize, text=black, anchor=south] at (0.5,4.3) {1};
-  \node[font=\scriptsize, text=black, anchor=south] at (1.5,4.3) {2};
-  \node[font=\scriptsize, text=black, anchor=south] at (2.5,4.3) {3};
-  \node[font=\scriptsize, text=black, anchor=south] at (3.5,4.3) {4};
-  \node[font=\scriptsize, text=black, anchor=east] at (-0.3,3.5) {1};
-  \node[font=\scriptsize, text=black, anchor=east] at (-0.3,2.5) {2};
-  \node[font=\scriptsize, text=black, anchor=east] at (-0.3,1.5) {3};
-  \draw[black, line width=1.5pt] (0,1) rectangle (4,4);
-\end{tikzpicture}
-\caption*{(c) After insertion with $i_1=2$}
-\end{minipage}
-\hfill
-% Fourth diagram
-\begin{minipage}{0.45\textwidth}
-\centering
-\begin{tikzpicture}[scale=0.8]
-  \draw[lightgray, very thin, opacity=0.3] (0,1) -- (4,1);
-  \draw[lightgray, very thin, opacity=0.3] (0,2) -- (4,2);
-  \draw[lightgray, very thin, opacity=0.3] (0,3) -- (4,3);
-  \draw[lightgray, very thin, opacity=0.3] (0,4) -- (4,4);
-  \draw[lightgray, very thin, opacity=0.3] (0,1) -- (0,4);
-  \draw[lightgray, very thin, opacity=0.3] (1,1) -- (1,4);
-  \draw[lightgray, very thin, opacity=0.3] (2,1) -- (2,4);
-  \draw[lightgray, very thin, opacity=0.3] (3,1) -- (3,4);
-  \draw[lightgray, very thin, opacity=0.3] (4,1) -- (4,4);
-  \draw[blue, line width=1.0pt, line cap=round] (0,3.5) -- (1,3.5);
-  \draw[blue, line width=1.0pt, line cap=round] (0.5,3) -- (0.5,4);
-  \draw[blue, line width=1.0pt] (1,3.5) .. controls (1.3,3.5) and (1.5,3.7) .. (1.5,4);
-  \draw[blue, line width=1.0pt] (1.5,3) .. controls (1.5,3.3) and (1.7,3.5) .. (2,3.5);
-  \draw[blue, line width=1.0pt, line cap=round] (2,3.5) -- (3,3.5);
-  \draw[blue, line width=1.0pt, line cap=round] (2.5,3) -- (2.5,4);
-  \draw[blue, line width=1.0pt] (3,3.5) .. controls (3.3,3.5) and (3.5,3.7) .. (3.5,4);
-  \draw[blue, line width=1.0pt, line cap=round] (0,2.5) -- (1,2.5);
-  \draw[blue, line width=1.0pt, line cap=round] (0.5,2) -- (0.5,3);
-  \draw[blue, line width=1.0pt] (1,2.5) .. controls (1.3,2.5) and (1.5,2.7) .. (1.5,3);
-  \draw[blue, line width=1.0pt] (1.5,2) .. controls (1.5,2.3) and (1.7,2.5) .. (2,2.5);
-  \draw[blue, line width=1.0pt] (2,2.5) .. controls (2.3,2.5) and (2.5,2.7) .. (2.5,3);
-  \draw[blue, line width=1.0pt, line cap=round] (0,1.5) -- (1,1.5);
-  \draw[blue, line width=1.0pt, line cap=round] (0.5,1) -- (0.5,2);
-  \draw[blue, line width=1.0pt] (1,1.5) .. controls (1.3,1.5) and (1.5,1.7) .. (1.5,2);
-  \node[font=\Large\bfseries, text=green!60!black, fill=white, inner sep=0.5pt, circle, transform shape] at (0.5,1.5) {3};
-  \node[font=\Large\bfseries, text=green!60!black, fill=white, inner sep=0.5pt, circle, transform shape] at (0.5,3.5) {1};
-  \node[font=\Large\bfseries, text=green!60!black, fill=white, inner sep=0.5pt, circle, transform shape] at (2.5,3.5) {3};
-  \node[font=\Large\bfseries, text=green!60!black, fill=white, inner sep=0.5pt, circle, transform shape] at (0.5,2.5) {2};
-  \node[font=\scriptsize, text=black, anchor=south] at (0.5,4.3) {4};
-  \node[font=\scriptsize, text=black, anchor=south] at (1.5,4.3) {1};
-  \node[font=\scriptsize, text=black, anchor=south] at (2.5,4.3) {3};
-  \node[font=\scriptsize, text=black, anchor=south] at (3.5,4.3) {2};
-  \node[font=\scriptsize, text=black, anchor=east] at (-0.3,3.5) {1};
-  \node[font=\scriptsize, text=black, anchor=east] at (-0.3,2.5) {2};
-  \node[font=\scriptsize, text=black, anchor=east] at (-0.3,1.5) {3};
-  \node[font=\scriptsize, text=black, anchor=east] at (-0.3,2.5) {2};
-  \node[font=\scriptsize, text=black, anchor=east] at (-0.3,1.5) {3};
-  \draw[black, line width=1.5pt] (0,1) rectangle (4,4);
-\end{tikzpicture}
-\caption*{(d) After rectification}
-\end{minipage}
-
-\vspace{1em}
-
 % Fifth diagram
 \begin{minipage}{0.45\textwidth}
 \centering
@@ -1310,77 +1078,80 @@ Let $R$ be an RC graph with $\hr(R) = n$ such that row $n$ is empty. We define $
   \node[font=\scriptsize, text=black, anchor=east] at (-0.3,2.5) {2};
   \draw[black, line width=1.5pt] (0,2) rectangle (4,4);
 \end{tikzpicture}
-\caption*{(e) Final result $\zeromap(R)=(R',2)$ after removing row 3}
+\caption*{(b) $\zeromap(R)$, of height $2$}
 \end{minipage}
 
-\caption{Step-by-step computation of $\zeromap(R)$ for $R=\{(1,2),(1,3),(2,2)\}$.}
+\caption{The map $\zeromap$ on $R=\{(1,2),(1,3),(2,2)\}$, of height $3$ and permutation $1432$. The crossing $(2,2)$ moves to $(2,1)$; the resulting word $3\,2\,2$ is not reduced, so $(1,2)$ moves to $(1,1)$, giving the reduced word $3\,1\,2$ of $1432\,t_{34}t_{13}=2413$. The empty row $3$ is then deleted.}
 \label{fig:zeroing}
 \end{figure}
 
 
 
-\begin{lemma} \label{lemma:insertworks}
-Given an RC graph $R$, an integer $k$, and $k\geq i_1\geq\cdots\geq i_m\geq 1$, Algorithm \ref{algorithm:insertion} produces a valid RC graph $R'$ satisfying
-$$\wtt_i(R') = \wtt_i(R) + \#\{j \mid i_j = i\}$$
-and
-$$\wof{R}\Tom{k} \wof{R'}$$
+
+\subsubsection*{Bumpless pipe dreams}
+Fix $N$ larger than every row and column index that occurs below. A \emph{bumpless pipe dream} \cite{lam2021back} is a tiling of the $N\times N$ grid by six tiles: the blank tile, the crossing tile, the horizontal and vertical tiles, and two elbow tiles, the \emph{$r$-tile}, in which a pipe enters from the south and leaves to the east, and the \emph{$j$-tile}, in which a pipe enters from the west and leaves to the north, such that the resulting pipes enter the grid from the south edge, one in each column, travel north and east, leave through the east edge, one in each row, and no two pipes cross twice. The pipe entering at the bottom of column $j$ is \emph{pipe $j$}. The permutation $w$ of $B$ is defined by: the pipe leaving through row $i$ is pipe $w(i)$. We write $\mathrm{BPD}(w)$ for the set of bumpless pipe dreams of $w$, $\mathrm{blank}(B)$ for the set of blank tiles of $B$ and $B_{\leq p}$ for rows $1,\ldots,p$ of $B$. By \cite[Theorem~5.13]{lam2021back}, $\sch_w=\sum_{B\in\mathrm{BPD}(w)}\prod_{(i,j)\in\mathrm{blank}(B)}x_i$. Enlarging $N$ appends pipes that travel straight north and turn once, and appends horizontal tiles to the rows already present, so statements about $B_{\leq p}$ do not depend on $N$. Since a pipe travels north and east, the pipe leaving through row $i$ lies entirely in rows $\geq i$; we use this repeatedly.
+
+Gao and Huang \cite{GaoHuang2023} construct, for every $w$, a bijection between $\mathrm{BPD}(w)$ and the RC graphs with permutation $w$ that sends $\mathrm{blank}(B)$ row by row to the crossings, i.e.\ row $i$ of $B$ has as many blank tiles as row $i$ of the RC graph has crossings \cite[Theorem~3.6]{GaoHuang2023}. We write $\Phi(R)\in\mathrm{BPD}(\wof R)$ for the bumpless pipe dream corresponding to the RC graph $R$; $\Phi$ is injective and depends only on the set $R$.
+
+We recall Little's bumping operation on reduced words \cite{little2003combinatorial}.
+
+\begin{definition}[Little bumps]\label{definition:littlebump}
+  Given a reduced word $a_1\cdots a_m$ for a permutation $w$ and an index $1\leq p\leq m$, the \emph{Little bump} $\ltb_p(a_1\cdots a_m)$ is defined recursively as follows. If $a_p>1$, replace $a_p$ with $a_p-1$, and if $a_p=1$ then instead replace all $a_q$ with $q\neq p$ with $a_q+1$. Denote the new word by $a_1'\cdots a_m'$. If this resulting word is reduced, we are done. Otherwise, there is a unique index $j\neq p$ such that the word obtained by deleting $a_j'$ from the new word is reduced by the deletion property of Coxeter groups. We then define
+  $$\ltb_p(a_1\cdots a_m) = \ltb_j(a_1'\cdots a_m')$$
+\end{definition}
+
+\subsubsection*{Monk moves}
+Monk's rule in the form
+\begin{equation}\label{eq:monk}
+x_\alpha\sch_w+\sum_{\substack{k<\alpha\\ wt_{k\alpha}\gtrdot w}}\sch_{wt_{k\alpha}}=\sum_{\substack{l>\alpha\\ wt_{\alpha l}\gtrdot w}}\sch_{wt_{\alpha l}}
+\end{equation}
+is realized bijectively on RC graphs by Billey--Holroyd--Young \cite{billey2019bijective} and on bumpless pipe dreams by Huang \cite{huang2020monk}: there are maps
+$$x_\alpha\!\rightsquigarrow:\RC(w)\to\bigsqcup_{l}\RC(wt_{\alpha l})\text{,}\qquad m_{k,\alpha}:\RC(wt_{k\alpha})\to\bigsqcup_{l}\RC(wt_{\alpha l})$$
+($l$ ranging over the right side of \eqref{eq:monk}), which together form a bijection from the disjoint union of the sets on the left of \eqref{eq:monk} to the disjoint union of those on the right, with $x_\alpha\!\rightsquigarrow$ adding one crossing in row $\alpha$ and $m_{k,\alpha}$ preserving the number of crossings in every row, and maps with the same names and properties (with blank tiles in place of crossings) on bumpless pipe dreams \cite[Definitions~4.2 and~4.4]{GaoHuang2023}. Gao and Huang prove that $\Phi$ intertwines them \cite[Theorem~4.5]{GaoHuang2023}:
+\begin{equation}\label{eq:GHintertwine}
+\Phi(x_\alpha\!\rightsquigarrow R)=x_\alpha\!\rightsquigarrow\Phi(R)\text{,}\qquad \Phi(m_{k,\alpha}R)=m_{k,\alpha}\Phi(R)\text{.}
+\end{equation}
+We recall the two descriptions to the extent needed. On RC graphs \cite[Definition~4.2]{GaoHuang2023}, $x_\alpha\!\rightsquigarrow R$ is computed by placing a crossing at the leftmost elbow of row $\alpha$; whenever the crossing just placed makes two pipes cross twice, the other crossing of that pair of pipes is replaced by an elbow and a crossing is placed at the nearest elbow to its right in its row, until the result is reduced. For $D\in\RC(wt_{k\alpha})$, $m_{k,\alpha}D$ is computed in the same way after first replacing by an elbow the unique crossing $c\in D$ with $\rtt_D(c)=(k,\alpha)$, i.e.\ the crossing whose removal yields $w$, and placing a crossing at the nearest elbow to its right in its row. Consequently, the inverse of the Monk bijection on an element $X$ of the right side is computed by removing the crossing $c\in X$ whose removal yields $w$, placing a crossing at the nearest elbow to its left in the same row, and whenever this makes two pipes cross twice, removing the other crossing of that pair and placing a crossing at the nearest elbow to its left in its row; if a crossing to be moved has no elbow to its left, it is simply removed and the process stops, and the result lies in $\RC(w)$ (this is the $x_\alpha\!\rightsquigarrow$ case). Moving a crossing one column to the left decrements its letter by one, and moving it across a block of crossings to the nearest elbow decrements the letters of the block one after the other, the two deletable positions of the intermediate words being adjacent equal letters; hence, when no crossing is removed (the $m_{k,\alpha}$ case), the inverse Monk move is, in terms of the reading word, the Little bump $\ltb_c$ of Definition~\ref{definition:littlebump} at the position of $c$, with the row sequence unchanged. We call it the \emph{Little bump of $X$ at $c$} in either case. Here we use Little's lemma \cite[Lemma~4]{little2003combinatorial} in the following form: if a word $\mathbf c$ is not reduced but $\mathbf c\setminus k$ is, then exactly one pair of wires of $\mathbf c$ crosses twice, the positions whose deletion leaves a reduced word are exactly the two crossings of this pair, and since the right root of a position records the two wires crossing there, these two positions have the same right root up to order.
+
+On bumpless pipe dreams \cite[Algorithm~1 and proof of Theorem~2]{huang2020monk}, $x_\alpha\!\rightsquigarrow B$ is computed by repeatedly modifying the pipe $p$ that leaves through row $\alpha$: $p$ is drooped from its current $r$-shaped turn into the nearest available tile to the southeast, and when the drooped pipe meets a pipe $q$ in a bump tile the bump is either replaced by a crossing (if $p$ and $q$ do not cross, in which case the algorithm stops) or exchanged with the existing crossing of $p$ and $q$, after which $p$ is drooped again. For $B\in\mathrm{BPD}(wt_{k\alpha})$, $m_{k,\alpha}B$ is computed by replacing the crossing of the two pipes that leave through rows $k$ and $\alpha$ by a bump tile, after which the pipe leaving through row $\alpha$ has the $r$-shaped turn in this tile and is the pipe $p$ to which the same algorithm is applied. In both cases the permutation of the diagram is $w$ throughout, except for the final step, so $p$ leaves through row $\alpha$ throughout.
+
+\begin{lemma}[Row confinement]\label{lemma:bpdconfine}
+Let $B\in\mathrm{BPD}(w)$ and $B'\in\mathrm{BPD}(wt_{k\alpha})$ with $k<\alpha$ and $wt_{k\alpha}\gtrdot w$. Then $x_\alpha\!\rightsquigarrow B$ agrees with $B$ in rows $1,\ldots,\alpha-1$, and $m_{k,\alpha}B'$ agrees with $B'$ in rows $1,\ldots,\alpha-1$.
 \end{lemma}
 \begin{proof}
-Set $R_0=R$ to be the initial RC graph. We claim that given $R$ and $L$ at the start of iteration $p$ of the main loop, we have that $R$ is a valid RC graph satisfying
-$$\wtt_i(R) = \wtt_i(R_0) + \#\{j \leq p-1 \mid i_j = i\}$$
-and
-$$\wof{R} = \wof{R_0}t_{a_1b_1}\cdots t_{a_{p-1}b_{p-1}}$$
-where $L=[(a_1,b_1),\ldots,(a_p,b_p)]$. This is clear for $p=1$. For larger $p$, suppose we are inserting at row $i_p$. If we are in case (a) of Step 5, then adding $(i_p,j)$ to $R$ adds the root $t_s - t_q$ to the inversion set of $\wof{R}$, and multiplying by $t_{sq}$ gives the desired result. If we are in case (b) of Step 5, then adding $(i_p,j)$ to $R$ results in multiplication by $t_{b_rq}$. This commutes past the other reflections to meet $t_{a_rb_r}$. We thus have the situation
-$$t_{a_rb_r}t_{b_rq} = t_{a_rq}t_{a_rb_r}$$
-This ensures that the product remains as desired if the RC graph is valid. However, the condition that the RC graph $R$ be valid is not guaranteed after this step, so we must rectify. Suppose we must rectify at row $i - 1$. We find a negative root $(i-1, j')$ which must have been created by the insertion, and hence by the strong exchange property equal to $\rtt_R(i, j)$ that was inserted. Removing this root (from both the graph and from $L$) returns us to the original permutation at the beginning of the iteration, and performing the insert at row $i-1$ adds a new positive root, giving the desired result on the permutation. The weight is unchanged since we removed and added one crossing in row $i-1$. If the algorithm ends here, we have instead multiplied by the new reflection obtained in the ultimate insert step. Otherwise, repeating this process for all necessary rectifications completes the proof of the claim. The claim iterated to $p=m+1$ yields the desired result, and the method of updating $L$ ensures that the $b_j$ are all distinct, so that $\wof{R}\Tom{k} \wof{R'}$.
+Every tile changed by Huang's algorithm lies either on the pipe $p$ that leaves through row $\alpha$ (the tiles of a bump and of a crossing that are exchanged, the final bump replaced by a crossing, and the initial crossing replaced by a bump, which lies on both pipes leaving through rows $k$ and $\alpha$) or in the rectangle spanned by a droop of $p$, whose northwest corner is a turn of $p$. Since $p$ travels north and east and leaves through row $\alpha$, all of $p$ lies in rows $\geq\alpha$, and so does every such rectangle.
 \end{proof}
 
-
-\begin{lemma}\label{lemma:zeroweight}
-Given a bounded RC graph $R$ with $\hr(R)=n$ such that row $n$ is empty, Algorithm \ref{algorithm:zero} produces a valid bounded RC graph $R'$ with $\hr(R')=n-1$ satisfying
-$$\wtt(R') = \wtt(R)$$
+\begin{lemma}[Little bumps and top rows]\label{lemma:bumpconfine}
+Let $X$ be an RC graph with $\wof X=\tau$ and let $c\in X$ be a crossing with $\rtt_X(c)=(s,\beta)$, $s<\beta$, such that $X\setminus\{c\}$ is reduced. Let $X'$ be the RC graph obtained from $X$ by the Little bump at $c$ (the inverse Monk move described above). Then $\Phi(X)$ and $\Phi(X')$ agree in rows $1,\ldots,s-1$.
 \end{lemma}
 \begin{proof}
-	Stripping out the crossings at roots $(n, n+1), (n+1, n+2), \ldots, (n + p - 1, n + p)$ removes exactly one crossing from each of rows $i_1, i_2, \ldots, i_p$, and moving them to the last row to obtain $R_1$ ensures that $\wof{R}=\wof{R_1}$. By construction, the portion of the RC graph in rows with index less than $n$ is valid (meaning its max descent is at most $n-1$). Applying Algorithm \ref{algorithm:insertion} to insert at rows $i_1, i_2, \ldots, i_p$ adds different crossings to preserve the number of elements in each row without adding descents past index $n$ in the permutation, by Lemma \ref{lemma:insertworks}. Removing row $n$ then yields a valid bounded RC graph $R'$ with $|R'|=n-1$ and the desired properties. 
+Removing $c$ yields $\pi:=\tau t_{s\beta}$ with $\ell(\pi)=\ell(\tau)-1$, so $X\in\RC(\pi t_{s\beta})$ lies on the right side of the Monk bijection for $(\pi,s)$, and $X'$ is its preimage: $X=x_s\!\rightsquigarrow X'$ with $X'\in\RC(\pi)$, or $X=m_{k,s}X'$ with $X'\in\RC(\pi t_{ks})$ for some $k<s$. By \eqref{eq:GHintertwine} the same relation holds between $\Phi(X)$ and $\Phi(X')$, and Lemma~\ref{lemma:bpdconfine} gives the claim.
 \end{proof}
 
-
-
-\begin{theorem} \label{theorem:zero_bijection}
-Let $w$ be a permutation with last descent at most $n$. Let $\mathcal{RC}(w,n)^0$ be the set of bounded RC graphs $R$ with $\hr(R)=n$ such that $\wof{R}=w$ and row $n$ is empty. Then
-$$\zeromap:\mathcal{RC}(w, n)^{0}\to \bigcup_{\substack{w\downvar{n} w'\\\ell(w')=\ell(w)}}\mathcal{RC}(w', n-1)$$
-is a weight-preserving bijection.
-\end{theorem}
-
-To prove Theorem \ref{theorem:zero_bijection} for $n=2$, we may characterize the bounded RC graphs $R$ with $|R|=2$ such that row $2$ is empty and $\maxd(\wof{R})=2$ as those for permutations $w=s_k s_{k-1}\cdots s_2$ for some $k>1$. Algorithm \ref{algorithm:zero} in this case moves the entirety of the crossings in row $1$ to row $2$. The procedure then inserts $k-1$ crossings into row $1$ in order from left to right, which must have roots $t_q - t_s$ such that $q=1$. Thus $R'$ is precisely $\{(1,1), (1,2), (1,3), \ldots, (1, k-1)\}$, which is the unique bounded RC graph for the permutation $w' = s_{k-1} s_{k-2}\cdots s_1$ with one row. This establishes the base case.
-
-For the induction step, we require the following lemmas.
-
-\begin{lemma} \label{lemma:zerotransition}
-Let $R$ be a bounded RC graph with $\hr(R)=n\geq 2$ such that row $n$ is empty. Then if $\zeromap(R) = R'$, we have
-$$\wof{R}\downvar{n} \wof{R'}$$
+\begin{lemma}[Bounded completion]\label{lemma:bpdcompletion}
+Let $B\in\mathrm{BPD}(w)$ have no blank tiles in rows $>p$, and suppose $\maxd(w)\leq p$. Then rows $>p$ of $B$ contain no $j$-shaped tiles. Consequently, in rows $>p$ every pipe $c$ travels straight north along column $c$, until it reaches row $p$ or until it reaches its exit row $w^{-1}(c)>p$, where it turns east and travels straight to the east edge; in particular $B$ is determined by $B_{\leq p}$.
 \end{lemma}
 \begin{proof}
-Let $w=\wof{R}$ and suppose $\code_n(w) = m$. By construction, the second to last step of Algorithm \ref{algorithm:zero} yields a bounded RC graph $\widetilde{R}$ with $|\widetilde{R}|=n$ such that if $\widetilde{w} = \wof{\widetilde{R}}$, then
-$$\widetilde{w}(n) > \widetilde{w}(n+1) < \widetilde{w}(n+2) < \cdots < \widetilde{w}(n + m)$$
-and
-$$w\Tom{n-1}\widetilde{w}$$
-via reflections $t_{ab}$ such that $n\leq b\leq n+m$. Let $w' = \wof{R'}$. We also have
-$$\widetilde{w}\Tom{n}\varphi_{n, N}(w')$$
-via only reflections $t_{nb}$ such that $b>n+m$. We claim that
-$$w\Tom{n} \varphi_{n, N}(w')$$
-This can only fail if $\widetilde{w}(n)\neq w(n)$ by the observations above. However, the pipe labeled $n$, by virtue of the fact that we have $(n,1),\ldots,(n,m)$ populated, will always lie to the right of pipes $n+1,n+2,\ldots,n+m$ in the wiring diagram for $\widetilde{w}$ or any intermediate stage. Inserting into any row that contained a crossing $(n, n+p)$, there must be a valid empty space to the left of the pipe labeled $n$ since we have deleted these crossings. By virtue of the fact that the leftmost is always chosen, no reflection $(i,n)$ will ever be inserted. This ensures that $\widetilde{w}(n) = w(n)$, as desired.
+Suppose $(i,c)$ is a $j$-shaped tile with $i>p$, and take $i$ maximal. No pipe enters $(i,c)$ from the south, so pipe $c$ turns east at some tile $(i'',c)$ with $i''>i$; as rows $>i$ contain no $j$-shaped tiles and no blanks, pipe $c$ then travels east along row $i''$ to the edge, so $w(i'')=c$. The pipe $P$ entering $(i,c)$ from the west travels along row $i$ from an $r$-shaped turn $(i,c_0)$, $c_0<c$. The pipe leaving through row $i$ is not $P$; its last turn is an $r$-shaped tile $(i,c_1)$ from which it travels east along row $i$ to the edge. The tiles $(i,c_0),\ldots,(i,c)$ are occupied by $P$ and an $r$-shaped tile cannot be entered from the west, so $c_1>c$. Below row $i$ there are no $j$-shaped tiles, so this pipe traveled straight north along column $c_1$ and is pipe $c_1$: $w(i)=c_1>c=w(i'')$ with $p<i<i''$, contradicting $\maxd(w)\leq p$. The remaining assertions follow: with no blanks and no $j$-shaped tiles in rows $>p$, a pipe in these rows can only travel north in its own column and, after one $r$-shaped turn, east.
 \end{proof}
 
-
-\begin{lemma} \label{lemma:ztrim}
-Let $(R, n)$ be a bounded RC graph with $n\geq 2$ such that row $n$ is empty. Then
-$$\zeromap(\trm(R)) = \trm(\zeromap(R))$$
-\end{lemma}
+\begin{proposition}[Top rows]\label{proposition:toprows}
+Let $R$ be an RC graph and $p\geq 0$. Then $\Phi(R)$ and $\Phi(R_{\leq p})$ agree in rows $1,\ldots,p$.
+\end{proposition}
 \begin{proof}
-This is almost a trivial observation. In terms of the word of $R$, $\trm(R, n)$ preserves a suffix. Removing all of the initial roots before trimming is therefore the same as removing the initial roots that still remain after trimming, by the exchange property. Afterwards, in performing the insertion algorithm, there is no dependency on rows with a lower index, the modification only proceeds downward in row number. Therefore, trimming the first row at any point only stops the process earlier, and does not change rows with higher index than $1$ in the outcome.
+It suffices to prove: if $\alpha$ is the last nonempty row of $R$ and $x$ is the leftmost crossing in row $\alpha$, then $\Phi(R)$ and $\Phi(R\setminus\{x\})$ agree in rows $1,\ldots,\alpha-1$. Indeed, removing the crossings of rows $>p$ one at a time in this manner never changes rows $1,\ldots,p$ of $\Phi$ and ends at $R_{\leq p}$.
+
+Let $x=(\alpha,j)$, $a=\alpha+j-1$ its letter, $R^-=R\setminus\{x\}$ and $\pi=\wof{R^-}$. As $x$ is the last letter of the reading word, $R^-$ is reduced and $\wof R=\pi s_a$, so $\rtt_R(x)=(a,a+1)$. We induct on $j$. If $j=1$ then $a=\alpha$, the leftmost elbow of $R^-$ in row $\alpha$ is $(\alpha,1)$, and $R=x_\alpha\!\rightsquigarrow R^-$ because $R$ is reduced; by \eqref{eq:GHintertwine} and Lemma~\ref{lemma:bpdconfine}, $\Phi(R)$ and $\Phi(R^-)$ agree in rows $<\alpha$.
+
+Let $j\geq 2$ and let $X'$ be the Little bump of $R$ at $x$. Since $a>\alpha$, row $a$ of $R$ is empty, so $R$ is not in the image of $x_a\!\rightsquigarrow$; hence $R=m_{k,a}X'$ for some $k<a$, and $X'$ has as many crossings as $R$ in every row. By Lemma~\ref{lemma:bumpconfine}, $\Phi(R)$ and $\Phi(X')$ agree in rows $<a$, hence in rows $<\alpha$. During the bump, a crossing moves only within its row and only to the nearest elbow on its left, so the crossings of row $\alpha$ other than $x$ remain to the right of $x$: the last nonempty row of $X'$ is $\alpha$, its leftmost crossing is $x'=(\alpha,j')$ with $j'<j$, and $X'\setminus\{x'\}$ is reduced. By induction, $\Phi(X')$ and $\Phi(X'\setminus\{x'\})$ agree in rows $<\alpha$. It remains to show that $\Phi(X'\setminus\{x'\})$ and $\Phi(R^-)$ agree in rows $<\alpha$.
+
+Write the reading word of $R$ as $\mathbf a\,a$ with $\mathbf a$ the reading word of $R^-$, and follow the Little bump letter by letter. We use the following restriction property, in which $\mathbf a\mathbf b$ is a word that is not reduced but becomes reduced when a position $k$ of $\mathbf a$ is deleted, and $\mathbf a^-$ denotes $\mathbf a$ with the letter at $k$ decremented: (i) if $\mathbf a^-$ is not reduced, then its defect (the unique position $j\neq k$ with $\mathbf a^-\setminus j$ reduced) is also the defect of $\mathbf a^-\mathbf b$; (ii) if $\mathbf a^-$ is reduced, then $\mathbf a^-\mathbf b$ is reduced or its defect lies in $\mathbf b$. For (i), the exchange property applied to the reduced word $\mathbf a^-\setminus k=\mathbf a\setminus k$ gives $\wof{\mathbf a^-\setminus j}=\wof{\mathbf a\setminus k}$, so $(\mathbf a^-\setminus j)\mathbf b$ has the permutation and the length of the reduced word $(\mathbf a\setminus k)\mathbf b$ and is reduced, and $j$ is the defect of $\mathbf a^-\mathbf b$ by uniqueness. For (ii), a defect $j$ of $\mathbf a^-\mathbf b$ in $\mathbf a$ would give $\wof{\mathbf a^-\setminus j}=\wof{\mathbf a\setminus k}=\wof{\mathbf a^-\setminus k}$, so the distinct positions $j,k$ of the reduced word $\mathbf a^-$ would have the same right root. The same holds with the roles of prefix and suffix exchanged.
+
+The bump begins by decrementing the last letter, $a\mapsto a-1$. If the word is reduced we are done with $X'\setminus\{x'\}=R^-$. Otherwise the defect $k$ lies in $\mathbf a$ by (ii) for the suffix, and by Little's lemma the positions $k$ and the last position have the same right root up to order; the last letter $a-1$ has right root $(a-1,a)$, so $\rtt_{\mathbf a}(k)=\{a-1,a\}$ as a set, and $\mathbf a\setminus k$ is reduced, being a prefix of the reduced word $(\mathbf a\,(a-1))\setminus k$. By (i) and (ii) the bump now performs the complete Little bump of $\mathbf a$ at $k$, producing a reduced word $\mathbf a^{(1)}$ (the RC graph $A^{(1)}$, with the rows of $R^-$), and then either stops or continues by decrementing the last letter again, to $a-2$, after which the same analysis applies to $\mathbf a^{(1)}(a-2)$, and so on. Thus $X'\setminus\{x'\}=A^{(m)}$ where $A^{(0)}=R^-$ and $A^{(i+1)}$ is the Little bump of $A^{(i)}$ at a crossing with right root $\{a-i-1,a-i\}$ whose removal leaves a reduced word. The last letter is decremented to $a-i-1$ only if $x$ moves to column $j-i-1\geq 1$, so $a-i-1\geq\alpha$. By Lemma~\ref{lemma:bumpconfine}, $\Phi(A^{(i)})$ and $\Phi(A^{(i+1)})$ agree in rows $<a-i-1$, hence in rows $<\alpha$, for every $i$, and therefore so do $\Phi(R^-)$ and $\Phi(X'\setminus\{x'\})$.
 \end{proof}
 
+\subsubsection*{Transition steps}
 \begin{definition}
 For a permutation $w$ with $\maxd(w)\le n$ define
 \[
@@ -1442,6 +1213,61 @@ $\sch_w(x_1,\dots,x_{n-1},0)=\sum\sch_{w'}$ over the end points $w'$ of all step
 Comparing with \eqref{E:Tn} and using that Schubert polynomials are linearly independent gives the claim.
 \end{proof}
 
+\subsubsection*{The map $\zeromap$}
+
+\begin{definition}\label{definition:zeromap}
+Let $R$ be a bounded RC graph of height $n\geq 1$ whose row $n$ is empty, and let $w=\wof R$. If $\maxd(w)<n$, let $\zeromap(R)$ be $R$ with its last row deleted, a bounded RC graph of height $n-1$. If $\maxd(w)=n$, let $s=\max\{j>n: w(j)<w(n)\}$ and let $c\in R$ be the unique crossing with $\rtt_R(c)=(n,s)$. Let $R^{(1)}$ be the RC graph obtained from $R$ by the Little bump at $c$, i.e.\ the inverse Monk move, and define $\zeromap(R)=\zeromap(R^{(1)})$, where $R^{(1)}$ is regarded as a bounded RC graph of height $n$.
+\end{definition}
+
+\begin{lemma}\label{lemma:zeroweight}
+Definition~\ref{definition:zeromap} is well posed: for $R$ as in the definition with $\maxd(w)=n$, the crossing $c$ exists and is unique, $R\setminus\{c\}$ is reduced, $R^{(1)}$ is a bounded RC graph of height $n$ with row $n$ empty, $\wtt(R^{(1)})=\wtt(R)$, and $\wof{R^{(1)}}=w\,t_{ns}t_{in}$ is a transition step at $n$ for some $i<n$. The recursion terminates, and $\zeromap(R)$ is a bounded RC graph of height $n-1$ with $\wtt(\zeromap R)=\wtt(R)$.
+\end{lemma}
+\begin{proof}
+Since $\maxd(w)=n$ we have $w(n+1)<w(n+2)<\cdots$, so $(n,s)$ is an inversion of $w$ and $w(k)<w(s)$ for $n<k<s$; hence $wt_{ns}\lessdot w$. The right roots of the positions of a reduced word are its inversions, each occurring once, which gives $c$, and $R\setminus\{c\}\in\RC(wt_{ns})$ is reduced. Put $\pi=wt_{ns}$. Then $R\in\RC(\pi t_{ns})$ lies on the right side of the Monk bijection \eqref{eq:monk} for $(\pi,n)$. As row $n$ of $R$ is empty, $R$ is not of the form $x_n\!\rightsquigarrow D$, so $R=m_{i,n}(R^{(1)})$ for a unique $i<n$ with $\pi t_{in}\gtrdot\pi$ and a unique $R^{(1)}\in\RC(\pi t_{in})$, namely the inverse Monk move, which has the same number of crossings as $R$ in every row; in particular no crossing is removed, so it is the Little bump at $c$. By Lemma~\ref{L:leaves}, $\maxd(wt_{ns}t_{in})\leq n$, so $R^{(1)}$ is a bounded RC graph of height $n$ with row $n$ empty, and the number of positions $j>n$ with $u(j)<u(n)$ strictly decreases along the recursion, which therefore terminates at a permutation with $\maxd<n$.
+\end{proof}
+
+\begin{lemma} \label{lemma:zerotransition}
+Let $R$ be a bounded RC graph with $\hr(R)=n\geq 1$ such that row $n$ is empty. Then $\wof{R}\downvar{n}\wof{\zeromap R}$ and $\ell(\wof{\zeromap R})=\ell(\wof R)$, i.e.\ $\wof{\zeromap R}\in T_n(\wof R)$.
+\end{lemma}
+\begin{proof}
+By Lemma~\ref{lemma:zeroweight}, $\wof{\zeromap R}$ is reached from $\wof R$ by a sequence of transition steps at $n$ and has $\maxd<n$; by Lemma~\ref{L:leaves} it lies in $T_n(\wof R)$.
+\end{proof}
+
+\begin{proposition}[$\zeromap$ erases the last row]\label{proposition:zerotrunc}
+Let $R$ be a bounded RC graph of height $n$ whose last row is empty. Then $\Phi(\zeromap R)$ and $\Phi(R)$ agree in rows $1,\ldots,n-1$. Consequently $\zeromap(R)$ is the unique bounded RC graph $S$ of height $n-1$ such that $\Phi(S)$ agrees with $\Phi(R)$ in rows $1,\ldots,n-1$.
+\end{proposition}
+\begin{proof}
+Each step $R\mapsto R^{(1)}$ of Definition~\ref{definition:zeromap} is a Little bump at a crossing with right root $(n,s)$ whose removal leaves a reduced word, so by Lemma~\ref{lemma:bumpconfine} it does not change rows $1,\ldots,n-1$ of $\Phi$; deleting the empty last row does not change $\Phi$ at all. For the second statement, if $S$ is a bounded RC graph of height $n-1$ then $\Phi(S)$ has no blank tiles in rows $>n-1$ and $\maxd(\wof S)\leq n-1$, so $\Phi(S)$ is determined by its rows $1,\ldots,n-1$ by Lemma~\ref{lemma:bpdcompletion}, and $S$ is determined by $\Phi(S)$.
+\end{proof}
+
+We also record the behavior of $\Phi$ under deleting the first row. Gao and Huang define $\Phi^{-1}$ by iterating an operation $\nabla$ on bumpless pipe dreams \cite[Definitions~3.1 and~3.3]{GaoHuang2023}: if $B=\Phi(R)$ and $x$ is the first crossing of $R$ in reading order (the rightmost crossing of the first nonempty row $r$, with letter $a$), then $\nabla B=\Phi(R\setminus\{x\})$, and the pair $(a,r)$ is read off from the computation of $\nabla B$ as described below; $\Phi(R)$ is the unique diagram whose successive pairs are the reading word and row sequence of $R$. The operation $\nabla B$ is computed as follows \cite[Definition~3.1, Figures~2 and~3]{GaoHuang2023}. A mark is placed on the rightmost blank tile of the first row of $B$ containing a blank tile, and a sequence of \emph{column moves} follows, each of which modifies only a rectangle of width two whose northwest corner $(x,y)$ is the current position of the mark, moved first to the rightmost blank tile of its block of consecutive blank tiles. The tile $(x,y+1)$ carries a pipe $p$ traveling north. If $p$ entered column $y+1$ at a $j$-tile $(x',y+1)$, $x'>x$, the rectangle has southeast corner $(x',y+1)$, and afterwards the mark is at $(x',y+1)$; otherwise $p$ is pipe $y+1$, the rectangle has southeast corner $(x',y+1)$ where $(x',y)$ is the $r$-tile at which pipe $y$ turns east, this is the last column move, and $a=y$. In both cases, in each row $z$ with $x<z<x'$ the pair of tiles $(z,y),(z,y+1)$ is replaced by a pair depending only on the tile $(z,y)$: a blank, horizontal, $r$- or $j$-tile at $(z,y)$ is replaced by a vertical, crossing, vertical, or crossing tile, respectively, and $(z,y+1)$ by a blank, horizontal, $r$- or $j$-tile, respectively, while a vertical or crossing tile at $(z,y)$ leaves the pair unchanged. The corner $(x,y)$ becomes an $r$-tile and $(x,y+1)$ becomes a horizontal or $j$-tile according as it was an $r$-tile or vertical. In the first case $(x',y+1)$ becomes blank and $(x',y)$ becomes vertical or a $j$-tile according as it was an $r$-tile or horizontal; in the second case $(x',y)$ becomes vertical and $(x',y+1)$ an $r$-tile, which is the same replacement as the row rule applied to the $r$-tile $(x',y)$.
+
+\begin{lemma}[Locality of $\nabla$]\label{lemma:poplocal}
+Let $B$ be a bumpless pipe dream with at least one blank tile and let $m\geq 1$. Then rows $1,\ldots,m$ of $\nabla B$ are determined by rows $1,\ldots,m$ of $B$. Moreover, if $B'$ is obtained from $B$ by adding a new first row and a new first column, with pipe $1$ traveling north along the new column and east along the new row and all other tiles shifted by $(1,1)$, then $\nabla B'$ is obtained from $\nabla B$ in the same way, and the pair $(a,r)$ read off from $B'$ is the pair read off from $B$ plus $(1,1)$.
+\end{lemma}
+\begin{proof}
+If rows $1,\ldots,m$ of $B$ contain no blank tile, the mark starts below row $m$ and every rectangle lies in rows $>m$. Otherwise the initial position of the mark is determined by $B_{\leq m}$. Consider a column move with northwest corner $(x,y)$, $x\leq m$. Scan column $y+1$ downward from row $x+1$ through rows $\leq m$. If a $j$-tile is met, in row $x'\leq m$, we are in the first case with this $x'$ (in the second case column $y+1$ carries pipe $y+1$ straight north), and the rectangle, its modification and the new position of the mark are determined by $B_{\leq m}$. If only vertical and crossing tiles are met, then in rows $x+1,\ldots,m$ the two columns are modified by the row rule: this is so in the first case, where $x'>m$; in the second case with $x'>m$; and in the second case with $x'\leq m$, because the corner replacement at row $x'$ agrees with the row rule and rows $x'+1,\ldots,m$ of column $y$ carry pipe $y$ vertically, so the row rule leaves them unchanged. In all these cases the mark is afterwards below row $m$ or the computation ends, so rows $1,\ldots,m$ are not changed again. For the second statement, the new row and column contain no blank tile and are never entered by a rectangle, since rectangles extend south and east from the mark, so every column move in $B'$ is the translate of the corresponding column move in $B$, and the last rectangle's left column index and the first blank row both increase by one.
+\end{proof}
+
+\begin{lemma} \label{lemma:ztrim}
+Let $R$ be a bounded RC graph of height $n\geq 2$ such that row $n$ is empty. Then
+$$\zeromap(\trm(R)) = \trm(\zeromap(R))\text{.}$$
+\end{lemma}
+\begin{proof}
+Put $S=\zeromap(R)$, of height $n-1$, and $T=\trm R$, of height $n-1$ with empty last row (Lemma~\ref{L:trim}). Both $\trm S$ and $\zeromap T$ are bounded RC graphs of height $n-2$ (Lemma~\ref{L:trim} and Lemma~\ref{lemma:zeroweight}), so by Proposition~\ref{proposition:zerotrunc} it suffices to show that $\Phi(\trm S)$ and $\Phi(T)$ agree in rows $1,\ldots,n-2$.
+
+Let $X$ be a bounded RC graph of height $n$ with $k$ crossings in row $1$. The first $k$ crossings of $X$ in reading order are those of row $1$, so $\nabla^k\Phi(X)=\Phi(X\setminus\text{row }1)=\Phi({\uparrow}\trm X)$. The reading word and row sequence of ${\uparrow}\trm X$ are those of $\trm X$ with every entry increased by one, so by the second part of Lemma~\ref{lemma:poplocal}, iterated, $\Phi({\uparrow}\trm X)$ is obtained from $\Phi(\trm X)$ by adding a first row and a first column. Hence rows $1,\ldots,n-2$ of $\Phi(\trm X)$ are determined by rows $2,\ldots,n-1$ of $\nabla^k\Phi(X)$, and these are determined by rows $1,\ldots,n-1$ of $\Phi(X)$ by the first part of Lemma~\ref{lemma:poplocal}, applied $k$ times.
+
+Apply this to $X=R$ and to $X=S$, regarded as a bounded RC graph of height $n$ with empty last row; both have $k=\wtt_1(R)$ crossings in row $1$ by Lemma~\ref{lemma:zeroweight}, and $\Phi(S)$ agrees with $\Phi(R)$ in rows $1,\ldots,n-1$ by Proposition~\ref{proposition:zerotrunc}. Therefore $\Phi(\trm S)$ and $\Phi(T)$ agree in rows $1,\ldots,n-2$.
+\end{proof}
+
+\begin{theorem} \label{theorem:zero_bijection}
+Let $w$ be a permutation with last descent at most $n$. Let $\mathcal{RC}(w,n)^0$ be the set of bounded RC graphs $R$ with $\hr(R)=n$ such that $\wof{R}=w$ and row $n$ is empty. Then
+$$\zeromap:\mathcal{RC}(w, n)^{0}\to \bigcup_{\substack{w\downvar{n} w'\\\ell(w')=\ell(w)}}\mathcal{RC}(w', n-1)$$
+is a weight-preserving bijection.
+\end{theorem}
+
+The proof occupies the rest of this subsection.
 
 \begin{lemma}\label{L:disjoint}
 Let $\maxd(w)\le n$ and let $w'\neq w''$ be two elements of $T_n(w)$. Then $P_1(w')\cap P_1(w'')=\varnothing$.
@@ -1605,73 +1431,6 @@ $$\trm(\clp^{k}(X))=\trm\bigl(\zeromap^{h-k}(X_{\leq k})\bigr)=\zeromap^{h-k}\bi
 and $\trm(X_{\leq k})=(\trm X)_{\leq k-1}$ regarded at height $h-1$, which is bounded by Lemma~\ref{L:trim}. Hence $h-1\geq\max(k-1,\maxd(\wof{(\trm X)_{\leq k-1}}))$ and the right side is $\clp^{k-1}(\trm X)$ by the padding independence noted after Definition~\ref{definition:cliptrim}.
 \end{proof}
 
-\subsection{Functoriality of \texorpdfstring{$\clp$}{clip} via bumpless pipe dreams}\label{section:bpd}
-
-The identity $\clp^p\circ\clp^{p+q}=\clp^p$ is proved by transporting it along the Gao--Huang bijection to bumpless pipe dreams, where erasing rows is literal. Throughout this subsection an RC graph is a finite set $R\subseteq\mathbb P\times\mathbb P$ with $\ell(\wof R)=|R|$ (a reduced pipe dream); the height assigned to it plays no role until Lemma~\ref{lemma:clpfunc}. We write $R_{\leq p}=\{(i,j)\in R:i\leq p\}$ as before.
-
-\subsubsection*{Bumpless pipe dreams}
-Fix $N$ larger than every row and column index that occurs below. A \emph{bumpless pipe dream} \cite{lam2021back} is a tiling of the $N\times N$ grid by six tiles: the blank tile, the crossing tile, the horizontal and vertical tiles, and two elbow tiles, the \emph{$r$-tile}, in which a pipe enters from the south and leaves to the east, and the \emph{$j$-tile}, in which a pipe enters from the west and leaves to the north, such that the resulting pipes enter the grid from the south edge, one in each column, travel north and east, leave through the east edge, one in each row, and no two pipes cross twice. The pipe entering at the bottom of column $j$ is \emph{pipe $j$}. The permutation $w$ of $B$ is defined by: the pipe leaving through row $i$ is pipe $w(i)$. We write $\mathrm{BPD}(w)$ for the set of bumpless pipe dreams of $w$, $\mathrm{blank}(B)$ for the set of blank tiles of $B$ and $B_{\leq p}$ for rows $1,\ldots,p$ of $B$. By \cite[Theorem~5.13]{lam2021back}, $\sch_w=\sum_{B\in\mathrm{BPD}(w)}\prod_{(i,j)\in\mathrm{blank}(B)}x_i$. Enlarging $N$ appends pipes that travel straight north and turn once, and appends horizontal tiles to the rows already present, so statements about $B_{\leq p}$ do not depend on $N$. Since a pipe travels north and east, the pipe leaving through row $i$ lies entirely in rows $\geq i$; we use this repeatedly.
-
-Gao and Huang \cite{GaoHuang2023} construct, for every $w$, a bijection between $\mathrm{BPD}(w)$ and the RC graphs with permutation $w$ that sends $\mathrm{blank}(B)$ row by row to the crossings, i.e.\ row $i$ of $B$ has as many blank tiles as row $i$ of the RC graph has crossings \cite[Theorem~3.6]{GaoHuang2023}. We write $\Phi(R)\in\mathrm{BPD}(\wof R)$ for the bumpless pipe dream corresponding to the RC graph $R$; $\Phi$ is injective and depends only on the set $R$.
-
-\subsubsection*{Monk moves}
-Monk's rule in the form
-\begin{equation}\label{eq:monk}
-x_\alpha\sch_w+\sum_{\substack{k<\alpha\\ wt_{k\alpha}\gtrdot w}}\sch_{wt_{k\alpha}}=\sum_{\substack{l>\alpha\\ wt_{\alpha l}\gtrdot w}}\sch_{wt_{\alpha l}}
-\end{equation}
-is realized bijectively on RC graphs by Billey--Holroyd--Young \cite{billey2019bijective} and on bumpless pipe dreams by Huang \cite{huang2020monk}: there are maps
-$$x_\alpha\!\rightsquigarrow:\RC(w)\to\bigsqcup_{l}\RC(wt_{\alpha l})\text{,}\qquad m_{k,\alpha}:\RC(wt_{k\alpha})\to\bigsqcup_{l}\RC(wt_{\alpha l})$$
-($l$ ranging over the right side of \eqref{eq:monk}), which together form a bijection from the disjoint union of the sets on the left of \eqref{eq:monk} to the disjoint union of those on the right, with $x_\alpha\!\rightsquigarrow$ adding one crossing in row $\alpha$ and $m_{k,\alpha}$ preserving the number of crossings in every row, and maps with the same names and properties (with blank tiles in place of crossings) on bumpless pipe dreams \cite[Definitions~4.2 and~4.4]{GaoHuang2023}. Gao and Huang prove that $\Phi$ intertwines them \cite[Theorem~4.5]{GaoHuang2023}:
-\begin{equation}\label{eq:GHintertwine}
-\Phi(x_\alpha\!\rightsquigarrow R)=x_\alpha\!\rightsquigarrow\Phi(R)\text{,}\qquad \Phi(m_{k,\alpha}R)=m_{k,\alpha}\Phi(R)\text{.}
-\end{equation}
-We recall the two descriptions to the extent needed. On RC graphs \cite[Definition~4.2]{GaoHuang2023}, $x_\alpha\!\rightsquigarrow R$ is computed by placing a crossing at the leftmost elbow of row $\alpha$; whenever the crossing just placed makes two pipes cross twice, the other crossing of that pair of pipes is replaced by an elbow and a crossing is placed at the nearest elbow to its right in its row, until the result is reduced. For $D\in\RC(wt_{k\alpha})$, $m_{k,\alpha}D$ is computed in the same way after first replacing by an elbow the unique crossing $c\in D$ with $\rtt_D(c)=(k,\alpha)$, i.e.\ the crossing whose removal yields $w$, and placing a crossing at the nearest elbow to its right in its row. Consequently, the inverse of the Monk bijection on an element $X$ of the right side is computed by removing the crossing $c\in X$ whose removal yields $w$, placing a crossing at the nearest elbow to its left in the same row, and whenever this makes two pipes cross twice, removing the other crossing of that pair and placing a crossing at the nearest elbow to its left in its row; if a crossing to be moved has no elbow to its left, it is simply removed and the process stops, and the result lies in $\RC(w)$ (this is the $x_\alpha\!\rightsquigarrow$ case). Moving a crossing one column to the left decrements its letter by one, and moving it across a block of crossings to the nearest elbow decrements the letters of the block one after the other, the two deletable positions of the intermediate words being adjacent equal letters; hence, in terms of the reading word, the inverse Monk move is the Little bump $\ltb_c$ of Definition~\ref{definition:littlebump} at the position of $c$. Here we use Little's lemma \cite[Lemma~4]{little2003combinatorial} in the following form: if a word $\mathbf c$ is not reduced but $\mathbf c\setminus k$ is, then exactly one pair of wires of $\mathbf c$ crosses twice, the positions whose deletion leaves a reduced word are exactly the two crossings of this pair, and since the right root of a position records the two wires crossing there, these two positions have the same right root up to order.
-
-On bumpless pipe dreams \cite[Algorithm~1 and proof of Theorem~2]{huang2020monk}, $x_\alpha\!\rightsquigarrow B$ is computed by repeatedly modifying the pipe $p$ that leaves through row $\alpha$: $p$ is drooped from its current $r$-shaped turn into the nearest available tile to the southeast, and when the drooped pipe meets a pipe $q$ in a bump tile the bump is either replaced by a crossing (if $p$ and $q$ do not cross, in which case the algorithm stops) or exchanged with the existing crossing of $p$ and $q$, after which $p$ is drooped again. For $B\in\mathrm{BPD}(wt_{k\alpha})$, $m_{k,\alpha}B$ is computed by replacing the crossing of the two pipes that leave through rows $k$ and $\alpha$ by a bump tile, after which the pipe leaving through row $\alpha$ has the $r$-shaped turn in this tile and is the pipe $p$ to which the same algorithm is applied. In both cases the permutation of the diagram is $w$ throughout, except for the final step, so $p$ leaves through row $\alpha$ throughout.
-
-\begin{lemma}[Row confinement]\label{lemma:bpdconfine}
-Let $B\in\mathrm{BPD}(w)$ and $B'\in\mathrm{BPD}(wt_{k\alpha})$ with $k<\alpha$ and $wt_{k\alpha}\gtrdot w$. Then $x_\alpha\!\rightsquigarrow B$ agrees with $B$ in rows $1,\ldots,\alpha-1$, and $m_{k,\alpha}B'$ agrees with $B'$ in rows $1,\ldots,\alpha-1$.
-\end{lemma}
-\begin{proof}
-Every tile changed by Huang's algorithm lies either on the pipe $p$ that leaves through row $\alpha$ (the tiles of a bump and of a crossing that are exchanged, the final bump replaced by a crossing, and the initial crossing replaced by a bump, which lies on both pipes leaving through rows $k$ and $\alpha$) or in the rectangle spanned by a droop of $p$, whose northwest corner is a turn of $p$. Since $p$ travels north and east and leaves through row $\alpha$, all of $p$ lies in rows $\geq\alpha$, and so does every such rectangle.
-\end{proof}
-
-\begin{lemma}[Little bumps and top rows]\label{lemma:bumpconfine}
-Let $X$ be an RC graph with $\wof X=\tau$ and let $c\in X$ be a crossing with $\rtt_X(c)=(s,\beta)$, $s<\beta$, such that $X\setminus\{c\}$ is reduced. Let $X'$ be the RC graph obtained from $X$ by the Little bump at $c$ (the inverse Monk move described above). Then $\Phi(X)$ and $\Phi(X')$ agree in rows $1,\ldots,s-1$.
-\end{lemma}
-\begin{proof}
-Removing $c$ yields $\pi:=\tau t_{s\beta}$ with $\ell(\pi)=\ell(\tau)-1$, so $X\in\RC(\pi t_{s\beta})$ lies on the right side of the Monk bijection for $(\pi,s)$, and $X'$ is its preimage: $X=x_s\!\rightsquigarrow X'$ with $X'\in\RC(\pi)$, or $X=m_{k,s}X'$ with $X'\in\RC(\pi t_{ks})$ for some $k<s$. By \eqref{eq:GHintertwine} the same relation holds between $\Phi(X)$ and $\Phi(X')$, and Lemma~\ref{lemma:bpdconfine} gives the claim.
-\end{proof}
-
-\begin{lemma}[Bounded completion]\label{lemma:bpdcompletion}
-Let $B\in\mathrm{BPD}(w)$ have no blank tiles in rows $>p$, and suppose $\maxd(w)\leq p$. Then rows $>p$ of $B$ contain no $j$-shaped tiles. Consequently, in rows $>p$ every pipe $c$ travels straight north along column $c$, until it reaches row $p$ or until it reaches its exit row $w^{-1}(c)>p$, where it turns east and travels straight to the east edge; in particular $B$ is determined by $B_{\leq p}$.
-\end{lemma}
-\begin{proof}
-Suppose $(i,c)$ is a $j$-shaped tile with $i>p$, and take $i$ maximal. No pipe enters $(i,c)$ from the south, so pipe $c$ turns east at some tile $(i'',c)$ with $i''>i$; as rows $>i$ contain no $j$-shaped tiles and no blanks, pipe $c$ then travels east along row $i''$ to the edge, so $w(i'')=c$. The pipe $P$ entering $(i,c)$ from the west travels along row $i$ from an $r$-shaped turn $(i,c_0)$, $c_0<c$. The pipe leaving through row $i$ is not $P$; its last turn is an $r$-shaped tile $(i,c_1)$ from which it travels east along row $i$ to the edge. The tiles $(i,c_0),\ldots,(i,c)$ are occupied by $P$ and an $r$-shaped tile cannot be entered from the west, so $c_1>c$. Below row $i$ there are no $j$-shaped tiles, so this pipe traveled straight north along column $c_1$ and is pipe $c_1$: $w(i)=c_1>c=w(i'')$ with $p<i<i''$, contradicting $\maxd(w)\leq p$. The remaining assertions follow: with no blanks and no $j$-shaped tiles in rows $>p$, a pipe in these rows can only travel north in its own column and, after one $r$-shaped turn, east.
-\end{proof}
-
-\begin{proposition}[Top rows]\label{proposition:toprows}
-Let $R$ be an RC graph and $p\geq 0$. Then $\Phi(R)$ and $\Phi(R_{\leq p})$ agree in rows $1,\ldots,p$.
-\end{proposition}
-\begin{proof}
-It suffices to prove: if $\alpha$ is the last nonempty row of $R$ and $x$ is the leftmost crossing in row $\alpha$, then $\Phi(R)$ and $\Phi(R\setminus\{x\})$ agree in rows $1,\ldots,\alpha-1$. Indeed, removing the crossings of rows $>p$ one at a time in this manner never changes rows $1,\ldots,p$ of $\Phi$ and ends at $R_{\leq p}$.
-
-Let $x=(\alpha,j)$, $a=\alpha+j-1$ its letter, $R^-=R\setminus\{x\}$ and $\pi=\wof{R^-}$. As $x$ is the last letter of the reading word, $R^-$ is reduced and $\wof R=\pi s_a$, so $\rtt_R(x)=(a,a+1)$. We induct on $j$. If $j=1$ then $a=\alpha$, the leftmost elbow of $R^-$ in row $\alpha$ is $(\alpha,1)$, and $R=x_\alpha\!\rightsquigarrow R^-$ because $R$ is reduced; by \eqref{eq:GHintertwine} and Lemma~\ref{lemma:bpdconfine}, $\Phi(R)$ and $\Phi(R^-)$ agree in rows $<\alpha$.
-
-Let $j\geq 2$ and let $X'$ be the Little bump of $R$ at $x$. Since $a>\alpha$, row $a$ of $R$ is empty, so $R$ is not in the image of $x_a\!\rightsquigarrow$; hence $R=m_{k,a}X'$ for some $k<a$, and $X'$ has as many crossings as $R$ in every row. By Lemma~\ref{lemma:bumpconfine}, $\Phi(R)$ and $\Phi(X')$ agree in rows $<a$, hence in rows $<\alpha$. During the bump, a crossing moves only within its row and only to the nearest elbow on its left, so the crossings of row $\alpha$ other than $x$ remain to the right of $x$: the last nonempty row of $X'$ is $\alpha$, its leftmost crossing is $x'=(\alpha,j')$ with $j'<j$, and $X'\setminus\{x'\}$ is reduced. By induction, $\Phi(X')$ and $\Phi(X'\setminus\{x'\})$ agree in rows $<\alpha$. It remains to show that $\Phi(X'\setminus\{x'\})$ and $\Phi(R^-)$ agree in rows $<\alpha$.
-
-Write the reading word of $R$ as $\mathbf a\,a$ with $\mathbf a$ the reading word of $R^-$, and follow the Little bump letter by letter. We use the following restriction property, in which $\mathbf a\mathbf b$ is a word that is not reduced but becomes reduced when a position $k$ of $\mathbf a$ is deleted, and $\mathbf a^-$ denotes $\mathbf a$ with the letter at $k$ decremented: (i) if $\mathbf a^-$ is not reduced, then its defect (the unique position $j\neq k$ with $\mathbf a^-\setminus j$ reduced) is also the defect of $\mathbf a^-\mathbf b$; (ii) if $\mathbf a^-$ is reduced, then $\mathbf a^-\mathbf b$ is reduced or its defect lies in $\mathbf b$. For (i), the exchange property applied to the reduced word $\mathbf a^-\setminus k=\mathbf a\setminus k$ gives $\wof{\mathbf a^-\setminus j}=\wof{\mathbf a\setminus k}$, so $(\mathbf a^-\setminus j)\mathbf b$ has the permutation and the length of the reduced word $(\mathbf a\setminus k)\mathbf b$ and is reduced, and $j$ is the defect of $\mathbf a^-\mathbf b$ by uniqueness. For (ii), a defect $j$ of $\mathbf a^-\mathbf b$ in $\mathbf a$ would give $\wof{\mathbf a^-\setminus j}=\wof{\mathbf a\setminus k}=\wof{\mathbf a^-\setminus k}$, so the distinct positions $j,k$ of the reduced word $\mathbf a^-$ would have the same right root. The same holds with the roles of prefix and suffix exchanged.
-
-The bump begins by decrementing the last letter, $a\mapsto a-1$. If the word is reduced we are done with $X'\setminus\{x'\}=R^-$. Otherwise the defect $k$ lies in $\mathbf a$ by (ii) for the suffix, and by Little's lemma the positions $k$ and the last position have the same right root up to order; the last letter $a-1$ has right root $(a-1,a)$, so $\rtt_{\mathbf a}(k)=\{a-1,a\}$ as a set, and $\mathbf a\setminus k$ is reduced, being a prefix of the reduced word $(\mathbf a\,(a-1))\setminus k$. By (i) and (ii) the bump now performs the complete Little bump of $\mathbf a$ at $k$, producing a reduced word $\mathbf a^{(1)}$ (the RC graph $A^{(1)}$, with the rows of $R^-$), and then either stops or continues by decrementing the last letter again, to $a-2$, after which the same analysis applies to $\mathbf a^{(1)}(a-2)$, and so on. Thus $X'\setminus\{x'\}=A^{(m)}$ where $A^{(0)}=R^-$ and $A^{(i+1)}$ is the Little bump of $A^{(i)}$ at a crossing with right root $\{a-i-1,a-i\}$ whose removal leaves a reduced word. The last letter is decremented to $a-i-1$ only if $x$ moves to column $j-i-1\geq 1$, so $a-i-1\geq\alpha$. By Lemma~\ref{lemma:bumpconfine}, $\Phi(A^{(i)})$ and $\Phi(A^{(i+1)})$ agree in rows $<a-i-1$, hence in rows $<\alpha$, for every $i$, and therefore so do $\Phi(R^-)$ and $\Phi(X'\setminus\{x'\})$.
-\end{proof}
-
-\begin{proposition}[$\zeromap$ erases the last row]\label{proposition:zerotrunc}
-Let $Y$ be a bounded RC graph of height $m$ whose last row is empty. Then $\Phi(\zeromap Y)$ and $\Phi(Y)$ agree in rows $1,\ldots,m-1$.
-\end{proposition}
-\begin{proof}
-If $\maxd(\wof Y)<m$ then $\zeromap Y$ is $Y$ with the empty last row deleted, and $\Phi$ depends only on the set of crossings. Otherwise $\zeromap=\lzeromap$ by Proposition~\ref{proposition:zerocrystal}, and $\lzeromap Y$ is computed by iterating $\lmap$: each step replaces the current RC graph $X$, with $d=\maxd(\wof X)\geq m$ and rows $\geq m$ empty (so that $X$ is a bounded RC graph of height $d$ with empty last row), by the Little bump at the crossing $c$ with $\rtt_X(c)=(d,d+1)$ (Proposition~\ref{proposition:little_bump}); as $d$ is a descent of $\wof X$, $X\setminus\{c\}$ is reduced. By Lemma~\ref{lemma:bumpconfine} each step preserves rows $1,\ldots,d-1\supseteq\{1,\ldots,m-1\}$ of $\Phi$, and the final deletion of empty rows does not change $\Phi$.
-\end{proof}
-
 \begin{lemma} \label{lemma:clpfunc}
 Let $R$ be a bounded RC graph with $\hr(R)=n$, and let $0\leq p\leq p+q\leq n$. Then
 $$\clp^p(\clp^{p+q}(R))=\clp^p(R).$$
@@ -1683,8 +1442,6 @@ Apply this to $X=\clp^{p+q}(R)$, to $X=R$ with $p+q$ in place of $p$, and to $X=
 $$\Phi\bigl(\clp^p(\clp^{p+q}R)\bigr)\sim\Phi(\clp^{p+q}R)\sim\Phi(R)\sim\Phi(\clp^pR)\text{,}$$
 where the middle agreement holds in rows $1,\ldots,p+q$. Both $\clp^p(\clp^{p+q}R)$ and $\clp^pR$ are bounded RC graphs of height $p$, so their images under $\Phi$ have no blank tiles in rows $>p$ and permutations with $\maxd\leq p$. By Lemma~\ref{lemma:bpdcompletion} these images are equal, and since $\Phi$ is injective, so are the two RC graphs.
 \end{proof}
-
-\subsection{Associativity}
 
 \begin{theorem}
 	 The product $\sqcupplus$ is associative and $\BRC$ is a ring when equipped with $\sqcupplus$.
@@ -2558,7 +2315,7 @@ Consequently
 $$\sum_{T\in\RC_{\leq p}(u)}x^{\wtt(T)}=\sch_u(x_1,\ldots,x_p,0,\ldots,0)=\sum_{u'}N_p(u,u')\,\sch_{u'}(x_1,\ldots,x_p)\text{.}$$
 \end{lemma}
 \begin{proof}
-Induct on $h-p$; if $h=p$ then $\zeromap^0$ is the identity and $\RC_{\leq p}(u)=\RC_p(u)$. Suppose $h>p$. Every $T\in\RC_{\leq p}(u)$ has empty last row, so by Theorem~\ref{theorem:zero_bijection} and Lemma~\ref{lemma:zeroweight}, $\zeromap$ restricts to a weight-preserving injection from $\RC_{\leq p}(u)$ into $\bigsqcup_{u_1\in T_h(u)}\RC_{h-1}(u_1)$ (the length condition $\ell(u_1)=\ell(u)$ is forced by weight preservation). By weight preservation the image consists of graphs whose rows $p+1,\ldots,h-1$ are empty, and conversely every such graph $T'\in\RC_{h-1}(u_1)$ is $\zeromap(T)$ for a unique $T\in\RC_h(u)^0$ by Theorem~\ref{theorem:zero_bijection}, and this $T$ has rows $p+1,\ldots,h$ empty by weight preservation, so $T\in\RC_{\leq p}(u)$. Thus $\zeromap$ is a bijection from $\RC_{\leq p}(u)$ onto the set of $T'\in\bigsqcup_{u_1\in T_h(u)}\RC_{h-1}(u_1)$ with rows $p+1,\ldots,h-1$ empty. For such $T'$ with $\wof{T'}=u_1$, put $h_1=\max(p,\maxd(u_1))\leq h-1$; the first $h-1-h_1$ applications of $\zeromap$ to $T'$ delete empty last rows (Algorithm~\ref{algorithm:zero}), so $\zeromap^{h-1-p}(T')=\zeromap^{h_1-p}(T')$ with $T'$ regarded as an element of $\RC_{\leq p}(u_1)$. Hence
+Induct on $h-p$; if $h=p$ then $\zeromap^0$ is the identity and $\RC_{\leq p}(u)=\RC_p(u)$. Suppose $h>p$. Every $T\in\RC_{\leq p}(u)$ has empty last row, so by Theorem~\ref{theorem:zero_bijection} and Lemma~\ref{lemma:zeroweight}, $\zeromap$ restricts to a weight-preserving injection from $\RC_{\leq p}(u)$ into $\bigsqcup_{u_1\in T_h(u)}\RC_{h-1}(u_1)$ (the length condition $\ell(u_1)=\ell(u)$ is forced by weight preservation). By weight preservation the image consists of graphs whose rows $p+1,\ldots,h-1$ are empty, and conversely every such graph $T'\in\RC_{h-1}(u_1)$ is $\zeromap(T)$ for a unique $T\in\RC_h(u)^0$ by Theorem~\ref{theorem:zero_bijection}, and this $T$ has rows $p+1,\ldots,h$ empty by weight preservation, so $T\in\RC_{\leq p}(u)$. Thus $\zeromap$ is a bijection from $\RC_{\leq p}(u)$ onto the set of $T'\in\bigsqcup_{u_1\in T_h(u)}\RC_{h-1}(u_1)$ with rows $p+1,\ldots,h-1$ empty. For such $T'$ with $\wof{T'}=u_1$, put $h_1=\max(p,\maxd(u_1))\leq h-1$; the first $h-1-h_1$ applications of $\zeromap$ to $T'$ delete empty last rows (Definition~\ref{definition:zeromap}), so $\zeromap^{h-1-p}(T')=\zeromap^{h_1-p}(T')$ with $T'$ regarded as an element of $\RC_{\leq p}(u_1)$. Hence
 $$\#\{T\in\RC_{\leq p}(u):\zeromap^{h-p}(T)=U\}=\sum_{u_1\in T_h(u)}\#\{T'\in\RC_{\leq p}(u_1):\zeromap^{h_1-p}(T')=U\}=\sum_{u_1\in T_h(u)}N_p(u_1,u')=N_p(u,u')$$
 by induction. For the second statement, Corollary~\ref{corollary:evschub} gives $\sum_{T\in\RC_h(u)}x^{\wtt(T)}=\sch_u(x_1,\ldots,x_h)$, and setting $x_{p+1}=\cdots=x_h=0$ kills exactly the terms with a crossing in rows $p+1,\ldots,h$; this is the first equality. For the second, sum the fiber count over $U\in\RC_p(u')$ and all $u'$, using $\wtt(\zeromap^{h-p}(T))=\wtt(T)$ and Corollary~\ref{corollary:evschub} for $\RC_p(u')$.
 \end{proof}
@@ -2675,47 +2432,6 @@ If $A\in\BRC$ is such that $\mathrm{extwt}(A) = a$, then
 $$\kappa_a = \sum_{R\in\mathrm{Dem}(A)} x^{\wtt(R)}$$
 \end{theorem}
 
-It will be advantageous to have an alternative, crystal-friendly definition of the map $\zeromap$ for the purposes of proving results about key polynomials.
-
-\begin{definition}[Little bumps]\label{definition:littlebump}
-  Given a reduced word $a_1\cdots a_m$ for a permutation $w$ and an index $1\leq p\leq m$, the \emph{Little bump} $\ltb_p(a_1\cdots a_m)$ is defined recursively as follows. If $a_p>1$, replace $a_p$ with $a_p-1$, and if $a_p=1$ then instead replace all $a_q$ with $q\neq p$ with $a_q+1$. Denote the new word by $a_1'\cdots a_m'$. If this resulting word is reduced, we are done. Otherwise, there is a unique index $j\neq p$ such that the word obtained by deleting $a_j'$ from the new word is reduced by the deletion property of Coxeter groups. We then define
-  $$\ltb_p(a_1\cdots a_m) = \ltb_j(a_1'\cdots a_m')$$
-\end{definition}
-
-\begin{definition}[Crystal-friendly transition map]
-Define a function $\lmap:\BRC^0(n)\to\BRC(n+1)$ as follows. Assume $n=\maxd(\wof{R})$, and suppose $\rtt_R(i, j) = (n, n + 1)$, where $i < n$. Set 
-$$R'= (R\setminus \{(i, j)\})\cup \{(n,1)\}$$
-Then define
-$$\lmap(R) = (\ins{n-1}{i} R')\setminus\{(n, 1)\}$$
-which we assign height $n+1$. Then define $\lzeromap:\BRC^0(n)\to \BRC(n-1)$ by iterating $\lmap$ and stopping as soon as the result has $\maxd(\wof{R})\leq n-1$, then reducing the number of rows to $n-1$.
-\end{definition}
-
-\begin{proposition} \label{proposition:little_bump}
-  Let $(R, n)\in \BRC^0(n)$ be a bounded RC graph such that $\maxd(\wof{R}) = n$. Suppose 
-  $$\mathrm{word}(R) = a_1 a_2 \cdots a_k$$ 
-  and 
-  $$\mathrm{seq}(R) = r_1 r_2 \cdots r_k$$ 
-  suppose $\rtt_R(i,j)=(n,n+1)$, and let $p$ be the index such that $r_p=i$ and $r_p + j - 1 = a_p$. Then
-  $$\mathrm{word}(\lmap(R)) = \ltb_{p}(\mathrm{word}(R))$$
-\end{proposition}
-\begin{proof}
-Consider the biword
-$$\begin{matrix}
-r_1& r_2& \cdots & r_{p-1} & r_p & r_{p+1} & \cdots & r_k\\
-a_1& a_2& \cdots & a_{p-1} & a_p & a_{p+1} & \cdots & a_k
-\end{matrix}$$
-The first deletion yields
-$$\begin{matrix}
-r_1& r_2& \cdots & r_{p-1} &  r_{p+1} & \cdots & r_k& n\\
-a_1& a_2& \cdots & a_{p-1} &  a_{p+1} & \cdots & a_k& n
-\end{matrix}$$
-Necessarily, we must have $a_p > 1$. To see this, note that if we have $a_p=1$, then we would have $r_p=1$ by the compatible sequence condition. The only way for position $(1,1)$ in an RC graph to be the final right descent is if it is the unique right descent. By assumption, that descent would have to be $n$, so that $n=1$. In that case, however, it would not be possible for the last row to be empty, which is included in the hypotheses of the proposition.
-
-We must also have that $r_p < a_p$, because there is a sequence of chute moves involving this crossing that moves it to position $(n, 1)$ by \cite[Theorem~3.7]{bbrc}. Assume first that $p = k$. Then the insertion algorithm will insert $a_p - 1=n-1$ into row $r_k$. If this word is reduced, then we are done, and this clearly coincides with the Little bump. If it is not reduced, the descent $n-1$ occurs somewhere to the left, say at position $j$. The insertion algorithm would delete this letter then try to insert another one. Recursively, this is the same as applying $\lmap$ to the biword obtained by removing all letters after position $j$ and then reinserting them afterwards. By the inductive hypothesis, this coincides with applying the Little bump at position $j$, which would indeed be the next step in the recursion of applying the Little bump at position $k$. Thus, the two coincide by induction.
-\end{proof}
-
-
-
 We invoke the following theorem of Hamaker and Young.
 
 \begin{theorem}[{\cite[Theorem~4.4]{hamaker2014relating}}] \label{theorem:littlecrystal}
@@ -2725,40 +2441,17 @@ for any valid $p$, where $Q$ denotes the Edelman-Green recording tableau \cite{e
 \end{theorem}
 
 
-\begin{proposition} \label{proposition:zeroequal}
-  We have that
-$$\lzeromap:\RC_n(w)^0\to \bigcup_{w\downvar{n} w'}\RC_{n-1}(w')$$ 
-	is an isomorphism of crystal graphs.
-\end{proposition}
-\begin{proof}
-The fact that this is a weight-preserving bijection follows directly from repeated application of \cite[Lemma~7]{little2003combinatorial}, which states that the Little bump on the last descent realizes the Lascoux-Sch\"utzenberger transition formula. The crystal isomorphism follows from Theorem \ref{theorem:littlecrystal}.
-\end{proof}
-
-\begin{proposition} \label{proposition:zerocrystal}
-We have the equality $\lzeromap=\zeromap$.
-\end{proposition}
-\begin{proof}
-Let $R$ be a bounded RC graph, say with permutation $w$, with $r$ rows and last descent $r$ such that row $r$ is empty. We prove this by induction on $\ell(w)$ as well as on $s - r$, where $s>r$ is the maximal index such that $w(r)>w(s)$. If $s=r+1$, then the definitions of the two maps are identical. 
-
-% Otherwise, we quote the following formula:
-% $$\sch_w(x) = \sch_w(x_1, \ldots, x_{r-1}, 0) + x_r\partial^r(\sch_w(x))(x_1,\ldots,x_r,0)$$
-% We model the second term as follows. 
-By the exchange property of Coxeter groups, there is a unique pair $(i,j)$ such that $\rtt_R(i, j) = (r, r+1)$. Set
-$$R' = R\setminus\{(i,j)\}$$
-and assume that $\hr(R') = r+1$. By the inductive hypothesis, we have $\lzeromap(R') = \zeromap(R')$. We have thus established that $\lzeromap$ and $\zeromap$ induce the same bijection between $\RC(ws_r)^0$ and 
-$$\bigcup_{ws_r\downvar{r+1} w'}\RC(w')$$
-Inspection of both algorithms reveals that the removal of this crossing and the subsequent reinsertion in the first step of both algorithms is precisely the same, and holding this fixed then applying the inductive hypothesis yields the result.
-\end{proof}
-
 \begin{corollary}[$\zeromap$ intertwines with crystal operators] \label{corollary:crystaliso}
 For any bounded RC graph $R$ and any positive integer $i$ satisfying $1\leq i\leq \hr(R) - 1$, we have 
 $$\zeromap(e_i(R)) = e_i(\zeromap(R))$$
 and
 $$\zeromap(f_i(R)) = f_i(\zeromap(R))$$
-whenever the left-hand sides are defined.
+whenever the left-hand sides are defined. Moreover, for $R\in\RC(w,n)^0$, $e_i(\zeromap R)$ is defined if and only if $e_i(R)$ is, and likewise for $f_i$; thus $\zeromap$ is an isomorphism of crystals from $\RC(w,n)^0$ onto $\bigcup_{w'\in T_n(w)}\RC(w',n-1)$.
 \end{corollary}
 \begin{proof}
-This follows from Proposition \ref{proposition:zerocrystal} and the fact that $\lzeromap$ is a crystal isomorphism by Proposition \ref{proposition:zeroequal}.
+Under Edelman--Greene insertion, an RC graph $R$ corresponds to the pair $(P,T)$, where $P$ is the insertion tableau of the reading word of $R$ and $T$ is the semistandard tableau obtained from the recording tableau by replacing each entry with the row of the corresponding crossing; the operators $e_i,f_i$ of Definition~\ref{definition:crystal} act on $T$ by the usual tableau crystal operators and leave $P$ unchanged \cite{morse2016crystal,assaf2018demazure}. Each step of $\zeromap$ (Definition~\ref{definition:zeromap}) replaces the reading word by its Little bump at the crossing of the two wires ending in positions $n$ and $s$, where $n$ and $s$ depend only on the permutation, and keeps the row sequence. By Theorem~\ref{theorem:littlecrystal} this leaves the recording tableau, hence $T$, unchanged, and by \cite[Lemma~3.3]{hamaker2014relating} Little bumps at the crossing of a fixed pair of wires commute with Coxeter--Knuth moves, so the insertion tableau of the bumped word depends only on $P$ \cite[Theorem~6.24]{edelman1987balanced}. Consequently, if $R$ corresponds to $(P,T)$ and $e_i(R)$ to $(P,e_iT)$, then after each step the two computations of $\zeromap$ correspond to $(P',T)$ and $(P',e_iT)$ for the same $P'$; in particular the permutations agree at every stage, the computations stop simultaneously, and $\zeromap(e_iR)=e_i\zeromap(R)$. The same argument applies to $f_i$.
+
+For the last statement put $X=\RC(w,n)^0$ and $Y=\bigcup_{w'\in T_n(w)}\RC(w',n-1)$. By Theorem~\ref{theorem:zero_bijection}, $\zeromap$ is a weight-preserving bijection $X\to Y$, and by the first part it maps each $i$-string of $X$ (a maximal set of elements connected by $e_i,f_i$) onto a set of consecutive elements of an $i$-string of $Y$. Since the weights of $X$ and $Y$ agree as multisets, $X$ and $Y$ have the same number of $i$-strings of each length. An $i$-string of maximal length $L$ in $X$ is mapped into an $i$-string of $Y$ of length at least $L$, hence of length $L$, and onto it; distinct such strings of $X$ have distinct images. Removing these strings from $X$ and their images from $Y$ leaves sets with equal weight multisets, and iterating shows that $\zeromap$ maps every $i$-string of $X$ onto an $i$-string of $Y$, which is the claim.
 \end{proof}
 
 \subsection{The dual key basis and the ring of RC graph crystals}
@@ -2806,7 +2499,7 @@ Let $R_1,R_2$ be bounded RC graphs of height $n$ with $\mathbb{Y}(R_1)=\mathbb{Y
 $$\mathbb{Y}(T\cup\shup^mR_1)=\mathbb{Y}(T\cup\shup^m\mathbb{Y}(R_1))=\mathbb{Y}(T\cup\shup^m\mathbb{Y}(R_2))=\mathbb{Y}(T\cup\shup^mR_2)\text{.}$$
 Thus $R\sqcupplus R_1-R\sqcupplus R_2=\sum_T\bigl((T\cup\shup^mR_1)-(T\cup\shup^mR_2)\bigr)\in\Theta$.
 
-\emph{Right ideal.} Since $R_1$ and $R_2$ lie in the same connected component, it suffices to treat $R_2=e_i(R_1)$ for some $1\leq i\leq n-1$ (the case $R_2=f_i(R_1)$ is symmetric). For $R'$ of height $n+m$ with $\trm^n(R')=R$, the operator $e_i$ ($i\leq n-1$) acts on rows $i,i+1\leq n$, so $\trm^n(e_iR')=R$ when $e_iR'$ is defined, and $\clp^n(e_iR')=e_i(\clp^nR')$ by Corollary~\ref{corollary:crystaliso} applied to each $\zeromap$ step in Definition~\ref{definition:cliptrim} (erasing rows of index $>n$ commutes with $e_i$, and $\zeromap$ is a crystal isomorphism onto its image by Propositions~\ref{proposition:zeroequal} and~\ref{proposition:zerocrystal}, so $e_i$ is defined on $\clp^nR'$ if and only if it is defined on $R'$). Hence $e_i$ restricts to a bijection from the terms of $R_1\sqcupplus R$ onto the terms of $e_i(R_1)\sqcupplus R$, and corresponding terms $R'$, $e_i(R')$ have the same highest weight. Thus $R_1\sqcupplus R-R_2\sqcupplus R\in\Theta$.
+\emph{Right ideal.} Since $R_1$ and $R_2$ lie in the same connected component, it suffices to treat $R_2=e_i(R_1)$ for some $1\leq i\leq n-1$ (the case $R_2=f_i(R_1)$ is symmetric). For $R'$ of height $n+m$ with $\trm^n(R')=R$, the operator $e_i$ ($i\leq n-1$) acts on rows $i,i+1\leq n$, so $\trm^n(e_iR')=R$ when $e_iR'$ is defined, and $\clp^n(e_iR')=e_i(\clp^nR')$ by Corollary~\ref{corollary:crystaliso} applied to each $\zeromap$ step in Definition~\ref{definition:cliptrim} (erasing rows of index $>n$ commutes with $e_i$, and $\zeromap$ is an isomorphism of crystals onto its image by Corollary~\ref{corollary:crystaliso}, so $e_i$ is defined on $\clp^nR'$ if and only if it is defined on $R'$). Hence $e_i$ restricts to a bijection from the terms of $R_1\sqcupplus R$ onto the terms of $e_i(R_1)\sqcupplus R$, and corresponding terms $R'$, $e_i(R')$ have the same highest weight. Thus $R_1\sqcupplus R-R_2\sqcupplus R\in\Theta$.
 \end{proof}
 
 \begin{lemma}
