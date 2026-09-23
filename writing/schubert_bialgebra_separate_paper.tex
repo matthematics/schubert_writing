@@ -1240,6 +1240,101 @@ Let $R$ be a bounded RC graph of height $n$ whose last row is empty. Then $\Phi(
 Each step $R\mapsto R^{(1)}$ of Definition~\ref{definition:zeromap} is a Little bump at a crossing with right root $(n,s)$ whose removal leaves a reduced word, so by Lemma~\ref{lemma:bumpconfine} it does not change rows $1,\ldots,n-1$ of $\Phi$; deleting the empty last row does not change $\Phi$ at all. For the second statement, if $S$ is a bounded RC graph of height $n-1$ then $\Phi(S)$ has no blank tiles in rows $>n-1$ and $\maxd(\wof S)\leq n-1$, so $\Phi(S)$ is determined by its rows $1,\ldots,n-1$ by Lemma~\ref{lemma:bpdcompletion}, and $S$ is determined by $\Phi(S)$.
 \end{proof}
 
+\begin{figure}[htbp]
+\centering
+\begin{minipage}{0.45\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.7]
+  \draw[lightgray, very thin] (0,0) -- (4,0);
+  \draw[lightgray, very thin] (0,0) -- (0,4);
+  \draw[lightgray, very thin] (0,1) -- (4,1);
+  \draw[lightgray, very thin] (1,0) -- (1,4);
+  \draw[lightgray, very thin] (0,2) -- (4,2);
+  \draw[lightgray, very thin] (2,0) -- (2,4);
+  \draw[lightgray, very thin] (0,3) -- (4,3);
+  \draw[lightgray, very thin] (3,0) -- (3,4);
+  \draw[lightgray, very thin] (0,4) -- (4,4);
+  \draw[lightgray, very thin] (4,0) -- (4,4);
+  \fill[gray!20] (0.1,3.1) rectangle (0.9,3.9);
+  \fill[gray!20] (1.1,3.1) rectangle (1.9,3.9);
+  \draw[blue, line width=1.0pt] (2.5,3) .. controls (2.5,3.3) and (2.7,3.5) .. (3,3.5);
+  \draw[blue, line width=1.0pt] (3,3.5) -- (4,3.5);
+  \fill[gray!20] (0.1,2.1) rectangle (0.9,2.9);
+  \draw[blue, line width=1.0pt] (1.5,2) .. controls (1.5,2.3) and (1.7,2.5) .. (2,2.5);
+  \draw[blue, line width=1.0pt] (2,2.5) .. controls (2.3,2.5) and (2.5,2.7) .. (2.5,3);
+  \draw[blue, line width=1.0pt] (3.5,2) .. controls (3.5,2.3) and (3.7,2.5) .. (4,2.5);
+  \draw[blue, line width=1.0pt] (0.5,1) .. controls (0.5,1.3) and (0.7,1.5) .. (1,1.5);
+  \draw[blue, line width=1.0pt] (1,1.5) .. controls (1.3,1.5) and (1.5,1.7) .. (1.5,2);
+  \draw[blue, line width=1.0pt] (2.5,1) .. controls (2.5,1.3) and (2.7,1.5) .. (3,1.5);
+  \draw[blue, line width=1.0pt] (3,1.5) -- (4,1.5);
+  \draw[blue, line width=1.0pt] (3.5,1) -- (3.5,2);
+  \draw[blue, line width=1.0pt] (0.5,0) -- (0.5,1);
+  \draw[blue, line width=1.0pt] (1.5,0) .. controls (1.5,0.3) and (1.7,0.5) .. (2,0.5);
+  \draw[blue, line width=1.0pt] (2,0.5) -- (3,0.5);
+  \draw[blue, line width=1.0pt] (2.5,0) -- (2.5,1);
+  \draw[blue, line width=1.0pt] (3,0.5) -- (4,0.5);
+  \draw[blue, line width=1.0pt] (3.5,0) -- (3.5,1);
+  \node[font=\scriptsize] at (0.5,-0.35) {1};
+  \node[font=\scriptsize] at (1.5,-0.35) {2};
+  \node[font=\scriptsize] at (2.5,-0.35) {3};
+  \node[font=\scriptsize] at (3.5,-0.35) {4};
+  \node[font=\scriptsize, anchor=west] at (4.15,3.5) {1};
+  \node[font=\scriptsize, anchor=west] at (4.15,2.5) {4};
+  \node[font=\scriptsize, anchor=west] at (4.15,1.5) {3};
+  \node[font=\scriptsize, anchor=west] at (4.15,0.5) {2};
+  \draw[black, line width=1pt] (0,0) rectangle (4,4);
+\end{tikzpicture}
+\caption*{(a) $\Phi(R)$, $\wof R=1432$}
+\end{minipage}
+\hfill
+\begin{minipage}{0.45\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.7]
+  \draw[lightgray, very thin] (0,0) -- (4,0);
+  \draw[lightgray, very thin] (0,0) -- (0,4);
+  \draw[lightgray, very thin] (0,1) -- (4,1);
+  \draw[lightgray, very thin] (1,0) -- (1,4);
+  \draw[lightgray, very thin] (0,2) -- (4,2);
+  \draw[lightgray, very thin] (2,0) -- (2,4);
+  \draw[lightgray, very thin] (0,3) -- (4,3);
+  \draw[lightgray, very thin] (3,0) -- (3,4);
+  \draw[lightgray, very thin] (0,4) -- (4,4);
+  \draw[lightgray, very thin] (4,0) -- (4,4);
+  \fill[gray!20] (0.1,3.1) rectangle (0.9,3.9);
+  \fill[gray!20] (1.1,3.1) rectangle (1.9,3.9);
+  \draw[blue, line width=1.0pt] (2.5,3) .. controls (2.5,3.3) and (2.7,3.5) .. (3,3.5);
+  \draw[blue, line width=1.0pt] (3,3.5) -- (4,3.5);
+  \fill[gray!20] (0.1,2.1) rectangle (0.9,2.9);
+  \draw[blue, line width=1.0pt] (1.5,2) .. controls (1.5,2.3) and (1.7,2.5) .. (2,2.5);
+  \draw[blue, line width=1.0pt] (2,2.5) .. controls (2.3,2.5) and (2.5,2.7) .. (2.5,3);
+  \draw[blue, line width=1.0pt] (3.5,2) .. controls (3.5,2.3) and (3.7,2.5) .. (4,2.5);
+  \draw[blue, line width=1.0pt] (0.5,1) .. controls (0.5,1.3) and (0.7,1.5) .. (1,1.5);
+  \draw[blue, line width=1.0pt] (1,1.5) -- (2,1.5);
+  \draw[blue, line width=1.0pt] (1.5,1) -- (1.5,2);
+  \draw[blue, line width=1.0pt] (2,1.5) -- (3,1.5);
+  \draw[blue, line width=1.0pt] (3,1.5) -- (4,1.5);
+  \draw[blue, line width=1.0pt] (3.5,1) -- (3.5,2);
+  \draw[blue, line width=1.0pt] (0.5,0) -- (0.5,1);
+  \draw[blue, line width=1.0pt] (1.5,0) -- (1.5,1);
+  \draw[blue, line width=1.0pt] (2.5,0) .. controls (2.5,0.3) and (2.7,0.5) .. (3,0.5);
+  \draw[blue, line width=1.0pt] (3,0.5) -- (4,0.5);
+  \draw[blue, line width=1.0pt] (3.5,0) -- (3.5,1);
+  \node[font=\scriptsize] at (0.5,-0.35) {1};
+  \node[font=\scriptsize] at (1.5,-0.35) {2};
+  \node[font=\scriptsize] at (2.5,-0.35) {3};
+  \node[font=\scriptsize] at (3.5,-0.35) {4};
+  \node[font=\scriptsize, anchor=west] at (4.15,3.5) {2};
+  \node[font=\scriptsize, anchor=west] at (4.15,2.5) {4};
+  \node[font=\scriptsize, anchor=west] at (4.15,1.5) {1};
+  \node[font=\scriptsize, anchor=west] at (4.15,0.5) {3};
+  \draw[black, line width=1pt] (0,0) rectangle (4,4);
+\end{tikzpicture}
+\caption*{(b) $\Phi(\zeromap R)$, $\wof{\zeromap R}=2413$}
+\end{minipage}
+\caption{The bumpless pipe dreams of the RC graph $R=\{(1,2),(1,3),(2,2)\}$ of Figure~\ref{fig:zeroing} and of $\zeromap(R)$, drawn on a $4\times4$ grid; blank tiles are shaded and the pipe leaving through each row is labeled at the right. Row $i$ has as many blank tiles as row $i$ of the RC graph has crossings. The two diagrams agree in rows $1$ and $2$ (Proposition~\ref{proposition:zerotrunc}); rows $3$ and $4$ of $\Phi(\zeromap R)$ contain no blank tile and no $j$-tile, so every pipe there travels straight north and then straight east (Lemma~\ref{lemma:bpdcompletion}).}
+\label{fig:bpdzero}
+\end{figure}
+
 We also record the behavior of $\Phi$ under deleting the first row. Gao and Huang define $\Phi^{-1}$ by iterating an operation $\nabla$ on bumpless pipe dreams \cite[Definitions~3.1 and~3.3]{GaoHuang2023}: if $B=\Phi(R)$ and $x$ is the first crossing of $R$ in reading order (the rightmost crossing of the first nonempty row $r$, with letter $a$), then $\nabla B=\Phi(R\setminus\{x\})$, and the pair $(a,r)$ is read off from the computation of $\nabla B$ as described below; $\Phi(R)$ is the unique diagram whose successive pairs are the reading word and row sequence of $R$. The operation $\nabla B$ is computed as follows \cite[Definition~3.1, Figures~2 and~3]{GaoHuang2023}. A mark is placed on the rightmost blank tile of the first row of $B$ containing a blank tile, and a sequence of \emph{column moves} follows, each of which modifies only a rectangle of width two whose northwest corner $(x,y)$ is the current position of the mark, moved first to the rightmost blank tile of its block of consecutive blank tiles. The tile $(x,y+1)$ carries a pipe $p$ traveling north. If $p$ entered column $y+1$ at a $j$-tile $(x',y+1)$, $x'>x$, the rectangle has southeast corner $(x',y+1)$, and afterwards the mark is at $(x',y+1)$; otherwise $p$ is pipe $y+1$, the rectangle has southeast corner $(x',y+1)$ where $(x',y)$ is the $r$-tile at which pipe $y$ turns east, this is the last column move, and $a=y$. In both cases, in each row $z$ with $x<z<x'$ the pair of tiles $(z,y),(z,y+1)$ is replaced by a pair depending only on the tile $(z,y)$: a blank, horizontal, $r$- or $j$-tile at $(z,y)$ is replaced by a vertical, crossing, vertical, or crossing tile, respectively, and $(z,y+1)$ by a blank, horizontal, $r$- or $j$-tile, respectively, while a vertical or crossing tile at $(z,y)$ leaves the pair unchanged. The corner $(x,y)$ becomes an $r$-tile and $(x,y+1)$ becomes a horizontal or $j$-tile according as it was an $r$-tile or vertical. In the first case $(x',y+1)$ becomes blank and $(x',y)$ becomes vertical or a $j$-tile according as it was an $r$-tile or horizontal; in the second case $(x',y)$ becomes vertical and $(x',y+1)$ an $r$-tile, which is the same replacement as the row rule applied to the $r$-tile $(x',y)$.
 
 \begin{lemma}[Locality of $\nabla$]\label{lemma:poplocal}
@@ -1436,11 +1531,7 @@ Let $R$ be a bounded RC graph with $\hr(R)=n$, and let $0\leq p\leq p+q\leq n$. 
 $$\clp^p(\clp^{p+q}(R))=\clp^p(R).$$
 \end{lemma}
 \begin{proof}
-For bounded RC graphs $X$ of height $\geq p$, Definition~\ref{definition:cliptrim} gives $\clp^p(X)=\zeromap^{\,h-p}(X_{\leq p})$ with $X_{\leq p}$ at height $h\geq p$, each intermediate RC graph having an empty last row. By Propositions~\ref{proposition:zerotrunc} and~\ref{proposition:toprows},
-$$\Phi(\clp^p X)\ \text{agrees with}\ \Phi(X_{\leq p})\ \text{and hence with}\ \Phi(X)\ \text{in rows }1,\ldots,p\text{.}$$
-Apply this to $X=\clp^{p+q}(R)$, to $X=R$ with $p+q$ in place of $p$, and to $X=R$: in rows $1,\ldots,p$,
-$$\Phi\bigl(\clp^p(\clp^{p+q}R)\bigr)\sim\Phi(\clp^{p+q}R)\sim\Phi(R)\sim\Phi(\clp^pR)\text{,}$$
-where the middle agreement holds in rows $1,\ldots,p+q$. Both $\clp^p(\clp^{p+q}R)$ and $\clp^pR$ are bounded RC graphs of height $p$, so their images under $\Phi$ have no blank tiles in rows $>p$ and permutations with $\maxd\leq p$. By Lemma~\ref{lemma:bpdcompletion} these images are equal, and since $\Phi$ is injective, so are the two RC graphs.
+For bounded RC graphs $X$ of height $\geq p$, Definition~\ref{definition:cliptrim} gives $\clp^p(X)=\zeromap^{\,h-p}(X_{\leq p})$ with $X_{\leq p}$ at height $h\geq p$, each intermediate RC graph having an empty last row. By Propositions~\ref{proposition:zerotrunc} and~\ref{proposition:toprows}, $\Phi(\clp^pX)$ agrees with $\Phi(X_{\leq p})$, and hence with $\Phi(X)$, in rows $1,\ldots,p$. Applying this to $X=\clp^{p+q}(R)$, then to $X=R$ with $p+q$ in place of $p$, and then to $X=R$, we find that $\Phi(\clp^p(\clp^{p+q}R))$ agrees with $\Phi(\clp^{p+q}R)$ in rows $1,\ldots,p$, that $\Phi(\clp^{p+q}R)$ agrees with $\Phi(R)$ in rows $1,\ldots,p+q$, and that $\Phi(R)$ agrees with $\Phi(\clp^pR)$ in rows $1,\ldots,p$. Hence $\Phi(\clp^p(\clp^{p+q}R))$ and $\Phi(\clp^pR)$ agree in rows $1,\ldots,p$. Both $\clp^p(\clp^{p+q}R)$ and $\clp^pR$ are bounded RC graphs of height $p$, so their images under $\Phi$ have no blank tiles in rows $>p$ and permutations with $\maxd\leq p$. By Lemma~\ref{lemma:bpdcompletion} these images are equal, and since $\Phi$ is injective, so are the two RC graphs.
 \end{proof}
 
 \begin{theorem}
@@ -2449,10 +2540,131 @@ $$\zeromap(f_i(R)) = f_i(\zeromap(R))$$
 whenever the left-hand sides are defined. Moreover, for $R\in\RC(w,n)^0$, $e_i(\zeromap R)$ is defined if and only if $e_i(R)$ is, and likewise for $f_i$; thus $\zeromap$ is an isomorphism of crystals from $\RC(w,n)^0$ onto $\bigcup_{w'\in T_n(w)}\RC(w',n-1)$.
 \end{corollary}
 \begin{proof}
-Under Edelman--Greene insertion, an RC graph $R$ corresponds to the pair $(P,T)$, where $P$ is the insertion tableau of the reading word of $R$ and $T$ is the semistandard tableau obtained from the recording tableau by replacing each entry with the row of the corresponding crossing; the operators $e_i,f_i$ of Definition~\ref{definition:crystal} act on $T$ by the usual tableau crystal operators and leave $P$ unchanged \cite{morse2016crystal,assaf2018demazure}. Each step of $\zeromap$ (Definition~\ref{definition:zeromap}) replaces the reading word by its Little bump at the crossing of the two wires ending in positions $n$ and $s$, where $n$ and $s$ depend only on the permutation, and keeps the row sequence. By Theorem~\ref{theorem:littlecrystal} this leaves the recording tableau, hence $T$, unchanged, and by \cite[Lemma~3.3]{hamaker2014relating} Little bumps at the crossing of a fixed pair of wires commute with Coxeter--Knuth moves, so the insertion tableau of the bumped word depends only on $P$ \cite[Theorem~6.24]{edelman1987balanced}. Consequently, if $R$ corresponds to $(P,T)$ and $e_i(R)$ to $(P,e_iT)$, then after each step the two computations of $\zeromap$ correspond to $(P',T)$ and $(P',e_iT)$ for the same $P'$; in particular the permutations agree at every stage, the computations stop simultaneously, and $\zeromap(e_iR)=e_i\zeromap(R)$. The same argument applies to $f_i$.
+Insert the letters of the reading word of an RC graph $R$ of height $m$ from right to left by Edelman--Greene insertion \cite{edelman1987balanced}, let $P(R)$ be the insertion tableau, and let $T^-(R)$ be the recording tableau with each entry replaced by the negative of the row index of the corresponding crossing (Figure~\ref{fig:egexample}). Then $T^-(R)$ is a semistandard tableau in English notation (rows weakly increasing to the right, columns strictly increasing downward) in the alphabet $-m<\cdots<-1$, the pair $(P(R),T^-(R))$ determines $R$, and the operators $e_i,f_i$ of Definition~\ref{definition:crystal} correspond to the tableau crystal operators $f_{-(i+1)}$ and $e_{-(i+1)}$ on $T^-(R)$, leaving $P(R)$ unchanged; this is the compatibility of the Morse--Schilling crystal on reduced factorizations with Edelman--Greene insertion \cite{morse2016crystal}, in which the factors are indexed from right to left, whence the reversal of the alphabet. Each step of $\zeromap$ (Definition~\ref{definition:zeromap}) replaces the reading word by its Little bump at the crossing of the two wires ending in positions $n$ and $s$, where $n$ and $s$ depend only on the permutation, and keeps the row sequence. By Theorem~\ref{theorem:littlecrystal} this leaves the recording tableau, hence $T^-(R)$, unchanged, and by \cite[Lemma~3.3]{hamaker2014relating} Little bumps at the crossing of a fixed pair of wires commute with Coxeter--Knuth moves, so the insertion tableau of the bumped word depends only on $P(R)$ \cite[Theorem~6.24]{edelman1987balanced}. Consequently, if $R$ corresponds to $(P,T)$ and $e_i(R)$ to $(P,f_{-(i+1)}T)$, then after each step the two computations of $\zeromap$ correspond to $(P',T)$ and $(P',f_{-(i+1)}T)$ for the same $P'$; in particular the permutations agree at every stage, the computations stop simultaneously, and $\zeromap(e_iR)=e_i\zeromap(R)$. The same argument applies to $f_i$.
 
 For the last statement put $X=\RC(w,n)^0$ and $Y=\bigcup_{w'\in T_n(w)}\RC(w',n-1)$. By Theorem~\ref{theorem:zero_bijection}, $\zeromap$ is a weight-preserving bijection $X\to Y$, and by the first part it maps each $i$-string of $X$ (a maximal set of elements connected by $e_i,f_i$) onto a set of consecutive elements of an $i$-string of $Y$. Since the weights of $X$ and $Y$ agree as multisets, $X$ and $Y$ have the same number of $i$-strings of each length. An $i$-string of maximal length $L$ in $X$ is mapped into an $i$-string of $Y$ of length at least $L$, hence of length $L$, and onto it; distinct such strings of $X$ have distinct images. Removing these strings from $X$ and their images from $Y$ leaves sets with equal weight multisets, and iterating shows that $\zeromap$ maps every $i$-string of $X$ onto an $i$-string of $Y$, which is the claim.
 \end{proof}
+
+\begin{figure}[htbp]
+\centering
+\begin{minipage}{0.48\textwidth}
+\centering
+\raisebox{-0.5\height}{\begin{tikzpicture}[scale=0.6]
+  \draw[lightgray, very thin, opacity=0.3] (0,1) -- (4,1);
+  \draw[lightgray, very thin, opacity=0.3] (0,2) -- (4,2);
+  \draw[lightgray, very thin, opacity=0.3] (0,3) -- (4,3);
+  \draw[lightgray, very thin, opacity=0.3] (0,4) -- (4,4);
+  \draw[lightgray, very thin, opacity=0.3] (0,1) -- (0,4);
+  \draw[lightgray, very thin, opacity=0.3] (1,1) -- (1,4);
+  \draw[lightgray, very thin, opacity=0.3] (2,1) -- (2,4);
+  \draw[lightgray, very thin, opacity=0.3] (3,1) -- (3,4);
+  \draw[lightgray, very thin, opacity=0.3] (4,1) -- (4,4);
+  \draw[blue, line width=1.5pt] (0,3.5) .. controls (0.3,3.5) and (0.5,3.7) .. (0.5,4);
+  \draw[blue, line width=1.5pt] (0.5,3) .. controls (0.5,3.3) and (0.7,3.5) .. (1,3.5);
+  \draw[blue, line width=1.5pt, line cap=round] (1,3.5) -- (2,3.5);
+  \draw[blue, line width=1.5pt, line cap=round] (1.5,3) -- (1.5,4);
+  \draw[blue, line width=1.5pt, line cap=round] (2,3.5) -- (3,3.5);
+  \draw[blue, line width=1.5pt, line cap=round] (2.5,3) -- (2.5,4);
+  \draw[blue, line width=1.5pt] (3,3.5) .. controls (3.3,3.5) and (3.5,3.7) .. (3.5,4);
+  \draw[blue, line width=1.5pt] (0,2.5) .. controls (0.3,2.5) and (0.5,2.7) .. (0.5,3);
+  \draw[blue, line width=1.5pt] (0.5,2) .. controls (0.5,2.3) and (0.7,2.5) .. (1,2.5);
+  \draw[blue, line width=1.5pt, line cap=round] (1,2.5) -- (2,2.5);
+  \draw[blue, line width=1.5pt, line cap=round] (1.5,2) -- (1.5,3);
+  \draw[blue, line width=1.5pt] (2,2.5) .. controls (2.3,2.5) and (2.5,2.7) .. (2.5,3);
+  \draw[blue, line width=1.5pt] (0,1.5) .. controls (0.3,1.5) and (0.5,1.7) .. (0.5,2);
+  \draw[blue, line width=1.5pt] (0.5,1) .. controls (0.5,1.3) and (0.7,1.5) .. (1,1.5);
+  \draw[blue, line width=1.5pt] (1,1.5) .. controls (1.3,1.5) and (1.5,1.7) .. (1.5,2);
+  \node[font=\Large\bfseries, text=green!60!black, fill=white, inner sep=0.5pt, circle, transform shape] at (1.5,3.5) {2};
+  \node[font=\Large\bfseries, text=green!60!black, fill=white, inner sep=0.5pt, circle, transform shape] at (2.5,3.5) {3};
+  \node[font=\Large\bfseries, text=green!60!black, fill=white, inner sep=0.5pt, circle, transform shape] at (1.5,2.5) {3};
+  \node[font=\scriptsize, text=black, anchor=east] at (-0.3,3.5) {1};
+  \node[font=\scriptsize, text=black, anchor=east] at (-0.3,2.5) {4};
+  \node[font=\scriptsize, text=black, anchor=east] at (-0.3,1.5) {3};
+  \node[font=\scriptsize, text=black, anchor=south] at (0.5,4.3) {1};
+  \node[font=\scriptsize, text=black, anchor=south] at (1.5,4.3) {2};
+  \node[font=\scriptsize, text=black, anchor=south] at (2.5,4.3) {3};
+  \node[font=\scriptsize, text=black, anchor=south] at (3.5,4.3) {4};
+  \draw[black, line width=1.7999999999999998pt] (0,1) rectangle (4,4);
+\end{tikzpicture}}\quad
+\raisebox{-0.5\height}{\begin{tikzpicture}[scale=1]
+  \draw (0.00,0.00) rectangle (0.55,-0.55);
+  \node[font=\small] at (0.28,-0.28) {$2$};
+  \draw (0.55,0.00) rectangle (1.10,-0.55);
+  \node[font=\small] at (0.83,-0.28) {$3$};
+  \draw (0.00,-0.55) rectangle (0.55,-1.10);
+  \node[font=\small] at (0.28,-0.83) {$3$};
+\end{tikzpicture}}\quad
+\raisebox{-0.5\height}{\begin{tikzpicture}[scale=1]
+  \draw (0.00,0.00) rectangle (0.55,-0.55);
+  \node[font=\small] at (0.28,-0.28) {$-2$};
+  \draw (0.55,0.00) rectangle (1.10,-0.55);
+  \node[font=\small] at (0.83,-0.28) {$-1$};
+  \draw (0.00,-0.55) rectangle (0.55,-1.10);
+  \node[font=\small] at (0.28,-0.83) {$-1$};
+\end{tikzpicture}}
+\caption*{(a) $R=\{(1,2),(1,3),(2,2)\}$, reading word $3\,2\,3$ with row sequence $1\,1\,2$; $P(R)$ and $T^-(R)$}
+\end{minipage}
+\hfill
+\begin{minipage}{0.48\textwidth}
+\centering
+\raisebox{-0.5\height}{\begin{tikzpicture}[scale=0.6]
+  \draw[lightgray, very thin, opacity=0.3] (0,1) -- (4,1);
+  \draw[lightgray, very thin, opacity=0.3] (0,2) -- (4,2);
+  \draw[lightgray, very thin, opacity=0.3] (0,3) -- (4,3);
+  \draw[lightgray, very thin, opacity=0.3] (0,4) -- (4,4);
+  \draw[lightgray, very thin, opacity=0.3] (0,1) -- (0,4);
+  \draw[lightgray, very thin, opacity=0.3] (1,1) -- (1,4);
+  \draw[lightgray, very thin, opacity=0.3] (2,1) -- (2,4);
+  \draw[lightgray, very thin, opacity=0.3] (3,1) -- (3,4);
+  \draw[lightgray, very thin, opacity=0.3] (4,1) -- (4,4);
+  \draw[blue, line width=1.5pt] (0,3.5) .. controls (0.3,3.5) and (0.5,3.7) .. (0.5,4);
+  \draw[blue, line width=1.5pt] (0.5,3) .. controls (0.5,3.3) and (0.7,3.5) .. (1,3.5);
+  \draw[blue, line width=1.5pt, line cap=round] (1,3.5) -- (2,3.5);
+  \draw[blue, line width=1.5pt, line cap=round] (1.5,3) -- (1.5,4);
+  \draw[blue, line width=1.5pt] (2,3.5) .. controls (2.3,3.5) and (2.5,3.7) .. (2.5,4);
+  \draw[blue, line width=1.5pt] (2.5,3) .. controls (2.5,3.3) and (2.7,3.5) .. (3,3.5);
+  \draw[blue, line width=1.5pt] (3,3.5) .. controls (3.3,3.5) and (3.5,3.7) .. (3.5,4);
+  \draw[blue, line width=1.5pt, line cap=round] (0,2.5) -- (1,2.5);
+  \draw[blue, line width=1.5pt, line cap=round] (0.5,2) -- (0.5,3);
+  \draw[blue, line width=1.5pt, line cap=round] (1,2.5) -- (2,2.5);
+  \draw[blue, line width=1.5pt, line cap=round] (1.5,2) -- (1.5,3);
+  \draw[blue, line width=1.5pt] (2,2.5) .. controls (2.3,2.5) and (2.5,2.7) .. (2.5,3);
+  \draw[blue, line width=1.5pt] (0,1.5) .. controls (0.3,1.5) and (0.5,1.7) .. (0.5,2);
+  \draw[blue, line width=1.5pt] (0.5,1) .. controls (0.5,1.3) and (0.7,1.5) .. (1,1.5);
+  \draw[blue, line width=1.5pt] (1,1.5) .. controls (1.3,1.5) and (1.5,1.7) .. (1.5,2);
+  \node[font=\Large\bfseries, text=green!60!black, fill=white, inner sep=0.5pt, circle, transform shape] at (1.5,3.5) {2};
+  \node[font=\Large\bfseries, text=green!60!black, fill=white, inner sep=0.5pt, circle, transform shape] at (0.5,2.5) {2};
+  \node[font=\Large\bfseries, text=green!60!black, fill=white, inner sep=0.5pt, circle, transform shape] at (1.5,2.5) {3};
+  \node[font=\scriptsize, text=black, anchor=east] at (-0.3,3.5) {1};
+  \node[font=\scriptsize, text=black, anchor=east] at (-0.3,2.5) {4};
+  \node[font=\scriptsize, text=black, anchor=east] at (-0.3,1.5) {3};
+  \node[font=\scriptsize, text=black, anchor=south] at (0.5,4.3) {1};
+  \node[font=\scriptsize, text=black, anchor=south] at (1.5,4.3) {2};
+  \node[font=\scriptsize, text=black, anchor=south] at (2.5,4.3) {3};
+  \node[font=\scriptsize, text=black, anchor=south] at (3.5,4.3) {4};
+  \draw[black, line width=1.7999999999999998pt] (0,1) rectangle (4,4);
+\end{tikzpicture}}\quad
+\raisebox{-0.5\height}{\begin{tikzpicture}[scale=1]
+  \draw (0.00,0.00) rectangle (0.55,-0.55);
+  \node[font=\small] at (0.28,-0.28) {$2$};
+  \draw (0.55,0.00) rectangle (1.10,-0.55);
+  \node[font=\small] at (0.83,-0.28) {$3$};
+  \draw (0.00,-0.55) rectangle (0.55,-1.10);
+  \node[font=\small] at (0.28,-0.83) {$3$};
+\end{tikzpicture}}\quad
+\raisebox{-0.5\height}{\begin{tikzpicture}[scale=1]
+  \draw (0.00,0.00) rectangle (0.55,-0.55);
+  \node[font=\small] at (0.28,-0.28) {$-2$};
+  \draw (0.55,0.00) rectangle (1.10,-0.55);
+  \node[font=\small] at (0.83,-0.28) {$-2$};
+  \draw (0.00,-0.55) rectangle (0.55,-1.10);
+  \node[font=\small] at (0.28,-0.83) {$-1$};
+\end{tikzpicture}}
+\caption*{(b) $f_1(R)=\{(1,1),(2,2),(2,3)\}$, reading word $2\,3\,2$ with row sequence $1\,2\,2$; $P(f_1R)=P(R)$ and $T^-(f_1R)=e_{-2}T^-(R)$}
+\end{minipage}
+\caption{Edelman--Greene data of an RC graph. The letters of the reading word are inserted from right to left; $P$ is the insertion tableau and $T^-$ is the recording tableau with each entry replaced by the negative of the row of the corresponding crossing. In (a), inserting $3$, then $2$ (which bumps $3$), then $3$ gives $P(R)$ with recording tableau $\begin{smallmatrix}1&3\\2\end{smallmatrix}$; the crossings inserted first, second and third lie in rows $2,1,1$, so $T^-(R)=\begin{smallmatrix}-2&-1\\-1\end{smallmatrix}$. The operator $f_1$ moves the crossing $(1,2)$ of $R$ to $(2,3)$ and, via the special bump of $2$ into the row $2\,3$, leaves $P$ unchanged while changing the entry $-1$ in the first row of $T^-$ to $-2$.}
+\label{fig:egexample}
+\end{figure}
 
 \subsection{The dual key basis and the ring of RC graph crystals}
 
