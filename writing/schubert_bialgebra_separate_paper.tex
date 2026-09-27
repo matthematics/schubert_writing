@@ -174,7 +174,7 @@ We focus primarily on the dual $\dcoma$ of this algebra, where the product is de
 $$\dcoma = \bigoplus_{n=0}^\infty \mathbb{Z}^{\oplus \mathrm{Comp}_n}$$
 and multiplicatively the product of two basis elements indexed by $a\in \mathrm{Comp}_p$ and $b\in \mathrm{Comp}_q$ is the basis element indexed by the concatenation of $a$ and $b$, which is an element of $\mathrm{Comp}_{p+q}$. We will denote this product by $\sqcupplus$, writing $a\sqcupplus b$ for the concatenation. The coproduct on $\dcoma$ is given by splitting sums of exponents, that is to say
 $$\Delta(c) = \sum_{a+b=c} a\otimes b$$
-where $a$ and $b$ are weak compositions of the same length as $c$ and $a+b$ denotes the pointwise sum. The counit is given by $\varepsilon(c)=0$ unless $c$ is the empty composition, in which case $\varepsilon(c)=1$. With these definitions, $\coma$ and $\dcoma$ are dual bialgebras over $\mathbb{Z}$ (with $\coma$ non-unital: the constant $1\in\coma_n$ is a unit for $\coma_n$ only), a fact that is straightforward to verify. Neither $\coma$ nor $\dcoma$ is connected, and neither is a Hopf algebra. A ``Littlewood--Richardson rule'' for a basis of the dual algebra is equivalent to a branching/splitting formula for the corresponding polynomial basis under the partition of variables into two blocks $\{x_1,\ldots,x_p\}$ and $\{x_{p+1},\ldots,x_{p+q}\}$.
+where $a$ and $b$ are weak compositions of the same length as $c$ and $a+b$ denotes the pointwise sum. The counit is given by $\varepsilon(c)=0$ unless $c=[000\cdots 0]$ for some number of $0$'s, in which case $\varepsilon(c)=1$. With these definitions, $\coma$ and $\dcoma$ are dual bialgebras over $\mathbb{Z}$ (with $\coma$ non-unital: the constant $1\in\coma_n$ is a unit for $\coma_n$ only), a fact that is straightforward to verify. Neither $\coma$ nor $\dcoma$ is connected, and neither is a Hopf algebra. A ``Littlewood--Richardson rule'' for a basis of the dual algebra is equivalent to a branching/splitting formula for the corresponding polynomial basis under the partition of variables into two blocks $\{x_1,\ldots,x_p\}$ and $\{x_{p+1},\ldots,x_{p+q}\}$.
 
 The algebraic structure of $\dcoma$ is not itself new; what is new is the product on the dual Schubert basis $\dsch_u^n$ of $\dcoma$ indexed by $u\in S_\infty$ and $n$ at least as large as the last descent of $u$, defined by
 $$\langle \dsch_u^m, \sch_v^n\rangle = \delta_{u,v}\delta_{m,n}$$
@@ -249,9 +249,9 @@ In effect this would generalize Little's bumping algorithm to the $0$-Hecke word
 
 Sections \ref{section:bialgebra} and \ref{section:dualalgebra} establish the algebraic foundations: \S\ref{section:bialgebra} (\nameref{section:bialgebra}) constructs $\coma$, identifies its Schubert basis $\sch_u^n$, and exhibits the elementary basis $\mathcal{E}_n$ of $\coma_n$; \S\ref{section:dualalgebra} (\nameref{section:dualalgebra}) builds the graded dual $\dcoma$, identifies the dual Schubert basis $\dsch_u^n$, and records the coproduct.
 
-Section \ref{section:brc} (\nameref{section:brc}) defines the module $\BRC$ of bounded RC graphs, the row-decomposition maps $\zeromap$, $\clp^p$, $\trm^p$, and the associative product $\sqcupplus$ on $\BRC$; this culminates in Theorem \ref{theorem:LR}, the Littlewood--Richardson rule for the dual Schubert basis.
+Section \ref{section:brc} (\nameref{section:brc}) defines the module $\BRC$ of bounded RC graphs, the row-decomposition maps $\zeromap$, $\clp^p$, $\trm^p$, and the associative product $\sqcupplus$ on $\BRC$; this culminates in Theorem \ref{theorem:LR}, the Littlewood--Richardson rule for the dual Schubert basis, and in Theorem \ref{theorem:general_lr_template}, a general Littlewood--Richardson principle for admissible equivalence relations on $\BRC$ (Definition~\ref{definition:admissible}) from which the rules of the later sections are derived.
 
-Sections \ref{section:crystals}--\ref{section:slide} produce three further LR rules by quotienting $\BRC$ by successively coarser equivalence relations. Section \ref{section:crystals} (\nameref{section:crystals}) imports the Demazure crystal structure on RC graphs from \cite{assaf2018demazure} and identifies an ideal $\Theta\subset\BRC$ whose quotient yields Theorem \ref{theorem:LRkey}, the LR rule for the dual key basis. Section \ref{section:forest} (\nameref{section:forest}) does the analogous construction for the forest invariant of \cite{nadeau2024forest}, producing an ideal $\Gamma\subset\BRC$ whose quotient yields Theorem \ref{theorem:LRforest}, the LR rule for the dual forest basis, and interprets it as a branching rule on the quasisymmetric flag variety. Section \ref{section:slide} (\nameref{section:slide}) introduces the quasi-Yamanouchi map $\QY$ and the corresponding ideal $\Sigma\subset\BRC$, yielding Theorem \ref{theorem:lrfslide}, a positive product rule for the dual slide basis; the section closes with Theorem \ref{theorem:general_lr_template}, a general ideal-quotient Littlewood--Richardson template that unifies all four rules under a single set of axioms on an equivalence relation $\sim$ on $\BRC$.
+Sections \ref{section:crystals}--\ref{section:slide} produce three further LR rules by quotienting $\BRC$ by successively coarser equivalence relations. Section \ref{section:crystals} (\nameref{section:crystals}) imports the Demazure crystal structure on RC graphs from \cite{assaf2018demazure} and identifies an ideal $\Theta\subset\BRC$ whose quotient yields Theorem \ref{theorem:LRkey}, the LR rule for the dual key basis. Section \ref{section:forest} (\nameref{section:forest}) does the analogous construction for the forest invariant of \cite{nadeau2024forest}, producing an ideal $\Gamma\subset\BRC$ whose quotient yields Theorem \ref{theorem:LRforest}, the LR rule for the dual forest basis, and interprets it as a branching rule on the quasisymmetric flag variety. Section \ref{section:slide} (\nameref{section:slide}) introduces the quasi-Yamanouchi map $\QY$ and the corresponding ideal $\Sigma\subset\BRC$, yielding Theorem \ref{theorem:lrfslide}, a positive product rule for the dual slide basis.
 
 The appendix is devoted to the proof of Proposition \ref{proposition:pullindex}, which would otherwise be distracting.
 
@@ -503,7 +503,7 @@ which is a factorial elementary symmetric polynomial, a special case of a double
 
 \begin{lemma} \label{lemma:doublediff}
   Let $u,w\in S_\infty$ satisfy $u\leq w$ and let $p>0,k>0$ be integers. Then we have
-  $$\delta_u^w(E_k(x;-y_p))=\sum_{C\in\achain{p}(u,w)}(-1)^{\sigma(C)}e_{k-\ell(u,w)}^k+\mathcal{O}(y_p)$$
+  $$\delta_u^w(E_k(x;-y_p))=\sum_{C\in\achain{p}(u,w)}(-1)^{\sigma(C)}e_{k-\ell(u,w)}^k+\mathcal{O}(y)$$
 \end{lemma}
 
 % \begin{lemma} 
@@ -714,7 +714,7 @@ $$[a]\cdot R=\sum_{\substack{\trm(R') = R\\\wtt_1(R') = a}}R'$$
 which is an element of $\BRC$. By virtue of the fact that $\dcoma$ is a free algebra generated by these elements, it is nearly a trivial observation that this is a left module action on $\BRC$. The consequences of this, however, are not at all trivial.
 
 \begin{lemma}[{\cite[Corollary~3.11]{bbrc}}] \label{lemma:d1desc}
-We have that the set $\{w'\mid w\downvar{1} w'\}$ is equal to the set of permutations $w'$ such that there exists a permutation $v=s_{a_1}\cdots s_{a_m}$ for some integers $a_1>a_2>\cdots>a_m\geq 1$ such that $w =v\shup{w'}$.
+We have that the set $\{w'\mid w\downvar{1} w'\}$ is equal to the set of permutations $w'$ such that there exists a permutation $v=s_{a_1}\cdots s_{a_m}$ for some integers $a_1>a_2>\cdots>a_m\geq 1$ such that $w =v\shup{w'}$ and $\ell(w)=\ell(v)+\ell(w')$.
 \end{lemma}
 
 
@@ -2493,6 +2493,60 @@ By Lemma~\ref{lemma:schubertrow}, $\iota$ is a ring isomorphism $\dcoma\to\mathc
 % Then
 % $$D = \sum_{w} c_w \wtt(\dsch_w^n(\mathtt{row}))$$
 
+\subsection{A general Littlewood--Richardson principle}\label{section:template}
+
+Theorem~\ref{theorem:LR} and the dual key, dual forest, and dual slide rules of the following sections are instances of one mechanism, which we isolate here. For a bounded RC graph $R$ of height $p+q$ write
+$$\Psi_p(R)=(\clp^pR,\trm^pR)\in\RC_p\times\RC_q\text{;}$$
+by the remarks following Definition~\ref{definition:cliptrim}, $\wtt(R)$ is the concatenation of $\wtt(\clp^pR)$ and $\wtt(\trm^pR)$.
+
+\begin{definition}\label{definition:admissible}
+Let $\sim$ be an equivalence relation on the set $\bigsqcup_n\RC_n$ of bounded RC graphs; its equivalence classes are called \emph{classes}. For a class $X$ of height $p+q$ and $(U,V)\in\RC_p\times\RC_q$ put
+$$m_X(U,V)=\#\{R\in X:\ \Psi_p(R)=(U,V)\}\text{.}$$
+Let $\lambda$ be a function from the set of classes to a set $J$, with classes of different heights receiving different labels. We say that $\sim$ is \emph{admissible} with respect to $\lambda$ if:
+\begin{itemize}
+\item[(H1)] $R_1\sim R_2$ implies $\hr(R_1)=\hr(R_2)$ and $\wof{R_1}=\wof{R_2}$.
+\item[(H2)] (Fiber constancy.) For all classes $X$, $D_1$, $D_2$ of heights $p+q$, $p$, $q$, the function $m_X$ is constant on $D_1\times D_2$; its value is denoted $m_X(D_1,D_2)$.
+\item[(H3)] (Characters.) For every class $D$ of height $n$, the polynomial $\sum_{R\in D}x^{\wtt(R)}\in\coma_n$ depends only on $\lambda(D)$; writing it $B_{\lambda(D)}$, the family $\{B_\lambda\}$, with $\lambda$ ranging over the labels of the classes of height $n$, is a $\mathbb Z$-basis of $\coma_n$.
+\end{itemize}
+Given such data, let $\{B_\lambda^*\}$ be the dual basis of $\dcoma_n$, let $I_\sim=\mathrm{span}_{\mathbb Z}\{R_1-R_2:R_1\sim R_2\}\subseteq\BRC$, write $[D]\in\BRC/I_\sim$ for the common image of the elements of a class $D$, and put
+$$E_\lambda=\sum_{D:\ \lambda(D)=\lambda}[D]\in\BRC/I_\sim\text{.}$$
+The classes $[D]$ form a $\mathbb Z$-basis of $\BRC/I_\sim$.
+\end{definition}
+
+\begin{theorem}[General LR principle]\label{theorem:general_lr_template}
+Let $\sim$ be admissible with respect to $\lambda$. Then:
+\begin{enumerate}
+\item $I_\sim$ is a two-sided ideal of $\BRC$ contained in $\Omega=\ker\alpha$, and $\alpha$ induces a surjective ring homomorphism $\overline\alpha:\BRC/I_\sim\to\dcoma$. (This part uses only (H1) and (H2).)
+\item $\overline\alpha(E_\lambda)=B_\lambda^*$ for every label $\lambda$.
+\item Let $\mu,\nu$ label classes of heights $p,q$ and define $b_{\mu,\nu}^\lambda$ by $B_\mu^*\sqcupplus B_\nu^*=\sum_\lambda b_{\mu,\nu}^\lambda B_\lambda^*$. For every class $X$ with $\lambda(X)=\lambda$,
+$$b_{\mu,\nu}^\lambda=\sum_{\substack{D_1:\ \lambda(D_1)=\mu\\ D_2:\ \lambda(D_2)=\nu}}m_X(D_1,D_2)\text{.}$$
+Equivalently, for any function $\mathrm{rep}$ that chooses one element in each class, $b_{\mu,\nu}^\lambda$ is the number of $R\in X$ such that $\clp^pR=\mathrm{rep}(\clp^pR)$, $\trm^pR=\mathrm{rep}(\trm^pR)$, $\lambda([\clp^pR])=\mu$ and $\lambda([\trm^pR])=\nu$. In particular $b_{\mu,\nu}^\lambda\in\mathbb Z_{\geq0}$.
+\item $E_\mu\sqcupplus E_\nu=\sum_\lambda b_{\mu,\nu}^\lambda E_\lambda$ in $\BRC/I_\sim$; hence the $E_\lambda$ span a subring of $\BRC/I_\sim$ that $\overline\alpha$ maps isomorphically onto $\dcoma$.
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+(1) For bounded RC graphs $S_1,S_2$ of heights $p,q$, Definition~\ref{definition:ringproduct} and grouping the terms by class give, modulo $I_\sim$,
+$$S_1\sqcupplus S_2\equiv\sum_{X}m_X(S_1,S_2)\,[X]\text{,}$$
+the sum over the classes $X$ of height $p+q$. If $S_1\sim S_1'$ then $m_X(S_1,S_2)=m_X(S_1',S_2)$ for every $X$ by (H2), so $S_1\sqcupplus S_2-S_1'\sqcupplus S_2\in I_\sim$; the same holds in the second argument. Thus $I_\sim$ is a two-sided ideal, and by (H1) each generator $R_1-R_2$ lies in $\Omega$.
+
+(2) By (H1) each class $D$ of height $n$ is contained in a single $\RC_n(w)$, and $\overline\alpha([D])=\dsch_w^n$. Hence $\langle\overline\alpha(E_\lambda),\sch_w^n\rangle$ is the number of classes $D\subseteq\RC_n(w)$ with $\lambda(D)=\lambda$. On the other hand, by Corollary~\ref{corollary:evschub} and (H3),
+$$\sch_w^n=\sum_{R\in\RC_n(w)}x^{\wtt(R)}=\sum_{D\subseteq\RC_n(w)}B_{\lambda(D)}\text{,}$$
+so $\langle B_\lambda^*,\sch_w^n\rangle$ is the same number. Since the $\sch_w^n$ form a basis of $\coma_n$, $\overline\alpha(E_\lambda)=B_\lambda^*$.
+
+(3) As in the proof of Lemma~\ref{lemma:dualbranch}, $\langle\beta\sqcupplus\gamma,f\rangle=\langle\beta\otimes\gamma,\Delta_{p,q}(f)\rangle$, so $b_{\mu,\nu}^\lambda$ is the coefficient of the product $B_\mu(x_1,\ldots,x_p)\,B_\nu(x_{p+1},\ldots,x_{p+q})$ in the polynomial $B_\lambda(x_1,\ldots,x_{p+q})$; by (H3) these products form a basis of $\coma_{p+q}$. Let $X$ be a class with $\lambda(X)=\lambda$. Grouping the elements of $X$ according to $\Psi_p$, and then the pairs $(U,V)$ according to their classes,
+\begin{align*}
+B_\lambda=\sum_{R\in X}x^{\wtt(R)}&=\sum_{(U,V)}m_X(U,V)\,x^{\wtt(U)}\,x_{p+1}^{\wtt_1(V)}\cdots x_{p+q}^{\wtt_q(V)}\\
+&=\sum_{D_1,D_2}m_X(D_1,D_2)\,B_{\lambda(D_1)}(x_1,\ldots,x_p)\,B_{\lambda(D_2)}(x_{p+1},\ldots,x_{p+q})
+\end{align*}
+by (H2) and (H3). Comparing coefficients gives the first formula. For the second, the set described is the disjoint union, over the pairs $(D_1,D_2)$ with $\lambda(D_1)=\mu$ and $\lambda(D_2)=\nu$, of the fibers $X\cap\Psi_p^{-1}(\mathrm{rep}\,D_1,\mathrm{rep}\,D_2)$, which have cardinalities $m_X(D_1,D_2)$.
+
+(4) By the display in (1) and by (3), $E_\mu\sqcupplus E_\nu=\sum_{D_1,D_2}\sum_Xm_X(D_1,D_2)[X]=\sum_Xb_{\mu,\nu}^{\lambda(X)}[X]=\sum_\lambda b_{\mu,\nu}^\lambda E_\lambda$. The $E_\lambda$ have disjoint supports in the basis of classes, hence are linearly independent, and by (2) they map onto the basis $\{B_\lambda^*\}$ of $\dcoma$.
+\end{proof}
+
+\begin{remark}\label{remark:general_lr_instances}
+Theorem~\ref{theorem:LR} is the instance in which $R_1\sim R_2$ means $\hr(R_1)=\hr(R_2)$ and $\wof{R_1}=\wof{R_2}$: the classes are the sets $\RC_n(w)$, labeled by $(w,n)$, with $B_{(w,n)}=\sch_w^n$ by Corollary~\ref{corollary:evschub} and $I_\sim=\Omega$; (H2) is the content of Lemma~\ref{lemma:clipfibers}, which shows that $m_{\RC_{p+q}(w)}(U,V)=N_p(u_v,u)$ for all $U\in\RC_p(u)$ and $V\in\RC_q(v)$ when $\ell(u_v)=\ell(w)-\ell(v)$, and $0$ otherwise. Note that the finer relation of equality on $\RC$ is not admissible: its classes are singletons, whose characters are monomials, and the sums $\mathcal S_w(n)$ of Corollary~\ref{corollary:evschub} do not span a subring of $\BRC$. The next three sections verify (H1)--(H3) for Demazure crystal equivalence, forest equivalence, and quasi-Yamanouchi equivalence.
+\end{remark}
+
 \section{The ring of RC graph crystals}\label{section:crystals}
 
 The key polynomials $\kappa_a$ (also called \emph{Demazure characters} in type $A$) form a $\mathbb{Z}$-basis of $\mathbb{Z}[x_1,x_2,\ldots]$ indexed by weak compositions $a$. Their origin lies in the work of Demazure \cite{demazure1974desingularisation,demazure1974nouvelle}, who introduced isobaric divided difference operators $\pi_i$ in order to compute the characters of the $B$-modules $H^0(X_w,\mathcal{L}_\lambda)$ associated to Schubert varieties $X_w$ in $G/B$. In type $A$, the resulting characters become polynomials in the $x_i$, and one obtains $\kappa_a$ for any weak composition $a$ by setting $\kappa_\lambda = x^\lambda$ when $\lambda$ is a partition (a dominant weight) and applying the appropriate operator $\pi_i$ at each descent of $a$ to interpolate between rearrangements of $\lambda$.
@@ -2726,14 +2780,20 @@ For a composition $a$, define  an element $K_a\in\BRC/\Theta$ by
 $$K_a =\sum_{\substack{R\in\mathrm{Dem}_a\\ R=\mathbb{Y}(R)}} R$$
 \end{definition}
 
-\begin{proposition}
-The elements $K_a\in\BRC/\Theta$ form an additive basis of a subring isomorphic to $\dcoma$ under the homomorphism $\alpha:\BRC/\Theta\to \dcoma$, and 
-$$\alpha(K_a) = \kappa_a^*$$
+\begin{lemma}[Fiber constancy for crystal components]\label{lemma:keyfibers}
+Let $X\subseteq\RC_{p+q}$, $D_1\subseteq\RC_p$, and $D_2\subseteq\RC_q$ be connected components for the operators of Definition~\ref{definition:crystal}. Then $m_X(U,V)=\#\{R\in X:\clp^pR=U,\ \trm^pR=V\}$ is constant for $(U,V)\in D_1\times D_2$.
+\end{lemma}
+\begin{proof}
+Let $R\in X$ with $\clp^pR=U$ and $\trm^pR=V$. For $1\leq i\leq p-1$ the operators $e_i,f_i$ act on rows $i,i+1\leq p$, so $e_i(R)$ is defined if and only if $e_i(R_{\leq p})$ is, and in that case $e_i(R)\in X$ and $\trm^p(e_iR)=V$. Moreover $\clp^p(e_iR)=e_i(\clp^pR)$, and $e_i$ is defined on $\clp^pR$ if and only if it is defined on $R_{\leq p}$: this is Corollary~\ref{corollary:crystaliso} applied to each $\zeromap$ step of Definition~\ref{definition:cliptrim}, as in the proof of Lemma~\ref{lemma:thetaideal}. Hence $e_i$ maps $X\cap\Psi_p^{-1}(U,V)$ into $X\cap\Psi_p^{-1}(e_iU,V)$ and $f_i$ maps back, so $m_X(U,V)=m_X(e_iU,V)$ whenever $e_iU$ is defined, and likewise for $f_i$. For $i\geq p+1$ the operators act on rows $>p$: $e_i(R)$ is defined if and only if $e_{i-p}(V)$ is, and then $\Psi_p(e_iR)=(U,e_{i-p}V)$, so $m_X(U,V)=m_X(U,e_{i-p}V)$, and likewise for $f_i$. Since $D_1$ and $D_2$ are connected, $m_X$ is constant on $D_1\times D_2$.
+\end{proof}
+
+\begin{proposition}\label{proposition:keyadmissible}
+The relation $R_1\sim R_2\iff\mathbb{Y}(R_1)=\mathbb{Y}(R_2)$ is admissible (Definition~\ref{definition:admissible}) with respect to $\lambda=\mathrm{extwt}$, with $B_a=\kappa_a$ and $E_a=K_a$. Consequently $\alpha(K_a)=\kappa_a^*$, and
+$$K_a\sqcupplus K_b=\sum_ck_{a,b}^c\,K_c\quad\text{in }\BRC/\Theta\text{,}\qquad\text{where }\kappa_a^*\sqcupplus\kappa_b^*=\sum_ck_{a,b}^c\,\kappa_c^*\text{;}$$
+the $K_a$ span a subring of $\BRC/\Theta$ mapped isomorphically onto $\dcoma$ by $\alpha$.
 \end{proposition}
 \begin{proof}
-The last statement is simply Theorem \ref{theorem:keyformula}. The $K_a$ actually consist of pairwise disjoint sets of RC graphs, the set of all such is clearly independent. To show that they span a subring, consider the homomorphism $\alpha:\BRC/\Theta\to \dcoma$. We have that $\alpha(K_a)=\kappa_a^*$, and since these are linearly independent, it follows that the kernel of $\alpha$ intersects trivially with the span of the $K_a$. Since $\alpha$ is a homomorphism, it follows that $\alpha$ is injective on the span of the $K_a$, and since 
-$$\alpha(K_a)\sqcupplus\alpha(K_b) = \kappa_a^*\sqcupplus\kappa_b^*=\sum_{c}k_{ab}^c\,\kappa_c^*=\sum k_{a,b}^c\,\alpha(K_c),$$ 
-it follows that $K_a\sqcupplus K_b$ is a linear combination of the $K_c$, so the span of the $K_a$ is closed under multiplication, so that $\alpha$ is an isomorphism and we are done.
+The classes are the connected components. (H1) holds because the crystal operators preserve height and permutation; (H2) is Lemma~\ref{lemma:keyfibers}; (H3) is Theorem~\ref{theorem:keykey} together with the fact that the key polynomials $\kappa_a$, $a\in\mathrm{Comp}_n$, form a $\mathbb{Z}$-basis of $\coma_n$. Each component contains exactly one highest weight element, so $E_a=K_a$. Now apply Theorem~\ref{theorem:general_lr_template}.
 \end{proof}
 
 \begin{theorem}[LR rule for dual keys]\label{theorem:LRkey}
@@ -2745,7 +2805,7 @@ in particular $k_{a,b}^c\in\mathbb{Z}_{\geq 0}$.
 \end{theorem}
 
 \begin{proof}[Proof of Theorem \ref{theorem:LRkey}]
-  The coefficient of $K_c$ in $K_a\sqcupplus K_b$ is the same as the coefficient of $\kappa_c^*$ in $\kappa_a^*\sqcupplus\kappa_b^*$, which is $k_{a,b}^c$ by definition. Since each of the summands of $K_c$ that are Demazure crystals of RC graphs are distinct from the summands of any other key element and each other, we need only consider one of the summands to read off the coefficient. The result follows.
+This is Theorem~\ref{theorem:general_lr_template}(3) for the admissible relation of Proposition~\ref{proposition:keyadmissible}, with $\mathrm{rep}=\mathbb{Y}$: the class of $C$ is $\{R:\mathbb{Y}(R)=C\}$, and $\clp^p(R)$ is the representative of its class with label $a$ exactly when it is a highest weight of extremal weight $a$, and likewise for $\trm^p(R)$.
 \end{proof}
 
 \begin{example}[Computing $\kappa_a^*\sqcupplus\kappa_b^*$ for $a=(0,1,2)$, $b=(0,1,0,2)$]\label{example:LRkey}
@@ -3339,19 +3399,49 @@ The coefficients of the expansion of a monomial into forest polynomials, or equi
 \end{remark}
 
 \begin{definition}[The submodule $\Gamma\subseteq \BRC$]\label{definition:gamma}
-  Let $\Gamma$ be the $\mathbb{Z}$-submodule of $\BRC$ generated by the elements $R_1-R_2$ such that $R_1\equiv_\forest R_2$.
-
+  Let $\Gamma$ be the $\mathbb{Z}$-submodule of $\BRC$ generated by the elements $R_1-R_2$ such that $\hr(R_1)=\hr(R_2)$ and $R_1\equiv_\forest R_2$. A \emph{forest class} is a set of bounded RC graphs of a common height $n$ that is an equivalence class for $\equiv_\forest$; its \emph{forest code} $\fcode(D)$ is the common value of $\fcode(R)$, $R\in D$, regarded as a weak composition of length $n$.
 \end{definition}
+
+\begin{lemma}[$\equiv_\forest$ and concatenation]\label{lemma:forestconcat}
+Let $\mathbf r_1\equiv_\forest\mathbf r_2$ be reduced words for the same permutation, and let $\mathbf s$, $\mathbf t$ be words such that the concatenations below are reduced.
+\begin{enumerate}
+\item[(a)] $\mathbf r_1\mathbf s\equiv_\forest\mathbf r_2\mathbf s$.
+\item[(b)] $\mathbf t\mathbf r_1\equiv_\forest\mathbf t\mathbf r_2$, and $\mathbf r_1+m\equiv_\forest\mathbf r_2+m$ for every $m\geq0$, where $\mathbf r+m$ adds $m$ to every letter.
+\end{enumerate}
+\end{lemma}
+\begin{proof}
+(a) The labeling $P(\overline{\mathbf r})$ records the letters of $\overline{\mathbf r}$ as a set, so $P(\overline{\mathbf r_1})=P(\overline{\mathbf r_2})$ implies that each value occurs equally often in $\mathbf r_1$ and $\mathbf r_2$; hence $\overline{\mathbf r_1\mathbf s}=\overline{\mathbf r_1}\,\mathbf s'$ and $\overline{\mathbf r_2\mathbf s}=\overline{\mathbf r_2}\,\mathbf s'$ with the same injective word $\mathbf s'$. Inserting a letter $a$ into $(F(w),P(w))$ depends only on $(F(w),P(w))$ and $a$, so $P(\overline{\mathbf r_1}\mathbf s')=P(\overline{\mathbf r_2}\mathbf s')$ by induction on the length of $\mathbf s'$.
+
+(b) These are \cite[Lemma~5.9]{nadeau2024forest} and \cite[Proposition~5.8]{nadeau2024forest}, respectively.
+\end{proof}
+
+\begin{lemma}[Forest compatibility of $\zeromap$]\label{lemma:forestzero}
+Let $\maxd(u)=n$ and let $X,X'\in\RC(u,n)^0$. Then $X\equiv_\forest X'$ if and only if $\zeromap(X)\equiv_\forest\zeromap(X')$.
+\end{lemma}
+\begin{proof}
+TBD.
+\end{proof}
+
+\begin{lemma}[Fiber constancy for forest classes]\label{lemma:forestfibers}
+Let $X$, $D_1$, $D_2$ be forest classes of heights $p+q$, $p$, $q$. Then $m_X(U,V)$ is constant for $(U,V)\in D_1\times D_2$.
+\end{lemma}
+\begin{proof}
+Let $w$, $u'$, $v$ be the permutations of the elements of $X$, $D_1$, $D_2$, fix $C\in X$, and write $R\in\RC_{p+q}(w)$ as $R=T\cup\shup^pV$ with $T=R_{\leq p}$, $V=\trm^pR$, as in the proof of Theorem~\ref{theorem:LR}. Then $\mathrm{word}(R)=\mathrm{word}(T)\,(\mathrm{word}(V)+p)$, and $R\in X$ if and only if $\mathrm{word}(R)\equiv_\forest\mathrm{word}(C)$.
+
+\emph{Varying $V$.} Let $V,V'\in D_2$. For $R=T\cup\shup^pV$ with $\Psi_p(R)=(U,V)$, the graph $T\cup\shup^pV'$ is a bounded RC graph of height $p+q$ with $\Psi_p(T\cup\shup^pV')=(U,V')$: reducedness of $\mathrm{word}(T)(\mathrm{word}(V')+p)$ and the last descent of the resulting permutation depend on $V'$ only through $\wof{V'}=v$, and $\clp^p$ depends only on $T$. By Lemma~\ref{lemma:forestconcat}(b), $\mathrm{word}(T)(\mathrm{word}(V')+p)\equiv_\forest\mathrm{word}(T)(\mathrm{word}(V)+p)$, so $T\cup\shup^pV'\in X$. Hence $T\cup\shup^pV\mapsto T\cup\shup^pV'$ is a bijection $X\cap\Psi_p^{-1}(U,V)\to X\cap\Psi_p^{-1}(U,V')$, and $m_X(U,V)=m_X(U,V')$.
+
+\emph{Varying $U$.} Fix $V\in D_2$, put $u_v=w(\shup^pv)^{-1}$ and $h=\max(p,\maxd(u_v))$, and let $\mathbf s=\mathrm{word}(V)+p$. If $\ell(u_v)\neq\ell(w)-\ell(v)$ then $m_X(\,\cdot\,,V)=0$. Otherwise, by the proof of Theorem~\ref{theorem:LR},
+$$X\cap\Psi_p^{-1}(U,V)=\{T\cup\shup^pV:\ T\in\RC_{\leq p}(u_v),\ \zeromap^{h-p}(T)=U,\ \mathrm{word}(T)\,\mathbf s\equiv_\forest\mathrm{word}(C)\}\text{.}$$
+By Lemma~\ref{lemma:forestconcat}(a) the last condition depends only on the $\equiv_\forest$-class of $T$. It therefore suffices to construct, for $U,U'\in D_1$, a bijection $\theta$ from $F(U)=\{T\in\RC_{\leq p}(u_v):\zeromap^{h-p}(T)=U\}$ onto $F(U')$ with $\theta(T)\equiv_\forest T$.
+
+For $T\in F(U)$ consider the sequence $T=T_h,T_{h-1},\ldots,T_p=U$ with $T_{k-1}=\zeromap(T_k)$, and let $u_k=\wof{T_k}$. If $\maxd(u_k)<k$ then $\zeromap$ merely deletes the empty last row of $T_k$, so $T_{k-1}$ and $T_k$ have the same word; if $\maxd(u_k)=k$ then $T_k\in\RC(u_k,k)^0$ and $u_{k-1}\in T_k(u_k)$. By Theorem~\ref{theorem:zero_bijection} and Lemma~\ref{lemma:zeroweight}, as in the proof of Lemma~\ref{lemma:clipfibers}, $T\mapsto(u_h,u_{h-1},\ldots,u_p)$ is a bijection from $F(U)$ onto the set of chains counted by $N_p(u_v,u')$: the chain and $U$ determine $T$ because $\zeromap$ is injective on each $\RC(u_k,k)^0$, and every chain arises by surjectivity. The same holds for $F(U')$; let $\theta(T)\in F(U')$ be the element with the same chain as $T$, and let $T'_k$ be its sequence. We show $T_k\equiv_\forest T'_k$ by induction on $k$, starting from $T_p=U\equiv_\forest U'=T'_p$. If $\maxd(u_k)<k$ then $T_k$, $T_{k-1}$ have the same word, as do $T'_k$, $T'_{k-1}$, and the claim follows. If $\maxd(u_k)=k$ then $T_k,T'_k\in\RC(u_k,k)^0$ with $\zeromap(T_k)=T_{k-1}\equiv_\forest T'_{k-1}=\zeromap(T'_k)$, so $T_k\equiv_\forest T'_k$ by Lemma~\ref{lemma:forestzero}. Thus $\theta(T)=T'_h\equiv_\forest T_h=T$, and $m_X(U,V)=m_X(U',V)$.
+\end{proof}
 
 \begin{lemma} \label{lemma:forestideal}
   $\Gamma$ is a two-sided ideal of $\BRC$.
 \end{lemma}
 \begin{proof}
-  The fact that $\Gamma$ is a left ideal follows from the fact that the products $R\sqcupplus R_1$ and $R\sqcupplus R_2$ have the same first $\hr(R)$ rows, and the rows below are simply shifts of $R_1$ and $R_2$. In terms of the resulting words, the shifted $\mathrm{word}(R_1)$ and $\mathrm{word}(R_2)$ are suffixes of $\mathrm{word}(R\sqcupplus R_1)$ and $\mathrm{word}(R\sqcupplus R_2)$. The $\equiv_\forest$ equivalence is determined by local swaps of pairs of letters that are related in a shift-invariant \cite[Proposition~5.8]{nadeau2024forest} and prefix-invariant \cite[Lemma~5.9]{nadeau2024forest} way, from which the result follows, since the prefixes are identical and the suffixes are related in the same way as $\mathrm{word}(R_1)$ and $\mathrm{word}(R_2)$.
-
-  To prove that $\Gamma$ is a right ideal, assume $\mathrm{word}(R_1)$ and $\mathrm{word}(R_2)$ differ by a single local swap of adjacent letters $a$ and $b$ in the same equivalence class, with $a$ to the left of $b$ in $\mathrm{word}(R_1)$ and to the right of $b$ in $\mathrm{word}(R_2)$. It suffices to consider only the case where $R$ is empty to show that
-  $$R_1\sqcupplus R - R_2\sqcupplus R\in \Gamma$$
-  for any $R$. According to \cite{nadeau2024forest}, the local swap of $a$ and $b$ is a commutation move, and we may reduce to the case where $a$ and $b$ are the last two letters of $\mathrm{word}(R_1)$, and that $b$ is the last descent of $\wof{R_1}$. For any empty $R$, the position $a$ will remain the same. For any term not identical to $R_1$, the suffix of the word will be $ab'$ where $b'>b$. For each $b'$, there will be precisely one matching term with suffix $b'a$ and identical prefix. The local swap of $a$ and $b'$ in the suffix is a valid local swap, so the resulting terms are all in $\Gamma$, and we are done.
+This is Theorem~\ref{theorem:general_lr_template}(1) for the relation ``same height and $\equiv_\forest$'': (H1) holds because forest-equivalent words are reduced words for the same permutation, and (H2) is Lemma~\ref{lemma:forestfibers}.
 \end{proof}
 
 \begin{lemma}
@@ -3366,14 +3456,13 @@ For a composition $a$, define  an element $F_a\in\BRC/\Gamma$ by
 $$F_a =\sum_{[R]\in\mathcal{C}_\forest(a)} [R]$$
 \end{definition}
 
-\begin{proposition}
-The elements $F_a\in\BRC/\Gamma$ form an additive basis of a subring isomorphic to $\dcoma$ under the homomorphism $\alpha:\BRC/\Gamma\to \dcoma$, and 
-$$\alpha(F_a) = \forest_a^*$$
+\begin{proposition}\label{proposition:forestadmissible}
+The relation ``$\hr(R_1)=\hr(R_2)$ and $R_1\equiv_\forest R_2$'' is admissible (Definition~\ref{definition:admissible}) with respect to $\lambda=\fcode$, with $B_a=\forest_a$ and $E_a=F_a$. Consequently $\alpha(F_a)=\forest_a^*$, and
+$$F_a\sqcupplus F_b=\sum_cf_{a,b}^c\,F_c\quad\text{in }\BRC/\Gamma\text{,}\qquad\text{where }\forest_a^*\sqcupplus\forest_b^*=\sum_cf_{a,b}^c\,\forest_c^*\text{;}$$
+the $F_a$ span a subring of $\BRC/\Gamma$ mapped isomorphically onto $\dcoma$ by $\alpha$.
 \end{proposition}
 \begin{proof}
-As before, the last statement is simply Theorem \ref{theorem:forestformula}. The $F_a$ actually consist of pairwise disjoint sets of RC graphs, the set of all such is clearly independent. To show that they span a subring, consider the homomorphism $\alpha:\BRC/\Gamma\to \dcoma$. We have that $\alpha(F_a)=\forest_a^*$, and since these are linearly independent, it follows that the kernel of $\alpha$ intersects trivially with the span of the $F_a$. Since $\alpha$ is a homomorphism, it follows that $\alpha$ is injective on the span of the $F_a$, and since 
-$$\alpha(F_a)\sqcupplus\alpha(F_b) = \forest_a^*\sqcupplus\forest_b^*=\sum_{c}f_{ab}^c\,\forest_c^*=\sum f_{a,b}^c\,\alpha(F_c),$$ 
-it follows that $F_a\sqcupplus F_b$ is a linear combination of the $F_c$, so the span of the $F_a$ is closed under multiplication, so that $\alpha$ is an isomorphism and we are done.
+(H1) and (H2) were verified in the proof of Lemma~\ref{lemma:forestideal}. For (H3), the character of a forest class $D$ of height $n$ is $\forest_{\fcode(D)}(x_1,\ldots,x_n)$ by Theorem~\ref{theorem:forestformula}(I), and the forest polynomials $\forest_a$, $a$ a weak composition of length $n$, form a $\mathbb{Z}$-basis of $\coma_n$ \cite{nadeau2024forest}. Now apply Theorem~\ref{theorem:general_lr_template}.
 \end{proof}
 
 \begin{theorem}[LR rule for dual forests]\label{theorem:LRforest}
@@ -3385,7 +3474,7 @@ in particular $f_{a,b}^c\in\mathbb{Z}_{\geq 0}$.
 \end{theorem}
 
 \begin{proof}[Proof of Theorem \ref{theorem:LRforest}]
-  The coefficient of $F_c$ in $F_a\sqcupplus F_b$ is the same as the coefficient of $\forest_c^*$ in $\forest_a^*\sqcupplus\forest_b^*$, which is $f_{a,b}^c$ by definition. Since each of the summands of $F_c$ that are equivalence classes of RC graphs are distinct from the summands of any other forest element and each other, we need only consider one of the summands to read off the coefficient. The result follows.
+The monomial $x^{\fcode(D)}$ occurs with coefficient $1$ in $\forest_{\fcode(D)}$ \cite{nadeau2024forest}, so by Theorem~\ref{theorem:forestformula}(I) every forest class $D$ contains exactly one element of weight $\fcode(D)$; let $\mathrm{rep}(D)$ be this element. The statement is Theorem~\ref{theorem:general_lr_template}(3) for the admissible relation of Proposition~\ref{proposition:forestadmissible} with this choice of $\mathrm{rep}$: $\clp^p(R)$ is the representative of its class with label $a$ exactly when $\clp^p(R)\in\mathcal{C}_\forest(a)$ and $\wtt(\clp^p(R))=a$, and likewise for $\trm^p(R)$.
 \end{proof}
 
 \begin{example}[Computing $\forest_a^*\sqcupplus\forest_b^*$ for $a=(0,0,2,0,2)$, $b=(0,1,0,0,2)$]\label{example:LRforest}
@@ -3488,9 +3577,13 @@ Let $\Sigma$ be the $\mathbb{Z}$-submodule of $\BRC$ generated by the elements $
 $\Sigma$ is a two-sided ideal of $\BRC$.
 \end{lemma}
 \begin{proof}
-That $\Sigma$ is a left ideal follows from the same mechanism used for $\Theta$ (Lemma~\ref{lemma:thetaideal}): the terms of $R\sqcupplus R_1$ and $R\sqcupplus R_2$ are in bijection $T\cup\shup^mR_1\leftrightarrow T\cup\shup^mR_2$, since $\wof{R_1}=\wof{R_2}$, and the crystal operators $e_i$, $i>\hr(R)$, act on the trailing block exactly as on $R_1$, $R_2$. The quasi-Yamanouchi map $\QY$ is defined by applying a sequence of crystal raising operators determined by the weight (\cite{assaf2017slide}); hence applying $\QY$ to $R\sqcupplus R_1$ and to $R\sqcupplus R_2$ produces graphs whose trailing rows have a common partial quasi-Yamanouchi reduction $R\sqcupplus \QY(R_1)=R\sqcupplus \QY(R_2)$, and so $\QY(R\sqcupplus R_1)=\QY(R\sqcupplus R_2)$.
+By definition $\QY(R_1)=\QY(R_2)$ means $\mathrm{word}(R_1)=\mathrm{word}(R_2)$ and $\hr(R_1)=\hr(R_2)=:n$; in particular $\wof{R_1}=\wof{R_2}$. Let $R$ be a bounded RC graph of height $m$.
 
-That $\Sigma$ is a right ideal follows from Corollary \ref{corollary:crystaliso}: multiplication on the right by a fixed $R$ induces an isomorphism of crystal graphs on the relevant subblock, and the $\QY$ images of corresponding terms therefore agree.
+\emph{Left ideal.} As in the proof of Lemma~\ref{lemma:thetaideal}, $T\cup\shup^mR_1\mapsto T\cup\shup^mR_2$ is a bijection from the terms of $R\sqcupplus R_1$ to those of $R\sqcupplus R_2$, since membership depends on $R_1$ only through $\wof{R_1}$. Corresponding terms have height $m+n$ and reading word $\mathrm{word}(T)$ followed by $\mathrm{word}(R_1)$ with every letter increased by $m$, which is the same for $R_1$ and $R_2$. Hence $R\sqcupplus R_1-R\sqcupplus R_2\in\Sigma$.
+
+\emph{Right ideal.} We first record that $\zeromap$ and its inverse act at the level of reading words. A step of Definition~\ref{definition:zeromap} on $X\in\RC(u,h)^0$ with $\maxd(u)=h$ replaces $\mathrm{word}(X)$ by its Little bump at the position with right root $(h,s)$, where $s$ is determined by $u$, and keeps the row sequence; so $\mathrm{word}(X^{(1)})$ depends only on $\mathrm{word}(X)$. Conversely, by Lemma~\ref{lemma:zeroweight} this step is the inverse of the Monk move $m_{i,h}$, and $m_{i,h}$ is computed (see the description preceding Lemma~\ref{lemma:bpdconfine}) by replacing the crossing with right root $(i,h)$ and moving crossings to the right within their rows, which in terms of the reading word is an incrementing Little bump at a word-determined position, again with the row sequence unchanged. Consequently, if $X,X'\in\RC(u,h)^0$ have the same reading word, then $\zeromap(X)$ and $\zeromap(X')$ have the same reading word; and if $Y,Y'\in\RC_{h-1}$ have the same reading word and $Y=\zeromap(X)$ with $X\in\RC(u,h)^0$, then applying to $Y'$, with an empty row $h$ appended, the sequence of Monk moves $m_{i_k,h},\ldots,m_{i_1,h}$ that recovers $X$ from $Y$ produces at each stage an RC graph with the same reading word as the corresponding stage for $X$, hence with the same permutation, and yields $X'\in\RC(u,h)^0$ with $\mathrm{word}(X')=\mathrm{word}(X)$ and $\zeromap(X')=Y'$.
+
+Now a bounded RC graph $R'$ of height $n+m$ is a term of $R_1\sqcupplus R$ if and only if $R'=T\cup\shup^nR$ with $T=R'_{\leq n}$, where $T\cup\shup^nR$ is a bounded RC graph and $\zeromap^{h-n}(T)=R_1$ for $h=\max(n,\maxd(\wof T))$ (Definition~\ref{definition:cliptrim}). The first condition depends only on $\mathrm{word}(T)$, and so does $h$. Iterating the previous paragraph $h-n$ times gives a bijection $T\mapsto T'$ from $\{T:\zeromap^{h-n}(T)=R_1\}$ onto $\{T':\zeromap^{h-n}(T')=R_2\}$ with $\mathrm{word}(T')=\mathrm{word}(T)$: at each stage the two computations pass through RC graphs with equal reading words, and the row sequences of $R_1$ and $R_2$ are carried along unchanged. Hence $T\cup\shup^nR\mapsto T'\cup\shup^nR$ is a bijection from the terms of $R_1\sqcupplus R$ onto the terms of $R_2\sqcupplus R$ preserving reading words and heights, and $R_1\sqcupplus R-R_2\sqcupplus R\in\Sigma$.
 \end{proof}
 
 \begin{lemma}
@@ -3505,14 +3598,20 @@ For a weak composition $a$, define an element $\mathcal{F}_a\in\BRC/\Sigma$ by
 $$\mathcal{F}_a=\sum_{R: \QY(R)=R,\ \wtt(R)=a} R.$$
 \end{definition}
 
+\begin{lemma}[Fiber constancy for word classes]\label{lemma:slidefibers}
+Let $X$, $D_1$, $D_2$ be classes of heights $p+q$, $p$, $q$ for the relation $\QY(R_1)=\QY(R_2)$. Then $m_X(U,V)$ is constant for $(U,V)\in D_1\times D_2$.
+\end{lemma}
+\begin{proof}
+The two bijections constructed in the proof of Lemma~\ref{lemma:slideideal} preserve reading words and heights. For $V,V'\in D_2$ the first, $T\cup\shup^pV\mapsto T\cup\shup^pV'$, restricts to a bijection $X\cap\Psi_p^{-1}(U,V)\to X\cap\Psi_p^{-1}(U,V')$, since it fixes $\clp^p$ and sends $X$ to $X$. For $U,U'\in D_1$ the second, $T\cup\shup^pV\mapsto T'\cup\shup^pV$ with $\zeromap^{h-p}(T')=U'$ and $\mathrm{word}(T')=\mathrm{word}(T)$, restricts to a bijection $X\cap\Psi_p^{-1}(U,V)\to X\cap\Psi_p^{-1}(U',V)$.
+\end{proof}
+
 \begin{proposition}\label{proposition:slidebasis}
-The elements $\mathcal{F}_a\in\BRC/\Sigma$ form an additive basis of a subring isomorphic to $\dcoma$ under the homomorphism $\alpha:\BRC/\Sigma\to\dcoma$, and
-$$\alpha(\mathcal{F}_a)=\mathfrak{F}_a^*.$$
+The relation $\QY(R_1)=\QY(R_2)$ is admissible (Definition~\ref{definition:admissible}) with respect to $\lambda(D)=\wtt(\QY(D))$, with $B_a=\mathfrak{F}_a$ and $E_a=\mathcal{F}_a$. Consequently $\alpha(\mathcal{F}_a)=\mathfrak{F}_a^*$, and
+$$\mathcal{F}_a\sqcupplus\mathcal{F}_b=\sum_cs_{a,b}^c\,\mathcal{F}_c\quad\text{in }\BRC/\Sigma\text{,}\qquad\text{where }\mathfrak{F}_a^*\sqcupplus\mathfrak{F}_b^*=\sum_cs_{a,b}^c\,\mathfrak{F}_c^*\text{;}$$
+the $\mathcal{F}_a$ span a subring of $\BRC/\Sigma$ mapped isomorphically onto $\dcoma$ by $\alpha$.
 \end{proposition}
 \begin{proof}
-The last identity is the Corollary above. Distinct $\mathcal{F}_a$ are supported on disjoint sets of quasi-Yamanouchi RC graphs (indexed by their common weight $a$), so the $\mathcal{F}_a$ are linearly independent in $\BRC/\Sigma$. Considering the homomorphism $\alpha:\BRC/\Sigma\to\dcoma$, since the $\mathfrak{F}_a^*$ are linearly independent, the kernel of $\alpha$ intersects the span of the $\mathcal{F}_a$ trivially; hence $\alpha$ is injective on $\sum_a \mathbb{Z}\mathcal{F}_a$. Since
-$$\alpha(\mathcal{F}_a)\sqcupplus\alpha(\mathcal{F}_b)=\mathfrak{F}_a^*\sqcupplus\mathfrak{F}_b^*=\sum_c s_{a,b}^c\,\mathfrak{F}_c^*=\sum_c s_{a,b}^c\,\alpha(\mathcal{F}_c),$$
-the product $\mathcal{F}_a\sqcupplus\mathcal{F}_b$ lies in the span of the $\mathcal{F}_c$, so this span is closed under multiplication and the restriction of $\alpha$ is a ring isomorphism.
+(H1) holds because a class consists of the RC graphs of a fixed height with a fixed reading word; (H2) is Lemma~\ref{lemma:slidefibers}. For (H3), the character of the class $D$ of height $n$ with reading word $\mathbf r$ is $\mathfrak{F}(\mathbf r)=\mathfrak{F}_{\wtt(\QY(D))}$ by \cite[Theorem~3.13]{assaf2017slide} and its proof, and the fundamental slide polynomials $\mathfrak{F}_a$, $a$ a weak composition of length $n$, form a $\mathbb{Z}$-basis of $\coma_n$ \cite{assaf2017slide}. Each class contains exactly one quasi-Yamanouchi element, so $E_a=\mathcal{F}_a$. Now apply Theorem~\ref{theorem:general_lr_template}.
 \end{proof}
 
 \begin{theorem} \label{theorem:lrfslide}
@@ -3521,56 +3620,8 @@ $$\mathfrak{F}_a^*\sqcupplus\mathfrak{F}_b^*=\sum_c s_{a,b}^c\,\mathfrak{F}_c^*$
 For each $c$, fix an RC graph $C$ with $\wtt(\QY(C)) = c$. Then $s_{a,b}^c$ is the number of distinct RC graphs $R$ with $\mathrm{word}(R)=\mathrm{word}(C)$ with $\wtt(\clp^p(R)) = a,\wtt(\trm^p(R)) = b$ such that $\clp^p(R),\trm^p(R)$ are quasi-Yamanouchi, and is in particular nonnegative.
 \end{theorem}
 \begin{proof}
-The coefficient of $\mathcal{F}_c$ in $\mathcal{F}_a\sqcupplus\mathcal{F}_b$ equals the coefficient of $\mathfrak{F}_c^*$ in $\mathfrak{F}_a^*\sqcupplus\mathfrak{F}_b^*$, namely $s_{a,b}^c$, by Proposition \ref{proposition:slidebasis}. Expanding the product $\mathcal{F}_a\sqcupplus\mathcal{F}_b$ via the $(\clp^p,\trm^p)$-decomposition of $\sqcupplus$ (Theorem \ref{theorem:modactrc}) and reading off the coefficient of $\mathcal{F}_c$ from a fixed representative $C$ with $\wtt(\QY(C))=c$, the contributing terms are precisely the RC graphs $R$ with $\mathrm{word}(R)=\mathrm{word}(C)$ whose clip and trim have quasi-Yamanouchi weights $a$ and $b$ respectively.
+This is Theorem~\ref{theorem:general_lr_template}(3) for the admissible relation of Proposition~\ref{proposition:slidebasis}, with $\mathrm{rep}=\QY$: the class of $C$ consists of the RC graphs of height $p+q$ with reading word $\mathrm{word}(C)$, and $\clp^p(R)$ is the representative of its class with label $a$ exactly when it is quasi-Yamanouchi of weight $a$, and likewise for $\trm^p(R)$.
 \end{proof}
-
-\subsection{A general ideal-quotient Littlewood--Richardson principle}
-
-The dual Schubert, dual key, and dual forest LR rules of the previous sections all fit a common template, which we record here.
-
-\begin{theorem}[General LR principle via ideals of $\BRC$]\label{theorem:general_lr_template}
-Let $\sim$ be an equivalence relation on $\bigsqcup_n \RC_n$ satisfying:
-\begin{itemize}
-\item[(H1)] If $R_1\sim R_2$ then $\hr(R_1)=\hr(R_2)$ and $\wof{R_1}=\wof{R_2}$ (in particular $\alpha(R_1)=\alpha(R_2)$).
-\item[(H2)] $\sim$ is a congruence for $\sqcupplus$: $R_1\sim R_2$ implies $R\sqcupplus R_1\sim R\sqcupplus R_2$ and $R_1\sqcupplus R\sim R_2\sqcupplus R$ for every $R$.
-\item[(H3)] $\clp^p$ and $\trm^p$ descend to $\sim$: if $R_1\sim R_2$ and $1\leq p\leq \hr(R_1)$, then $\clp^p(R_1)\sim \clp^p(R_2)$ and $\trm^p(R_1)\sim \trm^p(R_2)$.
-\item[(H4)] There is an index set $J$ and a function $\lambda:(\RC/\!\sim)\to J$ such that, writing $I_\sim=\mathrm{span}_{\mathbb{Z}}\{R_1-R_2:R_1\sim R_2\}\subseteq\BRC$ and
-$$E_\lambda := \sum_{[R]:\,\lambda([R])=\lambda} [R] \in \BRC/I_\sim,$$
-the family $\{\alpha(E_\lambda)\}_{\lambda\in J}$ is a $\mathbb{Z}$-basis of $\dcoma$.
-
-\end{itemize}
-Then $I_\sim$ is a two-sided ideal of $\BRC$ contained in $\Omega=\ker\alpha$, the elements $\{E_\lambda\}$ span a subring of $\BRC/I_\sim$ isomorphic to $\dcoma$ via $\alpha$, and the structure constants $b_{\mu,\nu}^\lambda$ defined by
-$$\mathfrak{B}_\mu^*\sqcupplus\mathfrak{B}_\nu^* = \sum_\lambda b_{\mu,\nu}^\lambda\,\mathfrak{B}_\lambda^*,\qquad \mathfrak{B}_\lambda^*:=\alpha(E_\lambda),$$
-are nonnegative integers. More precisely, for any function $\mathrm{rep}\colon\RC\to\RC$ that sends every element of a $\sim$-class to a single common representative of that class (that is, $\mathrm{rep}(R)\sim R$ for all $R$, and $\mathrm{rep}(R)=\mathrm{rep}(S)$ whenever $R\sim S$), we have the positive combinatorial formula
-\begin{align*}
-b_{\mu,\nu}^\lambda \;=\; \#\bigl\{\,R\sim C\ :\ &\clp^p(R)=\mathrm{rep}(\clp^p(R)),\;\;\trm^p(R)=\mathrm{rep}(\trm^p(R)),\\
-&\lambda([\clp^p(R)])=\mu,\;\;\lambda([\trm^p(R)])=\nu\,\bigr\}
-\end{align*}
-for any fixed $C$ with $\lambda([C])=\lambda$. The count is independent of the choice of $\mathrm{rep}$.
-\end{theorem}
-\begin{proof}
-By (H1) every generator $R_1-R_2$ of $I_\sim$ lies in $\Omega=\ker\alpha$, so $I_\sim\subseteq\Omega$ and $\alpha$ descends to a surjective ring homomorphism $\overline\alpha:\BRC/I_\sim\to\dcoma$. By (H2), $I_\sim$ is a two-sided ideal of $\BRC$, so $\BRC/I_\sim$ inherits a ring structure.
-
-By construction of $E_\lambda$ in (H4), each $\sim$-class $[R]$ appears in $E_\lambda$ with multiplicity exactly $1$ (when $\lambda([R])=\lambda$) or $0$ (otherwise), and the supports of $E_\lambda$ and $E_{\lambda'}$ in $\BRC/I_\sim$ are disjoint whenever $\lambda\neq\lambda'$; consequently the coefficient $b_{\mu,\nu}^\lambda$ may be read off from the contribution to a single chosen class $[C]$ with $\lambda([C])=\lambda$. In particular the $\{E_\lambda\}$ are linearly independent. Under $\overline\alpha$ they map to the $\mathbb{Z}$-basis $\{\mathfrak{B}_\lambda^*\}$ of $\dcoma$ by (H4), so $\overline\alpha$ restricts to a $\mathbb{Z}$-module isomorphism $\bigoplus_\lambda\mathbb{Z}E_\lambda\xrightarrow{\;\cong\;}\dcoma$. Since $\overline\alpha$ is a ring homomorphism, the span of the $E_\lambda$ is closed under multiplication and the isomorphism is one of rings. Consequently
-$$E_\mu \sqcupplus E_\nu = \sum_\lambda b_{\mu,\nu}^\lambda\, E_\lambda \quad\text{in } \BRC/I_\sim.$$
-
-To read off $b_{\mu,\nu}^\lambda$, fix any $C$ with $\lambda([C])=\lambda$ and let $S_1=\mathrm{rep}(R_1)$, $S_2=\mathrm{rep}(R_2)$ be the chosen representatives of the $\mu$- and $\nu$-classes (for any $R_1,R_2$ in those classes). By Theorem~\ref{theorem:modactrc} the product $\sqcupplus$ on $\BRC$ admits a $(\clp^p,\trm^p)$-decomposition: for any $S_1,S_2$ with $\hr(S_1)=p$, $\hr(S_2)=q$, the set $\{R\in\RC_{p+q}:\clp^p(R)=S_1,\,\trm^p(R)=S_2\}$ enumerates the summands of $S_1\sqcupplus S_2$ with multiplicity one. Projecting to $\BRC/I_\sim$, (H3) ensures that the class of $R$ depends only on the classes of $\clp^p(R)$ and $\trm^p(R)$, so the contribution of $S_1\sqcupplus S_2$ to the coefficient of $[C]$ in $E_\lambda$ is exactly the count of $R\sim C$ for which $\clp^p(R)=S_1$ and $\trm^p(R)=S_2$, i.e.\ for which $\clp^p(R)$ and $\trm^p(R)$ are themselves fixed points of $\mathrm{rep}$ and represent the $\mu$- and $\nu$-classes. This is the stated formula. Being a cardinality, it is nonnegative.
-
-Finally, the count is independent of the choice of $\mathrm{rep}$. The element $E_\lambda\in\BRC/I_\sim$ is defined directly as $\sum_{[R]:\lambda([R])=\lambda}[R]$, with no reference to $\mathrm{rep}$, so the structure constants in $E_\mu E_\nu=\sum_\lambda b_{\mu,\nu}^\lambda E_\lambda$ are intrinsic. To see that the formula computes the correct value for every valid $\mathrm{rep}$, fix classes $[T_1],[T_2]$ with $\lambda([T_1])=\mu$, $\lambda([T_2])=\nu$, and consider, for any $S_1\in[T_1]$ and $S_2\in[T_2]$, the count
-$$N(S_1,S_2):=\#\{R\sim C\,:\,\clp^p(R)=S_1,\ \trm^p(R)=S_2\}.$$
-By the $(\clp^p,\trm^p)$-decomposition of Theorem~\ref{theorem:modactrc}, $N(S_1,S_2)$ equals the coefficient of $[C]$ in the product $[S_1]\sqcupplus[S_2]\in\BRC/I_\sim$ (using (H2) to make the product well-defined and (H3) to ensure each summand of $S_1\sqcupplus S_2$ has $\sim$-class depending only on $[S_1]$ and $[S_2]$). In particular $N(S_1,S_2)$ depends only on the classes $[T_1],[T_2]$ and on $[C]$, not on the choice of representatives $S_1,S_2$. The $\mathrm{rep}$-formula selects, for each such class-pair, the single representative pair $(\mathrm{rep}(T_1),\mathrm{rep}(T_2))$ and counts $N(\mathrm{rep}(T_1),\mathrm{rep}(T_2))$; another valid $\mathrm{rep}'$ counts $N(\mathrm{rep}'(T_1),\mathrm{rep}'(T_2))$, and these are equal. Summing over class-pairs yields the same total $b_{\mu,\nu}^\lambda$.
-\end{proof}
-
-\begin{remark}\label{remark:general_lr_instances}
-In the present paper, Theorem~\ref{theorem:general_lr_template} is instantiated by
-\begin{itemize}
-\item $\sim$ = equality on $\RC$, with $I_\sim=0$ and $\lambda([R])=(\wof{R},\hr(R))$, recovering Theorem~\ref{theorem:LR} (dual Schubert basis);
-\item $\sim$ = Demazure-crystal equivalence, with $I_\sim=\Theta$ and $\lambda$ the extremal weight, recovering Theorem~\ref{theorem:LRkey} (dual key basis);
-\item $\sim\,=\,\equiv_\forest$, with $I_\sim=\Gamma$ and $\lambda=\fcode$, recovering Theorem~\ref{theorem:LRforest} (dual forest basis);
-\item $\sim$ = ``same reduced word and same $\hr$'' on $\RC$, with $\lambda([R])=\wtt(\QY(R))$, recovering Theorem~\ref{theorem:lrfslide} (dual slide basis).
-\end{itemize}
-The verifications of (H1)--(H4) in each case are precisely the lemmas and propositions of \S\ref{section:bialgebra}, \S\ref{section:crystals}, \S\ref{section:forest}, and \S\ref{section:slide}.
-\end{remark}
 
 \section*{Notation and conventions}\label{section:notation}
 
@@ -3659,14 +3710,14 @@ For the reader's convenience we collect here, in one place, the principal symbol
 \begin{description}
 \item[$\BRC$] $\bigoplus_{n\geq 0}\mathbb{Z}^{\oplus\RC_n}$, with the product $\sqcupplus$ (\S\ref{section:brc}).
 \item[$\BRC_n$] The graded component $\mathbb{Z}^{\oplus \RC_n}$ of $\BRC$ (RC graphs of height exactly $n$).
-\item[$\mathcal{S}_w(n)$] $\sum_{R:\,\wof{R}=w,\,\hr(R)=n}R\in\BRC_n$, the sum of all $n$-row RC graphs of permutation $w$; satisfies $\alpha(\mathcal{S}_w(n))=\dsch_w^n$ and $\mathrm{ev}(\mathcal{S}_w(n))=\sch_w^n$ (\S\ref{section:brc}).
+\item[$\mathcal{S}_w(n)$] $\sum_{R:\,\wof{R}=w,\,\hr(R)=n}R\in\BRC_n$, the sum of all $n$-row RC graphs of permutation $w$; satisfies $\alpha(\mathcal{S}_w(n))=|\RC_n(w)|\,\dsch_w^n$ and $\mathrm{ev}(\mathcal{S}_w(n))=\sch_w^n$ (\S\ref{section:brc}).
 \item[$K_a$] $\sum_{R\in\mathrm{Dem}_a,\,R=\mathbb{Y}(R)} R\in\BRC/\Theta$, the dual key class sum; $\alpha(K_a)=\kappa_a^*$ (\S\ref{section:crystals}).
 \item[$F_a$] $\sum_{[R]\in\mathcal{C}_\forest(a)}[R]\in\BRC/\Gamma$, the dual forest class sum; $\alpha(F_a)=\forest_a^*$ (\S\ref{section:forest}).
 \item[$\sqcupplus$] The associative concatenation product on $\BRC$, on $\dcoma$, and on the quotients $\BRC/I_\sim$; built from $\clp^p$ and $\trm^p$ on $\BRC$ (\S\ref{section:ringproduct}).
 \item[$\alpha:\BRC\to\dcoma$] Ring homomorphism with $\alpha(R)=\dsch_{\wof{R}}^{\hr(R)}$ (\S\ref{section:brc}).
 \item[$\Omega$] $\ker\alpha$, the two-sided ideal of $\BRC$ on which $\alpha$ vanishes (Definition~\ref{definition:omega}; Theorem~\ref{theorem:semidirect}).
 \item[$\Theta$] The two-sided ideal generated by $R_1-R_2$ with $\mathbb{Y}(R_1)=\mathbb{Y}(R_2)$ (Definition~\ref{definition:theta}); $\BRC/\Theta$ supports the dual key LR rule (Theorem~\ref{theorem:LRkey}).
-\item[$\Gamma$] The two-sided ideal generated by $R_1-R_2$ with $R_1\equiv_\forest R_2$ (Definition~\ref{definition:gamma}); $\BRC/\Gamma$ supports the dual forest LR rule (Theorem~\ref{theorem:LRforest}).
+\item[$\Gamma$] The two-sided ideal generated by $R_1-R_2$ with $\hr(R_1)=\hr(R_2)$ and $R_1\equiv_\forest R_2$ (Definition~\ref{definition:gamma}); $\BRC/\Gamma$ supports the dual forest LR rule (Theorem~\ref{theorem:LRforest}).
 \item[$\mathcal{E}_n$] The elementary basis of $\coma_n$ (Theorem~\ref{theorem:elemtrans}).
 \end{description}
 
@@ -3677,7 +3728,7 @@ For the reader's convenience we collect here, in one place, the principal symbol
 \item[$\RC_\QY(c)$] Set of RC graphs $R$ with $\wtt(R)=c$ such that $\mathrm{word}(\QY(R))$ is lex-minimal among $R'$ with $\wtt(\QY(R'))=\wtt(\QY(R))$ (\S\ref{section:slide}).
 \item[$\Sigma$] Two-sided ideal of $\BRC$ generated by $R_1-R_2$ with $\QY(R_1)=\QY(R_2)$ (Lemma~\ref{lemma:slideideal}).
 \item[$\mathcal{F}_a$] The element $\sum_{R=\QY(R),\,\wtt(R)=a} R\in\BRC/\Sigma$, a representative of the slide basis under $\alpha$ (Proposition~\ref{proposition:slidebasis}).
-\item[$\sim$] A generic equivalence relation on $\bigsqcup_n\RC_n$ satisfying (H1)--(H4) of Theorem~\ref{theorem:general_lr_template}.
+\item[$\sim$] An admissible equivalence relation on $\bigsqcup_n\RC_n$, i.e.\ one satisfying (H1)--(H3) of Definition~\ref{definition:admissible}.
 \item[$I_\sim$] The two-sided ideal $\mathrm{span}_{\mathbb{Z}}\{R_1-R_2:R_1\sim R_2\}\subseteq\BRC$ (Theorem~\ref{theorem:general_lr_template}).
 \item[$J$, $\lambda$] Index set, resp.\ labeling map $(\RC/\!\sim)\to J$ in the general LR template (Theorem~\ref{theorem:general_lr_template}).
 \item[$E_\lambda$] The class sum $\sum_{[R]:\,\lambda([R])=\lambda}[R]\in\BRC/I_\sim$ (Theorem~\ref{theorem:general_lr_template}).
