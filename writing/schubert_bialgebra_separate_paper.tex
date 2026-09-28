@@ -3415,19 +3415,28 @@ Let $\mathbf r_1\equiv_\forest\mathbf r_2$ be words.
 (b) This is \cite[Proposition~5.8]{nadeau2024forest}.
 \end{proof}
 
-The analogue of (a) for prefixes fails: $13\equiv_\forest31$ (both are reduced words of $2143$, and $\sch_{2143}=\forest_{(1,0,1)}$ is a single forest polynomial), but $213\not\equiv_\forest231$. The following lemma is the substitute that the row decomposition requires.
+The analogue of (a) for prefixes fails: $13\equiv_\forest31$ (both are reduced words of $2143$, and $\sch_{2143}=\forest_{(1,0,1)}$ is a single forest polynomial), but $213\not\equiv_\forest231$. The two lemmas below are the substitutes that the row decomposition requires. For a word $\mathbf a$ we write $R\equiv_{\mathbf a}R'$ if $\mathbf a\,\mathrm{rev}(\mathrm{word}(R))\equiv_\forest\mathbf a\,\mathrm{rev}(\mathrm{word}(R'))$; thus $\equiv_\varnothing$ is $\equiv_\forest$.
 
-\begin{lemma}[Forest compatibility of $\clp^p$]\label{lemma:clipforest}
-Let $p\geq0$, let $T,T'$ be bounded RC graphs of the same height with $\wof T=\wof{T'}$ and with all crossings in rows $1,\ldots,p$, and let $\mathbf a$ be a word all of whose letters exceed $p$ such that $\mathbf a\,\mathrm{rev}(\mathrm{word}(T))$ is a reduced word (equivalently, since $\wof T=\wof{T'}$, such that $\mathbf a\,\mathrm{rev}(\mathrm{word}(T'))$ is). If $\clp^p(T)\equiv_\forest\clp^p(T')$, then
-$$\mathbf a\,\mathrm{rev}(\mathrm{word}(T))\equiv_\forest\mathbf a\,\mathrm{rev}(\mathrm{word}(T'))\text{.}$$
+\begin{lemma}[Prefixes above the height]\label{lemma:forestprefix}
+Let $U\equiv_\forest U'$ be bounded RC graphs of height $p$, let $V$ be a bounded RC graph, and let $\mathbf a=\mathrm{rev}(\mathrm{word}(V))+p$. Then $U\equiv_{\mathbf a}U'$.
 \end{lemma}
 \begin{proof}
 TBD.
 \end{proof}
 
-\begin{remark}
-For $\mathbf a$ empty and $T,T'\in\RC(u,n)^0$ with $\maxd(u)=n$ and $p=n-1$, Lemma~\ref{lemma:clipforest} says that $\zeromap(T)\equiv_\forest\zeromap(T')$ implies $T\equiv_\forest T'$. The converse is false: for $u=2143$ and $n=3$ the graphs $\{(1,1),(1,3)\}$ and $\{(1,1),(2,2)\}$ are forest equivalent, but their images under $\zeromap$ have permutations $312$ and $231$; this reflects the fact that $\forest_{(1,0,1)}(x_1,x_2,0)=\forest_{(2,0)}+\forest_{(1,1)}$, so no map realizing $x_n=0$ on RC graphs can preserve forest classes. The hypothesis on the letters of $\mathbf a$ cannot be dropped either: regarded at height $p=3$, the same two graphs are forest equivalent and are their own clips, but prefixing the letter $2$ to their reversed reading words $13$ and $31$ gives the inequivalent words $213$ and $231$. Nor can the reducedness hypothesis: for $u=214365$ and $p=3$, the graphs $\{(1,1),(3,1),(3,3)\}$ and $\{(1,1),(1,5),(2,2)\}$ of height $5$, with reversed reading words $351$ and $315$, have forest equivalent clips, but $454\,351\not\equiv_\forest454\,315$; here $454\,351$ is not reduced. In the application below, $\mathbf a=\mathrm{rev}(\mathrm{word}(V))+p$ for a bounded RC graph $V$ with $T\cup\shup^pV$ a bounded RC graph, so both hypotheses hold. The lemma, and the fiber constancy it implies, have been verified by computer for all permutations in $S_6$, and for $S_7$ with $|\mathbf a|\leq 2$.
-\end{remark}
+\begin{lemma}[Forest compatibility of a Little bump]\label{lemma:forestbump}
+Let $\maxd(u)=n$, let $X,X'\in\RC(u,n)^0$, and let $X^{(1)},X'^{(1)}$ be the Little bumps of Definition~\ref{definition:zeromap}, at the crossing with right root $(n,s)$. For every word $\mathbf a$, if $X^{(1)}\equiv_{\mathbf a}X'^{(1)}$ then $X\equiv_{\mathbf a}X'$.
+\end{lemma}
+\begin{proof}
+TBD.
+\end{proof}
+
+\begin{lemma}[Forest compatibility of $\zeromap$]\label{lemma:forestzero}
+Let $\maxd(u)=n$ and $X,X'\in\RC(u,n)^0$. For every word $\mathbf a$, if $\zeromap(X)\equiv_{\mathbf a}\zeromap(X')$ then $X\equiv_{\mathbf a}X'$.
+\end{lemma}
+\begin{proof}
+Forest equivalent words have the same permutation, so $\wof{\zeromap X}=\wof{\zeromap X'}=:w'\in T_n(u)$. By Lemma~\ref{lemma:zeroweight}, $\zeromap(X)$ is computed by a sequence of Little bumps $X=X_0,X_1,\ldots,X_m$ whose permutations $u=u_0,u_1,\ldots,u_m=w'$ form a sequence of transition steps at $n$, followed by the deletion of the empty row $n$, which does not change the reading word; likewise for $X'$, with permutations $u=u'_0,\ldots,u'_{m'}=w'$. By Lemma~\ref{L:leaves} (the sum in its proof is without multiplicity), $w'$ is the end point of exactly one sequence of transition steps starting at $u$, so $m=m'$ and $u_k=u'_k$ for all $k$. Now $X_m\equiv_{\mathbf a}X'_m$ by hypothesis, and $X_{k-1}\equiv_{\mathbf a}X'_{k-1}$ follows from $X_k\equiv_{\mathbf a}X'_k$ by Lemma~\ref{lemma:forestbump} applied to $X_{k-1},X'_{k-1}\in\RC(u_{k-1},n)^0$.
+\end{proof}
 
 \begin{lemma}[Fiber constancy for forest classes]\label{lemma:forestfibers}
 Let $X$, $D_1$, $D_2$ be forest classes of heights $p+q$, $p$, $q$. Then $m_X(U,V)$ is constant for $(U,V)\in D_1\times D_2$.
@@ -3439,10 +3448,22 @@ and $R\in X$ if and only if $\mathrm{rev}(\mathrm{word}(R))\equiv_\forest\mathrm
 
 \emph{Varying $V$.} Let $V,V'\in D_2$. For $R=T\cup\shup^pV$ with $\Psi_p(R)=(U,V)$, the graph $T\cup\shup^pV'$ is a bounded RC graph of height $p+q$ with $\Psi_p(T\cup\shup^pV')=(U,V')$: reducedness of $\mathrm{word}(T)(\mathrm{word}(V')+p)$ and the last descent of the resulting permutation depend on $V'$ only through $\wof{V'}=v$, and $\clp^p$ depends only on $T$. By Lemma~\ref{lemma:forestconcat}(b) and then (a), $\mathrm{rev}(\mathrm{word}(T\cup\shup^pV'))\equiv_\forest\mathrm{rev}(\mathrm{word}(T\cup\shup^pV))$, so $T\cup\shup^pV'\in X$. Hence $T\cup\shup^pV\mapsto T\cup\shup^pV'$ is a bijection $X\cap\Psi_p^{-1}(U,V)\to X\cap\Psi_p^{-1}(U,V')$, and $m_X(U,V)=m_X(U,V')$.
 
-\emph{Varying $U$.} Fix $V\in D_2$, put $u_v=w(\shup^pv)^{-1}$ and $h=\max(p,\maxd(u_v))$, and let $\mathbf a=\mathrm{rev}(\mathrm{word}(V))+p$, all of whose letters exceed $p$. If $\ell(u_v)\neq\ell(w)-\ell(v)$ then $m_X(\,\cdot\,,V)=0$. Otherwise, by the proof of Theorem~\ref{theorem:LR}, $T\cup\shup^pV$ is a bounded RC graph of height $p+q$ for every $T\in\RC_{\leq p}(u_v)$, and, writing $F(U)=\{T\in\RC_{\leq p}(u_v):\zeromap^{h-p}(T)=U\}$,
+\emph{Varying $U$.} Fix $V\in D_2$, put $u_v=w(\shup^pv)^{-1}$ and $h=\max(p,\maxd(u_v))$, and let $\mathbf a=\mathrm{rev}(\mathrm{word}(V))+p$. If $\ell(u_v)\neq\ell(w)-\ell(v)$ then $m_X(\,\cdot\,,V)=0$. Otherwise, by the proof of Theorem~\ref{theorem:LR}, $T\cup\shup^pV$ is a bounded RC graph of height $p+q$ for every $T\in\RC_{\leq p}(u_v)$, and, writing $F(U)=\{T\in\RC_{\leq p}(u_v):\zeromap^{h-p}(T)=U\}$,
 $$X\cap\Psi_p^{-1}(U,V)=\{T\cup\shup^pV:\ T\in F(U),\ \mathbf a\,\mathrm{rev}(\mathrm{word}(T))\equiv_\forest\mathrm{rev}(\mathrm{word}(C))\}\text{,}$$
-where $|F(U)|=N_p(u_v,u')$ for every $U\in\RC_p(u')$ by Lemma~\ref{lemma:clipfibers}. Let $U,U'\in D_1$, $T\in F(U)$ and $T'\in F(U')$. Then $\clp^p(T)=U\equiv_\forest U'=\clp^p(T')$, and $\mathbf a\,\mathrm{rev}(\mathrm{word}(T))=\mathrm{rev}(\mathrm{word}(T\cup\shup^pV))$ is reduced, so $\mathbf a\,\mathrm{rev}(\mathrm{word}(T))\equiv_\forest\mathbf a\,\mathrm{rev}(\mathrm{word}(T'))$ by Lemma~\ref{lemma:clipforest}. Hence the membership condition above holds for all elements of $F(U)\cup F(U')$ or for none of them, and $m_X(U,V)=m_X(U',V)\in\{0,N_p(u_v,u')\}$.
+and the last condition depends only on the $\equiv_{\mathbf a}$-class of $T$. It therefore suffices to construct, for $U,U'\in D_1$, a bijection $\theta\colon F(U)\to F(U')$ with $\theta(T)\equiv_{\mathbf a}T$.
+
+For $T\in F(U)$ consider the sequence $T=T_h,T_{h-1},\ldots,T_p=U$ with $T_{k-1}=\zeromap(T_k)$, and let $u_k=\wof{T_k}$. If $\maxd(u_k)<k$ then $\zeromap$ merely deletes the empty last row of $T_k$, so $T_{k-1}$ and $T_k$ have the same reading word; if $\maxd(u_k)=k$ then $T_k\in\RC(u_k,k)^0$ and $u_{k-1}\in T_k(u_k)$. By Theorem~\ref{theorem:zero_bijection} and Lemma~\ref{lemma:zeroweight}, as in the proof of Lemma~\ref{lemma:clipfibers}, $T\mapsto(u_h,u_{h-1},\ldots,u_p)$ is a bijection from $F(U)$ onto the set of chains counted by $N_p(u_v,u')$: the chain and $U$ determine $T$ because $\zeromap$ is injective on each $\RC(u_k,k)^0$, and every chain arises by surjectivity. The same holds for $F(U')$; let $\theta(T)\in F(U')$ be the element with the same chain as $T$, and let $T'_k$ be its sequence. We show $T_k\equiv_{\mathbf a}T'_k$ by induction on $k$. For $k=p$ this is Lemma~\ref{lemma:forestprefix}, since $U\equiv_\forest U'$ have height $p$. If $\maxd(u_k)<k$ then $T_k$, $T_{k-1}$ have the same reading word, as do $T'_k$, $T'_{k-1}$, and the claim follows. If $\maxd(u_k)=k$ then $T_k,T'_k\in\RC(u_k,k)^0$ with $\zeromap(T_k)=T_{k-1}\equiv_{\mathbf a}T'_{k-1}=\zeromap(T'_k)$, so $T_k\equiv_{\mathbf a}T'_k$ by Lemma~\ref{lemma:forestzero}. Thus $\theta(T)=T'_h\equiv_{\mathbf a}T_h=T$, and $m_X(U,V)=m_X(U',V)$.
 \end{proof}
+
+\begin{remark}\label{remark:forestcounterexamples}
+The shape of this argument is forced by the following facts, each verified by computer.
+\begin{enumerate}
+\item The converse of Lemma~\ref{lemma:forestzero} is false: for $u=2143$ and $n=3$ the graphs $\{(1,1),(1,3)\}$ and $\{(1,1),(2,2)\}$ are forest equivalent, but their images under $\zeromap$ have permutations $312$ and $231$. This reflects $\forest_{(1,0,1)}(x_1,x_2,0)=\forest_{(2,0)}+\forest_{(1,1)}$: no map realizing $x_n=0$ on RC graphs can preserve forest classes.
+\item In Lemma~\ref{lemma:forestprefix} the prefix cannot be an arbitrary word with letters exceeding $p$: for $p=3$ the height-$3$ graphs with reading words $31$ and $13$ are forest equivalent, but $454\,13\not\equiv_\forest454\,31$. Computations indicate that the relevant property is the support of $P(\overline{\mathbf a})$: the conclusion holds for every word $\mathbf a$ with $\mathrm{supp}\,P(\overline{\mathbf a})\subseteq[p+1,\infty)$ and fails only for prefixes violating it, such as $454$, whose support is $\{3,4,5\}$. For $\mathbf a=\mathrm{rev}(\mathrm{word}(V))+p$ the support lies in $[p+1,\infty)$: the rows of $\shup^pV$ are a labeling of the forest of $P(\overline{\mathbf a})$ bounded by $\rho$ (Theorem~\ref{theorem:forestformula}(I)), so $\rho\geq p+1$ on the leftmost node of each tree, whose $\rho$ is its position.
+\item The bijection $\theta$ must match chains: the forest class of $R$ is not determined by $\wof R$, $[\clp^pR]$ and $[\trm^pR]$. For $w=1325746$, $p=2$, $q=3$, the graphs $\{(1,4),(2,1),(2,5),(5,1)\}$ and $\{(1,2),(2,3),(2,5),(5,1)\}$ have the same trim, forest equivalent clips, and forest codes $(0,1,0,1,2)$ and $(0,1,0,2,1)$. Fiber constancy nevertheless holds there, with $0<m_X(D_1,D_2)<N_p(u_v,u')$.
+\item Lemma~\ref{lemma:forestprefix} has been verified for all $U,U'$ with permutation in $S_7$ and all $V$ with permutation in $S_4$, and for $S_6$ with $V$ in $S_5$; Lemma~\ref{lemma:forestbump} for all permutations in $S_6$ and all words $\mathbf a$ with $|\mathbf a|\leq3$; and Lemma~\ref{lemma:forestfibers} for all $p+q\leq 5$ in $S_6$ and $(p,q)=(2,3)$ in $S_7$.
+\end{enumerate}
+\end{remark}
 
 \begin{lemma} \label{lemma:forestideal}
   $\Gamma$ is a two-sided ideal of $\BRC$.
