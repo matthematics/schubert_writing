@@ -3262,7 +3262,7 @@ Since there are exactly $2$ such RC graphs, Theorem~\ref{theorem:LRkey} gives $k
 
 The \emph{forest polynomials} $\forest_a$ were introduced by Nadeau and Tewari in \cite{nadeau2024forest} and are closely related to Schubert polynomials. They can be defined by reduced words and compatible sequences, but the invariant preserved by these words is distinct from the permutation. Given a reduced word/compatible sequence pair $(\mathbf{r},\mathbf{s})$, there is an insertion algorithm that produces a corresponding invariant $\finv(\mathbf{r},\mathbf{s})$ that represents an equivalence relation on the words, where the compatible sequence can vary arbitrarily. We therefore shorten the notation to $\finv(\mathbf{r})$. The equivalence classes consist of words that are all for the same permutation, so that if we define
 $$R\equiv_{\forest} R'$$
-to mean that $\finv(\mathrm{word}(R)) = \finv(\mathrm{word}(R'))$, then the forest polynomials partition the set of RC graphs for the given permutation. The forest polynomials are indexed in the original work by ``indexed forests,'' hence the name. These correspond bijectively to weak compositions, so we can define a weak composition $\fcode(R)$ by associating an indexed forest to this equivalence class as in the article. Define $\mathcal{C}_\forest(a)$ for a composition $a$ to be the set of equivalence classes of RC graphs under this relation such that $\fcode(R)=a$.
+to mean that $\finv(\mathrm{rev}(\mathrm{word}(R))) = \finv(\mathrm{rev}(\mathrm{word}(R')))$, where $\mathrm{rev}$ reverses a word (see Definition~\ref{definition:forestequiv} for the reason for the reversal), then the forest polynomials partition the set of RC graphs for the given permutation. The forest polynomials are indexed in the original work by ``indexed forests,'' hence the name. These correspond bijectively to weak compositions, so we can define a weak composition $\fcode(R)$ by associating an indexed forest to this equivalence class as in the article. Define $\mathcal{C}_\forest(a)$ for a composition $a$ to be the set of equivalence classes of RC graphs under this relation such that $\fcode(R)=a$.
 
 
 \subsection{Indexed forests, forest invariant}
@@ -3319,10 +3319,10 @@ The correspondence $w\mapsto (P(w), Q(w))$ is a bijection between the following 
 \end{theorem}
 
 
-\begin{definition}[Injectification, $\equiv_\forest$]
-  For a word $\mathbf{r}$ in the alphabet $\mathbb{Z}$, we may canonically turn $\mathbf{r}$ into an injective word in the alphabet $\overline{\mathbb{Z}}$ by assigning superscripts consecutively starting at $1$ to break ties between equal letters.
+\begin{definition}[Injectification, $\equiv_\forest$]\label{definition:forestequiv}
+  For a word $\mathbf{r}$ in the alphabet $\mathbb{Z}$, we may canonically turn $\mathbf{r}$ into an injective word $\overline{\mathbf r}$ in the alphabet $\overline{\mathbb{Z}}$ by assigning superscripts consecutively starting at $1$ to break ties between equal letters.
 
-Let $\mathbf{r}_1$ and $\mathbf{r}_2$ be reduced words. Then we say that $\mathbf{r}_1\equiv_\forest\mathbf{r}_2$ if $P(\overline{\mathbf{r}_1}) = P(\overline{\mathbf{r}_2})$. Naturally, we may apply this to RC graphs as well: for RC graphs $R_1$ and $R_2$, we say that $R_1\equiv_\forest R_2$ if $\overline{\mathrm{word}(R_1)}\equiv_\forest \overline{\mathrm{word}(R_2)}$. For a permutation $w$, we denote by $\mathcal{C}_\forest(w)$ the set of equivalence classes of reduced words for $w$ under $\equiv_\forest$.
+For words $\mathbf{r}_1$ and $\mathbf{r}_2$ we say that $\mathbf{r}_1\equiv_\forest\mathbf{r}_2$ if $P(\overline{\mathbf{r}_1}) = P(\overline{\mathbf{r}_2})$. For RC graphs $R_1$ and $R_2$, we say that $R_1\equiv_\forest R_2$ if $\mathrm{rev}(\mathrm{word}(R_1))\equiv_\forest \mathrm{rev}(\mathrm{word}(R_2))$, where $\mathrm{rev}$ reverses a word: the reduced words of \cite{nadeau2024forest} are read in the order opposite to our reading order, and the reversal is forced by Theorem~\ref{theorem:forestformula}(I) below, which fails for the unreversed reading word already for $w=2413$. For a permutation $w$, we denote by $\mathcal{C}_\forest(w)$ the set of equivalence classes of reduced words for $w$ under $\equiv_\forest$.
 \end{definition}
 
 \begin{theorem}[{\cite[Theorem~1.4]{nadeau2024forest}}] \label{theorem:forestforest}
@@ -3383,7 +3383,7 @@ $$\forest^*_c = \sum_{[R]\in\mathcal{C}_\forest(c)} \dsch_{\wof{R}}^{\hr(R)}$$
 
 
 \begin{proof}[Proof of Theorem \ref{theorem:forestformula}]
-  Part I of this theorem follows from the fact that for any equivalence class of words $W$ that have the same $P$-LBS, $\forest_{\code_\forest(W)}(x)$ is the sum of the compatible sequences on the words in $W$ (\cite[Proposition~5.10]{nadeau2024forest}), which are simply the RC graphs in the corresponding equivalence class of RC graphs. Part II follows from Theorem \ref{theorem:forestforest} and the definition of the dual Schubert basis.
+  Part I of this theorem follows from the fact that for any equivalence class of words $W$ that have the same $P$-LBS, $\forest_{\code_\forest(W)}(x)$ is the sum of the compatible sequences on the words in $W$ (\cite[Proposition~5.10]{nadeau2024forest}), which are simply the RC graphs in the corresponding equivalence class of RC graphs; the words of \cite{nadeau2024forest} are the reversals of our reading words, with the compatible sequences reversed accordingly. Part II follows from Theorem \ref{theorem:forestforest} and the definition of the dual Schubert basis.
 \end{proof}
 
 Guo and Woodruff \cite{guo2026forest} also published an alternative RC graph formula for forest polynomials.
@@ -3403,38 +3403,45 @@ The coefficients of the expansion of a monomial into forest polynomials, or equi
 \end{definition}
 
 \begin{lemma}[$\equiv_\forest$ and concatenation]\label{lemma:forestconcat}
-Let $\mathbf r_1\equiv_\forest\mathbf r_2$ be reduced words for the same permutation, and let $\mathbf s$, $\mathbf t$ be words such that the concatenations below are reduced.
+Let $\mathbf r_1\equiv_\forest\mathbf r_2$ be words.
 \begin{enumerate}
-\item[(a)] $\mathbf r_1\mathbf s\equiv_\forest\mathbf r_2\mathbf s$.
-\item[(b)] $\mathbf t\mathbf r_1\equiv_\forest\mathbf t\mathbf r_2$, and $\mathbf r_1+m\equiv_\forest\mathbf r_2+m$ for every $m\geq0$, where $\mathbf r+m$ adds $m$ to every letter.
+\item[(a)] $\mathbf r_1\mathbf s\equiv_\forest\mathbf r_2\mathbf s$ for every word $\mathbf s$.
+\item[(b)] $\mathbf r_1+m\equiv_\forest\mathbf r_2+m$ for every $m\geq0$, where $\mathbf r+m$ adds $m$ to every letter.
 \end{enumerate}
 \end{lemma}
 \begin{proof}
 (a) The labeling $P(\overline{\mathbf r})$ records the letters of $\overline{\mathbf r}$ as a set, so $P(\overline{\mathbf r_1})=P(\overline{\mathbf r_2})$ implies that each value occurs equally often in $\mathbf r_1$ and $\mathbf r_2$; hence $\overline{\mathbf r_1\mathbf s}=\overline{\mathbf r_1}\,\mathbf s'$ and $\overline{\mathbf r_2\mathbf s}=\overline{\mathbf r_2}\,\mathbf s'$ with the same injective word $\mathbf s'$. Inserting a letter $a$ into $(F(w),P(w))$ depends only on $(F(w),P(w))$ and $a$, so $P(\overline{\mathbf r_1}\mathbf s')=P(\overline{\mathbf r_2}\mathbf s')$ by induction on the length of $\mathbf s'$.
 
-(b) These are \cite[Lemma~5.9]{nadeau2024forest} and \cite[Proposition~5.8]{nadeau2024forest}, respectively.
+(b) This is \cite[Proposition~5.8]{nadeau2024forest}.
 \end{proof}
 
-\begin{lemma}[Forest compatibility of $\zeromap$]\label{lemma:forestzero}
-Let $\maxd(u)=n$ and let $X,X'\in\RC(u,n)^0$. Then $X\equiv_\forest X'$ if and only if $\zeromap(X)\equiv_\forest\zeromap(X')$.
+The analogue of (a) for prefixes fails: $13\equiv_\forest31$ (both are reduced words of $2143$, and $\sch_{2143}=\forest_{(1,0,1)}$ is a single forest polynomial), but $213\not\equiv_\forest231$. The following lemma is the substitute that the row decomposition requires.
+
+\begin{lemma}[Forest compatibility of $\clp^p$]\label{lemma:clipforest}
+Let $p\geq0$, let $T,T'$ be bounded RC graphs of the same height with $\wof T=\wof{T'}$ and with all crossings in rows $1,\ldots,p$, and let $\mathbf a$ be a word all of whose letters exceed $p$. If $\clp^p(T)\equiv_\forest\clp^p(T')$, then
+$$\mathbf a\,\mathrm{rev}(\mathrm{word}(T))\equiv_\forest\mathbf a\,\mathrm{rev}(\mathrm{word}(T'))\text{.}$$
 \end{lemma}
 \begin{proof}
 TBD.
 \end{proof}
 
+\begin{remark}
+For $\mathbf a$ empty and $T,T'\in\RC(u,n)^0$ with $\maxd(u)=n$ and $p=n-1$, Lemma~\ref{lemma:clipforest} says that $\zeromap(T)\equiv_\forest\zeromap(T')$ implies $T\equiv_\forest T'$. The converse is false: for $u=2143$ and $n=3$ the graphs $\{(1,1),(1,3)\}$ and $\{(1,1),(2,2)\}$ are forest equivalent, but their images under $\zeromap$ have permutations $312$ and $231$; this reflects the fact that $\forest_{(1,0,1)}(x_1,x_2,0)=\forest_{(2,0)}+\forest_{(1,1)}$, so no map realizing $x_n=0$ on RC graphs can preserve forest classes. The hypothesis on the letters of $\mathbf a$ cannot be dropped either: regarded at height $p=3$, the same two graphs are forest equivalent and are their own clips, but prefixing the letter $2$ to their reversed reading words $13$ and $31$ gives the inequivalent words $213$ and $231$. The lemma, and the fiber constancy it implies, have been verified by computer for all permutations in $S_6$.
+\end{remark}
+
 \begin{lemma}[Fiber constancy for forest classes]\label{lemma:forestfibers}
 Let $X$, $D_1$, $D_2$ be forest classes of heights $p+q$, $p$, $q$. Then $m_X(U,V)$ is constant for $(U,V)\in D_1\times D_2$.
 \end{lemma}
 \begin{proof}
-Let $w$, $u'$, $v$ be the permutations of the elements of $X$, $D_1$, $D_2$, fix $C\in X$, and write $R\in\RC_{p+q}(w)$ as $R=T\cup\shup^pV$ with $T=R_{\leq p}$, $V=\trm^pR$, as in the proof of Theorem~\ref{theorem:LR}. Then $\mathrm{word}(R)=\mathrm{word}(T)\,(\mathrm{word}(V)+p)$, and $R\in X$ if and only if $\mathrm{word}(R)\equiv_\forest\mathrm{word}(C)$.
+Let $w$, $u'$, $v$ be the permutations of the elements of $X$, $D_1$, $D_2$, fix $C\in X$, and write $R\in\RC_{p+q}(w)$ as $R=T\cup\shup^pV$ with $T=R_{\leq p}$, $V=\trm^pR$, as in the proof of Theorem~\ref{theorem:LR}. Then
+$$\mathrm{rev}(\mathrm{word}(R))=\bigl(\mathrm{rev}(\mathrm{word}(V))+p\bigr)\,\mathrm{rev}(\mathrm{word}(T))\text{,}$$
+and $R\in X$ if and only if $\mathrm{rev}(\mathrm{word}(R))\equiv_\forest\mathrm{rev}(\mathrm{word}(C))$.
 
-\emph{Varying $V$.} Let $V,V'\in D_2$. For $R=T\cup\shup^pV$ with $\Psi_p(R)=(U,V)$, the graph $T\cup\shup^pV'$ is a bounded RC graph of height $p+q$ with $\Psi_p(T\cup\shup^pV')=(U,V')$: reducedness of $\mathrm{word}(T)(\mathrm{word}(V')+p)$ and the last descent of the resulting permutation depend on $V'$ only through $\wof{V'}=v$, and $\clp^p$ depends only on $T$. By Lemma~\ref{lemma:forestconcat}(b), $\mathrm{word}(T)(\mathrm{word}(V')+p)\equiv_\forest\mathrm{word}(T)(\mathrm{word}(V)+p)$, so $T\cup\shup^pV'\in X$. Hence $T\cup\shup^pV\mapsto T\cup\shup^pV'$ is a bijection $X\cap\Psi_p^{-1}(U,V)\to X\cap\Psi_p^{-1}(U,V')$, and $m_X(U,V)=m_X(U,V')$.
+\emph{Varying $V$.} Let $V,V'\in D_2$. For $R=T\cup\shup^pV$ with $\Psi_p(R)=(U,V)$, the graph $T\cup\shup^pV'$ is a bounded RC graph of height $p+q$ with $\Psi_p(T\cup\shup^pV')=(U,V')$: reducedness of $\mathrm{word}(T)(\mathrm{word}(V')+p)$ and the last descent of the resulting permutation depend on $V'$ only through $\wof{V'}=v$, and $\clp^p$ depends only on $T$. By Lemma~\ref{lemma:forestconcat}(b) and then (a), $\mathrm{rev}(\mathrm{word}(T\cup\shup^pV'))\equiv_\forest\mathrm{rev}(\mathrm{word}(T\cup\shup^pV))$, so $T\cup\shup^pV'\in X$. Hence $T\cup\shup^pV\mapsto T\cup\shup^pV'$ is a bijection $X\cap\Psi_p^{-1}(U,V)\to X\cap\Psi_p^{-1}(U,V')$, and $m_X(U,V)=m_X(U,V')$.
 
-\emph{Varying $U$.} Fix $V\in D_2$, put $u_v=w(\shup^pv)^{-1}$ and $h=\max(p,\maxd(u_v))$, and let $\mathbf s=\mathrm{word}(V)+p$. If $\ell(u_v)\neq\ell(w)-\ell(v)$ then $m_X(\,\cdot\,,V)=0$. Otherwise, by the proof of Theorem~\ref{theorem:LR},
-$$X\cap\Psi_p^{-1}(U,V)=\{T\cup\shup^pV:\ T\in\RC_{\leq p}(u_v),\ \zeromap^{h-p}(T)=U,\ \mathrm{word}(T)\,\mathbf s\equiv_\forest\mathrm{word}(C)\}\text{.}$$
-By Lemma~\ref{lemma:forestconcat}(a) the last condition depends only on the $\equiv_\forest$-class of $T$. It therefore suffices to construct, for $U,U'\in D_1$, a bijection $\theta$ from $F(U)=\{T\in\RC_{\leq p}(u_v):\zeromap^{h-p}(T)=U\}$ onto $F(U')$ with $\theta(T)\equiv_\forest T$.
-
-For $T\in F(U)$ consider the sequence $T=T_h,T_{h-1},\ldots,T_p=U$ with $T_{k-1}=\zeromap(T_k)$, and let $u_k=\wof{T_k}$. If $\maxd(u_k)<k$ then $\zeromap$ merely deletes the empty last row of $T_k$, so $T_{k-1}$ and $T_k$ have the same word; if $\maxd(u_k)=k$ then $T_k\in\RC(u_k,k)^0$ and $u_{k-1}\in T_k(u_k)$. By Theorem~\ref{theorem:zero_bijection} and Lemma~\ref{lemma:zeroweight}, as in the proof of Lemma~\ref{lemma:clipfibers}, $T\mapsto(u_h,u_{h-1},\ldots,u_p)$ is a bijection from $F(U)$ onto the set of chains counted by $N_p(u_v,u')$: the chain and $U$ determine $T$ because $\zeromap$ is injective on each $\RC(u_k,k)^0$, and every chain arises by surjectivity. The same holds for $F(U')$; let $\theta(T)\in F(U')$ be the element with the same chain as $T$, and let $T'_k$ be its sequence. We show $T_k\equiv_\forest T'_k$ by induction on $k$, starting from $T_p=U\equiv_\forest U'=T'_p$. If $\maxd(u_k)<k$ then $T_k$, $T_{k-1}$ have the same word, as do $T'_k$, $T'_{k-1}$, and the claim follows. If $\maxd(u_k)=k$ then $T_k,T'_k\in\RC(u_k,k)^0$ with $\zeromap(T_k)=T_{k-1}\equiv_\forest T'_{k-1}=\zeromap(T'_k)$, so $T_k\equiv_\forest T'_k$ by Lemma~\ref{lemma:forestzero}. Thus $\theta(T)=T'_h\equiv_\forest T_h=T$, and $m_X(U,V)=m_X(U',V)$.
+\emph{Varying $U$.} Fix $V\in D_2$, put $u_v=w(\shup^pv)^{-1}$ and $h=\max(p,\maxd(u_v))$, and let $\mathbf a=\mathrm{rev}(\mathrm{word}(V))+p$, all of whose letters exceed $p$. If $\ell(u_v)\neq\ell(w)-\ell(v)$ then $m_X(\,\cdot\,,V)=0$. Otherwise, by the proof of Theorem~\ref{theorem:LR}, $T\cup\shup^pV$ is a bounded RC graph of height $p+q$ for every $T\in\RC_{\leq p}(u_v)$, and, writing $F(U)=\{T\in\RC_{\leq p}(u_v):\zeromap^{h-p}(T)=U\}$,
+$$X\cap\Psi_p^{-1}(U,V)=\{T\cup\shup^pV:\ T\in F(U),\ \mathbf a\,\mathrm{rev}(\mathrm{word}(T))\equiv_\forest\mathrm{rev}(\mathrm{word}(C))\}\text{,}$$
+where $|F(U)|=N_p(u_v,u')$ for every $U\in\RC_p(u')$ by Lemma~\ref{lemma:clipfibers}. Let $U,U'\in D_1$, $T\in F(U)$ and $T'\in F(U')$. Then $\clp^p(T)=U\equiv_\forest U'=\clp^p(T')$, so $\mathbf a\,\mathrm{rev}(\mathrm{word}(T))\equiv_\forest\mathbf a\,\mathrm{rev}(\mathrm{word}(T'))$ by Lemma~\ref{lemma:clipforest}. Hence the membership condition above holds for all elements of $F(U)\cup F(U')$ or for none of them, and $m_X(U,V)=m_X(U',V)\in\{0,N_p(u_v,u')\}$.
 \end{proof}
 
 \begin{lemma} \label{lemma:forestideal}
@@ -3675,7 +3682,7 @@ For the reader's convenience we collect here, in one place, the principal symbol
 \item[$\finv(R)$] The forest invariant of $R$, an indexed forest (Nadeau--Tewari; \S\ref{section:forest}).
 \item[$\fcode(R)\,(=\code_\forest(R))$] The composition associated to $\finv(R)$ (\S\ref{section:forest}). The forms $\fcode(R)$ and $\code_\forest(R)$ are used interchangeably.
 \item[$\mathcal{C}_\forest(a)$] The set of forest classes of RC graphs with $\fcode=a$ (\S\ref{section:forest}).
-\item[$\equiv_\forest$] Forest equivalence: $R\equiv_\forest R'$ iff $\finv(R)=\finv(R')$ (\S\ref{section:forest}).
+\item[$\equiv_\forest$] Forest equivalence: $R\equiv_\forest R'$ iff $\finv(R)=\finv(R')$, computed on the reversed reading word (Definition~\ref{definition:forestequiv}).
 \item[$\RC_\forest(c)$] The set of $R\in\RC_n$ with $\wtt(R)=c$ such that $\mathrm{word}(\mathbb{Y}_\forest(R))$ is lex-minimal among $R'$ with $\code_\forest(R')=\code_\forest(R)$ (Theorem~\ref{theorem:forestformula}).
 \end{description}
 
