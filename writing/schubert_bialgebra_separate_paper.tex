@@ -3417,11 +3417,55 @@ Let $\mathbf r_1\equiv_\forest\mathbf r_2$ be words.
 
 The analogue of (a) for prefixes fails: $13\equiv_\forest31$ (both are reduced words of $2143$, and $\sch_{2143}=\forest_{(1,0,1)}$ is a single forest polynomial), but $213\not\equiv_\forest231$. The two lemmas below are the substitutes that the row decomposition requires. For a word $\mathbf a$ we write $R\equiv_{\mathbf a}R'$ if $\mathbf a\,\mathrm{rev}(\mathrm{word}(R))\equiv_\forest\mathbf a\,\mathrm{rev}(\mathrm{word}(R'))$; thus $\equiv_\varnothing$ is $\equiv_\forest$.
 
+\begin{definition}[Simple chute moves]\label{definition:simplechute}
+Let $R$ be an RC graph and let $(i,j)\in R$ with $j\geq 2$ and $(i,j-1),(i+1,j),(i+1,j-1)\notin R$. The \emph{simple chute move} at $(i,j)$ replaces $(i,j)$ by $(i+1,j-1)$; the inverse operation is a \emph{simple inverse chute move}.
+\end{definition}
+
+Both cells carry the letter $i+j-1$. In the reading word, a simple chute move carries this letter past the letters of row $i$ in columns less than $j-1$, which are at most $i+j-3$, and past the letters of row $i+1$ in columns greater than $j$, which are at least $i+j+1$. Hence the reading word changes by a sequence of commutations, the result is again an RC graph with the same permutation, and if $R\in\RC_n(w)$ and $i+1\leq n$ then the result lies in $\RC_n(w)$. The same holds for simple inverse chute moves. We say that a simple chute or inverse chute move is \emph{in $\RC_n(w)$} if both RC graphs involved lie in $\RC_n(w)$. Two words are in the same \emph{commutation class} if one can be obtained from the other by repeatedly interchanging adjacent letters $x,y$ with $|x-y|\geq 2$.
+
+\begin{lemma}[Commutation classes]\label{lemma:commclass}
+Two words $\mathbf a,\mathbf b$ in the alphabet $\mathbb P$ lie in the same commutation class if and only if, for every pair of positive integers $x,y$ with $|x-y|\leq 1$, the subwords of $\mathbf a$ and $\mathbf b$ consisting of the letters in $\{x,y\}$ coincide. Consequently:
+\begin{enumerate}
+\item[(a)] if $x\mathbf a$ and $x\mathbf b$ lie in the same commutation class, then so do $\mathbf a$ and $\mathbf b$;
+\item[(b)] if $\mathbf a$ lies in the commutation class of a word beginning with $x$, then the first letter of $\mathbf a$ belonging to $\{x-1,x,x+1\}$ is $x$.
+\end{enumerate}
+\end{lemma}
+\begin{proof}
+Interchanging adjacent letters that differ by at least $2$ does not change any of the subwords in question, which gives one direction. For the converse we induct on the common length; the empty case is trivial. Let $x$ be the first letter of $\mathbf a$. Taking $y=x$ shows that $x$ occurs in $\mathbf b$, so $\mathbf b=\mathbf b_1x\mathbf b_2$ with $x$ not occurring in $\mathbf b_1$. If some letter $y$ of $\mathbf b_1$ satisfied $|y-x|\leq 1$, the subword of $\mathbf b$ on $\{x,y\}$ would begin with $y\neq x$, while that of $\mathbf a$ begins with $x$. Hence every letter of $\mathbf b_1$ commutes with $x$ and $\mathbf b$ lies in the commutation class of $x\mathbf b_1\mathbf b_2$. Writing $\mathbf a=x\mathbf a'$, the subwords of $\mathbf a'$ and of $\mathbf b_1\mathbf b_2$ on each $\{x',y'\}$ are obtained from those of $\mathbf a$ and $x\mathbf b_1\mathbf b_2$ by deleting the initial letter $x$ when $x\in\{x',y'\}$, so they coincide, and by induction $\mathbf a'$ and $\mathbf b_1\mathbf b_2$ lie in the same commutation class. Therefore so do $\mathbf a$ and $\mathbf b$.
+
+For (a), the subwords of $\mathbf a$ and $\mathbf b$ are obtained from those of $x\mathbf a$ and $x\mathbf b$ by deleting the initial $x$ where present. For (b), the subwords of $\mathbf a$ on $\{x-1,x\}$ and on $\{x,x+1\}$ both begin with $x$.
+\end{proof}
+
+\begin{lemma}\label{lemma:chuteconnect}
+Suppose $U,U'\in\RC_n(w)$ for some $w\in S_\infty$ and that $\mathrm{word}(U)$ is in the same commutation class as $\mathrm{word}(U')$. Then $U$ can be transformed into $U'$ by a sequence of simple chute/inverse chute moves.
+\end{lemma}
+\begin{proof}
+We prove, by induction on $|U|+n$, the following stronger claim: if $m\geq 0$ is an integer such that neither $U$ nor $U'$ has a crossing $(1,j)$ with $j>m$, then $U$ can be transformed into $U'$ by a sequence of simple chute/inverse chute moves in $\RC_n(w)$ such that no intermediate RC graph has a crossing $(1,j)$ with $j>m$. The lemma is the case $m=\maxd(w^{-1})$: if $(1,j)$ is the rightmost first-row crossing of an element of $\RC_n(w)$, then $j$ is the first letter of a reduced word for $w$, hence a right descent of $w^{-1}$, so $j\leq \maxd(w^{-1})$. Note that the reverse of such a sequence is again such a sequence, with chute and inverse chute moves interchanged, so the claim is symmetric in $U$ and $U'$.
+
+If $|U|=0$ then $U=U'=\varnothing$. Suppose $|U|\geq 1$.
+
+\emph{Case 1: the first rows of $U$ and $U'$ are both empty.} Then $n\geq 2$, $U=\shup\trm U$ and $U'=\shup\trm U'$. The reading words of $\trm U$ and $\trm U'$ are those of $U$ and $U'$ with every letter decreased by one, so they lie in the same commutation class, and $\trm U,\trm U'\in\RC_{n-1}(v)$ where $w(1)=1$ and $w(i+1)=v(i)+1$ for $i\geq 1$ (so $\maxd(v)=\maxd(w)-1\leq n-1$). Since $|\trm U|+(n-1)<|U|+n$, the induction hypothesis (with $m=\maxd(v^{-1})$) provides a sequence of simple chute/inverse chute moves in $\RC_{n-1}(v)$ from $\trm U$ to $\trm U'$. Applying $\shup$ to every term yields a sequence of simple chute/inverse chute moves in $\RC_n(w)$ from $U$ to $U'$, all of whose terms have empty first row.
+
+\emph{Case 2: at least one first row is nonempty.} Let $M$ be the largest column of a crossing in the first row of $U$ or of $U'$, so $M\leq m$; by symmetry we may assume $(1,M)\in U'$. Then $M$ is the first letter of $\mathrm{word}(U')$, so $\mathrm{word}(U')=M\mathbf a'$, and by Lemma~\ref{lemma:commclass}(b) the first letter of $\mathrm{word}(U)$ belonging to $\{M-1,M,M+1\}$ is an $M$; let $c=(i,j)\in U$ be the corresponding crossing, so $i+j-1=M$ and no crossing preceding $c$ in the reading order has letter in $\{M-1,M,M+1\}$. If $i\geq 2$, the cells $(i-1,j)$, $(i-1,j+1)$, $(i,j+1)$ have letters $M-1,M,M+1$ and precede $c$ in the reading order, so they are not in $U$, and the simple inverse chute move at $c$ is defined and moves $c$ to $(i-1,j+1)$. This move carries the letter $M$ past letters that are at most $M-2$ or at least $M+2$, so afterwards the crossings preceding $c$ still have no letter in $\{M-1,M,M+1\}$, and the resulting RC graph lies in $\RC_n(w)$ with the same first row as $U$. Iterating, we move $c$ to the cell $(1,M)$ by simple inverse chute moves in $\RC_n(w)$; call the result $\tilde U$. Every intermediate RC graph has first row equal to that of $U$ or to that of $U$ with $(1,M)$ adjoined, so has no crossing $(1,j)$ with $j>M$. As every first-row crossing of $U$ lies in a column at most $M$, the crossing $(1,M)$ is the rightmost first-row crossing of $\tilde U$, so $\mathrm{word}(\tilde U)=M\mathbf a$ for some word $\mathbf a$, and $M\mathbf a$ lies in the commutation class of $\mathrm{word}(U)$, hence of $M\mathbf a'$.
+
+Let $V=\tilde U\setminus\{(1,M)\}$ and $V'=U'\setminus\{(1,M)\}$, so $\mathrm{word}(V)=\mathbf a$ and $\mathrm{word}(V')=\mathbf a'$ are reduced words for $s_Mw$ which lie in the same commutation class by Lemma~\ref{lemma:commclass}(a), and neither $V$ nor $V'$ has a crossing $(1,j)$ with $j>M-1$. We claim $V,V'\in\RC_n(s_Mw)$. Their crossings lie in rows at most $n$, so it remains to check $\maxd(s_Mw)\leq n$. Since $M\mathbf a'$ is reduced, $M$ is a left descent of $w$, i.e.\ $w^{-1}(M)>w^{-1}(M+1)$. As $\maxd(w)\leq n$, the values $w(n+1)<w(n+2)<\cdots$ increase, so $M$ and $M+1$ cannot both occur among them. The one-line notation of $s_Mw$ is that of $w$ with the values $M$ and $M+1$ interchanged, and replacing a single value $M$ by $M+1$ (or $M+1$ by $M$) in a strictly increasing sequence of integers not containing the new value preserves strict increase. Hence $\maxd(s_Mw)\leq n$.
+
+Since $|V|+n<|U|+n$, the induction hypothesis with the bound $M-1$ provides a sequence $V=V_0,V_1,\ldots,V_t=V'$ of simple chute/inverse chute moves in $\RC_n(s_Mw)$ in which no $V_s$ has a crossing $(1,j)$ with $j>M-1$; in particular $(1,M),(1,M+1)\notin V_s$ for all $s$. Put $X_s=V_s\cup\{(1,M)\}$. Then $(1,M)$ is the rightmost first-row crossing of $X_s$, so $\mathrm{word}(X_s)=M\,\mathrm{word}(V_s)$, which lies in the commutation class of $M\mathbf a'=\mathrm{word}(U')$ and is therefore reduced; thus $X_s\in\RC_n(w)$, and $X_s$ has no crossing $(1,j)$ with $j>M$. The move from $V_s$ to $V_{s+1}$ relocates a crossing $x\neq(1,M)$ to a cell $y\neq(1,M)$ and requires two further cells to be empty. Inspecting Definition~\ref{definition:simplechute}, the cell $(1,M)$ is among the cells required to be empty only if $x=(1,M+1)$ (for a simple chute move) or $y\in\{(1,M),(1,M+1)\}$ (for a simple inverse chute move), and none of these occurs. Hence the same move transforms $X_s$ into $X_{s+1}$, and $X_0=\tilde U$, $X_t=U'$. Concatenating the moves from $U$ to $\tilde U$ with those from $X_0$ to $X_t$ proves the claim.
+\end{proof}
+
+\begin{lemma}
+Suppose $U\equiv_\forest U'$ are bounded RC graphs of height $p$. Then there is a sequence of simple chute/inverse chute moves transforming $U$ into an RC graph $U''$ satisfying $\mathrm{word}(U'') = \mathrm{word}(U')$.
+\end{lemma}
+\begin{proof}
+% Since for each such RC graph there is an RC graph with the same word that is quasi-Yamanouchi, we may assume without loss of generality that $U$ and $U'$ are quasi-Yamanouchi.
+TBD.
+\end{proof}
+
 \begin{lemma}[Prefixes above the height]\label{lemma:forestprefix}
 Let $U\equiv_\forest U'$ be bounded RC graphs of height $p$, let $V$ be a bounded RC graph, and let $\mathbf a=\mathrm{rev}(\mathrm{word}(V))+p$. Then $U\equiv_{\mathbf a}U'$.
 \end{lemma}
 \begin{proof}
-TBD.
+We prove this by induction on $|U|$. The base case $|U|=0$ is not trivial, but true because $\equiv_\forest$ is shift-invariant (in the case that $p>0$). Now, suppose the result holds for RC graphs of height $p$ and size $k\geq 0$, and assume that $|U|=k+1$. Let $m$ be the leftmost letter of $\mathrm{word}(U)$. If the leftmost letter of $\mathrm{word}(U')$ is also $m$, then we can remove this letter from both words and apply the induction hypothesis to the remaining RC graphs. If the leftmost letters differ, suppose $(i,j)\in U$ is the leftmost element of $U$ in the canonical ordering and suppose that $(i',j')\in U'$ satisfies $\rtt_{U'}(i',j') = \rtt_U(i,j)$. By forest equivalence, in the LBS $P(\mathrm{rev}(\mathrm{word}(U)))$ we must have that $(i',j')$ corresponds to the same vertex
 \end{proof}
 
 \begin{lemma}[Forest compatibility of a Little bump]\label{lemma:forestbump}
