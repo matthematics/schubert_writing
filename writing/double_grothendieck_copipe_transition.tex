@@ -1,0 +1,338 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[margin=1in]{geometry}
+\usepackage{booktabs}
+\usepackage[colorlinks=true,linkcolor=blue,urlcolor=blue,citecolor=blue]{hyperref}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newcommand{\Sch}{\mathfrak{S}}
+\newcommand{\Groth}{\mathfrak{G}}
+\newcommand{\PD}{\operatorname{PD}}
+\newcommand{\RPD}{\operatorname{RPD}}
+\newcommand{\Dem}{\operatorname{Dem}}
+\newcommand{\co}{\operatorname{co}}
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\wt}{\operatorname{wt}}
+\newcommand{\exc}{\operatorname{exc}}
+\newcommand{\dem}{\star}
+
+\title{A sign-free expansion of double Grothendieck polynomials\\
+in double Schubert polynomials}
+\author{Matthew J. Samuel}
+\date{October 8, 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We give a manifestly nonnegative combinatorial formula for the coefficients
+$a_{v,w}(\beta,z)$ in
+$\Groth_v(x;z)=\sum_w a_{v,w}(\beta,z)\,\Sch_w(x;z)$,
+the expansion of a double $\beta$-Grothendieck polynomial in the ordinary
+double Schubert basis, with no change of variables in either alphabet.
+The coefficient $a_{v,w}$ is the weight generating function of triples
+(pipe dream, WC graph with reduced co-pipe-dream, reduced pipe dream)
+glued along a Demazure product and a length-additive factorization; every
+triple contributes a single monomial in $\NN[\beta,z]$.  The formula
+composes three individually sign-free expansions: a Cauchy factorization
+of $\Groth_v(x;z)$ over Demazure products, the integer expansion of a single
+Grothendieck polynomial in single Schubert polynomials, and the standard
+splitting of a single Schubert polynomial into double Schubert polynomials.
+It has been verified against direct computation for every $v\in S_n$,
+$n\le 4$, and on samples in $S_5$.  A second, independent conjecture on a
+staircase-dressed transition in the formal-inverse alphabet is recorded
+separately.
+\end{abstract}
+
+\section{Conventions}
+
+Throughout, $\beta$ and $x_1,x_2,\dots,z_1,z_2,\dots$ are independent formal
+variables and $\ell(w)$ is the inversion number.  Permutation multiplication
+is composition, $(uv)(i)=u(v(i))$.  Bruhat order means ordinary (strong)
+Bruhat order.
+
+The multiplicative formal group law is $a\oplus b=a+b+\beta ab$.
+Double Schubert polynomials use the \emph{difference} convention,
+$\Sch_{s_1}(x;z)=x_1-z_1$, and double Grothendieck polynomials the
+\emph{plus} convention, $\Groth_{s_1}(x;z)=x_1\oplus z_1$.  Concretely,
+with $\RPD(w)$ the reduced pipe dreams of $w$ and $\PD(w)$ all
+(possibly unreduced) pipe dreams of $w$---i.e.\ cross sets whose
+row-reading word has Demazure product $w$---
+\begin{align}
+ \Sch_w(x;z)&=\sum_{R\in\RPD(w)}\ \prod_{(r,c)\in R}(x_r-z_c),
+ \label{eq:schub-pd}\\
+ \Groth_w(x;z)&=\sum_{D\in\PD(w)}\beta^{|D|-\ell(w)}
+   \prod_{(r,c)\in D}(x_r\oplus z_c).
+ \label{eq:groth-pd}
+\end{align}
+A cross at $(r,c)$ is the letter $s_{r+c-1}$; words are read row by row,
+right to left within a row.  We write $\exc(D)=|D|-\ell(w)$ for the excess
+and $z^{\wt(D)}=\prod_{(r,c)\in D}z_r$ for the row monomial.  In particular
+$\Groth_v(x;z)|_{\beta=0}=\Sch_v(x;-z)$, and the single polynomials are
+$\Sch_w(x)=\Sch_w(x;0)$, $\Groth_w(x)=\Groth_w(x;0)$.
+
+For $u,v\in S_n$ we write $u\dem v$ for the Demazure (0-Hecke) product:
+fold a reduced word of $v$ onto $u$ from the left, keeping each letter only
+when it increases length.  In \textsf{schubmult} this is
+\texttt{Permutation.\_\_matmul\_\_}, i.e.\ \texttt{u @ v}.
+
+\section{The expansion}
+
+Fix $v\in S_n$.  We seek
+\begin{equation}\label{eq:target}
+ \Groth_v(x;z)=\sum_{w\in S_n}a_{v,w}(\beta,z)\,\Sch_w(x;z),
+ \qquad a_{v,w}\in\ZZ[\beta,z].
+\end{equation}
+With $\deg\beta=-1$ and $\deg z_i=1$, $\Groth_v$ is homogeneous of degree
+$\ell(v)$ and $\Sch_w$ of degree $\ell(w)$, so $a_{v,w}$ is homogeneous of
+degree $\ell(v)-\ell(w)$:
+$a_{v,w}=\sum_{k\ge0}\beta^k p_k(z)$ with $p_k$ homogeneous of degree
+$\ell(v)-\ell(w)+k$.  In particular $a_{v,w}(\beta,0)=0$ unless
+$\ell(w)\ge\ell(v)$, while for $\ell(w)<\ell(v)$ the coefficient is a
+polynomial in $z$ of degree $\ell(v)-\ell(w)$ at $\beta=0$.
+
+\subsection{Three sign-free ingredients}
+
+\begin{proposition}[Cauchy factorization over Demazure products]
+\label{prop:cauchy}
+For every $v\in S_n$,
+\begin{equation}\label{eq:cauchy}
+ \Groth_v(x;z)=\sum_{\substack{u,v'\in S_n\\u\dem v'=v}}
+   \beta^{\ell(u)+\ell(v')-\ell(v)}\,
+   \Groth_{u^{-1}}(z)\,\Groth_{v'}(x).
+\end{equation}
+\end{proposition}
+
+This is the Cauchy-type identity of Fomin and Kirillov for double
+Grothendieck polynomials, transported to the present conventions; note the
+inverse on the $z$-factor.  It is verified symbolically for all $v\in S_n$,
+$n\le4$, in \texttt{tests/mult/test\_groth\_double.py}.  Each factor
+$\Groth_{u^{-1}}(z)$ is, by~\eqref{eq:groth-pd} at second alphabet zero,
+\[
+ \Groth_{u^{-1}}(z)=\sum_{P\in\PD(u^{-1})}\beta^{\exc(P)}z^{\wt(P)},
+\]
+a sum of monomials with coefficient $+1$.
+
+\begin{proposition}[Single Grothendieck in single Schubert]
+\label{prop:lenart}
+For every $v'\in S_n$ there are nonnegative integers $c_{v',u'}$ with
+\begin{equation}\label{eq:g2s}
+ \Groth_{v'}(x)=\sum_{u'\ge v'}\beta^{\ell(u')-\ell(v')}\,c_{v',u'}\,\Sch_{u'}(x).
+\end{equation}
+\end{proposition}
+
+\begin{sloppypar}
+Nonnegativity of this expansion is due to Lenart.  \textsf{schubmult}
+computes $c_{v',u'}$ by \texttt{WCGraph.groth\_to\_schub}: it is the number
+of pipe dreams $D\in\PD(v')$ in the $n\times n$ staircase whose
+\emph{co-pipe-dream} $\co(D)$ is reduced with $\Dem(\co(D))\,w_0=u'$.
+Here $\co(D)$ exchanges crosses and elbows and then reflects across the
+anti-diagonal, $(r,c)\mapsto(n+1-r-c,c)$.  We take this realization as
+given; only the nonnegativity and integrality of $c_{v',u'}$ are used below.
+\end{sloppypar}
+
+\begin{proposition}[Single to double Schubert]
+\label{prop:split}
+For every $u'\in S_n$,
+\begin{equation}\label{eq:split}
+ \Sch_{u'}(x)=\sum_{\substack{u'=aw\\\ell(a)+\ell(w)=\ell(u')}}
+   \Sch_a(z)\,\Sch_w(x;z),
+ \qquad
+ \Sch_a(z)=\sum_{R\in\RPD(a)}z^{\wt(R)}.
+\end{equation}
+\end{proposition}
+
+This is the $t=0$ case of the standard identity
+$\Sch_{u'}(x;t)=\sum_{u'=aw}\Sch_a(z;t)\Sch_w(x;z)$ over length-additive
+factorizations.
+
+\subsection{The formula}
+
+Substituting~\eqref{eq:g2s} and~\eqref{eq:split} into~\eqref{eq:cauchy}
+and collecting the coefficient of $\Sch_w(x;z)$:
+
+\begin{theorem}\label{thm:main}
+For $v,w\in S_n$,
+\begin{equation}\label{eq:main}
+ \boxed{\;
+ a_{v,w}(\beta,z)=
+ \sum_{\substack{u\dem v'=v}}\ \
+ \sum_{\substack{u'\ge v'}}\ \
+ \sum_{\substack{a:\ aw=u'\\\ell(a)+\ell(w)=\ell(u')}}
+ \beta^{\ell(u)+\ell(u')-\ell(v)}\;
+ c_{v',u'}\;\Groth_{u^{-1}}(z)\;\Sch_a(z).
+ \;}
+\end{equation}
+Equivalently, $a_{v,w}$ is the weight generating function of triples
+$(P,D,R)$ with
+\[
+ P\in\PD(u^{-1}),\qquad
+ D\in\PD(v'),\ \co(D)\ \text{reduced},\ \Dem(\co(D))w_0=u',\qquad
+ R\in\RPD(a),
+\]
+subject to $u\dem v'=v$ and $aw=u'$ with lengths adding, each triple
+weighted by the monomial
+\[
+ \beta^{|P|+\ell(u')-\ell(v)}\,z^{\wt(P)}\,z^{\wt(R)}.
+\]
+In particular $a_{v,w}\in\NN[\beta,z]$.
+\end{theorem}
+
+\begin{proof}
+Immediate from Propositions~\ref{prop:cauchy}--\ref{prop:split}; the
+$\beta$-exponent in~\eqref{eq:main} is
+$(\ell(u)+\ell(v')-\ell(v))+(\ell(u')-\ell(v'))$, and the pipe dream $P$
+contributes a further $\beta^{\exc(P)}=\beta^{|P|-\ell(u)}$ inside
+$\Groth_{u^{-1}}(z)$, for a total of $|P|+\ell(u')-\ell(v)$.
+Each ingredient is a sum of monomials with coefficient $+1$, and the
+weight of a triple is the product of the three weights.
+\end{proof}
+
+\begin{remark}
+No variable is substituted anywhere: both alphabets $x,z$ are the original
+ones, the output basis is $\{\Sch_w(x;z)\}$, and the coefficients involve
+only $\beta$ and $z$.  The sum over $(u,v')$ runs over the Bruhat interval
+below $v$ (both $u\le v$ and $v'\le v$ when $u\dem v'=v$); the sum over
+$u'$ runs over the interval above $v'$.
+\end{remark}
+
+\begin{remark}
+The degree bookkeeping of~\eqref{eq:target} is visible in~\eqref{eq:main}:
+$\Groth_{u^{-1}}(z)\Sch_a(z)$ has degree $\ell(u)+\ell(a)$ and the
+$\beta$-power contributes $-(\ell(u)+\ell(a)+\ell(w)-\ell(v))$, for a total
+of $\ell(v)-\ell(w)$.
+\end{remark}
+
+\subsection{Examples}
+
+\begin{example}[$n=2$]
+Pairs with $u\dem v'=s_1$ are $(e,s_1),(s_1,e),(s_1,s_1)$.  Using
+$\Groth_{s_1}(z)=z_1$ and $c_{s_1,s_1}=1$, $\Sch_{s_1}(x)=\Sch_{s_1}(x;z)+z_1$:
+\[
+ \Groth_{21}(x;z)=(1+\beta z_1)\,\Sch_{21}(x;z)+(2z_1+\beta z_1^2)\,\Sch_{e}(x;z).
+\]
+Note $2z_1+\beta z_1^2=z_1\oplus z_1$.
+\end{example}
+
+\begin{example}[$v=132$]
+Writing $A_i=1+\beta z_i$, the nonzero coefficients are
+\[
+\begin{array}{c@{\qquad}l}
+ \toprule
+ w & a_{132,w} \\
+ \midrule
+ 132 & A_1^2A_2 \\
+ 231 & \beta A_1A_2 \\
+ e   & (A_1^2A_2^2-1)/\beta \;=\; z_1\oplus z_1\oplus z_2\oplus z_2 \\
+ \bottomrule
+\end{array}
+\]
+There is no $\Sch_{21}$ term.  The $e$-coefficient is the polynomial
+$2z_1+2z_2+\beta(z_1^2+4z_1z_2+z_2^2)+2\beta^2(z_1^2z_2+z_1z_2^2)+\beta^3z_1^2z_2^2$,
+all of whose coefficients are positive, as the theorem predicts.
+\end{example}
+
+\subsection{Verification and implementation}
+
+The formula is implemented as
+\texttt{schubmult.mult.groth\_double.dgroth\_to\_dschub\_positive}.
+It enumerates $\PD(u^{-1})$ via \texttt{WCGraph.all\_wc\_graphs},
+$c_{v',u'}$ via \texttt{WCGraph.groth\_to\_schub}, and $\RPD(a)$ via
+\texttt{RCGraph.all\_rc\_graphs}, multiplying the resulting monomials; no
+algebraic expansion routine is called.  It agrees with the exact (divided
+difference) expansion \texttt{dgroth\_to\_dschub} for every $v\in S_n$,
+$n\le4$, and on samples in $S_5$; the coefficients are checked to involve
+only $\beta,z$ and to have positive integer monomial coefficients.  The
+Cauchy factorization~\eqref{eq:cauchy} is tested separately.  The routine
+enumerates two Bruhat intervals and is a research implementation rather
+than a multiplication kernel.
+
+\section{A staircase-dressed transition (conjectural)}
+
+A different, earlier line of computation produced an unsigned graph formula
+in a \emph{dressed} basis.  We record it because it is verified much
+further ($S_6$) than its ordinary counterpart would be, and because its
+objects---reduced dreams whose complements are unreduced---are of
+independent combinatorial interest.  It is \emph{not} needed for
+Theorem~\ref{thm:main}.
+
+Let $N=\binom n2$, $w_0\in S_n$ the longest element,
+$\bar x_i=-x_i/(1+\beta x_i)$ the formal inverse, $A_c=1+\beta z_c$, and
+$P_n(x)=\prod_{i=1}^{n-1}(1+\beta x_i)^{n-i}$.  Define coefficients
+$C^{(n)}_{v,\sigma}$ by
+\begin{equation}\label{eq:dressed}
+ \Groth_v(x;z)=(-1)^{\ell(v)}\,P_n(x)\sum_{\sigma\in S_n}
+   C^{(n)}_{v,\sigma}(\beta,z)\,\Sch_\sigma(\bar x;z).
+\end{equation}
+This is the fixed-staircase case of the ``phantom expansion'' used in
+\textsf{schubmult}'s Grothendieck v-path kernel, which computes
+$C^{(n)}_{v,\sigma}$ by a signed divided-difference recurrence on states
+(permutation, multiset of surviving atoms $A_c$).
+
+\begin{conjecture}\label{conj:dressed}
+For $v,\sigma\in S_n$,
+\[
+ C^{(n)}_{v,\sigma}=\beta^{\ell(\sigma)-\ell(v)}
+ \sum_{\substack{D\in\RPD(\sigma w_0)\\v\le\Dem(\co(D))}}
+ \ \prod_{(r,c)\in D}A_c,
+\]
+the sum over reduced pipe dreams $D$ for $\sigma w_0$ in the full
+$n\times n$ staircase whose co-pipe-dream has Demazure permutation at least
+$v$ in Bruhat order.  The co-pipe-dream may be unreduced.
+\end{conjecture}
+
+Since $D$ is reduced, $|D|=N-\ell(\sigma)$, so each term is homogeneous of
+degree $N-\ell(\sigma)$ in the atoms, and $v\le\Dem(\co(D))$ forces
+$\ell(\sigma)\ge\ell(v)$.  The conjecture matches the recurrence---not just
+the coefficients but each individual atom multiset with its integer
+multiplicity---for all $720$ inputs in $S_6$ (6080 reduced dreams), and the
+identity~\eqref{eq:dressed} is checked symbolically through $S_3$.  It is
+implemented as \texttt{dgroth\_copipe\_expansion}.
+
+Two features distinguish it from the integer expansion~\eqref{eq:g2s}:
+the acceptance condition is an upper Bruhat filter rather than an exact
+permutation, and the complement is allowed to be unreduced.  For instance,
+with $n=3$, $v=132$, $\sigma=231$: the reduced dream $\{(2,1)\}$ for
+$\sigma w_0=132$ has complement with word $s_2s_2$, Demazure permutation
+$132\ge v$; it is accepted and contributes $\beta A_1$, which is needed.
+
+\begin{remark}
+Attempts to turn~\eqref{eq:dressed} into the ordinary expansion
+\eqref{eq:target} by alphabet manipulation produced coefficients that were
+either signed (expanding a first-alphabet prefactor in Schubert polynomials)
+or positive but rational (changing the coefficient alphabet $\bar z\to z$,
+with local weights $z_r+z_c/A_c$ whose denominators cancel only after
+aggregation).  Theorem~\ref{thm:main} avoids both by never leaving the
+original alphabets.
+\end{remark}
+
+\section{Open problems}
+
+\begin{enumerate}
+\item \textbf{A single-object formula.}  Theorem~\ref{thm:main} sums over
+ \emph{triples} of graphs.  The $z=0$ specialization collapses to the single
+ family of~\eqref{eq:g2s}.  Is there a single family of decorated pipe dreams
+ for $v$, with a local weight in $\beta,z$, whose generating function is
+ $a_{v,w}$?  The factorization $x_r\oplus z_c=A_c(x_r-z_c)+(z_c\oplus z_c)$
+ applied cell by cell to~\eqref{eq:groth-pd} suggests marking cells of a
+ pipe dream of $v$, but the unmarked product $\prod(x_r-z_c)$ over a
+ non-reduced sub-dream is not a Schubert polynomial, which is precisely the
+ obstruction that the Cauchy step circumvents.
+\item \textbf{Proof of Conjecture~\ref{conj:dressed}}, and its relation to
+ Theorem~\ref{thm:main}: the conjecture's objects are reduced dreams of
+ $\sigma w_0$ with a Bruhat filter on the complement, the theorem's are
+ unreduced dreams of $v'$ with an exact complement; a bijective explanation
+ of how the Bruhat filter and the Cauchy sum over $u\dem v'=v$ trade off
+ would illuminate both.
+\end{enumerate}
+
+\end{document}

@@ -3470,11 +3470,99 @@ In Case 2, $(1,M)$ is the first letter of $\mathrm{word}(U')$, so $W'=Z'M$ ends 
 Now $V=\tilde U\setminus\{(1,M)\}$ and $V'=U'\setminus\{(1,M)\}$ have reversed reading words $Z$ and $Z'$, and $P(\overline Z)$, $P(\overline{Z'})$ are obtained from $P(\overline{ZM})=P(\overline{Z'M})$ by deleting the root $M^{[k]}$; hence $V\equiv_\forest V'$, and by induction the sequence $V=V_0,\ldots,V_t=V'$ consists of RC graphs forest equivalent to $V$. Each $V_s$ has the same multiset of letters as $V$, so $\mathrm{rev}(\mathrm{word}(X_s))=\mathrm{rev}(\mathrm{word}(V_s))\,M$ with the letter $M$ again injectified as $M^{[k]}$, and $P$ of this word is obtained from $P(\overline{\mathrm{rev}(\mathrm{word}(V_s))})=P(\overline Z)$ by inserting $M^{[k]}$. Therefore $X_s\equiv_\forest\tilde U\equiv_\forest U$ for all $s$, completing the induction.
 \end{proof}
 
+We make the rootlist criterion underlying these swaps explicit. Following \cite[Section~5.3]{nadeau2024forest}, adjoin leaf symbols $\underline{i}$ to $\overline{\mathbb Z}$, ordered by $\underline{i}<i^{[k]}<\underline{i+1}$. The \emph{rootlist} $\operatorname{rl}(P)$ consists of the root labels of $P$, together with $\underline{i}$ whenever $i-1,i\notin\operatorname{supp}(P)$. Inserting a fresh label $a$ removes the two consecutive rootlist elements bracketing $a$ and inserts $a$ in their place. The generating swap $LxyT\leftrightarrow LyxT$ is legal precisely when two elements of $\operatorname{rl}(P(L))$ lie strictly between $x$ and $y$. All concatenations of integer words below are injectified after concatenation.
+
+\begin{lemma}[Contextual chute connectivity]\label{lemma:forestcontextchute}
+Let $R,S$ be reduced RC graphs for the same permutation, supported in rows $1,\ldots,h$, and let $\mathbf a$ be any integer word. If $R\equiv_{\mathbf a}S$, then $R$ and $S$ are connected by simple chute/inverse chute moves supported in these rows, every term of which is $\equiv_{\mathbf a}$-equivalent to $R$. No maximum-descent assumption is required. If neither endpoint has a first-row crossing beyond column $m$, the sequence can be chosen to satisfy this bound throughout.
+\end{lemma}
+\begin{proof}
+Put $W(R)=\mathrm{rev}(\mathrm{word}(R))$. We use the geometric induction of Lemma~\ref{lemma:chuteconnect}, simultaneously for every context $\mathbf a$ and first-row bound $m$, inducting on $|R|+h$. Forest swaps are ordinary commutations, and projection of a swap sequence between $\overline{\mathbf aW(R)}$ and $\overline{\mathbf aW(S)}$ onto the suffix labels shows that the suffix words lie in the same commutation class. These labels are identifiable: the suffix occurrences of value $i$ have superscripts exceeding its multiplicity in $\mathbf a$.
+
+If both first rows are empty, delete them and subtract one from every letter, including the context. Translation equivariance and induction give the desired sequence, which we then shift back. Otherwise choose the largest first-row column $M$ of either endpoint, with $(1,M)\in S$ by symmetry. As in Lemma~\ref{lemma:chuteconnect}, the first crossing $c$ of $R$ whose letter belongs to $\{M-1,M,M+1\}$ has letter $M$, and successive simple inverse chute moves carry it to $(1,M)$, preserving reducedness, the row cutoff, and the first-row bound.
+
+Write $W(S)=Z'M$ and $W(R)=XMY$, where the displayed $M$ is the last suffix occurrence in both words. It therefore receives the same contextual label $\mu$. This label is a root of the common final P-symbol, since $\mathbf aW(S)$ ends with it. A node which becomes a child never becomes a root again, so no letter of $Y$ makes $\mu$ a child during insertion of $\mathbf aXMY$. Bubbling $\mu$ rightward through $Y$ is consequently a sequence of legal forest swaps: inductively the P-symbol after each processed portion agrees with the original execution, and the next letter does not make $\mu$ its child. Each geometric inverse chute above performs a block of these swaps, hence preserves the contextual P-symbol.
+
+Let $\widetilde R$ be the graph reached at $(1,M)$, with $W(\widetilde R)=ZM$. Delete $(1,M)$ from $\widetilde R,S$ to obtain $V,V'$. Deleting the common last-inserted root $\mu$ from $P(\overline{\mathbf aZM})=P(\overline{\mathbf aZ'M})$ gives $V\equiv_{\mathbf a}V'$. Induction connects them with first-row bound $M-1$. Adjoin $(1,M)$ to each term. Reducedness follows because the resulting reading words lie in the commutation class of $\mathrm{word}(S)$; the moves lift because their first-row cells are bounded by $M-1$, as in the lifting argument of Lemma~\ref{lemma:chuteconnect}. Contextual equivalence lifts by appending the same label $\mu$ to every reversed contextual word.
+
+This argument uses only reducedness and the row cutoff, not a maximum-descent bound: after deleting $(1,M)$ the smaller graphs need only be reduced graphs supported in the same rows. This proves the stated stronger claim.
+\end{proof}
+
+Call a positive integer word $W$ \emph{$p$-admissible} if every component of the forest of every prefix of $W$ has left endpoint at most $p$.
+
+\begin{lemma}[Rootlist frontier]\label{lemma:forestfrontier}
+Let $\operatorname{supp}P(\overline{\mathbf a})\subseteq[p+1,\infty)$ and let $W$ be $p$-admissible. For a prefix $L$ of $W$, put
+$$b(L)=\max\operatorname{supp}P(\overline L),\qquad c(L)=\max\{p+1,b(L)+2\},$$
+with $b(\varnothing)=-\infty$. Let $\nu_i(\mathbf a)$ be the multiplicity of $i$ in $\mathbf a$, and let $\sigma_{\mathbf a}$ send $i^{[k]}$ to $i^{[k+\nu_i(\mathbf a)]}$ and fix every leaf symbol. Then
+$$\operatorname{rl}(P(\overline{\mathbf aL}))\cap(-\infty,\underline{c(L)})
+=\sigma_{\mathbf a}\!\left(\operatorname{rl}(P(\overline L))\cap(-\infty,\underline{c(L)})\right).$$
+\end{lemma}
+\begin{proof}
+We induct on $|L|$, maintaining in addition that every surviving root inserted in $\mathbf a$ roots its original tree, whose left endpoint is at least $c(L)$. Insertion never changes an existing subtree internally. At $L=\varnothing$, the support assumption gives both assertions with $c=p+1$.
+
+Suppose the next letter has value $i$. Admissibility forces
+$$i\leq\max\{p,b(L)+1\}=c(L)-1:$$
+if $i>p$ and $i>b(L)+1$, insertion would create an isolated component beginning above $p$. Thus the new label lies below the frontier. If both its bracketing rootlist elements in the empty-start execution lie below the frontier, the contextual execution has the same two brackets under $\sigma_{\mathbf a}$. The updates agree, no original $\mathbf a$-root is consumed, and $c$ is unchanged.
+
+Otherwise the upper bracket in the empty-start execution is $\underline c$, where $c=c(L)$: all its occupied positions are at most $c-2$. The contextual execution has the same lower bracket, and its upper bracket is its first rootlist element at or above $\underline c$. This is either a leaf $\underline{k}$ with $k\geq c$, or a surviving original $\mathbf a$-root whose tree begins at or above $c$. It need not lie exactly at $c$, since a previously attached $\mathbf a$-tree can extend the contextual support. After this upper bracket is removed, every remaining contextual rootlist element at or above the old frontier is at least $\underline{c+1}$. For a leaf this follows from the vacancy of positions $k-1,k$; for a tree it follows from the gap separating its support from the next component.
+
+In this case the empty-start frontier increases to $c+1$. If $b(L)<p$, consuming $\underline{p+1}$ fills position $p$, making the new maximum support $p$. If $b(L)\geq p$, consuming $\underline{b(L)+2}$ extends the rightmost component to $b(L)+1$. Below the new frontier, both rootlists therefore consist of the common old elements minus the lower bracket, together with the new label. Any consumed original $\mathbf a$-tree is now a child, while all surviving original $\mathbf a$-trees begin at or above $c+1$. This completes the induction.
+\end{proof}
+
+\begin{lemma}[Admissibility from left descents]\label{lemma:forestadmissibleword}
+Let $W$ be a positive reduced word for $q$, all of whose left descents are at most $p$. Then $W$ is $p$-admissible.
+\end{lemma}
+\begin{proof}
+Every reduced prefix has the same left-descent bound. Indeed, if $q=zt$ is length-additive and $j$ is a left descent of $z$, then
+$$\ell(s_jq)\leq\ell(s_jz)+\ell(t)=\ell(q)-1,$$
+so $j$ is a left descent of $q$.
+
+If a component of $P(\overline L)$ for a prefix $L$ began above $p$, all its node labels would have values above $p$. Choose a decreasing recording labeling which processes this component first. By the $\Omega$-correspondence the resulting word has the same P-symbol as $L$, and hence is obtained by forest commutations and is a reduced word for the same prefix permutation. Its first letter has value $j>p$, making $j$ a left descent, a contradiction. The forest-move sequence cannot reverse the order of equal-valued labels, so the resulting injective word retains canonical injectification.
+\end{proof}
+
+\begin{lemma}[High-support prefixes]\label{lemma:foresthighsupport}
+Let $W\equiv_\forest W'$ be positive reduced words for a permutation whose left descents are at most $p$. If $\operatorname{supp}P(\overline{\mathbf a})\subseteq[p+1,\infty)$, then $\mathbf aW\equiv_\forest\mathbf aW'$.
+\end{lemma}
+\begin{proof}
+Connect $W$ to $W'$ by generating forest swaps. Every word along the sequence is reduced for the same permutation, hence is $p$-admissible by Lemma~\ref{lemma:forestadmissibleword}. For a swap $LxyT\leftrightarrow LyxT$, admissibility of both prefixes $Lx,Ly$ gives $\mathrm{val}(x),\mathrm{val}(y)\leq c(L)-1$. Thus both exchanged labels and their two separating rootlist elements lie strictly below $\underline{c(L)}$. Lemma~\ref{lemma:forestfrontier} preserves these separators after prefixing by $\mathbf a$, with suffix superscripts shifted by $\nu_i(\mathbf a)$. The contextual swap is legal by the rootlist criterion. Applying this to the entire sequence proves the claim.
+\end{proof}
+
 \begin{lemma}[Prefixes above the height]\label{lemma:forestprefix}
 Let $U\equiv_\forest U'$ be bounded RC graphs of height $p$, let $V$ be a bounded RC graph, and let $\mathbf a=\mathrm{rev}(\mathrm{word}(V))+p$. Then $U\equiv_{\mathbf a}U'$.
 \end{lemma}
 \begin{proof}
+Put $W=\mathrm{rev}(\mathrm{word}(U))$ and $W'=\mathrm{rev}(\mathrm{word}(U'))$. These are reduced words for $u^{-1}$, where $u$ is the common permutation of $U,U'$. Boundedness gives $\maxd(u)\leq p$, exactly the left-descent bound on $u^{-1}$ required by Lemma~\ref{lemma:foresthighsupport}.
+
+The support of $P(\overline{\mathrm{rev}(\mathrm{word}(V))})$ lies in $[1,\infty)$: under the compatible-forest correspondence of \cite[Proposition~5.10]{nadeau2024forest}, the positive row indices of $V$ give a forest labeling bounded by $\rho$. At the leftmost internal node of each component, $\rho$ is that component's left endpoint, so this endpoint is at least $1$. Translation by $p$ gives $\operatorname{supp}P(\overline{\mathbf a})\subseteq[p+1,\infty)$. Lemma~\ref{lemma:foresthighsupport} now yields $\mathbf aW\equiv_\forest\mathbf aW'$. If $p=0$, both graphs are empty and the conclusion is immediate.
 \end{proof}
+
+\begin{lemma}[Contextual compatibility of exchange deletion]\label{lemma:forestexchangedelete}
+Let $R,S$ be reduced RC graphs for $w$ and suppose $R\equiv_{\mathbf a}S$. Let $t_{ab}$ satisfy $wt_{ab}\lessdot w$, and let $c_R,c_S$ be the unique crossings with right root $(a,b)$. Then
+$$R\setminus\{c_R\}\equiv_{\mathbf a}S\setminus\{c_S\}.$$
+More generally, a fixed sequence of right-root exchange deletions, each a downward Bruhat cover of the current common permutation, preserves contextual forest equivalence.
+\end{lemma}
+\begin{proof}
+The two contextual injective words have a common P-symbol. Their insertion orders are linear extensions of the same forest order (children precede parents), with the same fixed initial segment consisting of the labels of $\overline{\mathbf a}$. Linear extensions with this fixed initial segment are connected by adjacent interchanges of incomparable suffix nodes: after deleting the initial segment, apply the usual connectivity of linear extensions of the remaining poset. By the $\Omega$-correspondence these are generating forest swaps, so we may connect the two words while retaining the prefix $\overline{\mathbf a}$ throughout.
+
+Each suffix swap is an ordinary commutation of distinct, nonadjacent simple reflections. The two crossings involved have disjoint wire pairs; their right roots are carried with their occurrences, and the right roots of the other occurrences are unchanged. Thus the crossing with right root $(a,b)$ can be tracked along this sequence. If a swap involves this crossing, deleting it makes the two resulting words identical. If not, delete its occurrence from the common prefix or suffix of the swap. The resulting swap is still legal by the deletion-of-context property of \cite[Section~5.3]{nadeau2024forest}: a generating forest swap remains legal after passing to subwords of its prefix and suffix, as follows from the rootlist criterion.
+
+The tracked deleted occurrence has the same value and occurrence rank throughout, since forest swaps never interchange equal-valued letters. After deleting it, canonical injectification decreases by one the superscripts of the later suffix occurrences of that value. This common relabeling preserves all label comparisons and values, hence preserves insertion and forest equivalence. The context itself is unchanged. The exchange property gives reduced words for $wt_{ab}$ at both endpoints, proving the displayed equality. Iterating gives the final assertion.
+\end{proof}
+
+\begin{remark}[The remaining marked-insertion issue]\label{remark:forestmarkedinsert}
+Lemma~\ref{lemma:forestexchangedelete} handles the exchange-deletion part of a deletion--reinsertion construction of a bump, but it does not establish compatibility of the reinsertion. In a row-preserving construction, the row of the deleted crossing must be retained as a mark: corresponding root occurrences in forest-equivalent graphs need not be in the same row. Consequently a compatibility statement for insertion in one fixed row would not suffice; the insertion inputs must include their corresponding deletion-row marks, and also the deleted column if the chosen insertion rule uses it, as the forward Monk rule does. Also, deletion compatibility is a forward implication and cannot be reversed to prove Lemma~\ref{lemma:forestbump}. One must either prove compatibility of the forward reconstruction from the bumped graphs, or prove an appropriate cancellation statement for the marked deletion--reinsertion map. We leave that assertion unproved here.
+\end{remark}
+
+\begin{remark}[A word-level local target for marked reinsertion]\label{remark:forestupwarddiamond}
+There is a potentially simpler local target than a geometric chute diamond. Fix $\maxd(u)=n$, $s=\max\{j>n:u(j)<u(n)\}$, $\pi=ut_{ns}$, and $v=\pi t_{in}\gtrdot\pi$ with $i<n$. On a reduced reading word for $v$, let $B_{i,n}$ denote the upward Little bump: start at the exchange occurrence with right root $(i,n)$, increment its letter, and repeatedly increment the other exchange defect until the word is reduced. This is the word version of the forward Monk reconstruction. The following local compatibility assertion remains unproved:
+
+if $\mathbf r=\mathbf lxy\mathbf t$ and $\mathbf r'=\mathbf lyx\mathbf t$ are reduced words for $v$ such that
+$$\mathbf a\,\mathrm{rev}(\mathbf r)\equiv_\forest\mathbf a\,\mathrm{rev}(\mathbf r'),$$
+then their reconstructed reversed words are forest equivalent with the same context $\mathbf a$. A stronger candidate is that the reconstructed reading words agree away from the displayed pair and differ by its interchange, and that this interchange is still a generating forest move after the context is inserted.
+
+For this reduction it is enough to use generating swaps of suffix labels, retaining the contextual prefix, as in the proof of Lemma~\ref{lemma:forestexchangedelete}. Thus a word-level local assertion would avoid requiring each intermediate word to have a compatible sequence with the original row cutoff. Its two separate proof obligations are synchronization of the marked exchange-defect trajectories across the adjacent commutation, and preservation of the two-separator rootlist condition for the reconstructed pair. In particular, an unchanged or enlarged numerical gap between the exchanged letters does not by itself establish the second obligation, because the intervening insertion prefix may also change. Neither obligation is asserted as proved here.
+
+One elementary separator case is settled directly. Suppose the two reconstructions have the forms $\widetilde{\mathbf l}\,x y^+\,\mathbf t$ and $\widetilde{\mathbf l}\,y^+ x\,\mathbf t$, with the common reading suffix $\mathbf t$ unchanged, $\mathrm{val}(x)<\mathrm{val}(y)$, and either $y^+=y$ or $\mathrm{val}(y^+)>\mathrm{val}(y)$. The insertion prefix $\mathbf a\,\mathrm{rev}(\mathbf t)$ is then unchanged. The label of $x$ is unchanged, while the new label of $y^+$ is equal to or greater than that of $y$. Hence the two original rootlist separators are still strictly between the reconstructed labels, so the reconstructed swap is legal, independently of the common continuation $\mathrm{rev}(\widetilde{\mathbf l})$. This proves the separator obligation in the unchanged-prefix, outward-moving-pair case, but does not prove that every reconstruction has this form.
+\end{remark}
 
 \begin{lemma}[Forest compatibility of a Little bump]\label{lemma:forestbump}
 Let $\maxd(u)=n$, let $X,X'\in\RC(u,n)^0$, and let $X^{(1)},X'^{(1)}$ be the Little bumps of Definition~\ref{definition:zeromap}, at the crossing with right root $(n,s)$. For every word $\mathbf a$, if $X^{(1)}\equiv_{\mathbf a}X'^{(1)}$ then $X\equiv_{\mathbf a}X'$.
@@ -3487,8 +3575,382 @@ TBD.
 Let $\maxd(u)=n$ and $X,X'\in\RC(u,n)^0$. For every word $\mathbf a$, if $\zeromap(X)\equiv_{\mathbf a}\zeromap(X')$ then $X\equiv_{\mathbf a}X'$.
 \end{lemma}
 \begin{proof}
-Forest equivalent words have the same permutation, so $\wof{\zeromap X}=\wof{\zeromap X'}=:w'\in T_n(u)$. By Lemma~\ref{lemma:zeroweight}, $\zeromap(X)$ is computed by a sequence of Little bumps $X=X_0,X_1,\ldots,X_m$ whose permutations $u=u_0,u_1,\ldots,u_m=w'$ form a sequence of transition steps at $n$, followed by the deletion of the empty row $n$, which does not change the reading word; likewise for $X'$, with permutations $u=u'_0,\ldots,u'_{m'}=w'$. By Lemma~\ref{L:leaves} (the sum in its proof is without multiplicity), $w'$ is the end point of exactly one sequence of transition steps starting at $u$, so $m=m'$ and $u_k=u'_k$ for all $k$. Now $X_m\equiv_{\mathbf a}X'_m$ by hypothesis, and $X_{k-1}\equiv_{\mathbf a}X'_{k-1}$ follows from $X_k\equiv_{\mathbf a}X'_k$ by Lemma~\ref{lemma:forestbump} applied to $X_{k-1},X'_{k-1}\in\RC(u_{k-1},n)^0$.
+Forest equivalent words have the same permutation, so $\wof{\zeromap X}=\wof{\zeromap X'}=:w'\in T_n(u)$. By Lemma~\ref{lemma:zeroweight}, $\zeromap(X)$ is computed by a sequence of Little bumps $X=X_0,X_1,\ldots,X_m$ whose permutations $u=u_0,u_1,\ldots,u_m=w'$ form a sequence of transition steps at $n$, followed by the deletion of the empty row $n$, which does not change the reading word; likewise for $X'$, with permutations $u=u'_0,\ldots,u'_{m'}=w'$. By Lemma~\ref{L:leaves} (the sum in its proof is without multiplicity), $w'$ is the end point of exactly one sequence of transition steps starting at $u$, so $m=m'$ and $u_k=u'_k$ for all $k$. Now $X_m\equiv_{\mathbf a}X'_m$ by hypothesis, and $X_{k-1}\equiv_{\mathbf a}X'_{k-1}$ follows from $X_k\equiv_{\mathbf a}X'_k$ by Lemma~\ref{lemma:forestbump} applied to $X_{k-1},X'_{k-1}\in\RC(u_{k-1},n)^0$. This argument is conditional on the unproved Lemma~\ref{lemma:forestbump}; the following terminal-edge criterion is an alternative sufficient route. The empty-context case is proved independently in Proposition~\ref{proposition:forestzeroempty} below.
 \end{proof}
+
+\begin{proposition}[A terminal-edge reduction for $\zeromap$]\label{proposition:forestzeroterminal}
+Fix $\maxd(u)=n$ and $w'\in T_n(u)$. By Theorem~\ref{theorem:zero_bijection}, every $Y\in\RC_{n-1}(w')$ has a unique lift
+$$L_{u,w'}(Y)\in\RC(u,n)^0,\qquad \zeromap(L_{u,w'}(Y))=Y.$$
+For a fixed context $\mathbf a$, the following assertions are equivalent:
+\begin{enumerate}
+\item[(i)] Whenever $Y,Z\in\RC_{n-1}(w')$ satisfy $Y\equiv_{\mathbf a}Z$, their lifts satisfy $L_{u,w'}(Y)\equiv_{\mathbf a}L_{u,w'}(Z)$.
+\item[(ii)] The same implication holds whenever $Y,Z$ differ by a single simple chute or inverse chute move.
+\end{enumerate}
+In particular, proving (ii) for every $u,w',\mathbf a$ proves Lemma~\ref{lemma:forestzero} without using Lemma~\ref{lemma:forestbump}.
+\end{proposition}
+\begin{proof}
+The implication (i)$\Rightarrow$(ii) is immediate. For the converse, Lemma~\ref{lemma:forestcontextchute} connects any contextual-equivalent $Y,Z$ by contextual-preserving simple chute/inverse chute moves supported in rows $1,\ldots,n-1$. Every intermediate graph is reduced for $w'$ and is bounded at height $n-1$, since $\maxd(w')<n$. The zero-map bijection therefore supplies a unique lift of every term for the fixed initial permutation $u$. Apply (ii) successively to conclude (i).
+
+Under the hypothesis of Lemma~\ref{lemma:forestzero}, projection of a contextual forest-swap sequence onto the suffix labels shows that $\zeromap(X)$ and $\zeromap(X')$ have the same permutation $w'$. Lemma~\ref{lemma:zerotransition} gives $w'\in T_n(u)$, and uniqueness of the lifts identifies $X=L_{u,w'}(\zeromap(X))$ and $X'=L_{u,w'}(\zeromap(X'))$. Thus (i) gives the required implication.
+\end{proof}
+
+\begin{remark}[An endpoint-only bridge]\label{remark:forestzeroendpointbridge}
+The unproved assertion (ii) of Proposition~\ref{proposition:forestzeroterminal} concerns only terminal graphs with maximum descent less than $n$ and their complete fixed-permutation lifts. It requires neither preservation of contextual forest equivalence at intermediate transition permutations nor compatibility for arbitrary reduced-word swaps. A concrete sufficient bridge has two parts: for a contextual-preserving terminal chute edge, show that its two lifts differ by a simple chute edge (possibly in a different column), and show that this lifted edge preserves the contextual P-symbol. The geometric assertion alone is not sufficient, since simple chute moves need not preserve forest equivalence. Both parts remain unproved in general. The terminal words, unlike arbitrary intermediate bump words, satisfy the left-descent bound $n-1$ of Lemma~\ref{lemma:forestadmissibleword}; this additional hypothesis is available for a direct rootlist argument.
+\end{remark}
+
+\begin{lemma}[Word-preserving terminal pairs]\label{lemma:forestzeroword}
+Fix $\maxd(u)=n$ and $w'\in T_n(u)$. If $Y,Z\in\RC_{n-1}(w')$ have the same reading word, then $L_{u,w'}(Y)$ and $L_{u,w'}(Z)$ have the same reading word. In particular their lifts are $\equiv_{\mathbf a}$-equivalent for every context $\mathbf a$.
+\end{lemma}
+\begin{proof}
+The transition path from $u$ to $w'$ is unique by Lemma~\ref{L:leaves}. Reverse this path, using the forward Monk maps. At a reversed step $v=\pi t_{in}\mapsto u_0=\pi t_{ns}$ the starting crossing is the unique exchange occurrence with right root $(i,n)$. Its position depends only on the reduced reading word and $(i,n)$.
+
+The reading-word description of the forward Monk move is deterministic without the row sequence: increment the marked letter, and, if the word is not reduced, mark and increment the unique other exchange defect, continuing until it is reduced. To see that this describes the geometric rule, expand a move to the nearest elbow on the right into single-column pushes. Passing an occupied cell produces adjacent equal letters in the reading word; the other equal-letter occurrence is the exchange defect, so the next push continues through that same row block. After the elbow is reached, any remaining defect is the other crossing of the same pair of pipes, as in the Monk description preceding Lemma~\ref{lemma:bpdconfine}. Thus the next marked position again depends only on the current word. The geometric forward Monk map terminates, so this word procedure terminates and gives its reading word.
+
+Both lifts follow the fixed reversed transition path: they are the preimages supplied by the zero-map bijection, and their downward permutation paths must be that unique path. Starting with equal words, the deterministic word procedure therefore gives equal words at each reversed step. Appending or deleting an empty bottom row does not change the word. Equal words have equal contextual P-symbols, proving the final assertion.
+\end{proof}
+
+\begin{lemma}[The bottom terminal edge has no word obstruction]\label{lemma:forestzerobottom}
+Let $h\geq2$, let $Y\in\RC_h(w)$, and suppose $Z=C_{h-1,j}(Y)$ is a simple chute move between its bottom two rows. If $Y\equiv_{\mathbf a}Z$ for any context $\mathbf a$, then $\mathrm{word}(Y)=\mathrm{word}(Z)$.
+\end{lemma}
+\begin{proof}
+The last row of a bounded height-$h$ RC graph is an initial segment of columns, say $1,\ldots,k$. Indeed, its decreasing reading word is a length-additive suffix of a reduced word for $w$, so every right descent of its permutation is a right descent of $w$. The right descents of a product of distinct simple reflections in decreasing order are the minimum letters in its maximal consecutive blocks. Every last-row letter is at least $h$ and $\maxd(w)\leq h$, so there is at most one block, and it starts at $h$. This proves the initial-segment assertion, including the empty case $k=0$.
+
+Both $Y$ and $Z$ have this property. Since the chute adds column $j-1$ to the last row, necessarily $j=k+2$. Put $x=h+k$, the moved letter. There are no last-row letters above $x$, and the reversed words consequently have the forms
+$$W(Y)=H B x D,\qquad W(Z)=H x B D,\qquad H=h(h+1)\cdots(x-1),$$
+where $B$ is the increasing word of the crossings in row $h-1$ to the left of column $j-1$. Its letters lie in $[h-1,x-2]$, and $D$ is the common continuation. If $B$ is empty the words are equal, as required; if $k=0$, this is already forced by the empty cell in column $j-1=1$.
+
+Suppose $B$ is nonempty, so $k\geq1$, and write $B=B_0b$ with $b$ its last letter. Inserting $H$ creates one tree whose support is $[h,x-1]$. Insertion never removes an occupied support position or splits a component, so this interval remains inside one component of $P(\overline{HB_0})$. There is no vacant-leaf rootlist element strictly between the labels of $b$ and $x$: all possible such leaf indices lie in $[h,x]$, and each is adjacent to that occupied interval. There is at most one tree-root label between them, since root values lie in their component supports and any such value lies in $[h-1,x-1]$; all these positions except possibly $h-1$ belong to the one component, and a root of value $h-1$ lies below the label of $b$. The two-separator criterion therefore forbids the adjacent swap $HB_0bxD\leftrightarrow HB_0xbD$.
+
+If $HBxD$ and $HxBD$ had the same P-symbol, their insertion histories would be linear extensions of the same ancestor poset. The node $x$ changes order with every node of $B$, so it would be incomparable with all of them. Moving $x$ across the last node $b$ would then be a legal forest swap, contradicting the preceding paragraph. Hence $Y\not\equiv_\forest Z$ when $B$ is nonempty. Finally, contextual equivalence implies ordinary equivalence by deleting the context from a generating-swap sequence, using the anti-monoid property of forest swaps. Thus no context can make this forbidden bottom edge forest preserving.
+\end{proof}
+
+\begin{corollary}[Forest compatibility in heights at most three]\label{corollary:forestzerolowheight}
+Lemma~\ref{lemma:forestzero} holds for $n\leq3$, for every context and with no restriction on the size of the permutation.
+\end{corollary}
+\begin{proof}
+There is no height-one RC graph of last descent one with its only row empty, so $n=1$ is vacuous. For $n=2$ the terminal graph has one row and is determined by its permutation. For $n=3$, contextual chute connectivity connects any two contextual-equivalent terminal graphs by moves between rows $1$ and $2$. Lemma~\ref{lemma:forestzerobottom} shows that every move has identical reading words at its endpoints. Thus the two terminal words are equal. In both nonvacuous cases Lemma~\ref{lemma:forestzeroword} gives contextual equivalence of the lifts.
+\end{proof}
+
+\begin{proposition}[Only word-changing first-row terminal edges remain]\label{proposition:forestzerofirstrow}
+To prove Lemma~\ref{lemma:forestzero} in all heights, it is enough to prove assertion (ii) of Proposition~\ref{proposition:forestzeroterminal} for word-changing simple chute moves between terminal rows $1$ and $2$, for $n\geq4$ and every context.
+\end{proposition}
+\begin{proof}
+Induct on $n$, using Corollary~\ref{corollary:forestzerolowheight} for the base. By Proposition~\ref{proposition:forestzeroterminal} it suffices to lift one contextual-preserving terminal chute edge $Y,Z$. Word-preserving edges are settled by Lemma~\ref{lemma:forestzeroword}, and edges between rows $1$ and $2$ are covered by the stated hypothesis.
+
+Otherwise the move lies strictly below the first row, so that row is common to $Y,Z$ and their trimmed permutations are equal; write $t=\wof{\trm Y}=\wof{\trm Z}$. Put $R=L_{u,w'}(Y)$ and $S=L_{u,w'}(Z)$. By Lemmas~\ref{L:trim}, \ref{lemma:ztrim} and \ref{lemma:zerotransition}, the permutations $v_R=\wof{\trm R}$ and $v_S=\wof{\trm S}$ belong to $P_1(u)$ and satisfy $t\in T_{n-1}(v_R)\cap T_{n-1}(v_S)$. Lemma~\ref{L:unique} gives $v_R=v_S=:v$. The first rows of $R,S$ are therefore identical, since their row factor is determined by $(v,u)$ by Theorem~\ref{theorem:modactrc}.
+
+Delete the common first-row continuation from $\mathbf aW(Y)\equiv_\forest\mathbf aW(Z)$, again using the anti-monoid property on occurrence labels and then canonical reinjectification. This gives
+$$\mathbf a\bigl(W(\trm Y)+1\bigr)\equiv_\forest
+  \mathbf a\bigl(W(\trm Z)+1\bigr).$$
+Translate every letter by $-1$. Since $\zeromap(\trm R)=\trm Y$ and $\zeromap(\trm S)=\trm Z$, the inductive hypothesis with context $\mathbf a-1$ gives $\trm R\equiv_{\mathbf a-1}\trm S$ if $\maxd(v)=n-1$. If $\maxd(v)<n-1$, the zero maps merely delete the empty bottom row and the same conclusion follows directly. Translate back by $1$ and append the common reversed first row of $R,S$. Lemma~\ref{lemma:forestconcat}(a) gives $R\equiv_{\mathbf a}S$, as required.
+\end{proof}
+
+\begin{proposition}[The inverse zero map is recursive in height]\label{proposition:forestzerorecursion}
+Let $n\geq3$, $\maxd(u)\leq n$, and $w'\in T_n(u)$. For $Y\in\RC_{n-1}(w')$, put $t=\wof{\trm Y}$. There is a unique
+$$v=\tau_{u,n}(t)\in P_1(u)\qquad\text{with}\qquad t\in T_{n-1}(v).$$
+It satisfies $\ell(v)=\ell(t)$, and the inverse zero map has the recursive formula
+$$L_{u,w'}(Y)=\mathrm{row}_1(Q_1(v,u))\cup
+  \shup L_{v,t}(\trm Y).$$
+Here $L_{v,t}$ denotes the inverse zero map at height $n-1$; if $\maxd(v)<n-1$, it simply appends an empty bottom row. In particular, $\tau_{u,n}$ depends on the trimmed terminal permutation, not on its RC graph or its forest class.
+\end{proposition}
+\begin{proof}
+Let $R=L_{u,w'}(Y)$, which exists uniquely by Theorem~\ref{theorem:zero_bijection}, and set $v=\wof{\trm R}$. Lemma~\ref{L:trim} gives $v\in P_1(u)$ and $\trm R\in\RC(v,n-1)^0$. The identity
+$$\zeromap(\trm R)=\trm(\zeromap R)=\trm Y$$
+gives $t\in T_{n-1}(v)$, hence $\ell(t)=\ell(v)$, by Lemma~\ref{lemma:zerotransition}. Lemma~\ref{L:unique} gives uniqueness of $v$. The zero-map bijection at height $n-1$ identifies $\trm R=L_{v,t}(\trm Y)$, and Theorem~\ref{theorem:modactrc} identifies the first row of $R$ with $Q_1(v,u)$. These establish the formula.
+\end{proof}
+
+\begin{proposition}[The common-first-row height-induction step]\label{proposition:forestzerocommonrow}
+Suppose Lemma~\ref{lemma:forestzero} is known at height $n-1$ for every context and permutation. Fix $\maxd(u)=n$, $w'\in T_n(u)$, and context $\mathbf a$. If $Y,Z\in\RC_{n-1}(w')$ have the same first row and $Y\equiv_{\mathbf a}Z$, then
+$$L_{u,w'}(Y)\equiv_{\mathbf a}L_{u,w'}(Z).$$
+The endpoints need not be related by a single chute.
+\end{proposition}
+\begin{proof}
+The common first row and the common permutation $w'$ give $\wof{\trm Y}=\wof{\trm Z}=:t$ by the length-additive row factorization. Proposition~\ref{proposition:forestzerorecursion} gives the same trimmed source permutation $v=\tau_{u,n}(t)$ and the same lifted first row $Q_1(v,u)$.
+
+Delete the common reversed first-row continuation from the contextual forest equivalence, using the anti-monoid property on the identified occurrence labels and then canonical reinjectification. This gives
+$$\mathbf a\bigl(W(\trm Y)+1\bigr)\equiv_\forest
+  \mathbf a\bigl(W(\trm Z)+1\bigr).$$
+Translate all letters by $-1$. Apply the height-$n-1$ hypothesis to $L_{v,t}(\trm Y)$ and $L_{v,t}(\trm Z)$, with context $\mathbf a-1$. If $\maxd(v)<n-1$, the inverse maps merely append empty rows and no inductive hypothesis is needed. Translate back and append the common increasing word of $Q_1(v,u)$, using Lemma~\ref{lemma:forestconcat}(a), to obtain the required equivalence.
+\end{proof}
+
+\begin{remark}[The boundary coherence required to complete height induction]\label{remark:forestzerorowcoherence}
+The recursive formula isolates precisely the extra assertion needed when the terminal first rows differ. Fix $n\geq3$, $\maxd(u)=n$, $w'\in T_n(u)$, and a context $\mathbf a$. For a finite set $E$, write $\mathrm{inc}(E)$ for its elements in increasing order. Take $t,t'\in P_1(w')$, $T\in\RC_{n-2}(t)$ and $T'\in\RC_{n-2}(t')$, and put
+$$v=\tau_{u,n}(t),\qquad v'=\tau_{u,n}(t').$$
+The required boundary coherence is
+\begin{align*}
+&\mathbf a\bigl(W(T)+1\bigr)\mathrm{inc}(Q_1(t,w'))
+ \equiv_\forest
+ \mathbf a\bigl(W(T')+1\bigr)\mathrm{inc}(Q_1(t',w'))\\
+&\hspace{6mm}\Longrightarrow\
+\mathbf a\bigl(W(L_{v,t}(T))+1\bigr)\mathrm{inc}(Q_1(v,u))
+ \equiv_\forest
+ \mathbf a\bigl(W(L_{v',t'}(T'))+1\bigr)\mathrm{inc}(Q_1(v',u)).
+\end{align*}
+Every map appearing here is an inverse zero map at strictly smaller height. By Proposition~\ref{proposition:forestzerorecursion}, this assertion for all the indicated data is equivalent to the desired height-$n$ conclusion. Under the height-$n-1$ inductive hypothesis, its diagonal case $t=t'$ is proved by Proposition~\ref{proposition:forestzerocommonrow}; its off-diagonal case is not asserted as proved.
+
+The clip identities give an exact, but distinct, three-row consistency statement. For $1\leq i\leq n-3$ set
+$$B_i(R)=\clp^3(\trm^{i-1}R)=\trm^{i-1}(\clp^{i+2}R).$$
+For $R\in\RC(u,n)^0$, $\zeromap R=\clp^{n-1}R$, so Lemmas~\ref{lemma:clptrm} and~\ref{lemma:clpfunc} give
+$$B_i(\zeromap R)
+ =\trm^{i-1}\bigl(\clp^{i+2}(\clp^{n-1}R)\bigr)
+ =B_i(R).$$
+This proves locality of the normalized three-row extraction, without any forest hypothesis. It does not yet transport the contextual P-symbol: $B_i$ normalizes its rows by zero-map operations, rather than merely translating their raw reading word. Translation of a raw tail, including its context, is harmless, but replacement of that tail by its clipped representative needs a compatibility argument. Thus the displayed block identity is proved, whereas an implication from three-row forest compatibility to the off-diagonal row-completion implication above is not proved here.
+
+The forest part of the local calculation can also be stated exactly. For a first-row chute at $(1,j)$ put $x=j$ and write
+$$W(Y)=K M x D,\qquad W(Z)=K x M D.$$
+Here $K$ consists of the reversed words of rows $3$ and below followed by the row-$2$ letters below $x$; $M$ consists of the row-$2$ letters above $x$ followed by the row-$1$ letters below $x$; and $D$ is the remaining first-row continuation. The empty cells in the chute square ensure that no letter of $M$ equals $x$ or differs from it by $1$. Write $M=m_1\cdots m_r$. The two contextual words are forest equivalent if and only if, for every $1\leq q\leq r$, the labels of $m_q$ and $x$ have two strict separators in
+$$\operatorname{rl}\!\left(P\!\left(\overline{\mathbf a K m_1\cdots m_{q-1}}\right)\right),$$
+with their superscripts assigned in the full concatenation. Sufficiency follows by moving $x$ left through $M$ one letter at a time. For necessity, equal P-symbols make the two insertion orders linear extensions of the same ancestor poset. The node $x$ reverses its order with every node of $M$, so each is incomparable with $x$; the successive adjacent interchanges are therefore legal, and the rootlist criterion gives the stated separators. This is an exact test on the terminal side, not a proof that its separators survive inverse reconstruction.
+
+One cannot discard the row completions and directly apply the fixed-permutation inductive hypothesis in the off-diagonal case. For example, at height $4$, put
+$$R=\{(1,1),(1,4)\},\qquad S=\{(1,1),(2,3)\}.$$
+Both have permutation $u=21354$ and empty last row. Their zero-map images are respectively
+$$Y=\{(1,1),(1,3)\},\qquad Z=\{(1,1),(2,2)\},$$
+of permutation $w'=21435$, with $W(Y)=13\equiv_\forest31=W(Z)$. But $\trm Y$ is empty whereas $\trm Z=\{(1,2)\}$, and $\trm R$ is empty whereas $\trm S=\{(1,3)\}$. Thus the two smaller-height inverse maps have different source permutations, different terminal permutations, and different degrees. The equivalence is supplied by the compensating first-row words. This example does not contradict the desired conclusion ($W(R)=14\equiv_\forest41=W(S)$); it shows why the trim identity alone does not supply its inductive proof.
+\end{remark}
+
+\begin{proposition}[Complete classification of bounded two-row graphs]\label{proposition:foresttworowclassification}
+Let $D$ be a bounded height-two RC graph with permutation $w$, and write $\code(w)=(a,b,0,\ldots)$. Its rows are classified as follows.
+\begin{enumerate}
+\item If $a\geq b$, there is exactly one graph:
+$$D_1=\{1,\ldots,a\},\qquad D_2=\{1,\ldots,b\}.$$
+Here $w$ is dominant; the case $b=0<a$ is also $1$-Grassmannian.
+\item If $a<b$, the graphs are indexed by an integer $k$ with $a\leq k\leq b$, and their columns are
+$$D_1=\{1,\ldots,a\}\cup\{k+2,\ldots,b+1\},\qquad
+  D_2=\{1,\ldots,k\}.$$
+Here $w$ is $2$-Grassmannian.
+\end{enumerate}
+An interval with upper endpoint below its lower endpoint is empty. The cases overlap at the level of permutation terminology: when $a=b>0$, the dominant permutation is also $2$-Grassmannian. In particular, the bottom row always has no gaps, and any gaps in the first row have precisely the displayed form.
+\end{proposition}
+\begin{proof}
+Boundedness gives $\maxd(w)\leq2$, hence $\code(w)=(a,b,0,\ldots)$ and $\ell(w)=a+b$. As established in the proof of Lemma~\ref{lemma:forestzerobottom}, the last row is an initial segment, say $1,\ldots,k$. Its permutation $d_k=s_{k+1}\cdots s_2$ has one-line form $(1,k+2,2,\ldots,k+1)$ on these positions. Write $w=cd_k$ with lengths adding, where $c$ is the decreasing product of the distinct first-row letters. The permutation $c=wd_k^{-1}$ determines that row uniquely.
+
+For such a decreasing product, a maximal consecutive block of letters $r,\ldots,s$ sends $r$ to $s+1$, and sends every $j$ with $r<j\leq s+1$ to $j-1$; all other positions are fixed. In particular $c(j)$ is either $j$, $j-1$, or greater than $j$.
+
+Suppose first $a>b$. The Lehmer code gives $w(1)=a+1$, $w(2)=b+1$, and an increasing tail. Since $d_k^{-1}(1)=1$, $c(1)=a+1$, forcing the first-row block $1,\ldots,a$ and consequently $c(j)=j-1$ for $2\leq j\leq a+1$. Also $d_k^{-1}(k+2)=2$, so $c(k+2)=b+1$. If $k<a$, the forced block gives $k+1=b+1$, hence $k=b$. If $k\geq a$, then $c(k+2)=b+1<k+1$, impossible for a decreasing product. Thus $k=b$. The first row has $a+b-k=a$ crossings, so the forced block is the entire row. Its word followed by $d_b$ gives $w$, since it has the stated first two values and increasing tail; the inversion count $a+b$ verifies reducedness.
+
+Suppose now $a\leq b$. Then $w(1)=a+1$, $w(2)=b+2$, and the tail is increasing. The permutation fixes every position above $b+2$, so a reduced word uses no letter above $b+1$. In particular $k\leq b$. If $a>0$, $c(1)=a+1$ again forces the block $1,\ldots,a$. Were $k<a$, this would give $c(k+2)=k+1$, contradicting $c(k+2)=w(2)=b+2$. Hence $k\geq a$; for $a=0$ this inequality is automatic.
+
+For each $a\leq k\leq b$, take the two rows in (ii). Their first-row permutation consists of the blocks $1,\ldots,a$ and $k+2,\ldots,b+1$. Direct multiplication by $d_k$ gives first two values $a+1,b+2$ and an increasing tail, hence gives $w$. There are $(a+b-k)+k=a+b$ letters, so the word is reduced. Uniqueness of the first-row factor proves exhaustiveness. When $a=b$, only $k=a$ is possible, giving (i).
+
+Finally $(a,b)$ is a partition exactly when $a\geq b$, which is the dominant case. If $a<b$, then $w(1)<w(2)$ and the only descent is at $2$. If $b=0<a$, the only descent is at $1$.
+\end{proof}
+
+\begin{lemma}[The two-row tail and its zero map]\label{lemma:forestzerotworowtail}
+Let $R$ be a bounded RC graph of height $n\geq2$ with row $n$ empty, and let $k=\wtt_{n-1}(R)$. If $k>0$, the columns of row $n-1$ are exactly one of
+$$\{1,\ldots,k\}\qquad\text{or}\qquad\{2,\ldots,k+1\}.$$
+In both cases the last row of $\zeromap R$ consists of columns $1,\ldots,k$. On this tail the first case is unchanged, while the second case moves every crossing one column to the left. These assertions concern the complete zero map, irrespective of the rows above the tail.
+\end{lemma}
+\begin{proof}
+Repeated application of Lemma~\ref{L:trim} shows that $D=\trm^{n-2}R$ is a bounded height-two RC graph with empty second row. Let $E$ be its first-row columns. Its reading word is the elements of $E$ in decreasing order. The right descents of this permutation are the minima of the maximal consecutive blocks in $E$, as in the proof of Lemma~\ref{lemma:forestzerobottom}. Boundedness forces every such minimum to be at most $2$. There cannot be two distinct blocks: their minima would have to be $1$ and $2$, which are adjacent and hence in the same block. Thus a nonempty $E$ is one consecutive block starting at $1$ or $2$.
+
+If $E=\{1,\ldots,k\}$, the permutation has last descent $1$, so $\zeromap D$ just deletes the empty second row. If $E=\{2,\ldots,k+1\}$, its permutation on $k+2$ letters is
+$$d=(1,k+2,2,3,\ldots,k+1).$$
+The forced transition at $2$ has $s=k+2$ and the only possible index $i<2$ is $i=1$. Its terminal permutation is
+$$dt_{2,k+2}t_{1,2}=(k+1,1,2,\ldots,k,k+2),$$
+of last descent $1$. Its unique height-one RC graph is the row with columns $1,\ldots,k$, so this is $\zeromap D$ by Lemma~\ref{lemma:zerotransition}. Equivalently, the one downward bump changes the word $(k+1)k\cdots2$ into $k(k-1)\cdots1$: decrementing the first letter produces equal adjacent letters, and the exchange defect propagates to the next position until the last letter is decremented.
+
+Iterating Lemma~\ref{lemma:ztrim} gives
+$$\trm^{n-2}(\zeromap R)=\zeromap(\trm^{n-2}R)=\zeromap D.$$
+This proves the assertions about the last row of the complete zero-map image. The case $k=0$ gives empty rows on both sides.
+\end{proof}
+
+\begin{corollary}[Two-row forest equivalence is word equality]\label{corollary:foresttworowwords}
+For bounded height-two RC graphs $D,E$ and any context $\mathbf a$,
+$$D\equiv_{\mathbf a}E
+ \quad\Longleftrightarrow\quad
+\mathrm{word}(D)=\mathrm{word}(E).$$
+Consequently, for the bottom two-row tails of bounded height-$h$ graphs, contextual forest equivalence of the tails is equivalent to equality of their reading words, after the common row and letter translation.
+More explicitly, for a fixed two-row permutation of code $(a,b)$: the dominant case has only one graph; when $a=0<b$, all its $b+1$ graphs are equivalent for every context; when $0<a<b$, each graph is a separate forest class, and no context identifies two of them.
+\end{corollary}
+\begin{proof}
+Equal words have equal contextual P-symbols. Conversely, contextual forest equivalence implies the same permutation by projection onto the suffix occurrence labels. Lemma~\ref{lemma:forestcontextchute} connects $D,E$ through contextual-preserving chutes in two rows. Each is a bottom edge, so Lemma~\ref{lemma:forestzerobottom} says its reading word is unchanged. Hence the endpoint words are equal. For a bottom two-row tail, repeated trimming gives a bounded height-two RC graph by Lemma~\ref{L:trim}; translate the letters and the context together.
+
+For the explicit classes, use Proposition~\ref{proposition:foresttworowclassification}. If $a=0<b$, the reading word of every graph is $(b+1)b\cdots2$, regardless of $k$. If $0<a<b$, the reading word at parameter $k$ is
+$$((b+1)b\cdots(k+2))(a(a-1)\cdots1)((k+1)k\cdots2).$$
+The letter $1$ separates the first block from the last block, so its position determines $k$. Distinct $k$ therefore give distinct words and cannot be contextually equivalent.
+\end{proof}
+
+\begin{remark}[The bottom boundary of height induction]\label{remark:forestzerotailboundary}
+Thus the bottom boundary is completely rigid: a general bounded graph has a genuine bounded two-row tail, and a zero-map input has the two explicit tail forms of Lemma~\ref{lemma:forestzerotworowtail}. The unresolved boundary coherence of Remark~\ref{remark:forestzerorowcoherence} is not an ambiguity of the last two rows. It concerns how the smaller-height lifted forest is attached to the restored first-row nodes. Nor does forest equivalence of whole graphs by itself identify their bottom-tail occurrence labels: the same node can lie in different rows in two compatible realizations. For example, the equivalent terminal words $13$ and $31$ in that remark have bottom tails at height three equal to the empty graph and the single crossing $(1,2)$ after trimming. The tail rigidity must therefore be used with the row-completion data, rather than as an unsupported assertion that trimming preserves forest equivalence across different first rows.
+\end{remark}
+
+\begin{lemma}[Deleting the first crossing commutes with the zero map]\label{lemma:forestzeropop}
+For a nonempty reduced RC graph $R$, let $\operatorname{pop}R$ delete its first crossing in reading order, without changing its declared height. If $R$ is bounded of height $n\geq2$ with empty last row, then
+$$\zeromap(\operatorname{pop}R)=\operatorname{pop}(\zeromap R).$$
+The removed crossings lie in the same row, although their letters need not be equal.
+\end{lemma}
+\begin{proof}
+Write the reading word of $R$ as $a\mathbf r$. Deleting its first crossing gives the reduced word $\mathbf r$ of $s_a\wof R$. Multiplication on the left by $s_a$ interchanges the consecutive values $a,a+1$, which occur in inverted order because $a$ is a left descent. Comparisons at adjacent positions are unchanged except when those two values occupy adjacent positions, in which case their descent is removed. Thus no right descent is created, and $\operatorname{pop}R$ remains bounded at height $n$, with empty last row.
+
+Put $Y=\zeromap R$, $R^-=\operatorname{pop}R$, and $Y^-=\operatorname{pop}Y$. The same argument makes $Y^-$ bounded at height $n-1$. The row of the first crossing is the first nonzero entry of the weight vector, so it agrees for $R,Y$ by weight preservation. The Gao--Huang pop correspondence gives
+$$\Phi(R^-)=\nabla\Phi(R),\qquad \Phi(Y^-)=\nabla\Phi(Y).$$
+Proposition~\ref{proposition:zerotrunc} says that $\Phi(R)$ and $\Phi(Y)$ agree in rows $1,\ldots,n-1$. Lemma~\ref{lemma:poplocal} therefore gives the same agreement for $\Phi(R^-)$ and $\Phi(Y^-)$. Apply Proposition~\ref{proposition:zerotrunc} to $R^-$: $\Phi(\zeromap R^-)$ also agrees with these rows. Both $\zeromap R^-$ and $Y^-$ are bounded at height $n-1$, so bounded completion and injectivity of $\Phi$ identify them.
+\end{proof}
+
+\begin{proposition}[A common leading crossing gives degree induction]\label{proposition:forestzerodegree}
+Fix a height $n\geq2$ and assume zero-map forest compatibility for all source permutations of maximum descent at most $n$, for all contexts, on graphs with fewer than $d$ crossings. Let $R,S$ have $d$ crossings, common permutation $u$, height $n$, and empty last row. Put $Y=\zeromap R$ and $Y'=\zeromap S$. Suppose their reading words have common first letter $b$, and the reading words of $R,S$ have common first letter $a$. Then
+$$Y\equiv_{\mathbf c}Y'\quad\Longrightarrow\quad R\equiv_{\mathbf c}S$$
+for every context $\mathbf c$.
+\end{proposition}
+\begin{proof}
+The terminal reversed contextual words end with the same label $b^{[j]}$, where $j$ is its total multiplicity, including the context. Equality of their P-symbols allows deletion of this common last-inserted root, giving
+$$\operatorname{pop}Y\equiv_{\mathbf c}\operatorname{pop}Y'.$$
+The popped source graphs have common permutation $s_a u$ and $d-1$ crossings, remain bounded, and have empty last row by Lemma~\ref{lemma:forestzeropop}. That lemma identifies their zero-map images with the popped terminal graphs. Apply the degree hypothesis to conclude $\operatorname{pop}R\equiv_{\mathbf c}\operatorname{pop}S$. Append their common letter $a$ to the reversed words, using Lemma~\ref{lemma:forestconcat}(a), to obtain the result. If $\maxd(s_a u)<n$, the zero maps simply delete empty rows and this step needs no inductive hypothesis.
+\end{proof}
+
+\begin{lemma}[Leading-letter transport in a reversed transition]\label{lemma:forestzeroleadingstep}
+Let $\maxd(u)=n$, $s=\max\{j>n:u(j)<u(n)\}$, $\pi=ut_{ns}$, and $v=\pi t_{in}\gtrdot\pi$ with $i<n$. Set $\eta=\pi(n)$. If a graph $D\in\RC(v,n)^0$ has reading word beginning with $b$, then the reading word of its forward Monk reconstruction $m_{i,n}D\in\RC(u,n)^0$ begins with
+$$f_\eta(b)=
+\begin{cases}
+b+1,&b=\eta-1,\\
+b,&b\neq\eta-1.
+\end{cases}$$
+In particular, the reconstructed leading letter is independent of the remaining reduced word and the row sequence.
+\end{lemma}
+\begin{proof}
+For any permutation $\rho$ with increasing tail in positions $>n$, there is exactly one right-hand Monk cover $\rho t_{nq}\gtrdot\rho$: $q$ is the first position $>n$ with $\rho(q)>\rho(n)$. Earlier tail values are smaller than $\rho(n)$; later choices are blocked by $\rho(q)$. For $\rho=\pi$ this unique cover is $u$, at $q=s$.
+
+Write the input word as $b\mathbf r$. If its marked exchange occurrence is the first position, then deleting that position gives $\pi$, so $v=s_b\pi$. The root $(i,n)$ at that occurrence means $\pi(i)=b$ and $\pi(n)=b+1$. Thus this case occurs only when $b=\eta-1$.
+
+Otherwise the marked occurrence lies in $\mathbf r$. Deleting it gives a reduced word for $\bar\pi=s_b\pi$, so $b$ is a left descent of $\pi$. No right descent is created by left multiplication at a left descent, as proved in Lemma~\ref{lemma:forestzeropop}; hence $\bar\pi$ also has increasing tail past $n$. Its suffix Monk input has permutation $s_bv=\bar\pi t_{in}$ and the same marked right root $(i,n)$.
+
+Suppose $b\neq\eta-1$. Swapping the consecutive values $b,b+1$ leaves the position $s$ of the first tail value above the value in position $n$ unchanged. If $\eta=b$, the value in position $n$ increases by one, but the value $b+1$ was earlier than $n$ because $b$ is a left descent; thus no tail value crosses the threshold. If $\eta\notin\{b,b+1\}$, comparisons with the threshold do not change. Consequently the unique suffix Monk output is
+$$q=\bar\pi t_{ns}=s_bu.$$
+Also $b$ remains a left descent of $u$. The transition from $\pi$ to $u$ can affect the order of $b,b+1$ only if one is in position $n$ or $s$: the case $\eta=b$ moves $b$ later, and the case $\pi(s)=b$ moves $b$ to $n$ while $b+1$ is earlier than $n$; $\pi(s)=b+1$ is impossible for a left descent with increasing tail and $\eta\neq b$. All other cases leave that order unchanged. Thus prefixing $b$ to the reduced suffix output is reduced and gives $u$. No push reaches the first position, and the leading letter stays $b$.
+
+Now suppose $b=\eta-1$ and the initial mark is in the suffix. The left-descent condition places $b$ at a position $r>n$. In $\bar\pi$, position $n$ contains $b$ and position $r$ contains $b+1$. Its first larger tail value is therefore at $r$, and the unique suffix Monk output is $\bar\pi t_{nr}=\pi$. Prefixing $b$ is not reduced, so the other exchange defect is the first position. The next push changes this letter to $b+1=\eta$. In the initial-mark-first case, this is already the first push, with suffix permutation $\pi$.
+
+If $\eta$ is not a left descent of $\pi$, the word $\eta\mathbf r'$ with suffix permutation $\pi$ is reduced and terminates. Otherwise $\pi^{-1}(\eta+1)=i'<n$, since $\pi(n)=\eta$ and the tail is increasing. The other exchange defect is in the suffix, with right root $(i',n)$; the remaining computation is the suffix Monk move with base $s_\eta\pi$. This base has increasing tail, and its unique right cover is at the same $s$, because the value $\eta+1$ occurs before $n$, not in the tail. Its output is $s_\eta u$. The value $\eta$ is in position $s$ of $u$ while $\eta+1$ is before $n$, so $\eta$ is a left descent of $u$. Prefixing $\eta$ to this suffix output is therefore reduced and gives $u$; the first position is not pushed again. Both subcases yield the leading letter $b+1$.
+
+These suffix computations describe the actual marked bump trajectory: until a suffix Monk move terminates, deleting its current marked occurrence leaves a reduced suffix, so the corresponding whole word cannot terminate or acquire its other exchange defect at the first position. At suffix termination, either prefixing the leading letter is reduced, or the first position is precisely the other defect. The exchange property therefore justifies each decomposition used above.
+\end{proof}
+
+\begin{proposition}[The Gao--Huang suffix recursion in transition form]\label{proposition:forestGHSuffix}
+Use the notation of Lemma~\ref{lemma:forestzeroleadingstep}, and let $b$ be the first reading letter of $D$. Set $D^-=\operatorname{pop}D$. Define $H$ as follows:
+\begin{enumerate}
+\item If the exchange occurrence with right root $(i,n)$ is the first reading position, set $H=D^-$.
+\item Otherwise set $H=m_{i,n}D^-$, with base permutation $s_b\pi$.
+\end{enumerate}
+In the first case $b=\eta-1$ and $\wof H=\pi$. In the second case,
+$$\wof H=
+\begin{cases}
+\pi,&b=\eta-1,\\
+s_bu,&b\neq\eta-1.
+\end{cases}$$
+The complete suffix of the reconstructed graph is
+$$\operatorname{pop}(m_{i,n}D)=
+\begin{cases}
+m_{\pi^{-1}(\eta+1),\,n}H,
+ & b=\eta-1\ \text{and}\ \eta\in\operatorname{Des}_L(\pi),\\
+H,&\text{otherwise}.
+\end{cases}$$
+The correction map in the first line has base $s_\eta\pi$. Thus both the leading letter and the remaining graph have a precise recursion; deletion does not always commute with a single forward Monk map.
+\end{proposition}
+\begin{proof}
+This is the specialization of \cite[Lemma~4.8(1)]{GaoHuang2023}; its bumpless counterpart is \cite[Lemma~4.12]{GaoHuang2023}. Their $\nabla$ on ordinary pipe dreams is our $\operatorname{pop}$, whereas their $\operatorname{pop}$ records the deleted letter and row. Their two cases distinguish whether the marked crossing is the first reading occurrence.
+
+If that occurrence is first, their exceptional formula gives leading letter $b+1$ and applies a correction precisely when $b+1$ is a left descent of $\wof D^-=\pi$. Here $b+1=\eta$, $\pi^{-1}(\eta)=n$, and the correction has the displayed indices.
+
+Otherwise their generic formula first applies $m_{i,n}$ to $D^-$. The unique-right-cover calculation in Lemma~\ref{lemma:forestzeroleadingstep} gives the displayed permutation of $H$. For $b\neq\eta-1$, $b$ is not a left descent of $s_bu$, since $b$ is a left descent of $u$, so there is no correction. For $b=\eta-1$, the intermediate permutation is $\pi$, $b$ is a left descent of $\pi$, and their correction condition reduces exactly to $\eta\in\operatorname{Des}_L(\pi)$. Its indices are again $\pi^{-1}(\eta+1),n$. The increasing tail of $\pi$ puts $\pi^{-1}(\eta+1)<n$ in this case; left descent ensures that deleting this crossing gives $s_\eta\pi$. All the maps are consequently defined.
+\end{proof}
+
+\begin{example}[The correction can occur even for a terminal input]\label{example:forestGHCorrection}
+Take $n=3$, $\pi=1324$, $i=1$, $s=4$, so $v=\pi t_{13}=2314$ and $u=\pi t_{34}=1342$. Let
+$$D=\{(1,1),(2,1)\},\qquad \mathrm{word}(D)=12.$$
+Then $m_{1,3}D$ has word $23$ and crossings $(1,2),(2,2)$. The marked occurrence is first, so $H=D^-$ has word $2$, not the final suffix $3$. Since $\eta=\pi(3)=2$ is a left descent of $\pi$, the correction $m_{2,3}$ changes $H$ to that final suffix. Here $v$ already has maximum descent $2<3$. Thus terminality does not eliminate the correction. This is not a counterexample to forest compatibility; it identifies the extra operation that a forest-swap proof must track.
+\end{example}
+
+\begin{corollary}[The lifted leading letter is unique]\label{corollary:forestzeroleadingunique}
+Fix $\maxd(u)=n$ and $w'\in T_n(u)$. There is a function $F_{u,w'}$ on the possible terminal leading letters such that every $Y\in\RC_{n-1}(w')$ whose reading word starts with $b$ has lift $L_{u,w'}(Y)$ starting with $F_{u,w'}(b)$. For the unique transition path $u=u_0,\ldots,u_m=w'$, put $\eta_k=(u_{k-1}t_{n,s_k})(n)$. Then
+$$F_{u,w'}=f_{\eta_1}\circ f_{\eta_2}\circ\cdots\circ f_{\eta_m}.$$
+Consequently, under the degree hypothesis of Proposition~\ref{proposition:forestzerodegree}, contextual-equivalent terminal graphs with a common leading letter always have contextual-equivalent lifts; no separate hypothesis on the lifted leading letters is needed.
+\end{corollary}
+\begin{proof}
+Reverse the unique transition path and apply Lemma~\ref{lemma:forestzeroleadingstep} at each step. Empty-row padding does not affect the word. This gives the formula and the uniqueness assertion, after which Proposition~\ref{proposition:forestzerodegree} applies.
+\end{proof}
+
+\begin{remark}[The remaining root-moving issue]\label{remark:forestzerodegreeboundary}
+For an arbitrary context, pop commutation and Corollary~\ref{corollary:forestzeroleadingunique} justify degree induction whenever the terminal words have a common leading letter, even if their first rows differ. The empty-context case, including different leading letters, is settled by the component induction below. The analogous contextual root-moving assertion remains unproved. Proposition~\ref{proposition:forestGHSuffix} gives an exact recursion for both deletion orders; its correction Monk map must be retained, as Example~\ref{example:forestGHCorrection} shows. Proposition~\ref{proposition:forestleadingdiamond} below settles word synchronization for a legal adjacent leading swap by finding a separating parabolic cut. Its remaining contextual forest obligation is the one-sided support condition of Remark~\ref{remark:forestleadingsupport}; the Gao--Huang identities do not themselves assert that condition.
+\end{remark}
+
+\begin{lemma}[A high-supported forest has a row-supported representative]\label{lemma:foresthighrows}
+Let $D$ be a bounded RC graph of height $h$, and suppose
+$$\operatorname{supp}P\!\left(\overline{\mathrm{rev}(\mathrm{word}(D))}\right)
+  \subseteq[J+1,\infty)$$
+for an integer $0\leq J<h$. There is a bounded height-$h$ graph $\widehat D\equiv_\forest D$ whose crossings all lie in rows $J+1,\ldots,h$.
+\end{lemma}
+\begin{proof}
+Every node value belongs to its component support, so every reading letter of $D$ exceeds $J$. Its permutation has the form $1^J\times q$, where $\maxd(q)\leq h-J$. Translate its reversed word and its labeled forest by $-J$. The translated forest has positive support. Its forest polynomial is nonzero, and \cite[Proposition~5.10]{nadeau2024forest}, applied to this single labeled $\Omega$-class, expresses that polynomial as the sum of the compatible-sequence polynomials of the words in the class. Consequently some word in this class has a positive compatible sequence and hence gives an RC graph $E$. Forest swaps are Coxeter commutations, so $E$ has permutation $q$; they also preserve the order of equal-valued occurrences, so canonical injectification is retained.
+
+Every RC graph for $q$ has its crossings in rows at most $\maxd(q)$. Indeed, if $r$ is its last nonempty row, its decreasing row word is a length-additive suffix of the full reduced word and has a right descent at least $r$; that descent is also a right descent of $q$. Shift $E$ down by $J$ rows, so that all its reading letters increase by $J$, and pad with empty rows to height $h$. Translation equivariance gives the required graph $\widehat D$.
+\end{proof}
+
+\begin{proposition}[Forest compatibility of the zero map with empty context]\label{proposition:forestzeroempty}
+Let $n\geq1$, $\maxd(u)\leq n$, and $X,X'\in\RC(u,n)^0$. Then
+$$\zeromap(X)\equiv_\forest\zeromap(X')
+  \quad\Longrightarrow\quad X\equiv_\forest X'.$$
+\end{proposition}
+\begin{proof}
+We use strong induction on the common number $d$ of crossings, simultaneously for all heights and source permutations. The case $d=0$ is immediate. If $\maxd(u)<n$, the zero map only deletes the empty last row, so the assertion is immediate as well. Hence assume $\maxd(u)=n$. Put $Y=\zeromap X$, $Y'=\zeromap X'$, and let $P$ be their common labeled forest. Their common permutation is $w\in T_n(u)$.
+
+\emph{Case 1: $P$ has a single nonempty tree.} The last inserted node is a root, so both reversed reading words end with the unique root label of $P$. Thus $Y,Y'$ have the same leading reading letter $b$. Corollary~\ref{corollary:forestzeroleadingunique} gives the same leading source letter $a$ in $X,X'$. Delete these first crossings. Deleting the common last-inserted root gives $\operatorname{pop}Y\equiv_\forest\operatorname{pop}Y'$, and Lemma~\ref{lemma:forestzeropop} identifies these graphs with the zero-map images of $\operatorname{pop}X,\operatorname{pop}X'$. The latter have common permutation $s_a u$ and $d-1$ crossings. The induction hypothesis, followed by appending their common reversed-word continuation $a$, proves the assertion.
+
+\emph{Case 2: $P$ has at least two nonempty trees.} Let $J$ be one more than the right endpoint of its penultimate component. Its lower components are supported in $(-\infty,J-1]$ and its rightmost component in $[J+1,\infty)$. Project reading words, and their crossings, onto letters below and above $J$, denoting the projections by subscripts $-$ and $+$. Neither alphabet contains $J$. The two projected insertion processes are separated throughout: support only grows, and their final supports avoid $J$. Therefore
+$$Y_-\equiv_\forest Y'_-,\qquad Y_+\equiv_\forest Y'_+,$$
+and the latter common symbol is precisely the rightmost component of $P$. Both projections are nonempty and have fewer than $d$ crossings.
+
+The permutation $w$ preserves the cut $\{1,\ldots,J\}$. Moreover $J<n$: otherwise the increasing tail of $w$ above $n-1$, together with preservation of the cut, would force the entire block above $J$ to be the identity, contradicting the nonempty right projection.
+
+Every reversed transition from $w$ to $u$ preserves this cut and acts only on the right factor. To verify this, suppose its child $v$ preserves the cut and write $v=\pi t_{in}$, where $\pi t_{in}\gtrdot\pi$, $i<n$, and the parent is $\pi t_{ns}$. Since $n>J$, we have $v(n)>J$. The cover inequality gives $\pi(n)=v(i)>v(n)>J$, so preservation of the cut forces $i>J$. Both transpositions consequently act above $J$. The upward bump starts at a right-factor crossing; each increment remains above $J$, and its other exchange defect belongs to that factor, since the two parabolic factors have disjoint wire sets and the left factor remains reduced. Thus projecting commutes with every reversed word reconstruction. It follows that
+$$X_-=Y_-,\qquad X'_-=Y'_-,\qquad
+  \zeromap(X_+)=Y_+,\qquad \zeromap(X'_+)=Y'_+.$$
+Here $X_+,X'_+$ have the same source permutation $u_+$, of maximum descent $n$, and $Y_+,Y'_+$ have the same terminal permutation $w_+\in T_n(u_+)$. These are bounded graphs with their original declared heights: projecting to either parabolic factor keeps a reduced compatible pair, and the right factor carries the descent at $n$.
+
+Apply the induction hypothesis to $X_+,X'_+$ to obtain $X_+\equiv_\forest X'_+$. We must also show that their common forest support remains above $J$. By Lemma~\ref{lemma:foresthighrows}, choose $\widehat Y_+\equiv_\forest Y_+$ with all crossings in rows greater than $J$ and height $n-1$. Lift it using the zero-map bijection for the fixed pair $(u_+,w_+)$, obtaining $\widehat X_+$. Weight preservation leaves all rows at most $J$ empty. After trimming these empty rows, the positive compatible-forest correspondence gives support in $[1,\infty)$, so
+$$\operatorname{supp}P\!\left(\overline{\mathrm{rev}(\mathrm{word}(\widehat X_+))}\right)
+  \subseteq[J+1,\infty).$$
+The graphs $X_+,\widehat X_+$ have fewer than $d$ crossings, common source permutation, and forest-equivalent zero-map images. Another application of the induction hypothesis gives $X_+\equiv_\forest\widehat X_+$ and transfers this support bound to $X_+$ and $X'_+$.
+
+The lower source forests are the unchanged terminal lower forests, supported in $(-\infty,J-1]$. Their upper forests are now known to be supported in $[J+1,\infty)$. Hence every interleaving of the two projected reversed words inserts the same disjoint union of labeled forests: each insertion has its bracketing roots in its own factor, since neither process can occupy the vacant cut. Occurrence ranks are unchanged by projection onto disjoint value alphabets. The lower symbols agree and the upper symbols agree, so the full source symbols agree. This proves $X\equiv_\forest X'$ and completes the induction.
+\end{proof}
+
+\begin{lemma}[A legal leading swap has a separating parabolic cut]\label{lemma:forestleadingcut}
+Use the transition notation of Lemma~\ref{lemma:forestzeroleadingstep}. Suppose $\mathbf r=bc\mathbf t$ and $\mathbf r'=cb\mathbf t$ are reduced reading words for $v$, with $b<c$, and
+$$\mathbf a\,\mathrm{rev}(\mathbf r)\equiv_\forest
+  \mathbf a\,\mathrm{rev}(\mathbf r').$$
+Then there is an integer $J$ with $b<J<c$ and $J<n$ such that no letter of either full contextual word has value $J$, their common P-symbol splits into components supported in $(-\infty,J-1]$ and $[J+1,\infty)$, and $v,\pi,u$ all preserve $\{1,\ldots,J\}$. The transition indices satisfy $J<i<n<s$.
+\end{lemma}
+\begin{proof}
+In the common P-symbol the displayed occurrence of $b$ is a root, because it is inserted last in the first word, and the displayed occurrence of $c$ is a root, because it is inserted last in the second. They are distinct roots of distinct forest components. A node value lies in its component support, so the component rooted at $b$ precedes that rooted at $c$. Let $e$ be the right endpoint of the component rooted at $b$, and put $J=e+1$. The next component begins at least at $e+2$, giving $b<J<c$ and the stated support split. No node has value $J$, hence neither the context nor the reading suffix has a letter $J$.
+
+A reduced word avoiding $s_J$ represents a permutation preserving $\{1,\ldots,J\}$, so $v$ preserves this set. If $J\geq n$, the increasing tail of $v$ and preservation of this set force $v$ to fix every position above $J$. This contradicts $c>J$ being a left descent of $v$, which follows from the reduced word beginning with $c$. Thus $J<n$.
+
+Since $v$ preserves the cut and $n>J$, $v(n)>J$. Write $\eta=\pi(n)=v(i)$ and $z=\pi(i)=v(n)$. The cover criterion gives $\eta>z>J$, hence $i>J$. The transpositions at $(i,n)$ and $(n,s)$ therefore act wholly to the right of the cut. Consequently $\pi=vt_{in}$ and $u=\pi t_{ns}$ preserve it as well.
+\end{proof}
+
+\begin{proposition}[The leading-swap reconstruction diamond]\label{proposition:forestleadingdiamond}
+Under the hypotheses of Lemma~\ref{lemma:forestleadingcut}, the forward word reconstructions have the forms
+$$B_{i,n}(bc\mathbf t)=bC\widetilde{\mathbf t},\qquad
+  B_{i,n}(cb\mathbf t)=Cb\widetilde{\mathbf t},$$
+with the same suffix $\widetilde{\mathbf t}$ and
+$$C=c+\mathbf1_{\{c=\eta-1\}},\qquad \eta=\pi(n).$$
+In particular the smaller letter is unchanged, the numerical gap cannot shrink, and $b$ cannot be the exceptional letter $\eta-1$.
+\end{proposition}
+\begin{proof}
+Use the cut $J$ of Lemma~\ref{lemma:forestleadingcut}. The input word splits, by projection, into a reduced word on letters below $J$ and a reduced word on letters above $J$. These two parabolic factors commute and have disjoint wire sets. The marked right root $(i,n)$ belongs to the right-hand factor. Incrementing its letter still gives a letter above $J$. If a double crossing results, its unique other exchange defect also belongs to that factor: the left factor remains reduced, and the two sets of wires cannot meet. Induction on the pushes therefore shows that the whole bump acts only on the projected right-hand word.
+
+The two input words have identical projections on each side of $J$, so their right-hand bump trajectories are identical. The push algorithm preserves occurrence positions in the reading word; the lower-side letters are untouched. Restoring the two original shuffles thus gives the same suffix and just interchanges the displayed occurrences. Since $\eta>v(n)>J>b$, the letter $b$ is not $\eta-1$. Apply Lemma~\ref{lemma:forestzeroleadingstep} to the word beginning with $c$ to obtain the formula for $C$.
+\end{proof}
+
+\begin{remark}[A one-sided support condition would finish the leading diamond]\label{remark:forestleadingsupport}
+The graph and word synchronization in Proposition~\ref{proposition:forestleadingdiamond} is proved; contextual forest compatibility of its outputs still needs a support argument. Here is a precise sufficient condition. Project the context $\mathbf a$ onto letters above $J$, obtaining $\mathbf a_+$. Project $\mathbf r$ onto those letters, obtaining $\mathbf r_+$, and let $\widetilde{\mathbf r}_+$ be its right-hand reconstruction. It suffices to show
+$$\operatorname{supp}P\!\left(\overline{\mathbf a_+\,\mathrm{rev}(\widetilde{\mathbf r}_+)}\right)
+  \subseteq[J+1,\infty).$$
+For the input this inclusion follows from the component split in Lemma~\ref{lemma:forestleadingcut}. The lower projected contextual word is identical in the two outputs and has forest support in $(-\infty,J-1]$. If the displayed inclusion holds, the two projected insertion processes remain separated by the vacant position $J$: insertion supports only grow, so every intermediate support stays on its own side. Their interleavings therefore give the same disjoint union of labeled forests. This proves output equivalence, with canonical occurrence ranks unchanged by the projection and reinterleaving on disjoint value alphabets.
+
+The sufficient support condition is not asserted as proved. Increasing numerical labels alone is insufficient for arbitrary words: $\operatorname{supp}P(\overline{111})=\{1,2,3\}$, whereas $\operatorname{supp}P(\overline{121})=\{0,1,2\}$. Thus a valid support proof must use the reduced right-hand suffix and its restricted Monk trajectory, not generic coordinatewise monotonicity. The example has a nonreduced suffix and does not disprove the restricted condition.
+\end{remark}
 
 \begin{lemma}[Fiber constancy for forest classes]\label{lemma:forestfibers}
 Let $X$, $D_1$, $D_2$ be forest classes of heights $p+q$, $p$, $q$. Then $m_X(U,V)$ is constant for $(U,V)\in D_1\times D_2$.
@@ -3511,7 +3973,7 @@ For $T\in F(U)$ consider the sequence $T=T_h,T_{h-1},\ldots,T_p=U$ with $T_{k-1}
 The shape of this argument is forced by the following facts, each verified by computer.
 \begin{enumerate}
 \item The converse of Lemma~\ref{lemma:forestzero} is false: for $u=2143$ and $n=3$ the graphs $\{(1,1),(1,3)\}$ and $\{(1,1),(2,2)\}$ are forest equivalent, but their images under $\zeromap$ have permutations $312$ and $231$. This reflects $\forest_{(1,0,1)}(x_1,x_2,0)=\forest_{(2,0)}+\forest_{(1,1)}$: no map realizing $x_n=0$ on RC graphs can preserve forest classes.
-\item In Lemma~\ref{lemma:forestprefix} the prefix cannot be an arbitrary word with letters exceeding $p$: for $p=3$ the height-$3$ graphs with reading words $31$ and $13$ are forest equivalent, but $454\,13\not\equiv_\forest454\,31$. Computations indicate that the relevant property is the support of $P(\overline{\mathbf a})$: the conclusion holds for every word $\mathbf a$ with $\mathrm{supp}\,P(\overline{\mathbf a})\subseteq[p+1,\infty)$ and fails only for prefixes violating it, such as $454$, whose support is $\{3,4,5\}$. For $\mathbf a=\mathrm{rev}(\mathrm{word}(V))+p$ the support lies in $[p+1,\infty)$: the rows of $\shup^pV$ are a labeling of the forest of $P(\overline{\mathbf a})$ bounded by $\rho$ (Theorem~\ref{theorem:forestformula}(I)), so $\rho\geq p+1$ on the leftmost node of each tree, whose $\rho$ is its position.
+\item In Lemma~\ref{lemma:forestprefix} the prefix cannot be an arbitrary word with letters exceeding $p$: for $p=3$ the height-$3$ graphs with reading words $31$ and $13$ are forest equivalent, but $454\,13\not\equiv_\forest454\,31$. Lemma~\ref{lemma:foresthighsupport} proves the conclusion for every word $\mathbf a$ with $\mathrm{supp}\,P(\overline{\mathbf a})\subseteq[p+1,\infty)$. The counterexample $454$ violates this sufficient condition, since its support is $\{3,4,5\}$. For $\mathbf a=\mathrm{rev}(\mathrm{word}(V))+p$ the support condition holds by the compatible-forest labeling, as established in the proof of Lemma~\ref{lemma:forestprefix}.
 \item The bijection $\theta$ must match chains: the forest class of $R$ is not determined by $\wof R$, $[\clp^pR]$ and $[\trm^pR]$. For $w=1325746$, $p=2$, $q=3$, the graphs $\{(1,4),(2,1),(2,5),(5,1)\}$ and $\{(1,2),(2,3),(2,5),(5,1)\}$ have the same trim, forest equivalent clips, and forest codes $(0,1,0,1,2)$ and $(0,1,0,2,1)$. Fiber constancy nevertheless holds there, with $0<m_X(D_1,D_2)<N_p(u_v,u')$.
 \item Lemma~\ref{lemma:forestprefix} has been verified for all $U,U'$ with permutation in $S_7$ and all $V$ with permutation in $S_4$, and for $S_6$ with $V$ in $S_5$; Lemma~\ref{lemma:forestbump} for all permutations in $S_6$ and all words $\mathbf a$ with $|\mathbf a|\leq3$; and Lemma~\ref{lemma:forestfibers} for all $p+q\leq 5$ in $S_6$ and $(p,q)=(2,3)$ in $S_7$.
 \end{enumerate}
