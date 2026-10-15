@@ -185,6 +185,8 @@ where $\beta_{a,b}^c$ is the number of pairs $(A,B)$ of RC graphs such that $\co
 \end{theorem}
 Here $A*B$ is the \emph{lift product} (\S\ref{section:liftproduct}), a binary operation on RC graphs that we introduce for this rule.
 
+Our rule is not fundamentally different from the shuffle rule of Nadeau and Tewari for products of forest polynomials \cite[\S6]{nadeau2024forest}. It may be viewed as a combinatorialization of that rule: the shuffle rule groups shuffles by their forest-insertion invariant, while our additional RC-graph machinery makes it easier to identify which forest polynomials occur and expresses each coefficient as the cardinality of one explicitly described set. The degree-one case illustrates this advantage (Proposition~\ref{proposition:degreeone}).
+
 Under the Borel-type surjection $\mathbb{Z}[x_1,\ldots,x_n]\twoheadrightarrow \mathbb{Z}[x_1,\ldots,x_n]/\mathrm{QSym}_n^+\cong H^\bullet(\mathrm{QFl}_n)$ of \cite{bergeron2025qsymflag}, the forest polynomials descend to a basis of $H^\bullet(\mathrm{QFl}_n)$, so the same rule computes the cup product there (Corollary~\ref{corollary:cupforest}).
 
 The proof requires substantial machinery, which we develop in its own right because it is of independent interest. We define a \emph{squash product} $\boxtimes$ on RC graphs of a common height, which on full Grassmannian RC graphs of height $n$ coincides with the plactic monoid product on semistandard Young tableaux (Theorem~\ref{theorem:placticiso}), and which makes the free abelian group $\BRC_n$ on $n$-row RC graphs into a right module over the plactic algebra in a way that models the classical structure of $\mathbb{Z}[x_1,\ldots,x_n]$ as a free module over symmetric polynomials with Schubert basis (Theorem~\ref{theorem:schubmoduleiso}). Tensoring the height-stratified plactic algebras together gives rise to a \emph{multiplactic algebra} $\mathcal{M}_n$, which correctly models Schubert polynomial multiplication via a signed expansion (Theorem~\ref{theorem:schubproduct}). The lift product $*$ is then obtained by choosing a canonical elementary tensor representative of each RC graph in $\mathcal{M}_n$; it does \emph{not} model Schubert multiplication, but it is associative, weight-additive, and compatible with the quasi-crystal structure on RC graphs in the framework of Cain--Guilherme--Malheiro \cite{cain2023quasicrystals} (Proposition~\ref{proposition:quasiprod}), and this is exactly enough to transport the Nadeau--Tewari forest equivalence through the computation. As a byproduct, we recover the shuffle product rule for slide polynomials of Assaf--Searles \cite{assaf2017slide} (Theorem~\ref{theorem:slideproduct}).
@@ -261,7 +263,7 @@ where the sum is over $u$ with $\ell(uw^{-1})=\ell(w)-\ell(u)$ \cite{notes}.
 	
 	A \emph{bounded RC graph} is an RC graph $R$ together with a specified number of rows $n\geq \max\{i: (i,j)\in R\text{ for some }j\}$, with the added condition that $\maxd(\wof{R})\leq n$. The definition is as an ordered pair $(R, n)$, but it will be far more convenient to abuse notation and consider the number of rows a property of $R$ itself. To denote the number of rows, we define the \emph{height} of $R$ to be $\hr(R)=n$. A bounded RC graph has an associated weight vector $\wtt(R)\in\mathbb{Z}_{\geq 0}^n$ where $\wtt_i(R)$ is the number of elements in row $i$. We write $\RC_n$ for the set of bounded RC graphs of height $n$, $\RC_n(w)$ for those with $\wof{R}=w$, and $\RC_n^0$ (resp.\ $\RC(w,n)^0$) for the subset of $\RC_n$ (resp.\ $\RC_n(w)$) consisting of RC graphs whose last row is empty.
 	
-	To a bounded RC graph $R$ with $\hr(R)\geq 1$, we define the \emph{trim} operation $\trm(R)$ to be the bounded RC graph with height $\hr(R)-1$ and underlying set $\{(i-1, j-1): (i,j)\in R, i\geq 2\}$. We also define
+	To a bounded RC graph $R$ with $\hr(R)\geq 1$, we define the \emph{trim} operation $\trm(R)$ to be the bounded RC graph with height $\hr(R)-1$ and underlying set $\{(i-1, j): (i,j)\in R, i\geq 2\}$. We also define
 	$$\shup^m R=\{(i+m, j)| (i,j)\in R\}.$$
 	For $w$ with $\maxd(w)\leq n$, the \emph{bottom RC graph} $\mathrm{bottom}(w)\in\RC_n(w)$ is the RC graph $\{(i,j): 1\leq j\leq \code_i(w)\}$, whose weight is $\code(w)$.
 \end{definition}
@@ -341,7 +343,7 @@ Following Morse and Schilling \cite{morse2016crystal}, who defined an $A_{\ell-1
 
 The action is governed by a bracketing procedure on the column indices appearing in rows $i$ and $i+1$. Process the entries of row $i$ in decreasing order of column index: for each column $b$ in row $i$, pair it with the smallest column $a>b$ appearing in row $i+1$ that has not yet been paired in an earlier step; if no such $a$ exists, $b$ is left unpaired. Let $R_i(R)$ denote the set of unpaired column indices in row $i$, and $L_i(R)$ the set of unpaired column indices in row $i+1$.
 
-If $R_i(R)$ is nonempty, $f_i(R)$ is obtained by removing the smallest unpaired entry $b\in R_i(R)$ from row $i$ and inserting an entry into row $i+1$ at the largest column $b' < b$ such that $b'$ does not already appear in row $i+1$; if $R_i(R) = \emptyset$, $f_i(R) = \emptyset$ (undefined). Dually, if $L_i(R)$ is nonempty, $e_i(R)$ is obtained by removing the largest unpaired entry $a\in L_i(R)$ from row $i+1$ and inserting an entry into row $i$ at the smallest column $a' > a$ such that $a'$ does not already appear in row $i$; if $L_i(R) = \emptyset$, $e_i(R) = \emptyset$. We set $\varphi_i(R)=|R_i(R)|$ and $\varepsilon_i(R)=|L_i(R)|$, so that $\varphi_i(R)=\max\{k: f_i^k(R)\neq\emptyset\}$ and $\varepsilon_i(R)=\max\{k:e_i^k(R)\neq\emptyset\}$.
+If $R_i(R)$ is nonempty, $f_i(R)$ is obtained by removing the smallest unpaired entry $b\in R_i(R)$ from row $i$ and inserting an entry into row $i+1$ at the largest column $b' < b$ such that $b'$ does not already appear in row $i+1$; if $R_i(R) = \emptyset$ or no such $b'$ exists, $f_i(R) = \emptyset$ (undefined). Dually, if $L_i(R)$ is nonempty, $e_i(R)$ is obtained by removing the largest unpaired entry $a\in L_i(R)$ from row $i+1$ and inserting an entry into row $i$ at the smallest column $a' > a$ such that $a'$ does not already appear in row $i$; if $L_i(R) = \emptyset$ or no such $a'$ exists, $e_i(R) = \emptyset$. We set $\varphi_i(R)=|R_i(R)|$ and $\varepsilon_i(R)=|L_i(R)|$, so that $\varphi_i(R)=\max\{k: f_i^k(R)\neq\emptyset\}$ and $\varepsilon_i(R)=\max\{k:e_i^k(R)\neq\emptyset\}$.
 
 The \emph{weight} of $R$ as an element of the crystal is $\wtt(R)$, and $\wtt(f_i(R))=\wtt(R)-\alpha_i$ where $\alpha_i=\mathbf{e}_i-\mathbf{e}_{i+1}$. The operators $e_i,f_i$ preserve $\wof{R}$ but in general change the reading word. A \emph{highest weight} element is an RC graph $R$ with $e_i(R) = \emptyset$ for all $i$. Every $R\in \RC_n(w)$ corresponds to a unique highest weight element $\mathbb{Y}(R)$, which can be obtained by greedily applying available $e_i$ until none apply. The \emph{Demazure crystal} $\mathrm{Dem}(R)$ generated by $\mathbb{Y}(R)$ is the closure of $\{\mathbb{Y}(R)\}$ under the operators $\{f_i^k : i\geq 1, k\geq 0\}$ subject to the Demazure truncation rule of \cite{assaf2018demazure}; it is the connected component of $R$ in $\RC_n(w)$, and by \cite{assaf2018demazure} it is isomorphic to a Demazure crystal in the sense of Kashiwara \cite{kashiwara1993crystal} and Littelmann \cite{littelmann1995crystal}, with character a key polynomial.
 \end{definition}
@@ -359,11 +361,11 @@ With this convention, the plactic product $T_1\cdot T_2$ of semistandard tableau
 The crucial compatibility between the crystal structure and the map $\zeromap$ is the following.
 
 \begin{proposition}[{\cite[Corollary~\ref*{B-corollary:crystaliso}]{samuelbialgebra}}] \label{proposition:zerocrystal}
-For any bounded RC graph $R\in\RC_n^0$ and any $1\leq i\leq n-1$ we have 
+For any bounded RC graph $R\in\RC_n^0$ and any $1\leq i\leq n-2$ we have
 $$\zeromap(e_i(R)) = e_i(\zeromap(R))\qquad\text{and}\qquad \zeromap(f_i(R)) = f_i(\zeromap(R))$$
 whenever the left-hand sides are defined, and $e_i(\zeromap R)$ (resp.\ $f_i(\zeromap R)$) is defined if and only if $e_i(R)$ (resp.\ $f_i(R)$) is. Consequently $\zeromap$ restricts to an isomorphism of crystals
 $$\RC(w,n)^0\;\longrightarrow\;\bigsqcup_{w'\in T_n(w)}\RC_{n-1}(w'),$$
-and for any $p$ the map $\clp^p$ commutes with $e_i$ and $f_i$ for $1\leq i\leq p-1$.
+with operator indices $1\leq i\leq n-2$, and for any $p$ the map $\clp^p$ commutes with $e_i$ and $f_i$ for $1\leq i\leq p-1$.
 \end{proposition}
 
 The proof in the companion paper proceeds by showing that Edelman--Greene insertion identifies the crystal operators on RC graphs with tableau crystal operators on the recording tableau, and then invoking the theorem of Hamaker and Young \cite[Theorem~4.4]{hamaker2014relating} that Little bumps preserve the Edelman--Greene recording tableau.
@@ -424,6 +426,10 @@ For RC graphs $R_1$ and $R_2$, we say that $R_1\equiv_\forest R_2$ if $\mathrm{r
 
 The \emph{forest code} of a word $\mathbf r$ (resp.\ of an RC graph $R$) is $\code_\forest(\mathbf r) := \code(F(\overline{\mathbf r}))$ (resp.\ $\code_\forest(R):=\code(F(\overline{R}))$). It depends only on the $\equiv_\forest$-class, which we call a \emph{forest class}, and for RC graphs in $\RC_n$ we regard it as a weak composition of length $n$. We write $\mathcal{C}_\forest(a)$ for the set of forest classes of RC graphs in $\RC_n$ with forest code $a$.
 \end{definition}
+
+\begin{remark}[Compatible-sequence conventions]
+The compatible-sequence convention used for slide polynomials below is the reverse of the convention used in the forest-polynomial literature: weakly increasing sequences here correspond to weakly decreasing sequences there. Since the forest invariant is applied to the reversed reading word $\mathrm{rev}(\mathrm{word}(R))$, this reversal of word order compensates for the reversal of convention. Thus the forest-equivalence classes and their weight-generating functions are expressed consistently in the conventions of this paper; in particular, no additional change of weights is needed in Theorem~\ref{theorem:forestformula}.
+\end{remark}
 
 \begin{theorem}[{\cite[Theorem~1.4]{nadeau2024forest}}] \label{theorem:forestforest}
   Let $w\in S_\infty$. Then
@@ -1022,6 +1028,15 @@ $$\code(\wof{A})=\code_\forest(A)=a,\qquad \code(\wof{B})=\code_\forest(B)=b,$$
 so the count of pairs $(A'',B'')$ with $A''*B''=R$ is exactly as stated in the theorem.
 \end{proof}
 
+\begin{proposition}\label{proposition:degreeone}
+Let $e_n=(0,\ldots,0,1)$ be the degree-one weak composition of length $n$. For every weak composition $a$ of length $n$, the product
+$$\forest_a\,\forest_{e_n}=\sum_c\beta_{a,e_n}^c\,\forest_c$$
+is multiplicity-free: $\beta_{a,e_n}^c\in\{0,1\}$ for every $c$.
+\end{proposition}
+\begin{proof}
+The forest class indexing $e_n$ consists of the single-letter word $n$, and $\forest_{e_n}=\sch_{s_n}=x_1+\cdots+x_n$. In the Nadeau--Tewari shuffle rule, the product is obtained by shuffling each word in the union of forest classes of code $a$ with this single letter, tagged so that its alphabet is disjoint from that of the first word. Each resulting shuffle word contains the distinguished tagged letter exactly once; deleting it recovers the unique input word and hence the unique shuffle occurrence. Thus no word occurs more than once in the shuffle multiset. By the stability of that multiset under forest equivalence \cite[Theorem~6.3]{nadeau2024forest}, every forest class that occurs is present in its entirety and with multiplicity one. Regrouping by forest classes therefore gives coefficients only $0$ or $1$.
+\end{proof}
+
 \providecommand{\pd}[3]{%
   \begin{tikzpicture}[baseline=(current bounding box.center),scale=0.4,thick,line cap=round]
     \foreach \i in {1,...,#1} {%
@@ -1049,22 +1064,22 @@ By the theorem, this coefficient $\beta_{(0,2,3),(2,0,2)}^{(4,3,2)}$ is the numb
 \smallskip
 \noindent\emph{First pair.}\quad Drawing RC graphs as pipe dreams (rows indexed from the top, columns from the left, with crossings shown as $+$ tiles and elbows as bumped arcs), the first pair is
 $$A_1 \;=\; \pd{3}{4}{1/2,1/3,2/4,3/1,3/2}, \qquad B_1 \;=\; \pd{3}{3}{1/1,1/2,2/2,2/3},$$
-corresponding to the row tuples $A_1=((3,2),(5,),(4,3))$ and $B_1=((2,1),(4,3),())$, with weights $\wtt(A_1)=(2,1,2)$ and $\wtt(B_1)=(2,2,0)$. Here, in the schubmult row-tuple notation, an entry $s$ in row $r$ records a crossing in column $s-r+1$, and the entries within each row are listed right-to-left (largest column first). The multiplactic lifts of $A_1$ and $B_1$ in $\grass_3\otimes\grass_4\otimes\grass_5$ and $\grass_1\otimes\grass_3\otimes\grass_4$ (respectively) are
+that is, $A_1=\{(1,2),(1,3),(2,4),(3,1),(3,2)\}$ and $B_1=\{(1,1),(1,2),(2,2),(2,3)\}$ as sets of ordered pairs $(\text{row},\text{column})$, with weights $\wtt(A_1)=(2,1,2)$ and $\wtt(B_1)=(2,2,0)$. The multiplactic lifts of $A_1$ and $B_1$ in $\grass_3\otimes\grass_4\otimes\grass_5$ and $\grass_1\otimes\grass_3\otimes\grass_4$ (respectively) are
 $$A_1 \;\longmapsto\; \pd{3}{2}{1/2,3/1}\;\otimes\;\pd{4}{3}{1/3,3/2}\;\otimes\;\pd{5}{4}{2/4},$$
 $$B_1 \;\longmapsto\; \pd{1}{1}{1/1}\;\otimes\;\pd{3}{2}{1/2,2/2}\;\otimes\;\pd{4}{3}{2/3},$$
 encoding $A_1$ and $B_1$ as elementary tensors in the multiplactic algebra $\mathcal{M}_n$. Their lift product is
 $$A_1 * B_1 \;=\; \pd{3}{5}{1/1,1/2,1/3,1/4,2/2,2/4,2/5,3/1,3/2}\,, \qquad \wtt(A_1*B_1)=(4,3,2),$$
-the forest RC graph with row tuples $((4,3,2,1),(6,5,3),(4,3))$.
+the forest RC graph $\{(1,1),(1,2),(1,3),(1,4),(2,2),(2,4),(2,5),(3,1),(3,2)\}$.
 
 \smallskip
 \noindent\emph{Second pair.}\quad The second pair is
 $$A_2 \;=\; \pd{3}{4}{1/2,1/3,2/2,2/3,2/4}, \qquad B_2 \;=\; \pd{3}{2}{1/1,1/2,3/1,3/2},$$
-with $A_2=((3,2),(5,4,3),())$ and $B_2=((2,1),(),(4,3))$, weights $\wtt(A_2)=(2,3,0)$ and $\wtt(B_2)=(2,0,2)$. Their multiplactic lifts are
+that is, $A_2=\{(1,2),(1,3),(2,2),(2,3),(2,4)\}$ and $B_2=\{(1,1),(1,2),(3,1),(3,2)\}$, with weights $\wtt(A_2)=(2,3,0)$ and $\wtt(B_2)=(2,0,2)$. Their multiplactic lifts are
 $$A_2 \;\longmapsto\; \pd{3}{2}{1/2,2/2}\;\otimes\;\pd{4}{3}{1/3,2/3}\;\otimes\;\pd{5}{4}{2/4},$$
 $$B_2 \;\longmapsto\; \pd{1}{1}{1/1}\;\otimes\;\pd{3}{2}{1/2,3/1}\;\otimes\;\pd{4}{2}{3/2}.$$
 Their lift product is
 $$A_2 * B_2 \;=\; \pd{3}{4}{1/1,1/2,1/3,1/4,2/1,2/2,2/4,3/1,3/2}\,, \qquad \wtt(A_2*B_2)=(4,3,2),$$
-the forest RC graph with row tuples $((4,3,2,1),(5,3,2),(4,3))$.
+the forest RC graph $\{(1,1),(1,2),(1,3),(1,4),(2,1),(2,2),(2,4),(3,1),(3,2)\}$.
 
 \smallskip
 Both forest products are forest RC graphs of weight $(4,3,2)$, and one verifies that no other pair $(A,B)$ with the prescribed forest codes produces a forest RC graph of this weight. Hence
