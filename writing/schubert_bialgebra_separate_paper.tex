@@ -1,4 +1,5 @@
 \documentclass{amsart}
+\pdfoutput=1
 %\usepackage[backend=bibtex8,style=numeric,giveninits=true]{biblatex}
 %\addbibresource{formschub.bib}
 \usepackage{algorithm}
@@ -207,6 +208,9 @@ In a similar vein, the dual slide basis $\{\slide_a^*\}$ of $\dcoma$ is defined 
 
 These formulas bear a striking similarity to each other, which is no coincidence: they are all consequences of the same underlying machinery, and in particular of the same maps $\clp^p$ and $\trm^p$ on RC graphs. A general ``dual LR rule factory'' is given in Theorem \ref{theorem:general_lr_template}, which gives a recipe for producing such rules whenever one has a family of polynomials with a positive combinatorial formula in terms of RC graphs that is compatible with the maps $\clp^p$ and $\trm^p$. The dual Schubert, dual key, dual forest, and dual slide bases all fit into this framework, and thus yield the four rules above as special cases.
 
+\subsection*{Relation to the forest Littlewood--Richardson rule}
+
+The first version of this work, arXiv:2606.23876v1, also contained a Littlewood--Richardson rule for the \emph{product} of forest polynomials themselves, that is, for the structure constants $\beta_{a,b}^c$ in $\forest_a\forest_b=\sum_c\beta_{a,b}^c\forest_c$. That result has been split off into the companion paper \cite{samuelforest}, which will appear as a revised version of that arXiv submission containing only the forest rule. The companion paper builds on the row-decomposition maps $\clp^p$, $\trm^p$, and $\zeromap$ and on the crystal and forest-equivalence properties of $\zeromap$ established here; it restates the definitions and results it needs from the present paper with precise references, and the present paper does not depend on anything proved there.
 
 \subsection*{Further directions}
 
@@ -3851,7 +3855,7 @@ For the reader's convenience we collect here, in one place, the principal symbol
 \item[$I_\sim$] The two-sided ideal $\mathrm{span}_{\mathbb{Z}}\{R_1-R_2:R_1\sim R_2\}\subseteq\BRC$ (Theorem~\ref{theorem:general_lr_template}).
 \item[$J$, $\lambda$] Index set, resp.\ labeling map $(\RC/\!\sim)\to J$ in the general LR template (Theorem~\ref{theorem:general_lr_template}).
 \item[$E_\lambda$] The class sum $\sum_{[R]:\,\lambda([R])=\lambda}[R]\in\BRC/I_\sim$ (Theorem~\ref{theorem:general_lr_template}).
-\item[$\mathfrak{B}_\lambda^*$, $b_{\mu,\nu}^\lambda$] Image $\alpha(E_\lambda)\in\dcoma$ and the corresponding structure constants in Theorem~\ref{theorem:general_lr_template}.
+\item[$B_\lambda^*$, $b_{\mu,\nu}^\lambda$] Image $\alpha(E_\lambda)\in\dcoma$ and the corresponding structure constants in Theorem~\ref{theorem:general_lr_template}.
 \end{description}
 
 \subsubsection*{Quasisymmetric flag variety (\S\ref{subsection:qflbranch})}

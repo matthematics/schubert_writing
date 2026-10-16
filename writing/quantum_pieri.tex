@@ -219,9 +219,85 @@ where $d=(d_1,\ldots,d_{n-1})$ is a weak composition and $q^d=q_1^{d_1}\cdots q_
 
 
 For $d=(0,\ldots,0)$, this is the ordinary triple Schubert calculus structure constant, and it was proved in \cite{gao2025grahampositivitytripleschubert} that these have the positivity property that they are polynomials in the differences $y_i-z_j$ with nonnegative integer coefficients. We will refer to this as \emph{triple Schubert positivity}. We have the following conjecture:
-\begin{conjecture}
-For all $u,v,w$ and $d$, the structure constants $c_{u,v}^{w,d}(y;z)$ exhibit triple Schubert positivity.
-\end{conjecture}
+\begin{theorem}[Triple quantum Schubert positivity]
+For all $u,v,w$ and $d$, the structure constants $c_{u,v}^{w,d}(y;z)$ are polynomials in the differences $y_i-z_j$ with nonnegative integer coefficients.
+\end{theorem}
+\begin{proof}
+The proof below is reproduced, with notation adapted to this paper, from the manuscript of Tongren Xiao and Yihua Yue \cite{xiaoyuequantumpositivity}, with their permission. Their product is written with the output basis carrying the parameters of the second factor. Commutativity of multiplication therefore identifies their coefficient $C_{v,u}^{w,d}(z,y)$ with $c_{u,v}^{w,d}(y;z)$. It is enough to prove that $C_{u,v}^{w,d}(y,t)$ is in $\mathbb{Z}_{\geq 0}[t_i-y_j]$.
+
+Fix $u,v,w\in S_n$, increasing $n$ if necessary so that all permutations and parameters occurring in the coefficient under consideration are included. Write
+$\mathbf a=(t_1,\ldots,t_n,y_1,\ldots,y_n)$, and let $\tau\in S_{2n}$ interchange the two blocks, so that $\tau\mathbf a=(y_1,\ldots,y_n,t_1,\ldots,t_n)$. Regard the product expansion in $S_{2n}$:
+\begin{equation}\label{eq:xiaoyue-product}
+\qsch_u(x;\tau\mathbf a)\qsch_v(x;\mathbf a)
+=\sum_{w\in S_{2n}}C_{u,v}^{w,\tau}(\mathbf a;q)\qsch_w(x;\mathbf a).
+\end{equation}
+We recall the geometric interpretation of these coefficients. Let $e_i(x)$ and $E_i(x,q)$ denote, respectively, the elementary symmetric polynomials and their quantum analogues in $2n$ variables, and set
+\[
+J_{\mathbf a}^{2n}=\langle e_i(x)-e_i(\mathbf a):1\leq i\leq 2n\rangle,\qquad
+J_{q\mathbf a}^{2n}=\langle E_i(x,q)-e_i(\mathbf a):1\leq i\leq 2n\rangle.
+\]
+The Fomin--Gelfand--Postnikov deformation map, extended $\mathbb Z[\mathbf a]$-linearly, induces
+\[
+\bar\theta:\mathbb Z[x,\mathbf a]/J_{\mathbf a}^{2n}
+\longrightarrow \mathbb Z[x,\mathbf a,q]/J_{q\mathbf a}^{2n}.
+\]
+The classical Borel presentation identifies the source with $H_T^*(X)$, and Kim's presentation identifies the target with $QH_T^*(X)$, where $X=\mathrm{Fl}_{2n}$. Under the Lam--Shimozono identification of quantum double Schubert polynomials with quantum Schubert classes, \eqref{eq:xiaoyue-product} is the quantum equivariant Littlewood--Richardson expansion for the classes obtained by applying $\bar\theta$ to the first factor. Consequently,
+\begin{equation}\label{eq:xiaoyue-eqlr}
+C_{u,v}^{w,\tau}(\mathbf a;q)
+=\sum_{d\geq0}q^d(\pi_{M_d})^T_*
+\left(
+\operatorname{ev}_1^*[\tau X_u]^T\,
+\operatorname{ev}_2^*[X_v]^T\,
+\operatorname{ev}_3^*[Y_w]^T
+\right).
+\end{equation}
+Here $M_d=\overline M_{0,3}(X,d)$, $\operatorname{ev}_i:M_d\to X$ are the evaluation maps, $\pi_{M_d}:M_d\to\mathrm{pt}$ is the structure map, and $X_r$ and $Y_r$ denote the Schubert and opposite Schubert varieties indexed by $r$.
+
+For each effective degree $d$, put
+\[
+F=(\operatorname{ev}_1,\operatorname{ev}_2):M_d\longrightarrow X\times X,\qquad
+I_{u,v}^d=F^{-1}(\tau X_u\times X_v),\qquad
+\Gamma_{u,v}^d=(\operatorname{ev}_3)_*[I_{u,v}^d].
+\]
+The incidence scheme $I_{u,v}^d$ is reduced and locally irreducible, and all its irreducible components have codimension $\ell(u)+\ell(v)$. Indeed, the moduli space $M_d$ is irreducible by Thomsen's theorem, and Mihalcea's incidence lemma applies after diagonal translation by $a_0=1\times w_0\in S_{2n}$, where $w_0$ is the longest element in the second block: it identifies $\tau X_u\times X_v$ with $w_0^{(2n)}X_u\times X_v$. The codimension is therefore
+\[
+\operatorname{codim}_X(w_0^{(2n)}X_u)+\ell(v)=\ell(u)+\ell(v).
+\]
+By the incidence formula of Mihalcea, this gives
+\begin{equation}\label{eq:xiaoyue-incidence}
+\operatorname{ev}_1^*[\tau X_u]^T\,
+\operatorname{ev}_2^*[X_v]^T\cap[M_d]^T=[I_{u,v}^d]_T.
+\end{equation}
+
+The cycle $\Gamma_{u,v}^d$ is effective and $B^-(\tau)$-invariant. To see invariance, write $N^-(\tau)=N^-\cap\tau N^-\tau^{-1}$ and $B^-(\tau)=TN^-(\tau)$. The varieties $X_v$ and $\tau X_u$ are stable under the corresponding actions, so their product, its inverse image under the equivariant map $F$, and its proper push-forward under $\operatorname{ev}_3$ are $B^-(\tau)$-invariant. Effectivity follows from the reducedness of $I_{u,v}^d$.
+
+There is a unique expansion
+\[
+[\Gamma_{u,v}^d]_T=\sum_{r\in S_{2n}}p_{u,v}^{r,d}(\mathbf a)[X_r]_T
+\quad\text{in }H_T^*(X).
+\]
+By the Graham--positivity theorem for $B^-(\tau)$-invariant effective cycles,
+\[
+p_{u,v}^{r,d}(\mathbf a)\in
+\mathbb Z_{\geq0}[t_i-y_j:1\leq i,j\leq n].
+\]
+Finally, by equivariant Poincaré duality, \eqref{eq:xiaoyue-incidence}, and the projection formula,
+\[
+(\operatorname{ev}_3)^T_*
+\left(\operatorname{ev}_1^*[\tau X_u]^T
+\operatorname{ev}_2^*[X_v]^T\right)
+=[\Gamma_{u,v}^d]_T,
+\]
+and hence the degree-$d$ summand of \eqref{eq:xiaoyue-eqlr} is
+\[
+(\pi_X)^T_*\bigl([\Gamma_{u,v}^d]_T[Y_w]^T\bigr)
+=\sum_{r\in S_{2n}}p_{u,v}^{r,d}(\mathbf a)
+(\pi_X)^T_*\bigl([X_r]^T[Y_w]^T\bigr)
+=p_{u,v}^{w,d}(\mathbf a).
+\]
+Thus every coefficient $C_{u,v}^{w,d}(y,t)$ is in
+$\mathbb Z_{\geq0}[t_i-y_j]$. Replacing $(u,v,y,t)$ by $(v,u,z,y)$ proves the asserted positivity of $c_{u,v}^{w,d}(y;z)$.
+\end{proof}
 
 \begin{example} \label{example:cppfpos}
 	We compute the product $\qsch_{15423}(x;y)\qsch_{1432}(x;z)$:
@@ -392,6 +468,8 @@ then each simple reflection in this word cancels a corresponding simple reflecti
 
 If $u\tom{k} w$, define 
 $$\fx_{k}(u,w)=\{u(i)\mid i\leq k\mbox{ and }u(i)=w(i)\}$$
+and
+$$n_k(u,w)=k-\lvert\fx_k(u,w)\rvert.$$
 Also, we define $q_k(u,w)$ recursively. If $u=w$, define $q_k(u,w)=1$. If we have defined $q_k(u,w')$ with $w'=t_{a_1b_1}\cdots t_{a_{p-1}b_{p-1}}$, suppose $\ell(w't_{a_pb_p})=\ell(w')+1$. Then define
 $$q_k(u,w)=q_k(u,w')$$
 If instead $\ell(w't_{a_pb_p})=\ell(w')-2(b_p-a_p)+1$, define
@@ -432,7 +510,7 @@ $$\qsch_u(x;y)\qelem_{k,k}(x;z)=\sum_{u\tom{k} w}q_k(u,w)\wte(y_{\fx_{k}(u,w)};z
 \newcommand{\Tom}[1]{\xRightarrow{#1}}
 \newcommand{\dom}{\mu}
 
-\section{Efficient multiplication of (quantum) double Schubert polynomials}
+\section{Algorithms for multiplying (quantum) double Schubert polynomials}
 
 \begin{definition}[$\code$, (strict) dominant permutations, $\theta$, $\dom$, $\thop$, $\mom$, medium theta $\medtheta$, $\medperm$] \label{def:codetheta}
 We say that a permutation $\mu$ is \emph{dominant} if $\code_i(\mu)\geq \code_{i+1}(\mu)$ for all $i$. A permutation $\mu$ is said to be \emph{strict dominant} if $\mu$ is dominant and whenever $\code_i(\mu)\neq 0$ we have $\code_i(\mu)>\code_{i+1}(\mu)$. For a permutation $v\in S_\infty$, we define a dominant permutation $\dom(v)$ recursively as follows. If $v$ is already dominant, define $\mu(v)=v$. Otherwise, let $i$ be the maximal index such that $\code_i(v)<\code_{i+1}(v)$, and define
@@ -468,7 +546,7 @@ $$\qsch_v(x;z)=\sum_{(v_0,\ldots,v_k)}\prod_{i=1}^k (-1)^{\sigma_i(v_{i-1},v_i)}
 Where $v_{i-1}\xRightarrow{i} v_i$ for all $i$, $v_0=1$, and $v_k=v\mom(v^{-1})$.
 \end{theorem}
 
-Coupled with the Pieri formulas, these formulas give a relatively efficient method for computing products of (quantum) double Schubert polynomials. We describe the resulting algorithm precisely and record its asymptotic complexity in the classical (non-quantum) case. To do so we build it up from its innermost primitive, the elementary (vertical-strip) Pieri step that generates the $u$-side covers at each layer.
+Coupled with the Pieri formulas, these formulas give an algorithm for computing products of (quantum) double Schubert polynomials. We describe its classical form by building it from two ingredients: the elementary Pieri step that generates the $u$-side covers, and the signed path expansion on the $v$-side.
 
 \begin{definition}[$k$-strip cover, admissible $k$-chain, the $(p,k)$-Pieri problem] \label{def:pieriproblem}
 Let $w\in S_n$, let $1\leq k<n$, and let $\beta\in\{1,\ldots,n\}\cup\{\infty\}$. A \emph{$k$-strip cover of $(w,\beta)$} is a transposition $t_{ab}$ of positions $a,b$ with $1\leq a\leq k<b\leq n$ such that
@@ -500,6 +578,7 @@ For each $t$, distinct admissible $k$-chains from $u$ of length $t$ have distinc
 The strictly decreasing bounds $\beta_0>\beta_1>\cdots$ force the values moved leftward across position $k$ to be strictly decreasing, which is exactly the condition making the $e_t$-Pieri expansion multiplicity-free; see \cite{bergeron2002skew}. Reconstructing the chain from its endpoint by peeling off these moves in decreasing order of value shows the map is injective, hence bijective onto the Pieri support.
 \end{proof}
 
+\iffalse
 \begin{proposition}[Complexity of $\textbf{\textsc{pieri}}$] \label{prop:piericomplexity}
 Let $M:=|T|$ be the number of admissible $k$-chains from $u$ of length at most $p$ that $\textbf{\textsc{pieri}}(u,p,k)$ returns. The algorithm runs in
 $$O\!\left(k\,(n-k)\,n\cdot M\right)$$
@@ -509,6 +588,7 @@ $$M\;\leq\;\#\{\,w\in S_n\mid w\geq u,\ \ell(w)\leq \ell(u)+p\,\}.$$
 \begin{proof}
 Processing one frontier node $(w,\beta)$ costs $O(k)$ to build $A$, and then iterates over the $n-k$ choices of $b$ and the at most $k$ elements of $A$; for each pair the Bruhat-cover test and the transposition each scan $O(n)$ positions. Thus a node costs $O\!\big(k+(n-k)\,k\,n\big)=O\!\big(k\,(n-k)\,n\big)$. By Lemma~\ref{lemma:pierimultfree} the number of nodes ever placed on a frontier equals $\sum_{t=0}^{p-1}N_t$, where $N_t$ is the number of length-$t$ chains; since $\sum_{t=0}^{p-1}N_t\leq\sum_{t=0}^{p}N_t=M$, the total cost is $O\!\big(k\,(n-k)\,n\cdot M\big)$. The bound on $M$ holds because every endpoint satisfies $w\geq u$ and $\ell(w)\leq\ell(u)+p$.
 \end{proof}
+\fi
 
 We now describe the $v$-side primitive. Its starting point is the structure of a \emph{dominant} double Schubert polynomial. If $\mu$ is dominant with $\code(\mu)=(\lambda_1,\ldots,\lambda_m)$, then $\sch_\mu(x;z)$ factors as a product of factorial elementary symmetric polynomials of maximal degree, one per column of the shape,
 $$\sch_\mu(x;z)=\prod_{i=1}^{m}E_{\lambda_i,\,\lambda_i}(x;z^{(i)}),$$
@@ -534,7 +614,7 @@ The algorithm returns a signed list $D$ of triples $(w',t,s)$, one for each leng
 \end{enumerate}
 \end{method}
 
-Applied without the edge $\mu$, the signed descending expansion produces many extraneous terms that ultimately cancel. The edge is exactly the bound that discards them: only endpoints beneath $\mu$ are retained in $D$. In the assembled $v$-side (Method~\ref{method:vpaths} below) only these retained labels seed the next column, so the edge prevents the number of live paths from blowing up across columns.
+Applied without the edge $\mu$, the signed descending expansion produces many extraneous terms that ultimately cancel. The edge is exactly the bound that discards them: only endpoints beneath $\mu$ are retained in $D$. In the assembled $v$-side (Method~\ref{method:vpaths} below), only these retained labels seed the next column, so each stage passes forward only labels compatible with the remaining shape.
 
 \begin{method}[$\textbf{\textsc{vpaths}}(v)$, the $v$-side path dictionaries] \label{method:vpaths}
 Let $\theta:=\theta(v^{-1})$ with nonzero parts in columns $1,\ldots,L$, and let $vmu:=v\,\dom(v^{-1})$. Processing columns from $i=L$ down to $i=1$, maintain for each column a set of live labels (initialized at column $L$ to the single label $vmu$). At column $i$, with $k=i$ and edge $\mu_i:=\dom$ of the shape truncated below column $i$, call $\textbf{\textsc{kdown}}(w,\mu_i,\theta_i,k)$ for each live label $w$; record its signed output triples as the transitions out of $w$, and let their endpoints be the live labels seeding column $i-1$. The collected transitions form the path dictionaries used by $\textbf{\textsc{schubmult}}$.
@@ -547,6 +627,7 @@ A permutation $w'$ produced by a descending $k$-strip chain from $w$ is retained
 The retention test is the identity $\mathrm{inv}(w'\mu)=\mathrm{inv}(\mu)-\mathrm{inv}(w')$ checked in step (2); this is precisely the condition that $w'\leq\mu$ with $\ell(w'\mu)=\ell(\mu)-\ell(w')$. The factorization of the dominant polynomial by column, together with the column-wise decoupling of the $z$-divided differences, identifies the beneath-$\mu$ endpoints at column $i$ with the surviving monomials of $\sch_v(x;z)$ after processing that column; the extraneous chains are exactly those leaving the shape, which the edge discards before they seed column $i-1$.
 \end{proof}
 
+\iffalse
 \begin{proposition}[Complexity of $\textbf{\textsc{kdown}}$] \label{prop:kdowncomplexity}
 Let $R:=|D|$ be the number of retained signed triples and $F^\ast$ the total number of frontier nodes generated by $\textbf{\textsc{kdown}}(w,\mu,p,k)$. The algorithm runs in
 $$O\!\left(n^2\cdot F^\ast\right)$$
@@ -555,6 +636,7 @@ elementary operations, and $R\leq F^\ast$. Consequently $\textbf{\textsc{vpaths}
 \begin{proof}
 Processing one frontier node scans $O(n)$ candidate positions, each requiring an $O(n)$ Bruhat-descent test and $O(n)$ transposition, so $O(n^2)$ per node; summing over the $F^\ast$ nodes gives $O(n^2F^\ast)$. Each retained triple arises from a distinct frontier node, so $R\leq F^\ast$. In $\textbf{\textsc{vpaths}}$, by Lemma~\ref{lemma:edgefilter} the labels seeding column $i-1$ are only the retained (beneath-edge) endpoints of column $i$, so the live-label count never includes extraneous paths; summing the per-column frontier work gives $O(n^2\Phi_v)$.
 \end{proof}
+\fi
 
 \begin{method}[The algorithm \textbf{\textsc{schubmult}}] \label{method:schubmult}
 Fix $n$ and let $u,v\in S_n$. The algorithm $\textbf{\textsc{schubmult}}(u,v)$ computes the expansion of $\sch_u(x;z)\,\sch_v(x;z)$ in the Schubert basis as follows. Set $\theta:=\theta(v^{-1})$ and let
@@ -562,6 +644,25 @@ $$L:=\#\{i\mid\theta_i\neq 0\}$$
 be the number of nonzero parts. The algorithm proceeds in $L$ layers. It maintains a \emph{front}, a collection of nodes each consisting of an intermediate permutation on the $u$-side paired with a label on the $v$-side, initialized to the single node $(u,\,e)$. At layer $i$ it replaces each node by the nodes obtained by combining one $u$-side cover, generated by $\textbf{\textsc{pieri}}(\,\cdot\,,\theta_i,\theta_i)$ (Method~\ref{method:pieri}), with one $v$-side transition, generated by $\textbf{\textsc{vpaths}}(v)$ (Method~\ref{method:vpaths}), accumulating coefficients in the coefficient ring. After all $L$ layers the surviving coefficients at $v$-label $v\dom(v^{-1})$ give the structure constants.
 \end{method}
 
+\paragraph{Quantum version.}
+The same path organization gives the quantum multiplication algorithm. Its
+layers are indexed by the medium theta $\medtheta(v^{-1})$; equal consecutive
+parts that are retained in this shape are handled together by the paired
+quantum Pieri step. On the $u$-side, classical covers are replaced by the
+quantum covers of Remark~\ref{remark:qkbruhat}, including length-decreasing
+moves, whose contributions carry the corresponding $q$-monomials. The
+$v$-side continues to use the descending path dictionaries of
+Method~\ref{method:vpaths}. Thus the two algorithms share the same
+layer-by-layer structure, while their Pieri transitions reflect the
+classical or quantum multiplication rule, respectively.
+
+The algorithmic construction is one way to compute products. We now turn to
+a complementary operator description, which packages the quantum
+multiplication rules in the Fomin--Gelfand--Postnikov difference operators.
+
+\subsection{Difference operators and multiplication coefficients}
+
+\iffalse
 \begin{definition}[$\ell_u$, $\ell_v$, $P_u$, $B$, $\Delta$] \label{def:complexityquantities}
 For $u,v\in S_n$ write $\ell_u:=\ell(u)$ and $\ell_v:=\ell(v)$, and set
 $$P_u:=\#\{\,w\in S_n\mid w\geq u \text{ and } \ell(w)\leq \ell_u+\ell_v\,\}.$$
@@ -635,10 +736,7 @@ whose leading exponent is $\binom{n}{2}$, the same as in the classical bound of 
 
 \emph{Assembly.} Exactly as in Theorem~\ref{thm:complexity}, the work is the layered product $\sum_i\sum_{(w,\lambda)\in\Phi_i}\beta^q_i(w)\,\delta_i(\lambda)$ with $\beta^q_i\leq B_q^2$ and $\delta_i\leq\Delta$; bounding the node count by $\widehat P_{u,v}\cdot 2^{\ell_v}$ and multiplying by $B_q^2\cdot\Delta$, the $O(Q_{u,v}\cdot n)$ per-operation cost, and the $\min(n-1,\ell_v)$ layers gives the stated bound. For the worst case use $\widehat P_{u,v}\leq n!$, $\ell_v\leq\binom{n}{2}$, and $B_q,\Delta=2^{O(n)}$; since $\log_2\!\big(n!\,B_q^2\,\Delta\,Q_{u,v}\big)=O(n\log n)=o\!\big(\binom{n}{2}\big)$, the leading exponent is $\binom{n}{2}$, exactly as in the classical bound.
 \end{proof}
-
-
-
-
+\fi
 %\begin{definition}[$\chi_{j;n}$, $\chi^{(n)}$]
 
 
@@ -877,6 +975,30 @@ $$\ell(u,uc_1\cdots c_n)\geq p_1+\cdots+p_n-2\sum_{i=1}^n\sum_{a\in\desc_u(c_i)}
 and the length hypothesis of the statement forces equality throughout, so every step is a cover of the quantum $k$-Bruhat order and hence $u\tom{k}w$.
 \end{proof}
 
+\begin{corollary}[Cycle formula for the quantum weight] \label{corollary:cycleweight}
+Suppose $u\tom{k}w$, and write the nontrivial cycles in the decomposition of
+$u^{-1}w$ as $c_i=(a_{i,p_i},\ldots,a_{i,1},b_i)$, as in Lemma
+\ref{lemma:piericycle}. Then
+\[
+q_k(u,w)=\prod_i\ \prod_{a\in\desc_u(c_i)}q_{a b_i}.
+\]
+Equivalently, the exponent of $q_r$ in $q_k(u,w)$ is
+\[
+\#\{(i,a):a\in\desc_u(c_i),\ a\leq r<b_i\}.
+\]
+\end{corollary}
+\begin{proof}
+In the factorization of $c_i$ into the transpositions
+$t_{a_{i,1}b_i}\cdots t_{a_{i,p_i}b_i}$, the step indexed by $a_{i,j}$
+is a quantum cover precisely when $u(a_{i,j})>u(a_{i,j-1})$, that is,
+precisely when $a_{i,j}\in\desc_u(c_i)$. The recursive definition of
+$q_k(u,w)$ assigns the factor $q_{a_{i,j}b_i}$ to exactly that step and
+assigns no factor to a classical cover. Multiplying these step weights gives
+the first formula. Since $q_{ab}=q_a\cdots q_{b-1}$, the exponent of $q_r$
+is the number of such descents whose interval contains $r$, giving the
+second formula.
+\end{proof}
+
 \newcommand{\lup}{\triangleleft}
 
 \begin{definition}[$\lup$]
@@ -1040,17 +1162,77 @@ A neighbor $v=wt$, with $t\in\{t_{ak}:a<k\}\cup\{t_{kb}:b>k\}$, contributes to $
 
 \emph{Up-neighbors are unique and force $C$ to have exactly the indices $k,B$ above $k-1$.} Let $v=wt_{kb}$ with $b>k$. If $b\notin C$, the merge produces a cycle containing $k$, $b$ and $B\geq b$, hence two indices exceeding $k-1$: inadmissible. Thus $b\in C$, and $t_{kb}$ splits $C$ into a piece through $k$ and a piece through $b$; admissibility forces each to hold a single index above $k-1$, so $b$ is that index for its piece. As $B=\max(C)>k-1$, this yields $b=B$ and shows $C$ has exactly the two indices $k,B$ above $k-1$, with $B>k$. Hence a contributing up-neighbor, if present, is unique and equals $wt_{kB}$.
 
-\emph{Down-neighbors.} Let $v=wt_{ak}$ with $a<k$. If $a\in C$ (a \emph{split}), admissibility assigns the indices of $C$ above $k-1$ one to each nontrivial piece: if $C$ has three or more such indices no split is admissible; if it has exactly two, $k$ and $B>k$, the split separates them (and then $wt_{kB}$ is the up-neighbor); if it has only $k$, so $B=k$, the split peels a fixed point off $C$. If $a\notin C$ (a \emph{merge}), then $C\cup(\text{component of }a)$ must retain a single index above $k-1$, namely $k$, forcing $B=k$ and the component of $a$ to have all indices $\leq k-1$. We record the resulting $q$-weights.
+ \emph{Down-neighbors.} Let $v=wt_{ak}$ with $a<k$. If $a\in C$, right
+multiplication by $t_{ak}$ splits $C$; for $u\tom{k-1}v$ each resulting
+nontrivial cycle must contain exactly one index greater than $k-1$. Thus a
+cycle $C$ containing three or more such indices cannot contribute. If $C$
+contains exactly $k$ and $B>k$ among its indices greater than $k-1$, a
+contributing split must separate these two indices. If $C$ contains only
+$k$ among its indices greater than $k-1$ (so $B=k$), a contributing split
+can only separate a fixed point from the cycle. If $a\notin C$, the
+transposition joins $C$ to the cycle containing $a$. The joined cycle must
+still contain exactly one index greater than $k-1$, namely $k$; hence this
+case is possible only when $B=k$ and the other cycle has all its indices at
+most $k-1$. If that other cycle is nontrivial, its top must be $k-1$.
 
-\emph{(1) The case $B=k$.} Either $a$ is adjoined as a fixed point --- then $v(a)=w(k)=u(a)$ reinstates below $k$ the agreement lost at $k$, the cycle tops are unchanged, and the summand carries weight $q_{k-1}(u,w)$ --- or the component absorbed into $C$ is a nontrivial cycle, whose unique index above $k-2$ is then $k-1$ (being $\leq k-1$ and $>k-2$); the merged cycle acquires the extra factor $q_{k-1}$, and a direct comparison of the invariants of Definition \ref{definition:pieri} gives
+\emph{(1) The case $B=k$.} There are two distinct boundary operations.
+A split which peels off a singleton leaves the other nontrivial cycle with
+top $k$; its $q$-weight is $q_{k-1}(u,w)$ and it cancels the diagonal
+contribution (the case treated separately in
+Lemma~\ref{lemma:vanishing}(i)). A join, on the other hand, attaches to
+the cycle of top $k$ either a fixed point or the unique other nontrivial
+cycle of top $k-1$. It is this join, when it is a Bruhat cover, that
+matches the quantum term. For $v=wt_{ak}$, the cycles of $u^{-1}v$ are
+obtained by this join. The cycle condition for $u\tom{k-2}w$ is exactly
+the condition that the new cycle at level $k-1$ has its required single
+index above $k-1$; the cover condition selects at most one such $a$.
+Comparing fixed positions and applying Corollary~\ref{corollary:cycleweight}
+to the cycle factorizations gives
 $$\fx_{{k-1}}(u,v)=\fx_{{k-2}}(u,w),\qquad n_{k-1}(u,v)=n_{k-2}(u,w)+1,\qquad \kappa_{ak}q_{k-1}(u,v)=q_{k-1}q_{k-2}(u,w),$$
-the very identities of Lemma \ref{lemma:reflectioncancel}, with the $\pi$-cycle of top $k-1$ now attached to $C$ in place of the fixed point $k$; the computation is otherwise verbatim, and by uniqueness of the $\pi$-cycle of top $k-1$ there is at most one such $v$.
+where the last equality is an equality of monomials: by
+Corollary~\ref{corollary:cycleweight}, its $q_r$-exponent on either side
+is the number of quantum descents whose interval contains $r$, including
+the interval contributed by the length-decreasing Monk edge when present.
+This is precisely the change in the descent intervals when the two cycles
+are joined (or when the fixed point is attached). The uniqueness is the
+uniqueness of the admissible cover in the cycle containing $k$.
 
-\emph{(2) The case $B>k$.} Here only the split with $C=\{k,B\}$ above $k-1$ occurs, and it separates $k$ from $B$.
+\emph{(2) The case $B>k$.} A contributing down-neighbor must split the
+cycle containing $k$ from the one containing $B$. The Bruhat-cover
+condition leaves exactly one such split: it is the cut immediately before
+the unique descent of this cycle (Lemma~\ref{lemma:onedescent}); the
+length-decreasing alternative is possible only for this cut, by
+Lemma~\ref{lemma:geq}. Thus there is at most one down-neighbor, and it is
+paired with the unique up-neighbor $wt_{kB}$.
 
-\emph{Cancellation.} Suppose first $q^M=q_{k-1}q_{k-2}(u,w)$, so the quantum term lies in $\mathcal{G}_M$ and $u\tom{k-2}w$; then every $\pi$-cycle has exactly one index above $k-2$, in particular $B=k$, and by the up-paragraph $\mathcal{G}_M$ contains no up-neighbor. By (1) the summands of weight $q^M$ reduce to the single merge down-neighbor $v$ with $\fx_{{k-1}}(u,v)=\fx_{{k-2}}(u,w)$; then $c_{k-1}(u,v)$ and $c_{k-2}(u,w)$ carry the same factorial elementary polynomial $\wte(y_{\fx_{{k-2}}(u,w)};z)$, and the down summand, of sign $\mathrm{sign}(a-k)=-1$, equals $-q_{k-1}c_{k-2}(u,w)$ and cancels the quantum term. (If no such $v$ exists the quantum term already vanishes.)
+\emph{Cancellation.} Suppose first $q^M=q_{k-1}q_{k-2}(u,w)$, so the
+quantum term lies in $\mathcal{G}_M$. If it is nonzero, then
+$u\tom{k-2}w$; the cycle condition forces $B=k$, and there is no
+up-neighbor. By (1) the unique join down-neighbor $v$ has
+$\fx_{{k-1}}(u,v)=\fx_{{k-2}}(u,w)$. Thus $c_{k-1}(u,v)$ and
+$c_{k-2}(u,w)$ have the same factorial factor, and the down summand,
+whose sign is $-1$, is exactly $-q_{k-1}c_{k-2}(u,w)$; it cancels the
+quantum term. If there is no such $v$, the quantum term is zero as well.
 
-Now suppose $q^M\neq q_{k-1}(u,w),\,q_{k-1}q_{k-2}(u,w)$. By (1) every merge or peel down carries weight $q_{k-1}(u,w)$ or $q_{k-1}q_{k-2}(u,w)$, hence lies outside $\mathcal{G}_M$; so every summand of $\mathcal{G}_M$ is of split type with $C=\{k,B\}$, $B>k$ (whence also $u\ntom{k-1}w$). For each such summand $\fx_{{k-1}}(u,v)=\fx_{{k-1}}(u,w)$: the up $wt_{kB}$ agrees with $w$ below $k$, while a split down $wt_{ak}$ agrees with $w$ below $k$ except at $a\in C$, where it takes the value $w(k)$; but $a$ is not fixed by $\pi$, and $u(a)\neq w(k)$ (otherwise, by (1), the summand would have weight $q_{k-1}(u,w)$), so no agreement below $k$ is created or destroyed. Consequently all summands of $\mathcal{G}_M$ share the factorial elementary factor $E_0=\wte(y_{P};z)$, where $P=\fx_{{k-1}}(u,w)$. Finally, when $C=\{k,B\}$ there are exactly two admissible neighbors through position $k$: the up $wt_{kB}$, and --- since $C$ has a single descent (Lemma \ref{lemma:onedescent}) and, as in the proof of Lemma \ref{lemma:pieriknotkn1}, exactly one covering split of $C$ separates $k$ from $B$ --- a single down $wt_{a^\ast k}$. The two reflections differ by the $3$-cycle $(a^\ast,B,k)$; each resolves the cycle $C$ into two cycles of tops $k$ and $B$ while leaving the other cycles untouched, so by the multiplicativity of the $q$-weight (Definition \ref{definition:pieri}) and Lemma \ref{lemma:geq}, which fixes $\desc_u(C)$ and hence the drop factors, both $\kappa_{kB}q_{k-1}(u,wt_{kB})$ and $\kappa_{a^\ast k}q_{k-1}(u,wt_{a^\ast k})$ equal the weight $q^M$ of $\mathcal{G}_M$. With opposite signs $\mathrm{sign}(B-k)=+1$ and $\mathrm{sign}(a^\ast-k)=-1$ and common coefficient $E_0$, the up and the down cancel. Hence $\mathcal{G}_M=0$.
+Now suppose $q^M\neq q_{k-1}(u,w),\,q_{k-1}q_{k-2}(u,w)$. By (1)
+every merge or peel down has one of the two excluded weights, so every
+summand of $\mathcal{G}_M$ is of split type with $B>k$. In this case the
+up-neighbor and the unique down-neighbor have the same fixed-position set
+$P=\fx_{k-1}(u,w)$: the up-neighbor agrees with $w$ below $k$, and the
+down-neighbor changes the value at $a^\ast$ to $w(k)$, which is not
+$u(a^\ast)$ (otherwise the split would be the fixed-point peel of case
+(1)). Their factorial factors are therefore both $\wte(y_P;z)$.
+For the quantum weights, the two splits have the same resulting cycle
+tops $k$ and $B$; their descent intervals agree except that the interval
+between $k$ and $B$ is supplied by the Monk factor on the length-decreasing
+edge. Applying the interval-count formula of
+Corollary~\ref{corollary:cycleweight} gives
+\[
+\kappa_{kB}q_{k-1}(u,wt_{kB})
+=\kappa_{a^\ast k}q_{k-1}(u,wt_{a^\ast k})=q^M.
+\]
+Since the two terms have opposite signs, they cancel. If neither neighbor
+exists, the corresponding collection is empty. Hence $\mathcal{G}_M=0$.
 \end{proof}
 
 The remaining case of the induction is when $u\ntom{k}w$, where the target coefficient is $0$.
@@ -1162,11 +1344,31 @@ In all cases $[\qsch_w](\qsch_u\qelem_{k,k})=c_k(u,w)$, completing the induction
 \end{definition}
 
 Then
-\begin{theorem}
+\begin{theorem}[Doubled quantum Pieri formula] \label{theorem:doubledpieri}
 	We have that the product $\qsch_u(x;y)D_k^q(x;z)$ is equal to
 	
-	$$\sum_{u\dtom{k} w} \sum_{v\in\mathrm{pivot}_k(u,w)}q_k(u,v)q_k(v,w)E_{k-n_k(u,v)}(y_{\fx_{k}(u,v)};z_1)E_{k-n_k(v,w)}(y_{\fx_{k}(v,w)};z_2)\qsch_w(x;y).$$
+$$\sum_{u\dtom{k} w} \sum_{v\in\mathrm{pivot}_k(u,w)}q_k(u,v)q_k(v,w)
+\prod_{a\in\fx_k(u,v)}(y_a-z_1)
+\prod_{b\in\fx_k(v,w)}(y_b-z_2)\qsch_w(x;y).$$
 \end{theorem}
+
+\begin{corollary}[Iterated quantum Pieri formula] \label{corollary:iteratedpieri}
+For all $u\in S_\infty$ and $k\geq 1$,
+\[
+\qsch_u(x;y)\qelem_{k,k}(x;z_1)\qelem_{k,k}(x;z_2)
+=\sum_{u\tom{k}v\tom{k}w}
+q_k(u,v)q_k(v,w)
+\prod_{a\in\fx_k(u,v)}(y_a-z_1)
+\prod_{b\in\fx_k(v,w)}(y_b-z_2)\qsch_w(x;y).
+\]
+\end{corollary}
+\begin{proof}
+Apply Theorem~\ref{theorem:pieri} to multiply $\qsch_u(x;y)$ by
+$\qelem_{k,k}(x;z_1)$. For each resulting term indexed by $v$, apply the
+same theorem with the $z$-alphabet replaced by $z_2$. The coefficient
+factors multiply, and the two successive relations are exactly
+$u\tom{k}v\tom{k}w$.
+\end{proof}
 
 \section{Peterson-Woodward comparison formula}
 
@@ -1190,4 +1392,3 @@ $$\sum_{v_1\cdot v_2=v}c_{u,v_2}^{w\omega_P\omega_{P'},\lambda_B}(y;y)\sch_{v_1}
 \bibliographystyle{acm}
 \bibliography{formschub}
 \end{document}
-
