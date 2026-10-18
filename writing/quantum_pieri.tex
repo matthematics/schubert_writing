@@ -20,6 +20,7 @@
 \usepackage[margin=1in]{geometry}
 \usepackage[makeroom]{cancel}
 \usepackage{chemarrow}
+\usepackage{url}
 \usetikzlibrary{decorations.pathreplacing, decorations.pathmorphing, math}
 \newcommand{\tikznode}[3][inner sep=0pt]{\tikz[remember
 picture,baseline=(#2.base)]{\node(#2)[#1]{$#3$};}}
@@ -142,10 +143,11 @@ picture,baseline=(#2.base)]{\node(#2)[#1]{$#3$};}}
 \begin{document}
 
 \begin{abstract}
+We study the structure constants $c_{u,v}^{w,d}(y;z)$ that arise when a product of two quantum double Schubert polynomials in \emph{different} sets of equivariant parameters, $\qsch_u(x;y)\qsch_v(x;z)$, is expanded in the basis $\{\qsch_w(x;y)\}$. We call them triple quantum Schubert structure constants; they specialize to the equivariant quantum Littlewood--Richardson coefficients when $z=y$ and to the ordinary triple Schubert structure constants when $q=0$. Adapting an argument of Xiao and Yue, we show that they are polynomials in the differences $y_i-z_j$ with nonnegative integer coefficients. We prove a Pieri formula for multiplication by a quantum factorial elementary polynomial, indexed by a quantum analogue of Sottile's relation, in which each coefficient is a monomial in $q$ times a product of differences $y_a-z_1$; the proof is a self-contained analysis of chains in the quantum Bruhat graph. We extend the Peterson--Woodward comparison formula and the quantum-to-classical reduction of Huang and Li to the triple constants, thereby reducing the computation of the parabolic triple quantum structure constants to the complete flag case. Finally we describe the algorithms implemented in the package \texttt{schubmult} for computing these constants, and give an interpretation of the coefficients in terms of the Fomin--Gelfand--Postnikov difference operators.
 \end{abstract}
 \maketitle
 
-{\bf Keywords}: Schubert polynomial, structure constant, Littlewood-Richardson rule, coproduct, double Schubert polynomial
+{\bf Keywords}: quantum double Schubert polynomial, structure constant, Littlewood-Richardson rule, Pieri formula, quantum Bruhat graph, Peterson--Woodward comparison formula
 
 {\bf Mathematics classification codes}: 05E05, 05A05, 05A15, 14N10
 
@@ -165,9 +167,29 @@ picture,baseline=(#2.base)]{\node(#2)[#1]{$#3$};}}
 %\end{theorem}
 \section{Introduction}
 
+Let $\sch_w(x;y)$, $w\in S_\infty$, denote the double Schubert polynomials of Lascoux and Sch\"utzenberger, which represent the torus-equivariant Schubert classes of the complete flag variety, and let $\qsch_w(x;y)$ denote the quantum double Schubert polynomials of Kirillov and Maeno \cite{kirillov2000quantum}, which represent the Schubert classes in torus-equivariant quantum cohomology \cite{lam2014quantum}. The structure constants of the equivariant quantum cohomology ring are the coefficients in
+$$\qsch_u(x;y)\qsch_v(x;y)=\sum_{w,d}q^d\,c_{u,v}^{w,d}(y;y)\,\qsch_w(x;y),$$
+and Mihalcea \cite{mihalcea2006positivity} proved that they are polynomials in the negative simple roots $y_{i+1}-y_i$ with nonnegative integer coefficients.
 
+In this paper we study the coefficients obtained when the two factors carry \emph{different} equivariant parameters:
+$$\qsch_u(x;y)\qsch_v(x;z)=\sum_{w,d}q^d\,c_{u,v}^{w,d}(y;z)\,\qsch_w(x;y).$$
+We call the $c_{u,v}^{w,d}(y;z)$ the \emph{triple quantum Schubert structure constants}. At $z=y$ they recover the equivariant quantum structure constants, and at $q=0$ they recover the triple Schubert structure constants $c_{u,v}^w(y;z)$ of \cite{samuelmolev}, which were recently shown by Gao and Xiong \cite{gao2025grahampositivitytripleschubert} to be polynomials in the differences $y_i-z_j$ with nonnegative integer coefficients. The triple constants carry strictly more information than the equivariant ones: the equivariant quantum constant $c_{u,v}^{w,d}(y;y)$ is a specialization of $c_{u,v}^{w,d}(y;z)$, while conversely $c_{u,v}^{w,d}(y;z)$ is recovered from the constants $c_{u,v_2}^{w,d}(y;y)$, $v_2$ ranging over the right factors of the reduced factorizations $v=v_1\cdot v_2$, by the quantum Cauchy identity (Lemma \ref{lemma:quantumtoordinary}).
 
-\section{Definitions and statement of results}
+Our main results are the following.
+\begin{enumerate}
+\item \emph{Positivity} (Theorem \ref{theorem:positivity}). The constants $c_{u,v}^{w,d}(y;z)$ lie in $\mathbb Z_{\geq0}[y_i-z_j]$. The proof, which we reproduce from the manuscript of Xiao and Yue \cite{xiaoyuequantumpositivity} with their permission, combines the geometric argument of Mihalcea with the Graham-positivity theorem of Gao and Xiong for $B^-$-stable effective cycles.
+\item \emph{A quantum Pieri formula} (Theorem \ref{theorem:pieri}). Let $\qelem_{k,k}(x;z)=\qsch_{s_1s_2\cdots s_k}(x;z)$ be the quantum factorial elementary polynomial. We prove
+$$\qsch_u(x;y)\qelem_{k,k}(x;z)=\sum_{u\tom{k} w}q_k(u,w)\prod_{a\in\fx_k(u,w)}(y_a-z_1)\,\qsch_w(x;y),$$
+where $\tom{k}$ is a quantum analogue of the relation introduced by Sottile \cite{sottile} for the classical Pieri rule, $q_k(u,w)$ is a monomial in the $q_i$ recording the length-decreasing steps of a chain from $u$ to $w$ in the quantum Bruhat graph, and $\fx_k(u,w)$ is the set of values fixed by the chain in the first $k$ positions. This is an explicit instance of the positivity theorem, and it is the engine of the multiplication algorithm. The proof occupies Section \ref{section:proofpieri}; it proceeds by induction on $k$ via the single-variable Monk formula, and rests on an intrinsic description of the chains (every cycle of $u^{-1}w$ has exactly one element exceeding $k$, and a single length identity) which makes the term-by-term cancellations tractable. In the non-equivariant case the quantum Pieri formula for complete flag manifolds is due to Ciocan-Fontanine \cite{ciocan1999partial} and Postnikov \cite{postnikov1999quantum}.
+\item \emph{Parabolic reduction} (Proposition \ref{prop:parabolic}). The Peterson--Woodward comparison formula, in the form proved by Huang and Li \cite{huang2015equivariant} for equivariant quantum cohomology, extends verbatim to the triple constants. Consequently the triple structure constants of the parabolic quantum double Schubert polynomials of Lam and Shimozono are equal to triple constants of the complete flag variety, and in particular they are also Graham-positive (Corollary \ref{corollary:parabolicpositivity}).
+\item \emph{Algorithms and operators} (Sections \ref{section:algorithms} and \ref{section:quantclass}). We describe the algorithms implemented in the package \texttt{schubmult} \cite{schubmult} for computing products of (quantum) double Schubert polynomials, which combine the Pieri formula on one factor with a signed expansion of the other factor into products of factorial elementary polynomials. We also show that the Fomin--Gelfand--Postnikov quantization operators \cite{fomin1997quantum} package the triple constants: the coefficient of $\partial^u$ in $\qsch_v(\chi^{(n)};z)$ is $\sum_d q^d c_{u,v}^{1,d}(x;z)$. Finally, we extend the quantum-to-classical reduction of Huang and Li to the triple constants.
+\end{enumerate}
+
+The paper is organized as follows. Section \ref{section:definitions} fixes notation, proves the positivity theorem and treats the parabolic case. Section \ref{section:pieri} states the Pieri formula, whose proof is given in Section \ref{section:proofpieri}. Section \ref{section:algorithms} describes the algorithms and the operator interpretation, Section \ref{section:quantclass} the quantum-to-classical reduction, Section \ref{section:additional} the iterated Pieri formula, and Section \ref{section:pw} the Peterson--Woodward comparison formula.
+
+\textbf{Acknowledgements.} We thank Tongren Xiao and Yihua Yue for permission to include their proof of Theorem \ref{theorem:positivity}.
+
+\section{Definitions and statement of results} \label{section:definitions}
 
 \subsection{Quantum double Schubert polynomials and triple quantum Schubert structure constants}
 We fix $n\geq 1$ and write
@@ -205,6 +227,18 @@ Given their stability property, we may let the number of variables be infinite, 
 $$\qsch_u(x;y)\qsch_v(x;z)=\sum_{w,d}q^dc_{u,v}^{w,d}(y;z)\qsch_w(x;y)$$
 where $d=(d_1,\ldots,d_{n-1})$ is a weak composition and $q^d=q_1^{d_1}\cdots q_{n-1}^{d_{n-1}}$. The coefficients $c_{u,v}^{w,d}(y;z)$ are the \emph{triple quantum Schubert structure constants}, which are polynomials in $y$ and $z$ with integer coefficients. This product respects the grading where for each $i$, $\deg y_i=\deg z_i=1$ and $\deg q_i=2$. In particular, if $c_{u,v}^{w,d}(y;z)\neq 0$, then $\deg c_{u,v}^{w,d}(y;z)=\ell(u)+\ell(v)-\ell(w)+2\sum_i d_i$. Unlike the usual triple Schubert structure constants, they do not exhibit triangularity in Bruhat order, and indeed we may have $\ell(w) < \ell(u) + \ell(v)$. There is an ordering in which the quantum double Schubert polynomials are triangular, but we will not need this in full generality.
 
+Throughout, a factorization $w=v_1\cdot v_2$ written with a dot is understood to be \emph{reduced}, i.e.\ $\ell(w)=\ell(v_1)+\ell(v_2)$. The following identity will be used repeatedly to pass between the triple constants and the equivariant quantum structure constants $c_{u,v}^{w,d}(y;y)$. Setting $y=0$ in it recovers the expansion $\qsch_w(x;z)=\sum_{v_1\cdot v_2=w}\sch_{v_1}(0;z)\qsch_{v_2}(x)$ of Kirillov--Maeno \cite{kirillov2000quantum} in terms of quantum Schubert polynomials.
+
+\begin{lemma}[Quantum Cauchy identity] \label{lemma:quantumtoordinary}
+For all $w\in S_\infty$,
+$$\qsch_w(x;z)=\sum_{v_1\cdot v_2=w}\sch_{v_1}(y;z)\,\qsch_{v_2}(x;y).$$
+Consequently, for all $u,v,w$ and $d$,
+$$c_{u,v}^{w,d}(y;z)=\sum_{v_1\cdot v_2=v}c_{u,v_2}^{w,d}(y;y)\,\sch_{v_1}(y;z).$$
+\end{lemma}
+\begin{proof}
+Let $\theta$ denote the quantization map of Fomin, Gelfand and Postnikov \cite{fomin1997quantum}, the $\mathbb Z[q]$-linear map on polynomials in $x$ which sends each standard elementary monomial $\prod_j e_{i_j}(x_1,\ldots,x_j)$ to $\prod_j e^{(q)}_{i_j}(x_1,\ldots,x_j)$, extended linearly over any further coefficient variables. Since the divided differences in the $y$-variables commute with $\theta$, the definition of $\qsch_w(x;y)$ by $y$-divided differences gives $\qsch_w(x;y)=\theta(\sch_w(x;y))$ \cite[(10)]{lam2014quantum}. Now apply $\theta$, which is $\mathbb Z[y,z]$-linear, to the classical Cauchy-type expansion $\sch_w(x;z)=\sum_{v_1\cdot v_2=w}\sch_{v_1}(y;z)\sch_{v_2}(x;y)$ \cite[(6.3)]{notes}: the left side becomes $\qsch_w(x;z)$ and the right side becomes $\sum_{v_1\cdot v_2=w}\sch_{v_1}(y;z)\qsch_{v_2}(x;y)$. For the second assertion, multiply the first identity (with $w=v$) by $\qsch_u(x;y)$ and expand each $\qsch_u(x;y)\qsch_{v_2}(x;y)$ in the basis $\{\qsch_w(x;y)\}$ with coefficients $q^dc_{u,v_2}^{w,d}(y;y)$.
+\end{proof}
+
 \begin{remark}[$\tom{k}$ and the quantum $k$-Bruhat order] \label{remark:qkbruhat}
 The \emph{quantum $k$-Bruhat order} was introduced by Benedetti, Bergeron, Colmenarejo, Saliola, and Sottile \cite{benedetti2025quantum} and studied further by Colmenarejo and Mayers \cite{colmenarejo2026quantum}. That order $\preceq_k^{\mathbf q}$ on $S_\infty[\mathbf q]$ is generated by cover relations
 $$u'\;\lessdot_k^{\mathbf q}\;\mathbf q^{\gamma}u't_{ab},\qquad a\leq k<b,$$
@@ -217,8 +251,8 @@ What we use below is only that each individual step of a $\tom{k}$ chain is a co
 \end{remark}
 
 
-For $d=(0,\ldots,0)$, this is the ordinary triple Schubert calculus structure constant, and it was proved in \cite{gao2025grahampositivitytripleschubert} that these have the positivity property that they are polynomials in the differences $y_i-z_j$ with nonnegative integer coefficients. We will refer to this as \emph{triple Schubert positivity}. We have the following conjecture:
-\begin{theorem}[Triple quantum Schubert positivity]
+For $d=(0,\ldots,0)$, this is the ordinary triple Schubert calculus structure constant, and it was proved in \cite{gao2025grahampositivitytripleschubert} that these have the positivity property that they are polynomials in the differences $y_i-z_j$ with nonnegative integer coefficients. We will refer to this as \emph{triple Schubert positivity}. Our first main result is that it persists in the quantum setting.
+\begin{theorem}[Triple quantum Schubert positivity] \label{theorem:positivity}
 For all $u,v,w$ and $d$, the structure constants $c_{u,v}^{w,d}(y;z)$ are polynomials in the differences $y_i-z_j$ with nonnegative integer coefficients.
 \end{theorem}
 \begin{proof}
@@ -329,21 +363,19 @@ $\mathbb Z_{\geq0}[t_i-y_j]$. Replacing $(u,v,y,t)$ by $(v,u,z,y)$ proves the as
 &+ \qsch_{356124}{\left(x; y \right)} + \qsch_{364125}{\left(x; y \right)} + \qsch_{462135}{\left(x; y \right)} \\
 &+ \qsch_{561234}{\left(x; y \right)}
 \end{align*}
-By inspection, we can see that the coefficients exhibit triple Schubert poisitivity.
+By inspection, we can see that the coefficients exhibit triple Schubert positivity.
 \end{example}
 
 
-We will provide formulas below that demonstrate this in special cases. In particular, we prove
-
-\begin{theorem}
-Suppose $u,v,w\in S_\infty$ and $v$ is $k$-Grassmannian for some $k$. Then for any $d$, $c_{u,v}^{w;d}(y;z)$ exhibits triple Schubert positivity.
-\end{theorem}
+\begin{remark}
+The Pieri formula of Theorem \ref{theorem:pieri} below is an explicit instance of Theorem \ref{theorem:positivity}: for $v=s_1s_2\cdots s_k$ each coefficient $c_{u,v}^{w,d}(y;z)$ is a product of differences $y_a-z_1$. The parabolic reduction of Proposition \ref{prop:parabolic} shows that the structure constants of the parabolic quantum double Schubert polynomials of the next subsection are also triple Schubert positive (Corollary \ref{corollary:parabolicpositivity}).
+\end{remark}
 
 \subsection{The parabolic case}
 
 Unlike ordinary cohomology or equivariant cohomology, quantum cohomology and equivariant quantum cohomology do not demonstrate simple functoriality, in the sense that a projection of the complete flag variety $G/B$ to a partial flag variety $G/P$ does not induce a homomorphism of rings $QH_T^*(G/P)\to QH_T^*(G/B)$, and indeed the quantum cohomology of $G/P$ is not isomorphic to the subring of the quantum cohomology of $G/B$ generated by the Schubert classes indexed by $W^P$. This is reflected in the fact that there are parabolic quantum double Schubert polynomials defined in a different manner that represent Schubert classes in $QH_T^*(G/P)$ \cite{lam2014quantum} and are not in general equal to the quantum double Schubert polynomials above.
 
-\begin{definition}[Parabolic quantum double Schubert polynomials]
+\begin{definition}[Parabolic quantum double Schubert polynomials] \label{def:parabolic}
 	Following Lam and Shimozono \cite{lam2014quantum}, we define parabolic quantum double Schubert polynomials as follows. Fix an integer $n>0$. A parabolic subgroup $W_P$ of $S_{n}$, which has Coxeter generators $s_1,\ldots,s_{n-1}$, is generated by a subset $P\subseteq \{s_1,\ldots,s_{n-1}\}$. In terms of the subgroup's properties, it is most natural to identify $P$ by the reflections that it \emph{excludes}. If $P$ is generated by $S\setminus \{s_{i_1},\ldots,s_{i_k}\}$ in increasing order, we define integers $n_1,\ldots,n_{k+1}$ with
 	$$n_1+\cdots+n_{k+1}=n$$
 	by $n_1 = i_1$ and $n_p = i_{p} - i_{p-1}$ for $2\leq p\leq k+1$. Then $N_j$ for $j\geq 1$ is defined by
@@ -386,7 +418,7 @@ q_1(\alpha_1\alpha_2+\alpha_1\alpha_3+\alpha_2\alpha_3+\alpha_2^2)\,\qsch_{132}^
 \end{example}
 
 
-\begin{definition}[$q$-vectors and Peterson-Woodward lifts]
+\begin{definition}[$q$-vectors and Peterson-Woodward lifts] \label{def:pwlift}
 	Define $Q^\vee$, for legacy purposes, to be the set of weak compositions. For an integer $i$ and $d\in Q^\vee$, define
 	$$\langle d\rangle_i = 2d_i - d_{i-1} - d_{i + 1}$$
 	The double indexed version will be denoted by
@@ -398,16 +430,20 @@ q_1(\alpha_1\alpha_2+\alpha_1\alpha_3+\alpha_2\alpha_3+\alpha_2^2)\,\qsch_{132}^
  \end{definition}
 
  \begin{method}[Checking the Peterson-Woodward lift property]
- While backing out a Peterson-Woodward lift is difficult, going in the other direction is not. Suppose $d\in Q^\vee$ and $P$ is parabolic. If there is any $i\in P$ such that $\langle d\rangle_i\notin\{0,-1\}$, then $d$ is not a Peterson-Woodward lift. If this condition does hold, let $z_P(d)$ be the set of all indexes $i$ such that $\langle d\rangle_i = 0$. This set is naturally divided into maximal disjoint intervals $I_1,\ldots,I_m$. We must check the additional condition that for each such $I$ and each pair $i<j$ with $i,j-1\in I$, the condition $\langle d\rangle_{ij}\in\{0,-1\}$ holds. If and only if it does, then $d$ is a Peterson-Woodward lift of a unique $d_P\in Q^\vee/Q^\vee_P$. We denote this $d_P$ by $\pi_P(d)$. 
+ While backing out a Peterson-Woodward lift is difficult, going in the other direction is not. Suppose $d\in Q^\vee$ and $P$ is parabolic. If there is any $i\in P$ such that $\langle d\rangle_i\notin\{0,-1\}$, then $d$ is not a Peterson-Woodward lift. If this condition does hold, let $I_1,\ldots,I_m$ be the maximal intervals of consecutive indices $i$ with $s_i\in P$. Since $\langle d\rangle_{ij}=\sum_{l=i}^{j-1}\langle d\rangle_l$, the condition $\langle d\rangle_{ij}\in\{0,-1\}$ for all $i<j$ with $s_i,\ldots,s_{j-1}\in P$ holds if and only if each interval $I_r$ contains at most one index $l$ with $\langle d\rangle_l=-1$. If and only if this is the case, $d$ is the Peterson-Woodward lift of a unique $d_P\in Q^\vee/Q^\vee_P$, namely its image, which we denote by $\pi_P(d)$. In that case we let
+$$z_P(d)=\{\,i\mid s_i\in P,\ \langle d\rangle_i=0\,\}$$
+and write $w_{z_P(d)}$ for the longest element of the parabolic subgroup generated by $\{s_i\mid i\in z_P(d)\}$, and $w_P$ for the longest element of $W_P$. 
  \end{method}
 
  This algorithm is polynomial in the length of $d$, which in almost all currently feasible cases is quite small. In contrast, a naive search for $d$ with $d_P$ as the input has an exponential search space, though a more refined algorithm may exist.
 
- We prove the following result.
+ The parabolic triple quantum Schubert structure constants $c_{u,v}^{w,d_P}(y;z)$ are defined by
+$$\qsch^P_u(x;y)\qsch^P_v(x;z)=\sum_{w\in W^{\pcomp P},\,d_P}q^{d_P}\,c_{u,v}^{w,d_P}(y;z)\,\qsch^P_w(x;y).$$
+We prove the following result in Section \ref{section:pw}, as a consequence of the Peterson--Woodward comparison formula of Huang and Li \cite{huang2015equivariant} and Lemma \ref{lemma:quantumtoordinary}.
 
- \begin{proposition}
-Let $W_P$ be a parabolic subgroup of $S_\infty$ with $P=\pcomp{P}$ and let $u,v,w\in W^{P}$. Then for any $d_P = \pi_P(d)\in Q^\vee/Q_P^\vee$, we have that
-$$c_{u,v}^{w,d_P}(y;z) = c_{u,v}^{ww_Pw_{z_P(d)},d}(y;z),$$
+ \begin{proposition} \label{prop:parabolic}
+Let $W_P$ be a parabolic subgroup of $S_\infty$ with $P=\pcomp{P}$ and let $u,v,w\in W^{P}$. Then for any $d_P\in Q^\vee/Q_P^\vee$ with Peterson--Woodward lift $d$, we have that
+$$c_{u,v}^{w,d_P}(y;z) = c_{u,v}^{ww_Pw_{z_P(d)},d}(y;z).$$
 \end{proposition}
 
 Thus, though we lack a simple functoriality property, we can reduce the computation of parabolic triple quantum Schubert structure constants completely to the complete flag variety case with an efficient algorithm. We obtain a nontrivial corollary from this.
@@ -439,12 +475,15 @@ Thus, though we lack a simple functoriality property, we can reduce the computat
 For an illustration, consider $d_P = (-,0,1,-,0)$ for the coefficient of $162345$. $q^{d_P} = q_2$. The Peterson-Woodward lift of $d_P$ is $d = (0,0,1,0,0)$, and $w_P = 21354$. $z_P(d) = \{1\}$, so $w_Pw_{z_P(d)} = 12354$. Thus, $ww_Pw_{z_P(d)} = 162435$, and the $q_2$-component of the coefficient of $\qsch_{162345}^P(x;y)$ is $(y_1+y_5+y_6-z_1-z_2-z_3)$, which is the same as the $q_3$-component ($q^d$) of the coefficient of $\qsch_{162435}(x;y)$ in the complete flag variety case (Example \ref{example:cppfpos}).
 \end{example}
 
-\begin{corollary}[Triple quantum Schubert positivity for the Grassmannian case]
-Suppose $u,v,w\in S_n$ are $k$-Grassmannian, where $P$ is the corresponding parabolic subroup such that $n_1 = k$ and $n_2 = n - k$. Then $c_{u,v}^{w;d}(y;z)$ exhibits triple Schubert positivity.
+\begin{corollary}[Triple quantum Schubert positivity for the parabolic case] \label{corollary:parabolicpositivity}
+Let $W_P$ be a parabolic subgroup with $P=\pcomp P$ and let $u,v,w\in W^P$. Then for every $d_P$ the parabolic structure constant $c_{u,v}^{w,d_P}(y;z)$ exhibits triple Schubert positivity. In particular this holds when $u,v,w$ are $k$-Grassmannian and $P$ is the corresponding maximal parabolic subgroup ($n_1=k$, $n_2=n-k$).
 \end{corollary}
+\begin{proof}
+By Proposition \ref{prop:parabolic}, $c_{u,v}^{w,d_P}(y;z)$ equals a structure constant $c_{u,v}^{w',d}(y;z)$ of the complete flag variety, which lies in $\mathbb Z_{\geq0}[y_i-z_j]$ by Theorem \ref{theorem:positivity}.
+\end{proof}
 
 
-\section{Pieri}
+\section{Pieri} \label{section:pieri}
 
 \begin{definition}[$\tom{k}$, $\fx_{k}(u,w)$, $q_k(u,w)$, $E_{p,k}(y;z)$, $\wte(y_A;z)$] \label{definition:pieri}
 We define a relation $\tom{k}$ on pairs of permutations, introduced in its non-quantum form by Sottile \cite{sottile}, which was used originally to indicate when the coefficient of a Schubert polynomial is nonzero in a suitable application of the Pieri formula. In the generalization to double Schubert polynomials in \cite{samuelmolev}, the same relation applies to all nonzero coefficients in the expansion of the generalized Pieri formula. The relation plays the same role in our case. 
@@ -487,10 +526,26 @@ the specialization of the factorial elementary polynomial to which the coefficie
 \end{definition}
 
 
+\begin{definition}[Quantum factorial elementary polynomials $\qelem_{p,k}(x;z)$] \label{def:qelem}
+For $0\leq p\leq k$ we define
+$$\qelem_{p,k}(x;z)=\qsch_{c[p,k]}(x;z),$$
+the quantum double Schubert polynomial of the Grassmannian permutation $c[p,k]=s_{k-p+1}\cdots s_k$, whose diagram is a single column of height $p$ with descent at $k$. At $q=0$ this is $E_{p,k}(x;z)$. We also set $\qelem_{0,k}=1$ and $\qelem_{p,k}=0$ for $p<0$.
+\end{definition}
+
+\begin{lemma} \label{lemma:qelemkk}
+For $k\geq1$,
+$$\qelem_{k,k}(x;z)=\Delta_k(-z_1\mid x_1,\ldots,x_k)=\sum_{j=0}^{k}(-z_1)^{k-j}e_j^{(q)}(x_1,\ldots,x_k).$$
+\end{lemma}
+\begin{proof}
+The permutation $c[k,k]=s_1s_2\cdots s_k$ has a unique reduced word, so its reduced factorizations are $v_1=s_1\cdots s_j$, $v_2=s_{j+1}\cdots s_k$ for $0\leq j\leq k$. By Lemma \ref{lemma:quantumtoordinary} with $y=0$, $\qelem_{k,k}(x;z)=\sum_{j}\sch_{s_1\cdots s_j}(0;z)\,\qsch_{s_{j+1}\cdots s_k}(x)$. Here $s_1\cdots s_j$ is dominant with code $(1^j)$, so $\sch_{s_1\cdots s_j}(x;z)=\prod_{i\leq j}(x_i-z_1)$ and $\sch_{s_1\cdots s_j}(0;z)=(-z_1)^j$; and $s_{j+1}\cdots s_k$ is the Grassmannian permutation with descent at $k$ and a single column of height $k-j$, whose Schubert polynomial $e_{k-j}(x_1,\ldots,x_k)$ is a standard elementary monomial, so that its quantum Schubert polynomial is $e^{(q)}_{k-j}(x_1,\ldots,x_k)$ \cite{fomin1997quantum}. Summing gives the second expression, which equals $\Delta_k(-z_1\mid x_1,\ldots,x_k)$ by the definition of the quantum elementary polynomials.
+\end{proof}
+
 \begin{theorem}[The Pieri formula] \label{theorem:pieri}
 Suppose $u\in S_\infty$ and $k\geq 1$. Then
-$$\qsch_u(x;y)\qelem_{k,k}(x;z)=\sum_{u\tom{k} w}q_k(u,w)\wte(y_{\fx_{k}(u,w)};z)\qsch_w(x;y)$$
+$$\qsch_u(x;y)\qelem_{k,k}(x;z)=\sum_{u\tom{k} w}q_k(u,w)\wte(y_{\fx_{k}(u,w)};z)\qsch_w(x;y).$$
 \end{theorem}
+
+The proof is given in Section \ref{section:proofpieri}. Note that the right-hand side is manifestly triple Schubert positive, in accordance with Theorem \ref{theorem:positivity}, and that at $q=0$ it reduces to the case $p=k$ of the Pieri formula of \cite[Theorem~7.1]{samuelmolev}.
 
 
 
@@ -509,7 +564,7 @@ $$\qsch_u(x;y)\qelem_{k,k}(x;z)=\sum_{u\tom{k} w}q_k(u,w)\wte(y_{\fx_{k}(u,w)};z
 \newcommand{\Tom}[1]{\xRightarrow{#1}}
 \newcommand{\dom}{\mu}
 
-\section{Algorithms for multiplying (quantum) double Schubert polynomials}
+\section{Algorithms for multiplying (quantum) double Schubert polynomials} \label{section:algorithms}
 
 \begin{definition}[$\code$, (strict) dominant permutations, $\theta$, $\dom$, $\thop$, $\mom$, medium theta $\medtheta$, $\medperm$] \label{def:codetheta}
 We say that a permutation $\mu$ is \emph{dominant} if $\code_i(\mu)\geq \code_{i+1}(\mu)$ for all $i$. A permutation $\mu$ is said to be \emph{strict dominant} if $\mu$ is dominant and whenever $\code_i(\mu)\neq 0$ we have $\code_i(\mu)>\code_{i+1}(\mu)$. For a permutation $v\in S_\infty$, we define a dominant permutation $\dom(v)$ recursively as follows. If $v$ is already dominant, define $\mu(v)=v$. Otherwise, let $i$ be the maximal index such that $\code_i(v)<\code_{i+1}(v)$, and define
@@ -532,7 +587,9 @@ and we define
 $$D_i(u,v)=\{u(i)\}\cup\{u(j)\mid u(j)\neq v(j)\}$$
 \end{definition}
 
-\begin{theorem}[Formula for ordinary double Schubert polynomials] \label{theorem:orddouble}
+The following two formulas express a (quantum) double Schubert polynomial as a signed sum of products of (quantum) factorial elementary polynomials in nested initial alphabets; they are the $v$-side input of the multiplication algorithm. The first is proved in \cite{samuelschubmultpaper}. The second is its quantum analogue and is proved in the same way, the only new ingredient being the factorization of $\qsch_\mu(x;z)$ for a strict dominant permutation $\mu$: if the column heights $\lambda'_1>\lambda'_2>\cdots$ of the diagram of $\mu$ are pairwise distinct, then $x^{\code(\mu)}=\prod_j e_{\lambda'_j}(x_1,\ldots,x_{\lambda'_j})$ is a single standard elementary monomial, so that the Fomin--Gelfand--Postnikov quantization gives $\qsch_\mu(x;z)=\prod_j\qelem_{\lambda'_j,\lambda'_j}(x;z_j)$; this is the reason $\dom$ is replaced by $\mom$ in the quantum case, since for repeated column heights the quantum polynomial is \emph{not} a product (see Section \ref{section:additional}).
+
+\begin{theorem}[{Formula for ordinary double Schubert polynomials, \cite{samuelschubmultpaper}}] \label{theorem:orddouble}
 Suppose $v\in S_\infty$. Then
 $$\sch_v(x;z)=\sum_{(v_0,\ldots,v_k)}\prod_{i=1}^k (-1)^{\sigma_i(v_{i-1},v_i)}E_{\theta_i(v)-\ell(v_{i-1},v_i),\theta_i(v)}(x;z_{D_i(v_{i-1},v_i)})$$
 Where $v_{i-1}\xRightarrow{i} v_i$ for all $i$, $v_0=1$, and $v_k=v\dom(v^{-1})$.
@@ -545,7 +602,7 @@ $$\qsch_v(x;z)=\sum_{(v_0,\ldots,v_k)}\prod_{i=1}^k (-1)^{\sigma_i(v_{i-1},v_i)}
 Where $v_{i-1}\xRightarrow{i} v_i$ for all $i$, $v_0=1$, and $v_k=v\mom(v^{-1})$.
 \end{theorem}
 
-Coupled with the Pieri formulas, these formulas give an algorithm for computing products of (quantum) double Schubert polynomials. We describe its classical form by building it from two ingredients: the elementary Pieri step that generates the $u$-side covers, and the signed path expansion on the $v$-side.
+Coupled with the Pieri formulas, these formulas give an algorithm for computing products of (quantum) double Schubert polynomials, which is the one implemented in \cite{schubmult}. We describe its classical form by building it from two ingredients: the elementary Pieri step that generates the $u$-side covers, and the signed path expansion on the $v$-side.
 
 \begin{definition}[$k$-strip cover, admissible $k$-chain, the $(p,k)$-Pieri problem] \label{def:pieriproblem}
 Let $w\in S_n$, let $1\leq k<n$, and let $\beta\in\{1,\ldots,n\}\cup\{\infty\}$. A \emph{$k$-strip cover of $(w,\beta)$} is a transposition $t_{ab}$ of positions $a,b$ with $1\leq a\leq k<b\leq n$ such that
@@ -616,7 +673,7 @@ The algorithm returns a signed list $D$ of triples $(w',t,s)$, one for each leng
 Applied without the edge $\mu$, the signed descending expansion produces many extraneous terms that ultimately cancel. The edge is exactly the bound that discards them: only endpoints beneath $\mu$ are retained in $D$. In the assembled $v$-side (Method~\ref{method:vpaths} below), only these retained labels seed the next column, so each stage passes forward only labels compatible with the remaining shape.
 
 \begin{method}[$\textbf{\textsc{vpaths}}(v)$, the $v$-side path dictionaries] \label{method:vpaths}
-Let $\theta:=\theta(v^{-1})$ with nonzero parts in columns $1,\ldots,L$, and let $vmu:=v\,\dom(v^{-1})$. Processing columns from $i=L$ down to $i=1$, maintain for each column a set of live labels (initialized at column $L$ to the single label $vmu$). At column $i$, with $k=i$ and edge $\mu_i:=\dom$ of the shape truncated below column $i$, call $\textbf{\textsc{kdown}}(w,\mu_i,\theta_i,k)$ for each live label $w$; record its signed output triples as the transitions out of $w$, and let their endpoints be the live labels seeding column $i-1$. The collected transitions form the path dictionaries used by $\textbf{\textsc{schubmult}}$.
+Let $\theta:=\theta(v^{-1})$ with nonzero parts in columns $1,\ldots,L$, and let $\nu:=v\,\dom(v^{-1})$. Processing columns from $i=L$ down to $i=1$, maintain for each column a set of live labels (initialized at column $L$ to the single label $\nu$). At column $i$, with $k=i$ and edge $\mu_i:=\dom$ of the shape truncated below column $i$, call $\textbf{\textsc{kdown}}(w,\mu_i,\theta_i,k)$ for each live label $w$; record its signed output triples as the transitions out of $w$, and let their endpoints be the live labels seeding column $i-1$. The collected transitions form the path dictionaries used by $\textbf{\textsc{schubmult}}$.
 \end{method}
 
 \begin{lemma}[Correctness of the edge filter] \label{lemma:edgefilter}
@@ -742,12 +799,12 @@ whose leading exponent is $\binom{n}{2}$, the same as in the classical bound of 
 
 
 \begin{definition}[$\chi_{j;n}$, $\chi^{(n)}$]
-Recall the definition of the commuting difference operators $\chi_{j;n}$, with $j\leq n$, defined by Fomin, Gelfand, and Postnikov, as follows:
-$$\chi_{j,n}=x_j-\sum_{1\leq i<j}q_{ij}\partial^{t_{ij}}+\sum_{j<k\leq n} q_{jk}\partial^{t_{jk}}$$
-We denote the sequence $(\chi_{1;n},\ldots,\chi_{n;n})$ with $n$ fixed by $\chi^{(n)}$. Recall (CITATION) that if $\sch_v(x)$ has at most $n$ variables, then
-$$\qsch_v(\chi^{(n)})(1) = \sch_v(x)$$
-and hence
-$$\qsch_v(\chi^{(n)};z)(1) = \sch_v(x;z)$$
+Recall the commuting difference operators $\chi_{j;n}$, $j\leq n$, of Fomin, Gelfand, and Postnikov \cite{fomin1997quantum}, acting on polynomials in $x_1,\ldots,x_n$ (with coefficients in any further variables):
+$$\chi_{j;n}=x_j-\sum_{1\leq i<j}q_{ij}\partial^{t_{ij}}+\sum_{j<k\leq n} q_{jk}\partial^{t_{jk}},$$
+where for a transposition $t$ we write $\partial^{t}$ for the divided difference operator $\partial_t$ in the $x$-variables associated with any reduced word of $t$, so that $\partial^{t}\sch_v(x;z)=\sch_{vt}(x;z)$ if $\ell(vt)=\ell(v)-\ell(t)$ and $\partial^t\sch_v(x;z)=0$ otherwise. We denote the sequence $(\chi_{1;n},\ldots,\chi_{n;n})$ with $n$ fixed by $\chi^{(n)}$. Fomin, Gelfand and Postnikov proved \cite{fomin1997quantum} that if $v\in S_n$ then
+$$\qsch_v(\chi^{(n)})(1) = \sch_v(x),$$
+and hence, by Lemma \ref{lemma:quantumtoordinary} with $y=0$ (whose coefficients $\sch_{v_1}(0;z)$ commute with the operators),
+$$\qsch_v(\chi^{(n)};z)(1) = \sum_{v_1\cdot v_2=v}\sch_{v_1}(0;z)\sch_{v_2}(x)=\sch_v(x;z).$$
 We specify a more precise formula, as follows.
 \end{definition}
 
@@ -783,7 +840,8 @@ and the result follows.
 
 \begin{theorem}
 Let $k$ be an integer and let $v,w\in S_\infty$. Then
-$$\sum_d q^dc_{s_k,v}^{w,d}(y;z)=c_{s_k,v}^{w}(y;z)+\sum_{i\leq k < j} q_{ij}\sch_{vt_{ij}w^{-1}}(y;z)$$
+$$\sum_d q^dc_{s_k,v}^{w,d}(y;z)=c_{s_k,v}^{w}(y;z)+\sum_{i\leq k < j} q_{ij}\sch_{vt_{ij}w^{-1}}(y;z),$$
+where the sum is over those $i<j$ with $\ell(vt_{ij})=\ell(v)-\ell(t_{ij})$, and $\sch_{vt_{ij}w^{-1}}(y;z)$ is to be read as $0$ unless $\ell(vt_{ij})=\ell(vt_{ij}w^{-1})+\ell(w)$.
 \end{theorem}
 \begin{proof}
 We have that the desired value is equal to the coefficient of $\sch_w(x;y)$ in
@@ -792,8 +850,9 @@ We have that
 $$\qsch_{s_k}(\chi^{(n)};y)=\sch_{s_k}(x;y)+\sum_{i\leq k<j\leq n}q_{ij}\partial^{t_{ij}}$$
 Applying this operator, we obtain
 $$\sum_{i\leq k<j\leq n} q_{ij}\sch_{vt_{ij}}(x;z)+\sum_w c_{s_k,v}^w(y;z)\sch_w(x;y)$$
-Applying the Cauchy formula, this is equal to
-$$\sum_{i\leq k<j,u} q_{ij}\sch_{vt_{ij}u^{-1}}(y;z)\sch_u(x;y)+\sum_w c_{s_k,v}^w(y;z)\sch_w(x;y)$$
+Applying the Cauchy formula (Lemma \ref{lemma:quantumtoordinary} at $q=0$), this is equal to
+$$\sum_{i\leq k<j}\ \sum_{u}q_{ij}\sch_{vt_{ij}u^{-1}}(y;z)\sch_u(x;y)+\sum_w c_{s_k,v}^w(y;z)\sch_w(x;y),$$
+the inner sum being over the reduced factorizations $vt_{ij}=(vt_{ij}u^{-1})\cdot u$.
 Setting $u=w$ and allowing $n$ to be sufficiently large, we obtain the result.
 \end{proof}
 
@@ -809,7 +868,9 @@ Setting $u=w$ and allowing $n$ to be sufficiently large, we obtain the result.
 % and the result follows.
 % \end{proof}
 
-\section{Quantum to classical reduction for Grassmannian products}
+\section{Quantum to classical reduction} \label{section:quantclass}
+
+In this section we extend the quantum-to-classical reduction of Huang and Li \cite{huang2015equivariant} from the equivariant quantum structure constants $c_{u,v}^{w,d}(y;y)$ to the triple constants. We write $\mathrm{sgn}_i(w)=1$ if $w(i)>w(i+1)$ and $\mathrm{sgn}_i(w)=0$ otherwise, $\delta_i\in Q^\vee$ for the weak composition with a single $1$ in position $i$, and $|d|=\sum_id_i$; the bracket $\langle d\rangle_i=2d_i-d_{i-1}-d_{i+1}$ was defined in Section \ref{section:definitions}. We say that $u\in S_\infty$ is \emph{$k$-Grassmannian} if $k$ is its only descent.
 
 \begin{theorem}[{\cite[Theorem~2.7]{huang2015equivariant}}] \label{theorem:quantclass}
 	We have the following.
@@ -834,11 +895,6 @@ Setting $u=w$ and allowing $n$ to be sufficiently large, we obtain the result.
 	\end{enumerate}
 	This is symmetric in $u$ and $v$.
 \end{corollary}
-
-\begin{lemma} \label{lemma:quantumtoordinary}
-We have that
-$$c_{u,v}^{w,d}(y;z)=\sum_{v_1\cdot v_2=v}c_{u,v_2}^{w,d}(y;y)\sch_{v_1}(y;z)$$
-\end{lemma}
 
 \begin{theorem}[Quantum reduction holds for triple quantum Schubert coefficients]\label{theorem:quantclassz}
 We have the following.
@@ -1155,7 +1211,7 @@ Let $\mathcal D_m$ ($1\leq m\leq s$) be the statement that $t_{z_mB},\ldots,t_{z
 
 \emph{Step 2: $\mathcal D_m$ implies $U_m,\ldots,U_s,T_s$.} For $i>m$, $D^{(i)}$ gives $U_i$ by Lemma \ref{lemma:admissible}(i). By the same lemma, $D^{(m)}$ and $D^{(i)}$ ($i>m$) give that $(\zeta_m,\beta)$ and $(\zeta_i,\zeta_{i-1})$ are $I$-admissible, so $(\zeta_s,\beta)$ is $I$-admissible by Lemma \ref{lemma:admissible}(ii): this is $T_s$. Likewise the pairs $(\zeta_m,\beta),(\zeta_{m+1},\zeta_m),\ldots,(\zeta_s,\zeta_{s-1})$ are $\{\zeta_{m-1}\}$-admissible, which as in the proof of Lemma \ref{lemma:admissible}(ii) means:
 \begin{equation}\label{eq:twoblocks}
-\text{the values }\beta,\zeta_m,\zeta_{m+1},\ldots,\zeta_s\text{ decrease on each side of }\zeta_{m-1}\text{, with at most one jump from below }\zeta_{m-1}\text{ to above it.}
+\parbox{0.85\textwidth}{\centering the values $\beta,\zeta_m,\zeta_{m+1},\ldots,\zeta_s$ decrease on each side of $\zeta_{m-1}$,\\ with at most one jump from below $\zeta_{m-1}$ to above it.}
 \end{equation}
 For $U_m$, admissibility of $(\zeta_m,\beta)$ with respect to $\{\zeta_{m-1}\}$ leaves three possibilities: (1) $\zeta_{m-1}>\beta>\zeta_m$; (2) $\zeta_m>\zeta_{m-1}>\beta$; (3) $\beta>\zeta_m>\zeta_{m-1}$. We use $D^{(m)}$ restricted to $J_m$ and $D^{\mathrm{last}}$ restricted to $N_m$, and treat the remaining elements $\zeta_l$ ($l>m$, $z_l>z_m$) of $J_m$ by \eqref{eq:twoblocks}. In case (1), $J_m\cap(\zeta_m,\beta)=\emptyset$ and $N_m\cap(\beta,\zeta_{m-1})=\emptyset$, while by \eqref{eq:twoblocks} each $\zeta_l$ ($l>m$) is either less than $\zeta_m$ or greater than $\zeta_{m-1}$; hence $J_m\cap(\zeta_m,\zeta_{m-1})=\emptyset$. In case (2), $J_m\subseteq(\beta,\zeta_m)$ and $N_m\cap(\beta,\zeta_{m-1})=\emptyset$ give $N_m\subseteq(\zeta_{m-1},\zeta_m)$, while by \eqref{eq:twoblocks} the jump occurs at $(\beta,\zeta_m)$ and so $\zeta_{m-1}<\zeta_l<\zeta_m$ for $l>m$; hence $J_m\subseteq(\zeta_{m-1},\zeta_m)$. In case (3), $J_m\cap(\zeta_m,\beta)=\emptyset$ and $N_m\subseteq(\zeta_{m-1},\beta)$ give $N_m\subseteq(\zeta_{m-1},\zeta_m)$, while by \eqref{eq:twoblocks} all of $\beta,\zeta_m,\ldots,\zeta_s$ lie above $\zeta_{m-1}$ and decrease, so again $\zeta_{m-1}<\zeta_l<\zeta_m$ for $l>m$; hence $J_m\subseteq(\zeta_{m-1},\zeta_m)$. In each case this is $U_m$. Together with the prefix $U_1,\ldots,U_{m-1}$ this proves (c).
 
@@ -1206,7 +1262,9 @@ Let $\omega\in S_\infty$, $k>1$, $\eta=\omega(k)$, and let $D$ be a cycle with $
 
 \emph{Nontrivial $D=(d_r,\ldots,d_1,d)$, $r\geq1$, $d=\max\supp(D)$.} Put $d_0=d$, $\gamma_0=\omega(d)$, $\gamma_i=\omega(d_i)$ and $\epsilon=k-d\geq1$. For $a=d_m$ ($0\leq m\leq r$) the cycle $\tau_m:=\tau_{d_m}$ is
 $$\tau_m=(d_{m-1},\ldots,d_1,d,d_r,\ldots,d_m,k),$$
-whose pivot factorization $t_{d_mk}t_{d_{m+1}k}\cdots t_{d_rk}t_{dk}t_{d_1k}\cdots t_{d_{m-1}k}$ exchanges, in order, the values $\eta,\gamma_m,\gamma_{m+1},\ldots,\gamma_r,\gamma_0,\gamma_1,\ldots,\gamma_{m-1}$: the sequence of values of $\tau_m$ in the sense of Corollary \ref{corollary:cyclic} is the cyclic sequence $\Gamma=(\gamma_0,\ldots,\gamma_r)$ of $D$ with $\eta$ inserted into the gap $(\gamma_{m-1},\gamma_m)$ (the wrap gap $(\gamma_r,\gamma_0)$ when $m=0$). Note $w(d_m)=\gamma_{m-1}$ for $m\geq1$ and $w(d)=\gamma_r$; we write $w(a)$ for the value at $a=d_m$ in either case.
+whose pivot factorization
+$$t_{d_mk}\,t_{d_{m+1}k}\cdots t_{d_rk}\,t_{dk}\,t_{d_1k}\cdots t_{d_{m-1}k}$$
+exchanges, in order, the values $\eta,\gamma_m,\gamma_{m+1},\ldots,\gamma_r,\gamma_0,\gamma_1,\ldots,\gamma_{m-1}$: the sequence of values of $\tau_m$ in the sense of Corollary \ref{corollary:cyclic} is the cyclic sequence $\Gamma=(\gamma_0,\ldots,\gamma_r)$ of $D$ with $\eta$ inserted into the gap $(\gamma_{m-1},\gamma_m)$ (the wrap gap $(\gamma_r,\gamma_0)$ when $m=0$). Note $w(d_m)=\gamma_{m-1}$ for $m\geq1$ and $w(d)=\gamma_r$; we write $w(a)$ for the value at $a=d_m$ in either case.
 
 \emph{Necessity.} Suppose $\tau_m$ is $\omega$-tight and $v_m:=v_{d_m}\lup w$. By Corollary \ref{corollary:cyclic} the cyclic sequence of $\tau_m$ is unimodal; deleting $\eta$ shows that $\Gamma$ is unimodal, and then $m$ must be the insertion gap of $\eta$ in $\Gamma$. This already proves (a). Let $\delta$ be the ascent index of $\Gamma$ ($\gamma_\delta>\gamma_{\delta-1}$, or $\delta=0$ for the wrap), so that by Corollary \ref{corollary:cyclic} and Definition \ref{def:tight}
 $$\Lw_\omega(D)=r-2(d-d_\delta),\qquad \qw_\omega(D)=q_{d_\delta d}$$
@@ -1290,7 +1348,7 @@ with the conventions $\qelem_{0,0}=1$ and $\qelem_{k,k}=0$ if $k<0$. Moreover, t
 $$\wte(y_{A\cup\{c\}};z)=(y_c-z_1)\,\wte(y_A;z).$$
 \end{lemma}
 \begin{proof}
-Here $\qelem_{k,k}(x;z)=\sum_{j=0}^k(-z_1)^{k-j}e^{(q)}_j(x_1,\ldots,x_k)=\Delta_k(-z_1\mid x_1,\ldots,x_k)$, and expanding the tridiagonal determinant $\Delta_k(t\mid x_1,\ldots,x_k)$ along its last row gives $\Delta_k=(x_k+t)\Delta_{k-1}+q_{k-1}\Delta_{k-2}$. The second identity is clear.
+By Lemma \ref{lemma:qelemkk}, $\qelem_{k,k}(x;z)=\Delta_k(-z_1\mid x_1,\ldots,x_k)$, and expanding the tridiagonal determinant $\Delta_k(t\mid x_1,\ldots,x_k)$ along its last row gives $\Delta_k=(x_k+t)\Delta_{k-1}+q_{k-1}\Delta_{k-2}$. The second identity is clear.
 \end{proof}
 
 The first recurrence is the quantization of the classical relation $E_{k,k}=(x_k-z_1)E_{k-1,k-1}$; the extra term $q_{k-1}\qelem_{k-2,k-2}$ is the only feature absent from the non-quantum setting. Discarding all quantum terms recovers the classical Pieri formula \cite[Theorem~7.1]{samuelmolev}, whose term-by-term cancellation is carried out in \cite[Proof of Proposition~4.4]{samuelmolev} by means of the reflection-matching Lemmas 7.6--7.9 of that paper; the lemmas above are the quantum counterparts, the essential new points being the length-decreasing covers permitted by Lemma \ref{lemma:piericycle}, the attendant bookkeeping of the powers of $q$, and the extra term of the recurrence, which is absorbed by the merge summands of Lemma \ref{lemma:merge}.
@@ -1337,33 +1395,9 @@ by Lemma \ref{lemma:elemrecursion}. The remaining contributions are the reflecti
 By Lemma \ref{lemma:leveldichotomy} these cases are exhaustive. In all cases $[\qsch_w](\qsch_u\qelem_{k,k})=c_k(u,w)$, completing the induction and the proof.
 \end{proof}
 
-\section{Additional formulas}
-\newcommand{\dtom}[1]{\overset{#1}{\rightrightarrows}}
-\begin{definition}
-	Consider a permutation $d_2[k]$ satisfying
-	$$\code(d_2[k]) = \overbrace{(2,2,\ldots,2)}^{k\text{ times}}.$$
-	The double Schubert polynomial $\sch_{d_2[k]}(x;y)$ is a product of two factorial elementary symmetric polynomials, specifically:
-	$$\sch_{d_2[k]}(x;y) = E_k(x;y_1)E_k(x;y_2).$$
-	Therefore, the Pieri formula in \cite{samuelmolev} easily transfers to being able to multiply by $\sch_{d_2[k]}(x;y)$.
-	
-	For quantum double Schubert polynomials, $\qsch_{d_2[k]}(x;y)$ is \emph{not} a product of factorial quantum elementary polynomials. For example:
-	$$\qsch_{d_2[1]}(x;y) = \qelem_{1,2}(x;y)\qelem_{1,1}(x;y) - E^q_{2,2}(x;y)$$
-	$$\qsch_{d_2[2]}(x;y) = E^q_{2,3}(x;y)E^q_{2,2}(x;y) - E^q_{3,3}(x;y)E^q_{1,2}(x;y)$$
+\section{The iterated Pieri formula} \label{section:additional}
 
-	For abbreviation purposes, we denote this polynomial by $D_k^q(x;y)$.
-
-	
-	We define a relation $\dtom{k}$ on permutations as follows. We say that $u\dtom{k} w$ if and only if there exists a $v\in S_\infty$ such that $u\tom{k} v$ and $v\tom{k} w$ satisfying the additional condition that if $u^{-1}v$ is a product of disjoint cycles $c_1,\ldots,c_m$ and $v^{-1}w$ is a product of disjoint cycles $d_1,\ldots,d_n$, then for each $d_i$ there exists a $c_j$ such that $d_i\cap c_j = \{\max(d_i)\} = \{\max(c_j)\}$. Call the set of all such $v$ $\mathrm{pivot}_k(u,w)$.
-\end{definition}
-
-Then
-\begin{theorem}[Doubled quantum Pieri formula] \label{theorem:doubledpieri}
-	We have that the product $\qsch_u(x;y)D_k^q(x;z)$ is equal to
-	
-$$\sum_{u\dtom{k} w} \sum_{v\in\mathrm{pivot}_k(u,w)}q_k(u,v)q_k(v,w)
-\prod_{a\in\fx_k(u,v)}(y_a-z_1)
-\prod_{b\in\fx_k(v,w)}(y_b-z_2)\qsch_w(x;y).$$
-\end{theorem}
+Iterating Theorem \ref{theorem:pieri} gives the expansion of a product with two quantum factorial elementary polynomials in different alphabets.
 
 \begin{corollary}[Iterated quantum Pieri formula] \label{corollary:iteratedpieri}
 For all $u\in S_\infty$ and $k\geq 1$,
@@ -1372,8 +1406,9 @@ For all $u\in S_\infty$ and $k\geq 1$,
 =\sum_{u\tom{k}v\tom{k}w}
 q_k(u,v)q_k(v,w)
 \prod_{a\in\fx_k(u,v)}(y_a-z_1)
-\prod_{b\in\fx_k(v,w)}(y_b-z_2)\qsch_w(x;y).
+\prod_{b\in\fx_k(v,w)}(y_b-z_2)\qsch_w(x;y),
 \]
+where $\qelem_{k,k}(x;z_i)$ denotes $\qelem_{k,k}(x;z)$ with $z_1$ replaced by $z_i$.
 \end{corollary}
 \begin{proof}
 Apply Theorem~\ref{theorem:pieri} to multiply $\qsch_u(x;y)$ by
@@ -1383,24 +1418,45 @@ factors multiply, and the two successive relations are exactly
 $u\tom{k}v\tom{k}w$.
 \end{proof}
 
-\section{Peterson-Woodward comparison formula}
+\begin{remark}[Two-column shapes] \label{remark:twocolumns}
+Let $d_2[k]$ be the dominant permutation with
+$$\code(d_2[k]) = \overbrace{(2,2,\ldots,2)}^{k\text{ times}},$$
+whose diagram is a $k\times2$ rectangle. Classically $\sch_{d_2[k]}(x;z)=E_{k,k}(x;z_1)E_{k,k}(x;z_2)$ is a product of two factorial elementary polynomials, so Corollary \ref{corollary:iteratedpieri} at $q=0$ is a Pieri rule for multiplication by $\sch_{d_2[k]}(x;z)$. In the quantum setting, however, $\qsch_{d_2[k]}(x;z)$ is \emph{not} the product $\qelem_{k,k}(x;z_1)\qelem_{k,k}(x;z_2)$: the two columns of the rectangle have the same height, so $x^{(2^k)}$ is not a standard elementary monomial, and the Fomin--Gelfand--Postnikov quantization does not factor. Instead one has a Giambelli-type determinant. For a Grassmannian permutation $w$ with descent at $k$ and shape $\lambda$ (so $\code(w)=(\lambda_k,\ldots,\lambda_1)$), the double Schubert polynomial is the determinant $\sch_w(x;z)=\det\big(E_{\lambda'_i+j-i,\,k+j-1}(x;z)\big)_{1\leq i,j\leq\lambda_1}$ of factorial elementary polynomials in the nested alphabets $x_1,\ldots,x_{k+j-1}$; every term of the expanded determinant is a standard elementary monomial, so the quantization map acts on it term by term and gives the quantum Giambelli formula \cite{fomin1997quantum,ciocan1999partial}
+$$\qsch_w(x;z)=\det\big(\qelem_{\lambda'_i+j-i,\,k+j-1}(x;z)\big)_{1\leq i,j\leq\lambda_1}$$
+in terms of the polynomials of Definition \ref{def:qelem}. For the $k\times2$ rectangle this reads
+$$\qsch_{d_2[k]}(x;z)=\qelem_{k,k+1}(x;z)\,\qelem_{k,k}(x;z)-\qelem_{k+1,k+1}(x;z)\,\qelem_{k-1,k}(x;z),$$
+whose first instances are
+$$\qsch_{d_2[1]}(x;z)=\qelem_{1,2}(x;z)\qelem_{1,1}(x;z)-\qelem_{2,2}(x;z),\qquad
+\qsch_{d_2[2]}(x;z)=\qelem_{2,3}(x;z)\qelem_{2,2}(x;z)-\qelem_{3,3}(x;z)\qelem_{1,2}(x;z).$$
+Consequently a product $\qsch_u(x;y)\qsch_{d_2[k]}(x;z)$ is computed by two successive quantum Pieri steps (for $\qelem_{k,k}$ and $\qelem_{k,k+1}$) minus two others; this is the ``paired step'' of the quantum multiplication algorithm of Section \ref{section:algorithms}, and it is the reason that algorithm iterates over the medium theta $\medtheta(v^{-1})$ rather than over $\theta(v^{-1})$. We do not know a closed Pieri-type formula for $\qsch_u(x;y)\qsch_{d_2[k]}(x;z)$ whose coefficients are individually positive.
+\end{remark}
 
-\begin{proposition}[{\cite[Proposition~2.10]{huang2015equivariant}}]
-Let $W_P$ be a parabolic subgroup of $W$. Then for any $\lambda_P\in Q^\vee/Q_P^\vee$, we have that
+\section{The Peterson--Woodward comparison formula} \label{section:pw}
+
+In this section we prove Proposition \ref{prop:parabolic}. We use the notation of Section \ref{section:definitions}: $W_P$ is a parabolic subgroup of $S_n$ with $P=\pcomp P$, $\omega_P=w_P$ is its longest element, and for $\lambda_P\in Q^\vee/Q^\vee_P$ we write $\lambda_B\in Q^\vee$ for its Peterson--Woodward lift. In the language of roots, $\lambda_B$ is the unique lift with $\langle\alpha,\lambda_B\rangle\in\{0,-1\}$ for all positive roots $\alpha$ of the Levi subgroup of $P$; in type $A$ these are the roots $\alpha_i+\cdots+\alpha_{j-1}$ with $s_i,\ldots,s_{j-1}\in P$, and $\langle\alpha_i+\cdots+\alpha_{j-1},d\rangle=\langle d\rangle_{ij}$, so this is the condition of Definition \ref{def:pwlift}.
+
+\begin{proposition}[{\cite[Proposition~2.10]{huang2015equivariant}}] \label{prop:huangli}
+Let $W_P$ be a parabolic subgroup of $W$ and $u,v,w\in W^P$. Then for any $\lambda_P\in Q^\vee/Q_P^\vee$, we have that
 $$c_{u,v}^{w,\lambda_P}(y;y) = c_{u,v}^{w\omega_P\omega_{P'},\lambda_B}(y;y),$$
-where $\omega_P$ is the longest element in $W_P$, $\omega_{P'}$ is the longest element in $W_{P'}$, where $P'$ is the parabolic subgroup generated by $\{s_\alpha\mid \alpha\in\Delta_P,\langle \alpha, \lambda_B\rangle=0\}$, and $\lambda_B$ is the Peterson-Woodward lift of $\lambda_P$. 
+where $\omega_P$ is the longest element in $W_P$, $\omega_{P'}$ is the longest element in $W_{P'}$, where $P'$ is the parabolic subgroup generated by $\{s_\alpha\mid \alpha\in\Delta_P,\langle \alpha, \lambda_B\rangle=0\}$, and $\lambda_B$ is the Peterson-Woodward lift of $\lambda_P$.
 \end{proposition}
 
-\begin{corollary}
-The Peterson-Woodward comparison formula holds for $c_{u,v}^w(y;z)$.
+Here the left-hand side is a structure constant of $QH_T^*(G/P)$, i.e.\ of the parabolic quantum double Schubert polynomials $\qsch^P_w(x;y)$ of Definition \ref{def:parabolic}, which represent the Schubert classes of $QH_T^*(G/P)$ \cite{lam2014quantum}, and the right-hand side is a structure constant of $QH_T^*(G/B)$.
+
+\begin{corollary} \label{corollary:pwz}
+With the notation of Proposition \ref{prop:huangli}, for all $u,v,w\in W^P$,
+$$c_{u,v}^{w,\lambda_P}(y;z) = c_{u,v}^{w\omega_P\omega_{P'},\lambda_B}(y;z).$$
 \end{corollary}
 \begin{proof}
-We have that
-$$c_{u,v}^{w,\lambda_P}(y;z) = \sum_{v_1\cdot v_2=v}c_{u,v_2}^{w,\lambda_P}(y;y)\sch_{v_1}(y;z)$$
-By definition of a parabolic subgroup, $v_2\in W_P$ as well. Thus, this is equal to
-$$\sum_{v_1\cdot v_2=v}c_{u,v_2}^{w\omega_P\omega_{P'},\lambda_B}(y;y)\sch_{v_1}(y;z) = c_{u,v}^{w\omega_P\omega_{P'},\lambda_B}(y;z).$$
+The parabolic polynomials satisfy the same quantum Cauchy identity as in Lemma \ref{lemma:quantumtoordinary}. Indeed, by \cite[Lemma~18]{lam2014quantum}, $\qsch^P_w(x;y)=\theta^P(\sch_w(x;y))$ for $w\in W^P$, where $\theta^P$ is the parabolic quantization map of Ciocan-Fontanine \cite{ciocan1999partial}, extended linearly over the coefficient variables; applying $\theta^P$ to the classical identity $\sch_v(x;z)=\sum_{v_1\cdot v_2=v}\sch_{v_1}(y;z)\sch_{v_2}(x;y)$ gives $\qsch^P_v(x;z)=\sum_{v_1\cdot v_2=v}\sch_{v_1}(y;z)\qsch^P_{v_2}(x;y)$, where we note that $v_2\in W^P$ for every reduced factorization (see below), so that $\theta^P(\sch_{v_2}(x;y))$ is indeed $\qsch^P_{v_2}(x;y)$. Hence
+$$c_{u,v}^{w,\lambda_P}(y;z) = \sum_{v_1\cdot v_2=v}c_{u,v_2}^{w,\lambda_P}(y;y)\,\sch_{v_1}(y;z).$$
+Here, if $v=v_1\cdot v_2$ is reduced and $v\in W^P$, then $v_2\in W^P$: for $s_i\in P$, $v_2s_i<v_2$ would give $\ell(vs_i)\leq\ell(v_1)+\ell(v_2s_i)<\ell(v)$, contradicting $v\in W^P$. Thus Proposition \ref{prop:huangli} applies to each term, and resumming by Lemma \ref{lemma:quantumtoordinary} gives
+$$\sum_{v_1\cdot v_2=v}c_{u,v_2}^{w\omega_P\omega_{P'},\lambda_B}(y;y)\,\sch_{v_1}(y;z) = c_{u,v}^{w\omega_P\omega_{P'},\lambda_B}(y;z).\qedhere$$
 \end{proof}
 
+\begin{proof}[Proof of Proposition \ref{prop:parabolic}]
+Let $d_P\in Q^\vee/Q^\vee_P$ with Peterson--Woodward lift $d=\lambda_B$. In type $A$, $\langle\alpha_i,d\rangle=2d_i-d_{i-1}-d_{i+1}=\langle d\rangle_i$, so the parabolic subgroup $P'$ of Proposition \ref{prop:huangli} is generated by $\{s_i\in P\mid\langle d\rangle_i=0\}$, that is, by $\{s_i\mid i\in z_P(d)\}$, and $\omega_P\omega_{P'}=w_Pw_{z_P(d)}$. The claim is therefore Corollary \ref{corollary:pwz}. (The passage from $S_n$ to $S_\infty$, i.e.\ from $P$ to $\pcomp P$, is the stability discussed after Definition \ref{def:parabolic}.)
+\end{proof}
 
 \bibliographystyle{acm}
 \bibliography{formschub}
