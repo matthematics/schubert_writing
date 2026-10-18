@@ -182,10 +182,10 @@ Our main results are the following.
 $$\qsch_u(x;y)\qelem_{k,k}(x;z)=\sum_{u\tom{k} w}q_k(u,w)\prod_{a\in\fx_k(u,w)}(y_a-z_1)\,\qsch_w(x;y),$$
 where $\tom{k}$ is a quantum analogue of the relation introduced by Sottile \cite{sottile} for the classical Pieri rule, $q_k(u,w)$ is a monomial in the $q_i$ recording the length-decreasing steps of a chain from $u$ to $w$ in the quantum Bruhat graph, and $\fx_k(u,w)$ is the set of values fixed by the chain in the first $k$ positions. This is an explicit instance of the positivity theorem, and it is the engine of the multiplication algorithm. The proof occupies Section \ref{section:proofpieri}; it proceeds by induction on $k$ via the single-variable Monk formula, and rests on an intrinsic description of the chains (every cycle of $u^{-1}w$ has exactly one element exceeding $k$, and a single length identity) which makes the term-by-term cancellations tractable. In the non-equivariant case the quantum Pieri formula for complete flag manifolds is due to Ciocan-Fontanine \cite{ciocan1999partial} and Postnikov \cite{postnikov1999quantum}.
 \item \emph{Parabolic reduction} (Proposition \ref{prop:parabolic}). The Peterson--Woodward comparison formula, in the form proved by Huang and Li \cite{huang2015equivariant} for equivariant quantum cohomology, extends verbatim to the triple constants. Consequently the triple structure constants of the parabolic quantum double Schubert polynomials of Lam and Shimozono are equal to triple constants of the complete flag variety, and in particular they are also Graham-positive (Corollary \ref{corollary:parabolicpositivity}).
-\item \emph{Algorithms and operators} (Sections \ref{section:algorithms} and \ref{section:quantclass}). We describe the algorithms implemented in the package \texttt{schubmult} \cite{schubmult} for computing products of (quantum) double Schubert polynomials, which combine the Pieri formula on one factor with a signed expansion of the other factor into products of factorial elementary polynomials; the quantum algorithm also uses a ``doubled'' Pieri rule (Theorem \ref{theorem:doubledpieri}) for the quantization of a product of two elementary polynomials in the same variables, which is obtained from two iterated Pieri steps by omitting the pairs of chains that are not compatible in a precise cycle-theoretic sense. We prove this doubled rule in general (Theorem \ref{theorem:doubledpieri}): it is equivalent to a termwise identity between pairs of chains (Theorem \ref{conjecture:termwise}) which telescopes along explicit blocks of pairs and is then established by an injection built from a single local lemma, a generalization of the up/down pairing used in the proof of the Pieri formula (Theorem \ref{theorem:junction}). We also show that the Fomin--Gelfand--Postnikov quantization operators \cite{fomin1997quantum} package the triple constants: the coefficient of $\partial^u$ in $\qsch_v(\chi^{(n)};z)$ is $\sum_d q^d c_{u,v}^{1,d}(x;z)$. Finally, we extend the quantum-to-classical reduction of Huang and Li to the triple constants.
+\item \emph{Algorithms and operators} (Sections \ref{section:algorithms} and \ref{section:quantclass}). We describe the algorithms implemented in the package \texttt{schubmult} \cite{schubmult} for computing products of (quantum) double Schubert polynomials, which combine the Pieri formula on one factor with a signed expansion of the other factor into products of factorial elementary polynomials. We prove this expansion, in both its classical and its quantum form (Theorems \ref{theorem:orddouble} and \ref{theorem:quandouble}); the key step is a formula for the skew divided differences, in the sense of \cite{samuelleibniz,samuelmolev}, of a product $\prod_{j\leq k}(x_j-z_i)$ with respect to the $z$-variables (Theorem \ref{theorem:skewtop}), in which the terms of the iterated Monk rule that revisit a position cancel by a rotation argument (Lemma \ref{lemma:rotation}). The quantum algorithm also uses a ``doubled'' Pieri rule (Theorem \ref{theorem:doubledpieri}) for the quantization of a product of two elementary polynomials in the same variables, which is obtained from two iterated Pieri steps by omitting the pairs of chains that are not compatible in a precise cycle-theoretic sense. We prove this doubled rule in general (Theorem \ref{theorem:doubledpieri}): it is equivalent to a termwise identity between pairs of chains (Theorem \ref{conjecture:termwise}) which telescopes along explicit blocks of pairs and is then established by an injection built from a single local lemma, a generalization of the up/down pairing used in the proof of the Pieri formula (Theorem \ref{theorem:junction}). We also show that the Fomin--Gelfand--Postnikov quantization operators \cite{fomin1997quantum} package the triple constants: the coefficient of $\partial^u$ in $\qsch_v(\chi^{(n)};z)$ is $\sum_d q^d c_{u,v}^{1,d}(x;z)$. Finally, we extend the quantum-to-classical reduction of Huang and Li to the triple constants.
 \end{enumerate}
 
-The paper is organized as follows. Section \ref{section:definitions} fixes notation, proves the positivity theorem and treats the parabolic case. Section \ref{section:pieri} states the Pieri formula, whose proof is given in Section \ref{section:proofpieri}. Section \ref{section:algorithms} describes the algorithms and the operator interpretation, Section \ref{section:quantclass} the quantum-to-classical reduction, Section \ref{section:additional} the iterated Pieri formula, and Section \ref{section:pw} the Peterson--Woodward comparison formula.
+The paper is organized as follows. Section \ref{section:definitions} fixes notation, proves the positivity theorem and treats the parabolic case. Section \ref{section:pieri} states the Pieri formula, whose proof is given in Section \ref{section:proofpieri}. Section \ref{section:algorithms} describes the algorithms and the operator interpretation, Section \ref{section:quantclass} the quantum-to-classical reduction, Section \ref{section:proofvside} proves the expansion formulas used on the $v$-side of the algorithms, Section \ref{section:additional} the iterated Pieri formula, and Section \ref{section:pw} the Peterson--Woodward comparison formula.
 
 \textbf{Acknowledgements.} We thank Tongren Xiao and Yihua Yue for permission to include their proof of Theorem \ref{theorem:positivity}.
 
@@ -578,28 +578,26 @@ Define $\thop_i(v)$ to be $\code_i(\mom(v))$.
 Between these two lies the \emph{medium theta} $\medtheta(v)$, the partition actually iterated by the quantum multiplication algorithm. Like $\theta(v)$ it is a weakly decreasing partition obtained from $\code(v)$ by incrementing and reordering, but it stops short of separating every pair of equal parts: a pair of equal consecutive nonzero parts $\medtheta_i(v)=\medtheta_{i+1}(v)$ is left in place exactly when it is preceded by a strict drop of at least two, that is $\medtheta_{i-1}(v)\geq\medtheta_i(v)+2$ (or $i=1$), and every other ascent or equality is removed by incrementing as for $\theta$. Thus $\medtheta(v)$ permits some, but not all, repeated parts, and lies between $\theta(v)$ (arbitrary repeats) and $\thop(v)$ (no repeats). We write $\medperm(v)$ for the permutation with $\code(\medperm(v))=\medtheta(v)$ and set $|\medtheta(v)|:=\sum_i\medtheta_i(v)=\ell(\medperm(v))$. The number of nonzero parts of $\medtheta(v)$ equals the number of nonzero parts of $\code(v)$.
 \end{definition}
 
-\begin{definition}[$\xRightarrow{i}$, $\sigma_i(u,v)$, $D_i(u,v)$]
+\begin{definition}[$\xRightarrow{i}$, $\ell(u,v)$, $\sigma_i(u,v)$, $D_i(u,v)$, $z_D$] \label{def:itom}
 Let $u,v\in S_\infty$ and $i\geq 1$ be an integer. We define $u\Tom{i} v$ if there exist distinct integers $b_1,b_2,\ldots,b_k$ such that $b_j\neq i$ for all $j$, $\ell(ut_{i,b_1}\cdots t_{i,b_j})=\ell(u)+j$ for all $j$, and 
-$$v=ut_{i,b_1}\cdots t_{i,b_k}$$
-We define
-$$\sigma_i(u,v)=\#\{j\mid b_j<i\}$$
-and we define
-$$D_i(u,v)=\{u(i)\}\cup\{u(j)\mid u(j)\neq v(j)\}$$
+$$v=ut_{i,b_1}\cdots t_{i,b_k}.$$
+Thus $u\Tom{i}v$ means that $v$ is reached from $u$ by a chain of Bruhat covers $u\lessdot ut_{ib_1}\lessdot ut_{ib_1}t_{ib_2}\lessdot\cdots\lessdot v$, each of which exchanges the position $i$ with a position not used before. The sequence $b_1,\ldots,b_k$ is determined by $u$ and $v$: the product $u^{-1}v=t_{ib_1}\cdots t_{ib_k}$ is the cycle $i\mapsto b_k\mapsto b_{k-1}\mapsto\cdots\mapsto b_1\mapsto i$, from which the $b_j$ are read off. We write $\ell(u,v)=\ell(v)-\ell(u)=k$ and define
+$$\sigma_i(u,v)=\#\{j\mid b_j<i\},\qquad D_i(u,v)=\{u(i)\}\cup\{u(j)\mid u(j)\neq v(j)\}=\{u(i),u(b_1),\ldots,u(b_k)\},$$
+a set of $k+1$ values. Finally, for a finite set $D=\{d_1<\cdots<d_m\}$ of positive integers with $m=k-p+1$ we write $E_{p,k}(x;z_D)=E_{p,k}(x;z_{d_1},\ldots,z_{d_m})$ and $\qelem_{p,k}(x;z_D)=\qelem_{p,k}(x;z_{d_1},\ldots,z_{d_m})$; since these polynomials are symmetric in $z_1,\ldots,z_{k-p+1}$ (Lemma \ref{lemma:Ehe}), the order in which the elements of $D$ are listed is immaterial. As in Definition \ref{def:qelem}, $E_{p,k}=\qelem_{p,k}=0$ when $p<0$.
 \end{definition}
 
-The following two formulas express a (quantum) double Schubert polynomial as a signed sum of products of (quantum) factorial elementary polynomials in nested initial alphabets; they are the $v$-side input of the multiplication algorithm. The first is proved in \cite{samuelschubmultpaper}. The second is its quantum analogue and is proved in the same way, the only new ingredient being the factorization of $\qsch_\mu(x;z)$ for a strict dominant permutation $\mu$: if the column heights $\lambda'_1>\lambda'_2>\cdots$ of the diagram of $\mu$ are pairwise distinct, then $x^{\code(\mu)}=\prod_j e_{\lambda'_j}(x_1,\ldots,x_{\lambda'_j})$ is a single standard elementary monomial, so that the Fomin--Gelfand--Postnikov quantization gives $\qsch_\mu(x;z)=\prod_j\qelem_{\lambda'_j,\lambda'_j}(x;z_j)$; this is the reason $\dom$ is replaced by $\mom$ in the quantum case, since for repeated column heights the quantum polynomial is \emph{not} a product (see Section \ref{section:additional}). The implementation uses the intermediate shape $\medtheta$, in which an equal pair of columns is allowed when there is room for it, and handles such a pair by the doubled formula of Theorem \ref{theorem:doubledpieri}.
+The following two formulas express a (quantum) double Schubert polynomial as a signed sum of products of (quantum) factorial elementary polynomials in nested initial alphabets; they are the $v$-side input of the multiplication algorithm, and they are proved in Section \ref{section:proofvside}. Both start from a dominant permutation $\mu$ lying above $v^{-1}$ in the right weak order, that is $\mu=v^{-1}\cdot y$ with $\ell(\mu)=\ell(v)+\ell(y)$; the permutations $\dom(v^{-1})$ and $\mom(v^{-1})$ are of this kind, since each step of their construction multiplies on the right by a simple reflection $s_i$ with $\code_i<\code_{i+1}$ (respectively $\code_i\leq\code_{i+1}$), which forces $v(i)<v(i+1)$ and so increases the length. The implementation uses $\mu=\dom(v^{-1})$ in the classical case, and the parts of $\code(\mu)$ are then the $\theta_i(v^{-1})$ of Definition \ref{def:codetheta}. In the quantum case the dominant permutation has to be strict dominant, because the quantum polynomial $\qsch_{\mu^{-1}}(x;z)$ which is being expanded factors into a product of quantum factorial elementary polynomials only when the column heights of the diagram of $\mu^{-1}$, which are the parts of $\code(\mu)$, are pairwise distinct (Lemma \ref{lemma:dominantfactor}); for repeated column heights it is \emph{not} a product (see Section \ref{section:additional}). This is the reason $\dom$ is replaced by $\mom$. The implementation uses the intermediate shape $\medtheta$, in which an equal pair of columns is allowed when there is room for it, and handles such a pair by the doubled formula of Theorem \ref{theorem:doubledpieri}.
 
-\begin{theorem}[{Formula for ordinary double Schubert polynomials, \cite{samuelschubmultpaper}}] \label{theorem:orddouble}
-Suppose $v\in S_\infty$. Then
-$$\sch_v(x;z)=\sum_{(v_0,\ldots,v_k)}\prod_{i=1}^k (-1)^{\sigma_i(v_{i-1},v_i)}E_{\theta_i(v)-\ell(v_{i-1},v_i),\theta_i(v)}(x;z_{D_i(v_{i-1},v_i)})$$
-Where $v_{i-1}\xRightarrow{i} v_i$ for all $i$, $v_0=1$, and $v_k=v\dom(v^{-1})$.
+\begin{theorem}[Formula for ordinary double Schubert polynomials] \label{theorem:orddouble}
+Let $v\in S_\infty$ and let $\mu$ be a dominant permutation with $\mu=v^{-1}\cdot y$ reduced, for instance $\mu=\dom(v^{-1})$. Let $\theta=\code(\mu)$, with nonzero parts $\theta_1\geq\cdots\geq\theta_k>0$. Then
+$$\sch_v(x;z)=\sum_{(v_0,\ldots,v_k)}\prod_{i=1}^k (-1)^{\sigma_i(v_{i-1},v_i)}E_{\theta_i-\ell(v_{i-1},v_i),\,\theta_i}\big(x;z_{D_i(v_{i-1},v_i)}\big),$$
+the sum being over all sequences $1=v_0\Tom{1}v_1\Tom{2}v_2\Tom{3}\cdots\Tom{k}v_k=v\mu$.
 \end{theorem}
 
-
 \begin{theorem}[Formula for quantum double Schubert polynomials] \label{theorem:quandouble}
-Suppose $v\in S_\infty$. Then
-$$\qsch_v(x;z)=\sum_{(v_0,\ldots,v_k)}\prod_{i=1}^k (-1)^{\sigma_i(v_{i-1},v_i)}E_{\thop_i(v)-\ell(v_{i-1},v_i),\thop_i(v)}^q(x;z_{D_i(v_{i-1},v_i)})$$
-Where $v_{i-1}\xRightarrow{i} v_i$ for all $i$, $v_0=1$, and $v_k=v\mom(v^{-1})$.
+Let $v\in S_\infty$ and let $\mu$ be a strict dominant permutation with $\mu=v^{-1}\cdot y$ reduced, for instance $\mu=\mom(v^{-1})$. Let $\thop=\code(\mu)$, with nonzero parts $\thop_1>\cdots>\thop_k>0$. Then
+$$\qsch_v(x;z)=\sum_{(v_0,\ldots,v_k)}\prod_{i=1}^k (-1)^{\sigma_i(v_{i-1},v_i)}\qelem_{\thop_i-\ell(v_{i-1},v_i),\,\thop_i}\big(x;z_{D_i(v_{i-1},v_i)}\big),$$
+the sum being over all sequences $1=v_0\Tom{1}v_1\Tom{2}\cdots\Tom{k}v_k=v\mu$.
 \end{theorem}
 
 Coupled with the Pieri formulas, these formulas give an algorithm for computing products of (quantum) double Schubert polynomials, which is the one implemented in \cite{schubmult}. We describe its classical form by building it from two ingredients: the elementary Pieri step that generates the $u$-side covers, and the signed path expansion on the $v$-side.
@@ -646,9 +644,9 @@ Processing one frontier node $(w,\beta)$ costs $O(k)$ to build $A$, and then ite
 \end{proof}
 \fi
 
-We now describe the $v$-side primitive. Its starting point is the structure of a \emph{dominant} double Schubert polynomial. If $\mu$ is dominant with $\code(\mu)=(\lambda_1,\ldots,\lambda_m)$, then $\sch_\mu(x;z)$ factors as a product of factorial elementary symmetric polynomials of maximal degree, one per column of the shape,
-$$\sch_\mu(x;z)=\prod_{i=1}^{m}E_{\lambda_i,\,\lambda_i}(x;z^{(i)}),$$
-where $z^{(i)}$ is the shifted $z$-alphabet attached to column $i$ (Definition~\ref{definition:pieri}). For a general $v$ one writes $\sch_v(x;z)$ by applying divided differences in the $z$-variables to the dominant polynomial $\sch_{\dom(v^{-1})}(x;z)$; because that polynomial factors by column, the divided-difference action decouples and may be carried out one column (one $z^{(i)}$-group) at a time. Applied to a single column this produces a \emph{signed} descending expansion. The following primitive carries it out.
+We now describe the $v$-side primitive. Its starting point is the structure of a \emph{dominant} double Schubert polynomial. If $\mu$ is dominant and the columns of its diagram have heights $\lambda_1,\ldots,\lambda_m$ (so that $(\lambda_1,\ldots,\lambda_m)=\code(\mu^{-1})$), then $\sch_\mu(x;z)$ factors as a product of factorial elementary symmetric polynomials of maximal degree, one per column of the shape,
+$$\sch_\mu(x;z)=\prod_{i=1}^{m}E_{\lambda_i,\,\lambda_i}(x;z_i)$$
+(Lemma \ref{lemma:dominantfactor}). For a general $v$ one writes $\sch_v(x;z)$ by applying divided differences in the $z$-variables to the dominant polynomial $\sch_{\mu^{-1}}(x;z)$ with $\mu=\dom(v^{-1})$, whose column heights are the parts of $\theta(v^{-1})$; because that polynomial factors by column, the divided-difference action decouples and may be carried out one column (one variable $z_i$) at a time. Applied to a single column this produces a \emph{signed} descending expansion. The following primitive carries it out.
 
 \begin{definition}[$k$-strip descent beneath an edge, the down-Pieri problem] \label{def:kdownproblem}
 Let $w,\mu\in S_n$ and $1\leq k<n$. Say $w'$ lies \emph{beneath the edge} $\mu$ if
@@ -750,7 +748,7 @@ times, where $\beta_i(w):=\bigl|\textbf{\textsc{pieri}}(w,\theta_i,\theta_i)\big
 $$W\;\leq\;L\cdot P_u\cdot 2^{\ell_v}\cdot B\cdot\Delta,$$
 and each executed body costs $O(n)$ ring and permutation operations; this is the stated bound.
 
-For the worst case substitute $P_u\leq n!\leq 2^{\,n\log_2 n}$, $\ell_v\leq\binom{n}{2}$, and $B,\Delta\leq 2^{n}-1$. Because $\log_2(B\,\Delta)\leq 2n=O(n)$, the two branchings---in particular the kdown-triple factor $\Delta$---contribute only $O(n)$ to the exponent, which is absorbed by the $n\log_2 n$ term; hence $W=2^{\,\binom{n}{2}+n\log_2 n+O(n)}=O\!\left(2^{\,\binom{n}{2}+n\log_2 n}\right)$, and the leading exponent $\binom{n}{2}$ is unchanged. If $v$ is dominant then $\theta(v)=\code(v)$, $\ell(\mu)=\ell_v$, every path step carries a $+1$ sign, and each layer's $v$-side is a single path: the number of live labels is $O(\ell_v)$ and the kdown branching collapses to $\Delta=1$, so no term is produced and later canceled. The bound becomes $O(\ell_v\cdot P_u\cdot B\cdot n)=O(2^{\,n\log_2 n})$.
+For the worst case substitute $P_u\leq n!\leq 2^{\,n\log_2 n}$, $\ell_v\leq\binom{n}{2}$, and $B,\Delta\leq 2^{n}-1$. Because $\log_2(B\,\Delta)\leq 2n=O(n)$, the two branchings---in particular the kdown-triple factor $\Delta$---contribute only $O(n)$ to the exponent, which is absorbed by the $n\log_2 n$ term; hence $W=2^{\,\binom{n}{2}+n\log_2 n+O(n)}=O\!\left(2^{\,\binom{n}{2}+n\log_2 n}\right)$, and the leading exponent $\binom{n}{2}$ is unchanged. If $v$ is dominant then $\theta(v^{-1})=\code(v^{-1})$, $\ell(\mu)=\ell_v$, every path step carries a $+1$ sign, and each layer's $v$-side is a single path: the number of live labels is $O(\ell_v)$ and the kdown branching collapses to $\Delta=1$, so no term is produced and later canceled. The bound becomes $O(\ell_v\cdot P_u\cdot B\cdot n)=O(2^{\,n\log_2 n})$.
 \end{proof}
 
 \begin{remark}
@@ -1394,6 +1392,142 @@ by Lemma \ref{lemma:elemrecursion}. The remaining contributions are the reflecti
 \emph{Case 3: $u(k)\neq w(k)$ and $B=k$.} Here $u\ntom{k}w$, since $C$ contains no element greater than $k$, so $c_k(u,w)=0$; and \eqref{eq:diag}--\eqref{eq:rec} vanishes by Lemma \ref{lemma:movedcancel}(b) (equivalently, by Lemma \ref{lemma:vanishing}).
 
 By Lemma \ref{lemma:leveldichotomy} these cases are exhaustive. In all cases $[\qsch_w](\qsch_u\qelem_{k,k})=c_k(u,w)$, completing the induction and the proof.
+\end{proof}
+
+\section{Proof of the formulas for the double Schubert polynomials} \label{section:proofvside}
+
+In this section we prove Theorems \ref{theorem:orddouble} and \ref{theorem:quandouble}. Throughout, divided difference operators act on the $z$-variables, and in order to free the subscript for the skew operators we write
+$$\partial^a=\partial^{(z)}_a,\qquad \partial^w=\partial^{(z)}_w=\partial^{a_1}\cdots\partial^{a_m}\quad(w=s_{a_1}\cdots s_{a_m}\text{ reduced}),$$
+the rightmost operator being applied first. The simple reflection $s_a$ acts on polynomials by exchanging $z_a$ and $z_{a+1}$, and a permutation $w$ acts by $w(z_i)=z_{w(i)}$, so that $w=s_{a_1}\circ\cdots\circ s_{a_m}$ as operators. All operators of this section are linear over $\mathbb Z[q][x]$, which we treat as the ring of scalars. Since the letter $\theta$ denotes a code in Theorems \ref{theorem:orddouble} and \ref{theorem:quandouble}, we write $\mathcal Q$ in this section for the quantization map of Fomin, Gelfand and Postnikov, called $\theta$ in the proof of Lemma \ref{lemma:quantumtoordinary}; recall that $\mathcal Q$ is linear over $\mathbb Z[q][z]$, sends every standard elementary monomial $\prod_je_{i_j}(x_1,\ldots,x_j)$ to $\prod_je^{(q)}_{i_j}(x_1,\ldots,x_j)$, and satisfies $\mathcal Q(\sch_w(x;z))=\qsch_w(x;z)$.
+
+\subsection{Skew divided difference operators}
+
+We use the skew divided difference operators of \cite{samuelleibniz,samuelmolev}. They are the operators $\partial^w_u$, $u,w\in S_\infty$, determined by the Leibniz formula
+\begin{equation}\label{eq:leibniz2}
+\partial^w(PQ)=\sum_{u\in S_\infty}\partial^u(P)\,\partial^w_u(Q),
+\end{equation}
+which differs by a normalization from the convention of Macdonald \cite{notes}. We shall use the following facts.
+
+\begin{lemma} \label{lemma:skewfacts}
+Let $u,w\in S_\infty$.
+\begin{enumerate}
+\item[(i)] (Subword formula.) If $(a_1,\ldots,a_m)$ is a reduced word for $w$, then $\partial^w_u$ is the sum, over all reduced subwords $(b_1,\ldots,b_m)$ for $u$ (that is, $b_j\in\{1,s_{a_j}\}$ for each $j$, and the nonunit entries form a reduced word for $u$), of the compositions $\partial^{a_1}_{b_1}\cdots\partial^{a_m}_{b_m}$, where $\partial^{a}_{1}=\partial^a$ and $\partial^{a}_{s_a}=s_a$.
+\item[(ii)] $\partial^w_u=0$ unless $u\leq w$ in Bruhat order; $\partial^w_1=\partial^w$ and $\partial^w_w=w$; and $\partial^w_u$ is homogeneous of degree $\ell(u)-\ell(w)$ in the $z$-variables. In particular, for a scalar $c$, $\partial^w_u(c)=c$ if $u=w$ and $\partial^w_u(c)=0$ otherwise.
+\item[(iii)] (Ascending Leibniz formula.) For polynomials $f_1,\ldots,f_k$,
+$$\partial^w_u(f_1f_2\cdots f_k)=\sum_{u=u_0\leq u_1\leq\cdots\leq u_k=w}\ \prod_{j=1}^k\partial^{u_j}_{u_{j-1}}(f_j).$$
+\end{enumerate}
+\end{lemma}
+\begin{proof}
+(i) is proved in \cite{samuelmolev} (it goes back to Macdonald \cite{notes}). (ii) follows from (i): a reduced subword for $u$ of a reduced word for $w$ exists only if $u\leq w$; the only subword for $u=1$ is the empty one and the only one for $u=w$ is the full word, whose composition $s_{a_1}\circ\cdots\circ s_{a_m}$ is the action of $w$; and each composition in (i) consists of $\ell(u)$ reflections, which preserve degree, and $\ell(w)-\ell(u)$ divided differences, which lower it by one. (iii) is a rearrangement of the generalized Leibniz rule of \cite[Corollary~3.5.4]{samuelleibniz}: in the notation of that work $\partial^w_u=\sum_vc^w_{u,v}\partial_v$, the coefficients $c^w_{u_0,u_1,\ldots,u_k}$ of the $k$-fold rule factor as $\sum_{v_1,\ldots,v_{k-1}}c^{v_1}_{u_0,u_1}c^{v_2}_{v_1,u_2}\cdots c^{w}_{v_{k-1},u_k}$ by associativity, and $\sum_{u_j}c^{v_j}_{v_{j-1},u_j}\partial_{u_j}(f_j)=\partial^{v_j}_{v_{j-1}}(f_j)$. By (ii) only chains $u_0\leq u_1\leq\cdots\leq u_k$ contribute.
+\end{proof}
+
+\begin{lemma}[Linear forms] \label{lemma:skewlinear}
+Let $u,w\in S_\infty$ and $i\geq1$. Then
+$$\partial^w_u(z_i)=\begin{cases}z_{u(i)}&\text{if }w=u,\\ 1&\text{if }w=ut_{ib}\text{ with }b>i\text{ and }\ell(w)=\ell(u)+1,\\ -1&\text{if }w=ut_{bi}\text{ with }b<i\text{ and }\ell(w)=\ell(u)+1,\\ 0&\text{otherwise.}\end{cases}$$
+\end{lemma}
+\begin{proof}
+The case $w=u$ is Lemma \ref{lemma:skewfacts}(ii), and by the same lemma $\partial^w_u(z_i)=0$ unless $u<w$ and $\ell(w)=\ell(u)+1$. So let $w=ut_{ab}$ with $a<b$ and $\ell(w)=\ell(u)+1$, so that $u(a)<u(b)$. Fix a reduced word $(a_1,\ldots,a_m)$ for $w$ and put $\sigma_p=s_{a_{p+1}}\cdots s_{a_m}$. The reduced subwords for $u$ omit exactly one letter, and omitting the $p$-th letter gives the element $w\,\sigma_p^{-1}s_{a_p}\sigma_p=w\,t_{\sigma_p^{-1}(a_p),\,\sigma_p^{-1}(a_p+1)}$. The reflections $\sigma_p^{-1}s_{a_p}\sigma_p$, $1\leq p\leq m$, are pairwise distinct (they are the $m$ reflections $t$ with $\ell(wt)<\ell(w)$, see \cite[Section~1.6--1.7]{humphreys1992reflection}), so exactly one $p$ yields $u$, namely the one with $\{\sigma_p^{-1}(a_p),\sigma_p^{-1}(a_p+1)\}=\{a,b\}$, and by Lemma \ref{lemma:skewfacts}(i)
+$$\partial^w_u(z_i)=s_{a_1}\cdots s_{a_{p-1}}\,\partial^{a_p}\,\sigma_p(z_i)=s_{a_1}\cdots s_{a_{p-1}}\,\partial^{a_p}\big(z_{\sigma_p(i)}\big),$$
+which is $1$ if $\sigma_p(i)=a_p$, $-1$ if $\sigma_p(i)=a_p+1$, and $0$ otherwise. It remains to see that $\sigma_p^{-1}(a_p)=a$ and $\sigma_p^{-1}(a_p+1)=b$. The word $(a_1,\ldots,a_p)$ is reduced and ends with $a_p$, so $\tau=s_{a_1}\cdots s_{a_p}$ satisfies $\tau(a_p)>\tau(a_p+1)$; since $w=\tau\sigma_p$ this says $w(\sigma_p^{-1}(a_p))>w(\sigma_p^{-1}(a_p+1))$. As $w(a)=u(b)>u(a)=w(b)$, the claim follows.
+\end{proof}
+
+\subsection{Factorial elementary polynomials and dominant permutations}
+
+\begin{lemma} \label{lemma:Ehe}
+For $0\leq p\leq k$,
+\begin{align*}
+E_{p,k}(x;z)&=\sum_{m=0}^{p}(-1)^{p-m}h_{p-m}(z_1,\ldots,z_{k-p+1})\,e_m(x_1,\ldots,x_k),\\
+\qelem_{p,k}(x;z)&=\sum_{m=0}^{p}(-1)^{p-m}h_{p-m}(z_1,\ldots,z_{k-p+1})\,e^{(q)}_m(x_1,\ldots,x_k).
+\end{align*}
+In particular $E_{p,k}(x;z)$ and $\qelem_{p,k}(x;z)$ are symmetric in $z_1,\ldots,z_{k-p+1}$, and $\qelem_{p,k}(x;z)=\mathcal Q\big(E_{p,k}(x;z)\big)$.
+\end{lemma}
+\begin{proof}
+Lemma \ref{lemma:quantumtoordinary} with $y=0$ gives $\qsch_w(x;z)=\sum_{v_1\cdot v_2=w}\sch_{v_1}(0;z)\qsch_{v_2}(x)$. The permutation $c[p,k]=s_{k-p+1}\cdots s_k$ has a unique reduced word, so its reduced factorizations are $v_1=s_{k-p+1}\cdots s_j$, $v_2=s_{j+1}\cdots s_k$ with $k-p\leq j\leq k$. Here $v_2$ is the Grassmannian permutation with descent at $k$ whose diagram is a single column of height $m=k-j$, so $\sch_{v_2}(x)=e_m(x_1,\ldots,x_k)$ and $\qsch_{v_2}(x)=e^{(q)}_m(x_1,\ldots,x_k)$ \cite{fomin1997quantum}; and $\sch_{v_1}(0;z)=(-1)^{\ell(v_1)}\sch_{v_1^{-1}}(z)$, where $v_1^{-1}=s_j\cdots s_{k-p+1}$ is the Grassmannian permutation with descent at $k-p+1$ whose diagram is a single row of length $\ell(v_1)=p-m$, so that $\sch_{v_1^{-1}}(z)=h_{p-m}(z_1,\ldots,z_{k-p+1})$. Summing over $j$ gives the second formula, and the first is its specialization at $q=0$. The symmetry is clear from the formulas, and the last assertion holds because $\mathcal Q$ fixes $\mathbb Z[z]$ and sends the standard elementary monomial $e_m(x_1,\ldots,x_k)$ to $e^{(q)}_m(x_1,\ldots,x_k)$.
+\end{proof}
+
+\begin{lemma}[Dominant permutations] \label{lemma:dominantfactor}
+Let $\mu$ be a dominant permutation with $\code(\mu)=\theta$, $\theta_1\geq\cdots\geq\theta_k>0$. Then $\mu^{-1}$ is dominant, the $i$-th column of its diagram has height $\theta_i$, and
+$$\sch_{\mu^{-1}}(x;z)=\prod_{i=1}^kE_{\theta_i,\theta_i}(x;z_i)=\prod_{i=1}^k\prod_{j=1}^{\theta_i}(x_j-z_i).$$
+If moreover $\theta_1>\cdots>\theta_k$, then $\qsch_{\mu^{-1}}(x;z)=\prod_{i=1}^k\qelem_{\theta_i,\theta_i}(x;z_i)$.
+\end{lemma}
+\begin{proof}
+A permutation is dominant if and only if its diagram is the Young diagram of its code, placed in the upper left corner, and for such a permutation $\rho$ one has $\sch_\rho(x;z)=\prod_{(a,b)\in D(\rho)}(x_a-z_b)$ \cite{notes}. The diagram of $\mu^{-1}$ is the transpose of that of $\mu$, so $D(\mu^{-1})=\{(j,i)\mid 1\leq i\leq k,\ 1\leq j\leq\theta_i\}$, which is again a Young diagram in the upper left corner; this gives the first assertions and the factorization. For the quantum statement, expand each factor by Lemma \ref{lemma:qelemkk} at $q=0$: $E_{\theta_i,\theta_i}(x;z_i)=\sum_{m}(-z_i)^{\theta_i-m}e_m(x_1,\ldots,x_{\theta_i})$. Multiplying out, each term $\prod_ie_{m_i}(x_1,\ldots,x_{\theta_i})$ is a standard elementary monomial because the alphabets $x_1,\ldots,x_{\theta_i}$ have pairwise distinct lengths, and $\mathcal Q$ sends it to $\prod_ie^{(q)}_{m_i}(x_1,\ldots,x_{\theta_i})$. Hence $\qsch_{\mu^{-1}}(x;z)=\mathcal Q(\sch_{\mu^{-1}}(x;z))=\prod_i\sum_m(-z_i)^{\theta_i-m}e^{(q)}_m(x_1,\ldots,x_{\theta_i})=\prod_i\qelem_{\theta_i,\theta_i}(x;z_i)$ by Lemma \ref{lemma:qelemkk}.
+\end{proof}
+
+\subsection{The skew divided differences of $E_{k,k}(x;z_i)$}
+
+For $i\geq1$ and an integer $b\neq i$ put $\epsilon_i(b)=1$ if $b<i$ and $\epsilon_i(b)=-1$ if $b>i$. If $u\Tom{i}w$ with chain $b_1,\ldots,b_k$ as in Definition \ref{def:itom}, then $\prod_j\epsilon_i(b_j)=(-1)^{\ell(u,w)-\sigma_i(u,w)}$. The heart of the matter is the following lemma, which governs the cancellation of the chains through position $i$ that revisit a position.
+
+\begin{lemma}[Rotation] \label{lemma:rotation}
+Let $\psi\in S_\infty$, $i\geq1$, and let $\gamma_1,\ldots,\gamma_m$ ($m\geq2$) be distinct integers different from $i$, with indices read modulo $m$. For $1\leq r\leq m$ let
+$$R_r=(\gamma_r,\gamma_{r+1},\ldots,\gamma_{r+m-1},\gamma_r),$$
+a sequence of length $m+1$, and call $R_r$ \emph{valid} if the sequence of permutations $\psi,\ \psi t_{i\gamma_r},\ \psi t_{i\gamma_r}t_{i\gamma_{r+1}},\ \ldots$ obtained by applying its entries in turn is a chain of Bruhat covers. Then:
+\begin{enumerate}
+\item[(i)] $t_{i\gamma_r}t_{i\gamma_{r+1}}\cdots t_{i\gamma_{r+m-1}}t_{i\gamma_r}=C$ for every $r$, where $C$ is the cycle $\gamma_j\mapsto\gamma_{j-1}$ ($1\leq j\leq m$), which fixes $i$. In particular all valid $R_r$ lead from $\psi$ to the same permutation $\psi C$.
+\item[(ii)] Listed in cyclic order of $r$, the valid $R_r$ alternate between those with $\gamma_r<i$ and those with $\gamma_r>i$. In particular the number of valid $R_r$ with $\gamma_r<i$ equals the number of valid $R_r$ with $\gamma_r>i$.
+\end{enumerate}
+\end{lemma}
+\begin{proof}
+(i) Since $t_{ib}t_{ic}t_{ib}=t_{bc}$ for distinct $b,c\neq i$, the product equals $t_{\gamma_r\gamma_{r+1}}t_{\gamma_r\gamma_{r+2}}\cdots t_{\gamma_r\gamma_{r+m-1}}$, which in the notation \eqref{eq:pivot} is the cycle $(\gamma_{r+m-1},\ldots,\gamma_{r+1},\gamma_r)$, sending $\gamma_{r+m-1}\mapsto\gamma_{r+m-2}\mapsto\cdots\mapsto\gamma_{r+1}\mapsto\gamma_r\mapsto\gamma_{r+m-1}$.
+
+(ii) Put $c=\psi(i)$ and $v_j=\psi(\gamma_j)$. Fix $r$ and follow $R_r$. Before the $s$-th step ($1\leq s\leq m$) the position $i$ carries $v_{r+s-2}$ (that is, $c$ when $s=1$), and the position $\gamma_{r+s-1}$, which has not been moved yet, carries $v_{r+s-1}$; before the last step the position $i$ carries $v_{r-1}$ and the position $\gamma_r$ carries $c$. Call a step exchanging the position $i$ with a position $g$ \emph{ascending} if the value at $g$ exceeds the value at $i$ when $g>i$, and is smaller than it when $g<i$. By Lemma \ref{lemma:lengthchange} an ascending step increases the length by at least $1$, a non-ascending step decreases it, and a step is a Bruhat cover exactly when it is ascending and increases the length by exactly $1$. The total change in length along $R_r$ is $\ell(\psi C)-\ell(\psi)$ by (i), independently of $r$. Consequently $R_r$ is valid if and only if all of its $m+1$ steps are ascending and $\ell(\psi C)-\ell(\psi)=m+1$.
+
+By the description of the values before each step, the steps $2,\ldots,m$ of $R_r$ are all ascending if and only if
+\begin{equation}\label{eq:DC}
+v_j>v_{j-1}\iff\gamma_j>i\qquad\text{for all }j\neq r,
+\end{equation}
+while the first step is ascending if and only if ($v_r>c\iff\gamma_r>i$) and the last if and only if ($c>v_{r-1}\iff\gamma_r>i$). The last two conditions together say precisely that $c$ lies strictly between $v_{r-1}$ and $v_r$ and that \eqref{eq:DC} holds for $j=r$ as well. Therefore $R_r$ is valid if and only if
+$$\ell(\psi C)-\ell(\psi)=m+1,\qquad\text{\eqref{eq:DC} holds for all }j,\qquad\text{and }c\text{ lies strictly between }v_{r-1}\text{ and }v_r.$$
+The first two conditions do not involve $r$. If they hold, the valid indices $r$ are exactly those at which the cyclic sequence $v_1,\ldots,v_m$, none of whose terms equals $c$, crosses the level $c$; and consecutive crossings of a cyclic sequence are alternately upward ($v_{r-1}<c<v_r$) and downward ($v_{r-1}>c>v_r$). By \eqref{eq:DC} the upward crossings are those with $\gamma_r>i$ and the downward ones those with $\gamma_r<i$.
+\end{proof}
+
+\begin{theorem} \label{theorem:skewtop}
+Let $u,w\in S_\infty$, $i\geq1$ and $k\geq0$. Then $\partial^w_u\big(E_{k,k}(x;z_i)\big)=0$ unless $u\Tom{i}w$, in which case
+$$\partial^w_u\big(E_{k,k}(x;z_i)\big)=(-1)^{\ell(u,w)-\sigma_i(u,w)}\,E_{k-\ell(u,w),\,k}\big(x;z_{D_i(u,w)}\big).$$
+\end{theorem}
+\begin{proof}
+Write $E_{k,k}(x;z_i)=f_1\cdots f_k$ with $f_j=x_j-z_i$. By Lemma \ref{lemma:skewfacts}(iii),
+$$\partial^w_u\big(E_{k,k}(x;z_i)\big)=\sum_{u=u_0\leq\cdots\leq u_k=w}\ \prod_{j=1}^k\partial^{u_j}_{u_{j-1}}(x_j-z_i),$$
+and by Lemmas \ref{lemma:skewlinear} and \ref{lemma:skewfacts}(ii) the factor $\partial^{u_j}_{u_{j-1}}(x_j-z_i)$ equals $x_j-z_{u_j(i)}$ if $u_j=u_{j-1}$, equals $\epsilon_i(b)$ if $u_j=u_{j-1}t_{ib}$ with $\ell(u_j)=\ell(u_{j-1})+1$, and vanishes otherwise. Call a sequence $(u_0,\ldots,u_k)$ in which every step is of one of these two kinds an \emph{$i$-walk} from $u$ to $w$. Thus the sum is over the $i$-walks, and a walk contributes the product of $x_j-z_{u_j(i)}$ over its trivial steps and of $\epsilon_i(b)$ over its nontrivial steps.
+
+An \emph{$i$-chain} from $u$ to $w$ is a sequence $\beta=(\beta_1,\ldots,\beta_\ell)$ of integers different from $i$ such that, with $u^{(0)}=u$ and $u^{(s)}=u^{(s-1)}t_{i\beta_s}$, every step $u^{(s-1)}\lessdot u^{(s)}$ is a Bruhat cover and $u^{(\ell)}=w$; repetitions among the $\beta_s$ are allowed. Put $c_s(\beta)=u^{(s)}(i)$, the value at position $i$ after $s$ steps, and $\epsilon(\beta)=\prod_s\epsilon_i(\beta_s)$. Every $i$-walk determines the $i$-chain formed by its nontrivial steps, and conversely an $i$-chain of length $\ell\leq k$ arises from exactly the $\binom{k}{\ell}$ walks obtained by choosing the positions $j_1<\cdots<j_p$ ($p=k-\ell$) of the trivial steps. In such a walk the trivial step at $j_r$ is preceded by $j_r-r$ nontrivial steps, so it contributes the factor $x_{j_r}-z_{c_{j_r-r}(\beta)}$. Summing over the choices of $j_1<\cdots<j_p$ and comparing with the explicit formula for $E_{p,k}$ in Definition \ref{definition:pieri}, the walks with chain $\beta$ contribute in total
+$$\epsilon(\beta)\sum_{1\leq j_1<\cdots<j_p\leq k}\ \prod_{r=1}^p\big(x_{j_r}-z_{c_{j_r-r}(\beta)}\big)=\epsilon(\beta)\,E_{k-\ell,k}\big(x;z_{c_0(\beta)},z_{c_1(\beta)},\ldots,z_{c_\ell(\beta)}\big).$$
+Hence
+\begin{equation}\label{eq:chainsum}
+\partial^w_u\big(E_{k,k}(x;z_i)\big)=\sum_{\beta}\epsilon(\beta)\,E_{k-\ell(\beta),k}\big(x;z_{c_0(\beta)},\ldots,z_{c_{\ell(\beta)}(\beta)}\big),
+\end{equation}
+the sum being over all $i$-chains $\beta$ from $u$ to $w$ of length $\ell(\beta)\leq k$. By Lemma \ref{lemma:Ehe} the summand depends on $c_0(\beta),\ldots,c_\ell(\beta)$ only through their multiset.
+
+\emph{Chains without repetitions.} If $\beta_1,\ldots,\beta_\ell$ are distinct, then $\beta$ is a witness for $u\Tom{i}w$, and by Definition \ref{def:itom} it is the unique one; moreover $\ell=\ell(u,w)$, $\epsilon(\beta)=(-1)^{\ell(u,w)-\sigma_i(u,w)}$, and since the position $\beta_s$ is untouched before the $s$-th step, $c_s(\beta)=u(\beta_s)$, so that $\{c_0(\beta),\ldots,c_\ell(\beta)\}=D_i(u,w)$. So the chains without repetitions contribute exactly the right-hand side of the theorem if $u\Tom{i}w$ and $\ell(u,w)\leq k$, and nothing otherwise; if $u\Tom{i}w$ and $\ell(u,w)>k$ then both sides of the theorem vanish, the left by degree. It remains to show that the chains with a repetition contribute zero in total.
+
+\emph{Chains with repetitions.} Let $\beta$ be an $i$-chain from $u$ to $w$ with a repetition, and let $s$ be the least index for which $\beta_s\in\{\beta_1,\ldots,\beta_{s-1}\}$, say $\beta_s=\beta_t$ with $t<s$. Put $m=s-t$ and $(\gamma_1,\ldots,\gamma_m)=(\beta_t,\ldots,\beta_{s-1})$; these are distinct, and $m\geq2$ because two consecutive covers cannot use the same transposition. The segment $(\beta_t,\ldots,\beta_s)$ of $\beta$ is the sequence $R_1$ of Lemma \ref{lemma:rotation} for $\psi=u^{(t-1)}$, and it is valid. The alternation in Lemma \ref{lemma:rotation}(ii) pairs each valid $R_r$ with $\gamma_r>i$ with the next valid sequence in cyclic order, whose entry lies below $i$, and each valid $R_r$ with $\gamma_r<i$ with the previous one; this is a fixed-point-free involution on the valid sequences which exchanges the two sides of $i$. Let $R_{r^*}$ be the sequence paired with $R_1$, and let $\beta^*$ be obtained from $\beta$ by replacing the segment $(\beta_t,\ldots,\beta_s)$ with $R_{r^*}$. By Lemma \ref{lemma:rotation}(i) the new segment again leads from $u^{(t-1)}$ to $u^{(t-1)}C=u^{(s)}$, so $\beta^*$ is an $i$-chain from $u$ to $w$ of the same length as $\beta$. The entries of $\beta^*$ preceding the index $s$ form the same set as those of $\beta$ and are distinct, and $\beta^*_s=\beta^*_t$, so the first repetition of $\beta^*$ occurs at the same index $s$ with the same $t$, the same $\psi$, and the same cyclic sequence $\gamma$; hence $\beta^{**}=\beta$, and $\beta\mapsto\beta^*$ is a fixed-point-free involution on the set of $i$-chains with repetitions. The values $c_0,\ldots,c_{t-1}$ and $c_s,\ldots,c_\ell$ are the same for $\beta$ and $\beta^*$, since the permutations $u^{(0)},\ldots,u^{(t-1)}$ and $u^{(s)},\ldots,u^{(\ell)}$ are; and $c_t,\ldots,c_{s-1}$ are the values $\psi(\gamma_1),\ldots,\psi(\gamma_m)$ in some order for both chains. So the multisets of values coincide, and the $E$-factors in \eqref{eq:chainsum} agree. Finally $\epsilon(\beta^*)=-\epsilon(\beta)$: the two segments consist of the entries $\gamma_1,\ldots,\gamma_m$, each once, together with one additional entry, which is $\gamma_1$ for $\beta$ and $\gamma_{r^*}$ for $\beta^*$, and these lie on opposite sides of $i$. Hence the chains with repetitions cancel in pairs in \eqref{eq:chainsum}, and the theorem follows.
+\end{proof}
+
+\begin{remark}
+Through the Leibniz formula \eqref{eq:leibniz2} and the identity $c_{u,v}^w(y;z)=\partial^w_u\big(\sch_v(y;z)\big)$ of \cite{samuelmolev}, Theorem \ref{theorem:skewtop} is equivalent to a Monk-type formula for the product of a double Schubert polynomial by a polynomial in a single variable: for indeterminates $a_1,\ldots,a_k$,
+$$\prod_{j=1}^k(a_j-x_i)\,\sch_u(x;y)=\sum_{u\Tom{i}w}(-1)^{\ell(u,w)-\sigma_i(u,w)}E_{k-\ell(u,w),k}\big(a;y_{D_i(u,w)}\big)\sch_w(x;y),$$
+in which the right-hand side is what survives of the iteration of Lemma \ref{lemma:singlevariable} (at $q=0$) after the cancellation of Lemma \ref{lemma:rotation}. We shall not need this form.
+\end{remark}
+
+\subsection{Proofs of Theorems \ref{theorem:orddouble} and \ref{theorem:quandouble}}
+
+\begin{proof}[Proof of Theorem \ref{theorem:orddouble}]
+From the definition of the double Schubert polynomials, for every $w$ and $a$,
+\begin{equation}\label{eq:leftdd}
+\partial^a\sch_w(x;z)=\begin{cases}-\sch_{s_aw}(x;z)&\text{if }s_aw<w,\\ 0&\text{if }s_aw>w:\end{cases}
+\end{equation}
+indeed $\sch_w=(-1)^{\ell(w_0)-\ell(w)}\partial^{ww_0}\sch_{w_0}$, and $\partial^a\partial^{ww_0}$ equals $\partial^{s_aww_0}$ if $\ell(s_aww_0)>\ell(ww_0)$, which is the case $s_aw<w$, and equals $0$ otherwise. Since $\mu=v^{-1}\cdot y$ is reduced, so is $\mu^{-1}=y^{-1}\cdot v$; writing $y=s_{a_1}\cdots s_{a_r}$ reduced, the permutations $s_{a_j}s_{a_{j+1}}\cdots s_{a_r}\mu^{-1}$, $j=r+1,r,\ldots,1$, therefore decrease in length by one at each step, from $\mu^{-1}$ down to $y\mu^{-1}=v$. Applying \eqref{eq:leftdd} $r$ times and then Lemma \ref{lemma:dominantfactor},
+$$\sch_v(x;z)=(-1)^{\ell(y)}\,\partial^{y}\sch_{\mu^{-1}}(x;z)=(-1)^{\ell(y)}\,\partial^{y}\Big(\prod_{i=1}^kE_{\theta_i,\theta_i}(x;z_i)\Big).$$
+Now expand by the ascending Leibniz formula, Lemma \ref{lemma:skewfacts}(iii) with $u=1$ and $w=y$, and evaluate each factor by Theorem \ref{theorem:skewtop}:
+\begin{align*}
+\partial^{y}\Big(\prod_{i=1}^kE_{\theta_i,\theta_i}(x;z_i)\Big)&=\sum_{1=v_0\leq\cdots\leq v_k=y}\ \prod_{i=1}^k\partial^{v_i}_{v_{i-1}}\big(E_{\theta_i,\theta_i}(x;z_i)\big)\\
+&=\sum_{1=v_0\Tom{1}v_1\Tom{2}\cdots\Tom{k}v_k=y}\ \prod_{i=1}^k(-1)^{\ell(v_{i-1},v_i)-\sigma_i(v_{i-1},v_i)}E_{\theta_i-\ell(v_{i-1},v_i),\,\theta_i}\big(x;z_{D_i(v_{i-1},v_i)}\big).
+\end{align*}
+Since $\sum_i\ell(v_{i-1},v_i)=\ell(y)$, the signs combine to $\prod_i(-1)^{\sigma_i(v_{i-1},v_i)}$; and $y=v\mu$.
+\end{proof}
+
+\begin{proof}[Proof of Theorem \ref{theorem:quandouble}]
+A strict dominant permutation is dominant, so Theorem \ref{theorem:orddouble} applies to $v$ and $\mu$ and expresses $\sch_v(x;z)$ as the sum, over the chains $1=v_0\Tom{1}\cdots\Tom{k}v_k=v\mu$, of $\prod_i(-1)^{\sigma_i}E_{\thop_i-\ell_i,\thop_i}(x;z_{D_i})$, where $\ell_i=\ell(v_{i-1},v_i)$, $\sigma_i=\sigma_i(v_{i-1},v_i)$ and $D_i=D_i(v_{i-1},v_i)$. Apply $\mathcal Q$ to both sides. The left-hand side becomes $\qsch_v(x;z)$. On the right, by Lemma \ref{lemma:Ehe} each factor is $E_{\thop_i-\ell_i,\thop_i}(x;z_{D_i})=\sum_{m}c_{i,m}\,e_m(x_1,\ldots,x_{\thop_i})$ with coefficients $c_{i,m}\in\mathbb Z[z]$, and multiplying out, each term $\prod_ie_{m_i}(x_1,\ldots,x_{\thop_i})$ of the product over $i$ is a standard elementary monomial because $\thop_1>\cdots>\thop_k$. Hence $\mathcal Q$ sends the product to $\prod_i\sum_mc_{i,m}\,e^{(q)}_m(x_1,\ldots,x_{\thop_i})=\prod_i\qelem_{\thop_i-\ell_i,\thop_i}(x;z_{D_i})$, again by Lemma \ref{lemma:Ehe}.
 \end{proof}
 
 \section{Iterated and doubled Pieri formulas} \label{section:additional}
