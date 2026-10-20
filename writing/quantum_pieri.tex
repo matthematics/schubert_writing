@@ -1,10 +1,3 @@
-%%
-%% This is LaTeX2e input.
-%%
-
-%% The following tells LaTeX that we are using the 
-%% style file amsart.cls (That is the AMS article style
-%%
 \documentclass{amsart}
 \usepackage{fancyvrb}
 \usepackage{amsmath}
@@ -27,98 +20,27 @@ picture,baseline=(#2.base)]{\node(#2)[#1]{$#3$};}}
 
 
 
-%\usepackage{ytableau}
-%\usepackage{witharrows}
-
 \newtheorem{lemma}{Lemma}[section]
 \newtheorem{corollary}[lemma]{Corollary}
 \newtheorem{conjecture}[lemma]{Conjecture} 
 \newtheorem{proposition}[lemma]{Proposition} 
 \newtheorem{theorem}[lemma]{Theorem}
 \newtheorem{question}{Question}
-%%
-%% If some other type is need, say conjectures, then it is constructed
-%% by editing and uncommenting the following.
-%%
-
-%\newtheorem{conj}[thm]{Conjecture} 
-
-
-%%% 
-%%% The following gives definition type environments (which only differ
-%%% from theorem type invironmants in the choices of fonts).  The
-%%% numbering is still tied to the theorem counter.
-%%% 
-
 \theoremstyle{definition}
 \newtheorem{definition}[lemma]{Definition}
 \newtheorem{example}[lemma]{Example}
 \newtheorem{method}[lemma]{Method}
 \allowdisplaybreaks
-%%
-%% Again more of these can be added by uncommenting and editing the
-%% following. 
-%%
-
-%\newtheorem{note}[thm]{Note}
-
-
-%%% 
-%%% The following gives remark type environments (which only differ
-%%% from theorem type invironmants in the choices of fonts).  The
-%%% numbering is still tied to the theorem counter.
-%%% 
-
-
 \theoremstyle{remark}
 
 \newtheorem{remark}[lemma]{Remark}
 
 
-%%%
-%%% The following, if uncommented, numbers equations within sections.
-%%% 
-
 \numberwithin{equation}{section}
 
 
-%%%
-%%% The following show how to make definition (also called macros or
-%%% abbreviations).  For example to use get a bold face R for use to
-%%% name the real numbers the command is \mathbf{R}.  To save typing we
-%%% can abbreviate as
-
-\newcommand{\R}{\mathbf{R}}  % The real numbers.
-
-%%
-%% The comment after the defintion is not required, but if you are
-%% working with someone they will likely thank you for explaining your
-%% definition.  
-%%
-%% Now add you own definitions:
-%%
-
-%%%
-%%% Mathematical operators (things like sin and cos which are used as
-%%% functions and have slightly different spacing when typeset than
-%%% variables are defined as follows:
-%%%
-
-\DeclareMathOperator{\dist}{dist} % The distance.
-
-
-
-%%
-%% This is the end of the preamble.
-%% 
 \title{Triple quantum Schubert calculus}
 \author{Matthew J. Samuel}
-%\ead{matthematics@gmail.com}
-
-%\affiliation[1]{addressline={31 Cherry Blossom Drive},
-%city={Monroe Township},
-%postcode={NJ 08831},
-%country={USA}}
 
 
 \DeclareMathOperator{\bpath}{BPath}
@@ -136,14 +58,11 @@ picture,baseline=(#2.base)]{\node(#2)[#1]{$#3$};}}
 
 \newcommand{\tom}[1]{\ensuremath{\xrightsquigarrow{#1}}}
 \newcommand{\fx}{\mathrm{fix}}
-%\newcommand{\tomm}[2]{\xrightarrow{#1}_{#2}}
-%\counterwithout{equation}{section}
-%\setcounter{section}{-1}
 
 \begin{document}
 
 \begin{abstract}
-We study the structure constants $c_{u,v}^{w,d}(y;z)$ that arise when a product of two quantum double Schubert polynomials in \emph{different} sets of equivariant parameters, $\qsch_u(x;y)\qsch_v(x;z)$, is expanded in the basis $\{\qsch_w(x;y)\}$. We call them triple quantum Schubert structure constants; they specialize to the equivariant quantum Littlewood--Richardson coefficients when $z=y$ and to the ordinary triple Schubert structure constants when $q=0$. Adapting an argument of Xiao and Yue, we show that they are polynomials in the differences $y_i-z_j$ with nonnegative integer coefficients. We prove a Pieri formula for multiplication by a quantum factorial elementary polynomial, indexed by a quantum analogue of Sottile's relation, in which each coefficient is a monomial in $q$ times a product of differences $y_a-z_1$; the proof is a self-contained analysis of chains in the quantum Bruhat graph. We also prove a doubled Pieri formula for the quantization of a product of two elementary polynomials in the same variables, which selects the compatible pairs of chains and is the paired step of the multiplication algorithm. We extend the Peterson--Woodward comparison formula and the quantum-to-classical reduction of Huang and Li to the triple constants, thereby reducing the computation of the parabolic triple quantum structure constants to the complete flag case. Finally we describe the algorithms implemented in the package \texttt{schubmult} for computing these constants, and give an interpretation of the coefficients in terms of the Fomin--Gelfand--Postnikov difference operators.
+We study the structure constants $c_{u,v}^{w,d}(y;z)$ that arise when a product of two quantum double Schubert polynomials in \emph{different} sets of equivariant parameters, $\qsch_u(x;y)\qsch_v(x;z)$, is expanded in the basis $\{\qsch_w(x;y)\}$. We call them triple quantum Schubert structure constants; they specialize to the equivariant quantum Littlewood--Richardson coefficients when $z=y$ and to the ordinary triple Schubert structure constants when $q=0$. Adapting an argument of Xiao and Yue, we show that they are polynomials in the differences $y_i-z_j$ with nonnegative integer coefficients. We prove a Pieri formula for multiplication by a quantum factorial elementary polynomial, indexed by a quantum analogue of Sottile's relation, in which each coefficient is a monomial in $q$ times a product of differences $y_a-z_1$; the proof is a self-contained analysis of chains in the quantum Bruhat graph. We also prove a doubled Pieri formula for the quantization of a product of two elementary polynomials in the same variables, which selects the compatible pairs of chains and is the paired step of the multiplication algorithm. We extend the Peterson--Woodward comparison formula and the quantum-to-classical reduction of Huang and Li to the triple constants, thereby reducing the computation of the parabolic triple quantum structure constants to the complete flag case. Finally we describe and prove correct the algorithms implemented in the package \texttt{schubmult} for computing these constants.
 \end{abstract}
 \maketitle
 
@@ -158,13 +77,6 @@ We study the structure constants $c_{u,v}^{w,d}(y;z)$ that arise when a product 
 \newcommand{\wte}{\mathbf{E}}
 \newcommand{\qelem}{\widetilde{E}}
 \newcommand{\pcomp}[1]{\widehat{#1}}
-%$$w_0(n)^{(i)}=w_0(n)w_0(n+1-i)w_0(n-i)$$
-
-%\begin{theorem}
-%Let $u\in S_n$ and $1\leq i\leq n$. Then we have
-%$$\sch_u(y)=\sum_{u'w_0(n)^{(i)}\tom{n+1-i} uw_0(n)}y_i^{\ell(u',u)}\sch_{u'}(y^{(i)})$$
-%where $u'\in S_n$ satisfies $\ell(u'w_0(n)^{(i)})+\ell(u')=\ell(w_0(n)^{(i)})$.
-%\end{theorem}
 \section{Introduction}
 
 Let $\sch_w(x;y)$, $w\in S_\infty$, denote the double Schubert polynomials of Lascoux and Sch\"utzenberger, which represent the torus-equivariant Schubert classes of the complete flag variety, and let $\qsch_w(x;y)$ denote the quantum double Schubert polynomials of Kirillov and Maeno \cite{kirillov2000quantum}, which represent the Schubert classes in torus-equivariant quantum cohomology \cite{lam2014quantum}. The structure constants of the equivariant quantum cohomology ring are the coefficients in
@@ -182,10 +94,10 @@ Our main results are the following.
 $$\qsch_u(x;y)\qelem_{k,k}(x;z)=\sum_{u\tom{k} w}q_k(u,w)\prod_{a\in\fx_k(u,w)}(y_a-z_1)\,\qsch_w(x;y),$$
 where $\tom{k}$ is a quantum analogue of the relation introduced by Sottile \cite{sottile} for the classical Pieri rule, $q_k(u,w)$ is a monomial in the $q_i$ recording the length-decreasing steps of a chain from $u$ to $w$ in the quantum Bruhat graph, and $\fx_k(u,w)$ is the set of values fixed by the chain in the first $k$ positions. This is an explicit instance of the positivity theorem, and it is the engine of the multiplication algorithm. The proof occupies Section \ref{section:proofpieri}; it proceeds by induction on $k$ via the single-variable Monk formula, and rests on an intrinsic description of the chains (every cycle of $u^{-1}w$ has exactly one element exceeding $k$, and a single length identity) which makes the term-by-term cancellations tractable. In the non-equivariant case the quantum Pieri formula for complete flag manifolds is due to Ciocan-Fontanine \cite{ciocan1999partial} and Postnikov \cite{postnikov1999quantum}.
 \item \emph{Parabolic reduction} (Proposition \ref{prop:parabolic}). The Peterson--Woodward comparison formula, in the form proved by Huang and Li \cite{huang2015equivariant} for equivariant quantum cohomology, extends verbatim to the triple constants. Consequently the triple structure constants of the parabolic quantum double Schubert polynomials of Lam and Shimozono are equal to triple constants of the complete flag variety, and in particular they are also Graham-positive (Corollary \ref{corollary:parabolicpositivity}).
-\item \emph{Algorithms and operators} (Sections \ref{section:algorithms} and \ref{section:quantclass}). We describe the algorithms implemented in the package \texttt{schubmult} \cite{schubmult} for computing products of (quantum) double Schubert polynomials, which combine the Pieri formula on one factor with a signed expansion of the other factor into products of factorial elementary polynomials. We prove this expansion, in its classical form (Theorem \ref{theorem:orddouble}) and in two quantum forms, over a strict dominant shape (Theorem \ref{theorem:quandouble}) and over the ``medium'' shape actually used by the implementation, in which a pair of equal columns is allowed when it is preceded by a drop of at least two and contributes a single doubled factor (Theorem \ref{theorem:quandoublemed}); the key step is a formula for the skew divided differences, in the sense of \cite{samuelleibniz,samuelmolev}, of a product $\prod_{j\leq k}(x_j-z_i)$ with respect to the $z$-variables (Theorem \ref{theorem:skewtop}), in which the terms of the iterated Monk rule that revisit a position cancel by a rotation argument (Lemma \ref{lemma:rotation}). The quantum algorithm also uses a ``doubled'' Pieri rule (Theorem \ref{theorem:doubledpieri}) for the quantization of a product of two elementary polynomials in the same variables, which is obtained from two iterated Pieri steps by omitting the pairs of chains that are not compatible in a precise cycle-theoretic sense. We prove this doubled rule in general (Theorem \ref{theorem:doubledpieri}): it is equivalent to a termwise identity between pairs of chains (Theorem \ref{conjecture:termwise}) which telescopes along explicit blocks of pairs and is then established by an injection built from a single local lemma, a generalization of the up/down pairing used in the proof of the Pieri formula (Theorem \ref{theorem:junction}). We also show that the Fomin--Gelfand--Postnikov quantization operators \cite{fomin1997quantum} package the triple constants: the coefficient of $\partial^u$ in $\qsch_v(\chi^{(n)};z)$ is $\sum_d q^d c_{u,v}^{1,d}(x;z)$. Finally, we extend the quantum-to-classical reduction of Huang and Li to the triple constants.
+\item \emph{Algorithms} (Sections \ref{section:algorithms} and \ref{section:quantclass}). We describe the algorithms implemented in the package \texttt{schubmult} \cite{schubmult} for computing products of (quantum) double Schubert polynomials, which combine the Pieri formula on one factor with a signed expansion of the other factor into products of factorial elementary polynomials. We prove this expansion, in its classical form (Theorem \ref{theorem:orddouble}) and in two quantum forms, over a strict dominant shape (Theorem \ref{theorem:quandouble}) and over the ``medium'' shape actually used by the implementation, in which a pair of equal columns is allowed when it is preceded by a drop of at least two and contributes a single doubled factor (Theorem \ref{theorem:quandoublemed}); the key step is a formula for the skew divided differences, in the sense of \cite{samuelleibniz,samuelmolev}, of a product $\prod_{j\leq k}(x_j-z_i)$ with respect to the $z$-variables (Theorem \ref{theorem:skewtop}), in which the terms of the iterated Monk rule that revisit a position cancel by a rotation argument (Lemma \ref{lemma:rotation}). The quantum algorithm also uses a ``doubled'' Pieri rule (Theorem \ref{theorem:doubledpieri}) for the quantization of a product of two elementary polynomials in the same variables, which is obtained from two iterated Pieri steps by omitting the pairs of chains that are not compatible in a precise cycle-theoretic sense. We prove this doubled rule in general (Theorem \ref{theorem:doubledpieri}): it is equivalent to a termwise identity between pairs of chains (Theorem \ref{conjecture:termwise}) which telescopes along explicit blocks of pairs and is then established by an injection built from a single local lemma, a generalization of the up/down pairing used in the proof of the Pieri formula (Theorem \ref{theorem:junction}). Finally, we extend the quantum-to-classical reduction of Huang and Li to the triple constants.
 \end{enumerate}
 
-The paper is organized as follows. Section \ref{section:definitions} fixes notation, proves the positivity theorem and treats the parabolic case. Section \ref{section:pieri} states the Pieri formula, whose proof is given in Section \ref{section:proofpieri}. Section \ref{section:algorithms} describes the algorithms and the operator interpretation, Section \ref{section:quantclass} the quantum-to-classical reduction, Section \ref{section:proofvside} proves the expansion formulas used on the $v$-side of the algorithms, Section \ref{section:additional} the iterated Pieri formula, and Section \ref{section:pw} the Peterson--Woodward comparison formula.
+The paper is organized as follows. Section \ref{section:definitions} fixes notation, proves the positivity theorem and treats the parabolic case. Section \ref{section:pieri} states the Pieri formula, whose proof is given in Section \ref{section:proofpieri}. Section \ref{section:algorithms} describes the algorithms, Section \ref{section:quantclass} the quantum-to-classical reduction, Section \ref{section:proofvside} proves the expansion formulas used on the $v$-side of the algorithms, Section \ref{section:additional} the iterated Pieri formula, and Section \ref{section:pw} the Peterson--Woodward comparison formula.
 
 \textbf{Acknowledgements.} We thank Tongren Xiao and Yihua Yue for permission to include their proof of Theorem \ref{theorem:positivity}.
 
@@ -332,41 +244,6 @@ Thus every coefficient $C_{u,v}^{w,d}(y,t)$ is in
 $\mathbb Z_{\geq0}[t_i-y_j]$. Replacing $(u,v,y,t)$ by $(v,u,z,y)$ proves the asserted positivity of $c_{u,v}^{w,d}(y;z)$.
 \end{proof}
 
-\begin{example} \label{example:cppfpos}
-	We compute the product $\qsch_{15423}(x;y)\qsch_{1432}(x;z)$:
-\begin{align*}
-&q_{2} q_{3} \left(y_{1} + y_{4} - z_{1} - z_{2}\right) \qsch_{124635}{\left(x; y \right)} + q_{2} q_{3} \left(y_{1} + y_{4} - z_{1} - z_{2}\right) \qsch_{13452}{\left(x; y \right)} \\
-&+ q_{2} q_{3} \left(y_{1} + y_{4} - z_{1} - z_{2}\right) \qsch_{14253}{\left(x; y \right)} \\
-&+ q_{2} q_{3} \qsch_{125634}{\left(x; y \right)} + q_{2} q_{3} \qsch_{126435}{\left(x; y \right)} + q_{2} q_{3} \qsch_{13542}{\left(x; y \right)} + q_{2} q_{3} \qsch_{214635}{\left(x; y \right)} \\
-&+ q_{2} q_{3} \qsch_{23451}{\left(x; y \right)} + q_{2} q_{3} \qsch_{24153}{\left(x; y \right)} + q_{2} q_{3} \qsch_{31452}{\left(x; y \right)} + q_{2} q_{3} \qsch_{41253}{\left(x; y \right)} \\
-&+ q_{2} \left(y_{1} + y_{4} - z_{1} - z_{2}\right) \qsch_{146235}{\left(x; y \right)} + q_{2} \left(y_{4} + y_{5} - z_{1} - z_{2}\right) \qsch_{24513}{\left(x; y \right)} \\
-&+ q_{2} \qsch_{246135}{\left(x; y \right)} + q_{3} \qsch_{1724356}{\left(x; y \right)} + q_{3} \qsch_{261435}{\left(x; y \right)} + q_{3} \qsch_{35142}{\left(x; y \right)} \\
-&+ \left(q_{2} q_{3} + q_{2} \left(\left(y_{1} - z_{2}\right) \left(y_{4} + y_{5} - z_{1} - z_{2}\right) + \left(y_{4} - z_{1}\right) \left(y_{5} - z_{1}\right)\right)\right) \qsch_{14523}{\left(x; y \right)} \\
-&+ \left(\left(y_{4} - z_{1}\right) \left(y_{5} - z_{3}\right) + \left(y_{4} - z_{1}\right) \left(y_{1} + y_{2} - z_{1} - z_{2}\right) \right. \\
-&\quad \left. + \left(y_{5} - z_{2}\right) \left(y_{5} - z_{3}\right) + \left(y_{5} - z_{2}\right) \left(y_{1} + y_{2} - z_{1} - z_{2}\right)\right) \qsch_{25413}{\left(x; y \right)} \\
-&+ \left(\left(y_{1} - z_{2}\right) \left(y_{1} - z_{3}\right) \left(y_{4} - z_{2}\right) + \left(y_{1} - z_{2}\right) \left(y_{1} - z_{3}\right) \left(y_{5} - z_{1}\right) + \left(y_{1} - z_{2}\right) \left(y_{5} - z_{1}\right) \left(y_{5} - z_{2}\right) \right. \\
-&\quad \left. + \left(y_{1} - z_{3}\right) \left(y_{4} - z_{1}\right) \left(y_{5} - z_{1}\right) + \left(y_{4} - z_{1}\right) \left(y_{5} - z_{1}\right) \left(y_{5} - z_{2}\right)\right) \qsch_{15423}{\left(x; y \right)} \\
-&+ \left(q_{2} + \left(y_{1} - z_{2}\right) \left(y_{1} - z_{3}\right) + \left(y_{1} - z_{3}\right) \left(y_{5} - z_{1}\right) + \left(y_{5} - z_{1}\right) \left(y_{5} - z_{2}\right)\right) \qsch_{156234}{\left(x; y \right)} \\
-&+ \left(q_{3} + \left(y_{1} - z_{1}\right) \left(y_{4} - z_{1}\right) + \left(y_{5} - z_{2}\right) \left(y_{1} + y_{4} - z_{1} - z_{2}\right)\right) \qsch_{45123}{\left(x; y \right)} \\
-&+ \left(q_{2} q_{3} + q_{3} \left(\left(y_{1} - z_{1}\right) \left(y_{1} + y_{5} - z_{2} - z_{3}\right) + \left(y_{5} - z_{2}\right) \left(y_{5} - z_{3}\right)\right)\right) \qsch_{15243}{\left(x; y \right)} \\
-&+ q_{3} \left(y_{1} + y_{5} + y_{6} - z_{1} - z_{2} - z_{3}\right) \qsch_{162435}{\left(x; y \right)} + q_{3} \left(y_{1} + y_{2} + y_{5} - z_{1} - z_{2} - z_{3}\right) \qsch_{25143}{\left(x; y \right)} \\
-&+ q_{2} q_{3} \left(y_{1} + y_{2} + y_{5} - z_{1} - z_{2} - z_{3}\right) \qsch_{12543}{\left(x; y \right)} + q_{2} q_{3} \left(y_{1} + y_{2} + y_{5} - z_{1} - z_{2} - z_{3}\right) \qsch_{21453}{\left(x; y \right)} \\
-&+ q_{2} q_{3} \left((y_{1} - z_{2}) (y_{1} - z_{3}) + (y_{1} - z_{2}) (y_{2} - z_{2}) + (y_{1} - z_{2}) (y_{4} - z_{1}) \right. \\
-&\quad \left. + (y_{1} - z_{2}) (y_{5} - z_{1}) + (y_{2} - z_{1}) (y_{4} - z_{1}) + (y_{4} - z_{1}) (y_{5} - z_{3})\right) \qsch_{12453}{\left(x; y \right)} \\
-&+ \left(y_{1} + y_{4} - z_{1} - z_{2}\right) \qsch_{1742356}{\left(x; y \right)} + \left(y_{1} + y_{4} - z_{1} - z_{2}\right) \qsch_{461235}{\left(x; y \right)} \\
-&+ \left(y_{4} + y_{5} - z_{1} - z_{2}\right) \qsch_{35412}{\left(x; y \right)} + \left(y_{4} + y_{5} - z_{1} - z_{2}\right) \qsch_{45213}{\left(x; y \right)} \\
-&+ \left(\left(y_{1} - z_{2}\right) \left(y_{1} - z_{3}\right) + \left(y_{1} - z_{2}\right) \left(y_{5} + y_{6} - z_{1} - z_{2}\right) \right. \\
-&\quad \left. + \left(y_{1} - z_{3}\right) \left(y_{4} - z_{1}\right) + \left(y_{4} - z_{1}\right) \left(y_{5} + y_{6} - z_{1} - z_{2}\right)\right) \qsch_{164235}{\left(x; y \right)} \\
-&+ \left(y_{1} + y_{2} + y_{5} - z_{1} - z_{2} - z_{3}\right) \qsch_{256134}{\left(x; y \right)} + \left(y_{1} + y_{5} + y_{6} - z_{1} - z_{2} - z_{3}\right) \qsch_{165234}{\left(x; y \right)} \\
-&+ \left(y_{1} + y_{2} + y_{4} + y_{5} + y_{6} - 2 z_{1} - 2 z_{2} - z_{3}\right) \qsch_{264135}{\left(x; y \right)} \\
-&+ \qsch_{1752346}{\left(x; y \right)} + \qsch_{265134}{\left(x; y \right)} + \qsch_{2741356}{\left(x; y \right)} \\
-&+ \qsch_{356124}{\left(x; y \right)} + \qsch_{364125}{\left(x; y \right)} + \qsch_{462135}{\left(x; y \right)} \\
-&+ \qsch_{561234}{\left(x; y \right)}
-\end{align*}
-By inspection, we can see that the coefficients exhibit triple Schubert positivity.
-\end{example}
-
-
 \begin{remark}
 The Pieri formula of Theorem \ref{theorem:pieri} below is an explicit instance of Theorem \ref{theorem:positivity}: for $v=s_1s_2\cdots s_k$ each coefficient $c_{u,v}^{w,d}(y;z)$ is a product of differences $y_a-z_1$. The parabolic reduction of Proposition \ref{prop:parabolic} shows that the structure constants of the parabolic quantum double Schubert polynomials of the next subsection are also triple Schubert positive (Corollary \ref{corollary:parabolicpositivity}).
 \end{remark}
@@ -448,33 +325,6 @@ $$c_{u,v}^{w,d_P}(y;z) = c_{u,v}^{ww_Pw_{z_P(d)},d}(y;z).$$
 
 Thus, though we lack a simple functoriality property, we can reduce the computation of parabolic triple quantum Schubert structure constants completely to the complete flag variety case with an efficient algorithm. We obtain a nontrivial corollary from this.
 
-\begin{example}
-	The product in the example above, with $P=\pcomp{P}$ satisfying $P\cap\{s_1,s_2,s_3,s_4,s_5\} = \{s_1,s_4\}$, allows us to compute the triple structure constants for the corresponding parabolic quantum double Schubert polynomials:
-\begin{align*}
-&q_{1} q_{2} \left(y_{1} + y_{2} + y_{5} - z_{1} - z_{2} - z_{3}\right) \qsch_{1243}^P{\left(x; y \right)} \\
-&+ q_{1} q_{2} \qsch_{124365}^P{\left(x; y \right)} + q_{1} q_{2} \qsch_{1342}^P{\left(x; y \right)} + q_{1} q_{2} \qsch_{1423}^P{\left(x; y \right)} \\
-&+ q_{2} \left(\left(y_{1} - z_{2}\right) \left(y_{1} - z_{3}\right) + \left(y_{1} - z_{3}\right) \left(y_{5} - z_{1}\right) + \left(y_{5} - z_{1}\right) \left(y_{5} - z_{2}\right)\right) \qsch_{15234}^P{\left(x; y \right)} \\
-&+ q_{2} \left(y_{1} + y_{5} + y_{6} - z_{1} - z_{2} - z_{3}\right) \qsch_{162345}^P{\left(x; y \right)} + q_{2} \left(y_{1} + y_{2} + y_{5} - z_{1} - z_{2} - z_{3}\right) \qsch_{25134}^P{\left(x; y \right)} \\
-&+ \left(\left(y_{1} - z_{2}\right) \left(y_{1} - z_{3}\right) \left(y_{4} - z_{2}\right) + \left(y_{1} - z_{2}\right) \left(y_{1} - z_{3}\right) \left(y_{5} - z_{1}\right) + \left(y_{1} - z_{2}\right) \left(y_{5} - z_{1}\right) \left(y_{5} - z_{2}\right) \right. \\
-&\quad \left. + \left(y_{1} - z_{3}\right) \left(y_{4} - z_{1}\right) \left(y_{5} - z_{1}\right) + \left(y_{4} - z_{1}\right) \left(y_{5} - z_{1}\right) \left(y_{5} - z_{2}\right)\right) \qsch_{15423}^P{\left(x; y \right)} \\
-&+ q_{2} \qsch_{1723456}^P{\left(x; y \right)} + q_{2} \qsch_{261345}^P{\left(x; y \right)} + q_{2} \qsch_{35124}^P{\left(x; y \right)} \\
-&+ \left(\left(y_{1} - z_{2}\right) \left(y_{1} - z_{3}\right) + \left(y_{1} - z_{3}\right) \left(y_{5} - z_{1}\right) + \left(y_{5} - z_{1}\right) \left(y_{5} - z_{2}\right)\right) \qsch_{156234}^P{\left(x; y \right)} \\
-&+ \left(\left(y_{1} - z_{2}\right) \left(y_{1} - z_{3}\right) + \left(y_{1} - z_{2}\right) \left(y_{5} + y_{6} - z_{1} - z_{2}\right) \right. \\
-&\quad \left. + \left(y_{1} - z_{3}\right) \left(y_{4} - z_{1}\right) + \left(y_{4} - z_{1}\right) \left(y_{5} + y_{6} - z_{1} - z_{2}\right)\right) \qsch_{164235}^P{\left(x; y \right)} \\
-&+ \left(\left(y_{4} - z_{1}\right) \left(y_{5} - z_{3}\right) + \left(y_{4} - z_{1}\right) \left(y_{1} + y_{2} - z_{1} - z_{2}\right) \right. \\
-&\quad \left. + \left(y_{5} - z_{2}\right) \left(y_{5} - z_{3}\right) + \left(y_{5} - z_{2}\right) \left(y_{1} + y_{2} - z_{1} - z_{2}\right)\right) \qsch_{25413}^P{\left(x; y \right)} \\
-&+ \left(\left(y_{1} - z_{1}\right) \left(y_{4} - z_{1}\right) + \left(y_{5} - z_{2}\right) \left(y_{1} + y_{4} - z_{1} - z_{2}\right)\right) \qsch_{45123}^P{\left(x; y \right)} \\
-&+ \left(y_{1} + y_{5} + y_{6} - z_{1} - z_{2} - z_{3}\right) \qsch_{165234}^P{\left(x; y \right)} + \left(y_{1} + y_{2} + y_{5} - z_{1} - z_{2} - z_{3}\right) \qsch_{256134}^P{\left(x; y \right)} \\
-&+ \left(y_{1} + y_{4} - z_{1} - z_{2}\right) \qsch_{1742356}^P{\left(x; y \right)} + \left(y_{1} + y_{4} - z_{1} - z_{2}\right) \qsch_{461235}^P{\left(x; y \right)} \\
-&+ \left(y_{1} + y_{2} + y_{4} + y_{5} + y_{6} - 2 z_{1} - 2 z_{2} - z_{3}\right) \qsch_{264135}^P{\left(x; y \right)} \\
-&+ \left(y_{4} + y_{5} - z_{1} - z_{2}\right) \qsch_{35412}^P{\left(x; y \right)} + \left(y_{4} + y_{5} - z_{1} - z_{2}\right) \qsch_{45213}^P{\left(x; y \right)} \\
-&+ \qsch_{1752346}^P{\left(x; y \right)} + \qsch_{265134}^P{\left(x; y \right)} + \qsch_{2741356}^P{\left(x; y \right)} \\
-&+ \qsch_{356124}^P{\left(x; y \right)} + \qsch_{364125}^P{\left(x; y \right)} + \qsch_{462135}^P{\left(x; y \right)} \\
-&+ \qsch_{561234}^P{\left(x; y \right)}
-\end{align*}
-For an illustration, consider $d_P = (-,0,1,-,0)$ for the coefficient of $162345$. $q^{d_P} = q_2$. The Peterson-Woodward lift of $d_P$ is $d = (0,0,1,0,0)$, and $w_P = 21354$. $z_P(d) = \{1\}$, so $w_Pw_{z_P(d)} = 12354$. Thus, $ww_Pw_{z_P(d)} = 162435$, and the $q_2$-component of the coefficient of $\qsch_{162345}^P(x;y)$ is $(y_1+y_5+y_6-z_1-z_2-z_3)$, which is the same as the $q_3$-component ($q^d$) of the coefficient of $\qsch_{162435}(x;y)$ in the complete flag variety case (Example \ref{example:cppfpos}).
-\end{example}
-
 \begin{corollary}[Triple quantum Schubert positivity for the parabolic case] \label{corollary:parabolicpositivity}
 Let $W_P$ be a parabolic subgroup with $P=\pcomp P$ and let $u,v,w\in W^P$. Then for every $d_P$ the parabolic structure constant $c_{u,v}^{w,d_P}(y;z)$ exhibits triple Schubert positivity. In particular this holds when $u,v,w$ are $k$-Grassmannian and $P$ is the corresponding maximal parabolic subgroup ($n_1=k$, $n_2=n-k$).
 \end{corollary}
@@ -548,13 +398,6 @@ $$\qsch_u(x;y)\qelem_{k,k}(x;z)=\sum_{u\tom{k} w}q_k(u,w)\wte(y_{\fx_{k}(u,w)};z
 The proof is given in Section \ref{section:proofpieri}. Note that the right-hand side is manifestly triple Schubert positive, in accordance with Theorem \ref{theorem:positivity}, and that at $q=0$ it reduces to the case $p=k$ of the Pieri formula of \cite[Theorem~7.1]{samuelmolev}.
 
 
-
-% \begin{theorem} \label{theorem:coeffreduce}
-% Suppose $u,v\in S_\infty$ and let $d$ be a weak composition such that $d_i\in \{0,1\}$ for all $i$ and if $d_i=1$, then $d_{i+1}=0$. Let $i_1,\ldots,i_k$ be the integers such that $d_{i_p}=1$ for $1\leq p\leq k$. Then $c_{u,v}^{w,d}(y;z)=0$ unless $\ell(us_{i_p})<\ell(u)$ and $\ell(vs_{i_p})<\ell(v)$ for each $p$, in which case
-% $$c_{u,v}^{w,d}(y;z)=c_{us',vs'}^w(y;z)$$
-% where
-% $$s'=s_{i_1}\cdots s_{i_k}$$
-% \end{theorem}
 
 \newcommand{\lom}{\widetilde{\lambda}}
 \newcommand{\mom}{\widetilde{\mu}}
@@ -645,51 +488,9 @@ where $\ell_i=\ell(v_{i-1},v_i)$, $D_i=D_i(v_{i-1},v_i)$, and the sum is over al
 
 By Proposition \ref{prop:weakorder}(iii), $|\thop(v^{-1})|=|\medtheta(v^{-1})|+|\mathcal P|$: the medium shape is smaller than the strict shape by exactly the number of retained pairs (for instance $\code(v^{-1})=(1,1)$ gives $\medtheta=(1,1)$, $\thop=(2,1)$, and $\code(v^{-1})=(2,2,2)$ gives $\medtheta=(4,2,2)$, $\thop=(4,3,2)$). Since $\sum_i\ell_i=|\code(\mu)|-\ell(v)$ for every chain in these formulas, a smaller shape means shorter chains in the $v$-side sum and, in the multiplication algorithm, $u$-side Pieri steps of smaller degree; this is the reason the implementation prefers $\medperm(v^{-1})$ to $\mom(v^{-1})$. Proposition \ref{prop:weakorder}(iii) also explains how Theorem \ref{theorem:quandoublemed} arises from Theorem \ref{theorem:quandouble}: the dominant polynomial of the medium shape is obtained from that of the strict shape by one divided difference per retained pair, which turns the product of the two adjacent factors into the doubled factor (Corollary \ref{corollary:mediumfactor}).
 
-Coupled with the Pieri formulas, these formulas give an algorithm for computing products of (quantum) double Schubert polynomials, which is the one implemented in \cite{schubmult}. We describe its classical form by building it from two ingredients: the elementary Pieri step that generates the $u$-side covers, and the signed path expansion on the $v$-side.
+Coupled with the Pieri formulas, these formulas give an algorithm for computing products of (quantum) double Schubert polynomials, which is the one implemented in \cite{schubmult}. We describe its classical form first. The $u$-side covers are generated by the classical Pieri rule, Theorem \ref{theorem:pierigeneral} at $q=0$ (the enumeration is Method \ref{method:qpieri} below with the quantum covers discarded); the $v$-side is the following signed path expansion.
 
-\begin{definition}[$k$-strip cover, admissible $k$-chain, the $(p,k)$-Pieri problem] \label{def:pieriproblem}
-Let $w\in S_n$, let $1\leq k<n$, and let $\beta\in\{1,\ldots,n\}\cup\{\infty\}$. A \emph{$k$-strip cover of $(w,\beta)$} is a transposition $t_{ab}$ of positions $a,b$ with $1\leq a\leq k<b\leq n$ such that
-\begin{enumerate}
-\item $w\lessdot wt_{ab}$ in Bruhat order; that is, $w(a)<w(b)$ and no $c$ with $a<c<b$ satisfies $w(a)<w(c)<w(b)$; and
-\item $w(b)<\beta$.
-\end{enumerate}
-Its \emph{output} is the pair $(wt_{ab},\,w(b))$. An \emph{admissible $k$-chain of length $p$} from $u$ is a sequence $u=w_0,w_1,\ldots,w_p$ carrying bounds $\infty=\beta_0>\beta_1>\cdots>\beta_p$ in which $(w_t,\beta_t)$ is the output of a $k$-strip cover of $(w_{t-1},\beta_{t-1})$ for every $t$. The \emph{$(p,k)$-Pieri problem} for $u$ asks to enumerate every admissible $k$-chain from $u$ of length at most $p$. These chains index the permutations occurring in $e_p(x_1,\ldots,x_k)\,\sch_u$, where $e_p$ is the elementary symmetric polynomial.
-\end{definition}
-
-\begin{method}[$\textbf{\textsc{pieri}}(u,p,k)$] \label{method:pieri}
-Given $u\in S_n$, $1\leq k<n$, and $0\leq p\leq k$, the algorithm returns a list $T$ of pairs $(w,t)$, one for each admissible $k$-chain from $u$ of length $t\leq p$, recording its endpoint $w$.
-\begin{enumerate}
-\item Initialize $T\gets[(u,0)]$ and a frontier $F\gets[(u,\infty)]$.
-\item For $t=1,\ldots,p$, form a new frontier $F'\gets[\,]$ and, for each $(w,\beta)\in F$:
-  \begin{enumerate}
-  \item compute $A\gets\{\,a\in\{1,\ldots,k\}\mid w(a)<\beta\,\}$;
-  \item for each $b=k+1,\ldots,n$ with $w(b)<\beta$, and each $a\in A$ for which $t_{ab}$ is a $k$-strip cover of $(w,\beta)$, append $(wt_{ab},\,w(b))$ to $F'$ and $(wt_{ab},\,t)$ to $T$.
-  \end{enumerate}
-  Then set $F\gets F'$.
-\item Return $T$.
-\end{enumerate}
-\end{method}
-
-\begin{lemma}[Multiplicity-freeness] \label{lemma:pierimultfree}
-For each $t$, distinct admissible $k$-chains from $u$ of length $t$ have distinct endpoints; equivalently, the endpoint map is a bijection from admissible $k$-chains of length $t$ onto the permutations $w$ with $w\gtrdot^{k} u$ of length $\ell(u)+t$ produced by the Pieri rule for $e_t(x_1,\ldots,x_k)$.
-\end{lemma}
-\begin{proof}
-The strictly decreasing bounds $\beta_0>\beta_1>\cdots$ force the values moved leftward across position $k$ to be strictly decreasing, which is exactly the condition making the $e_t$-Pieri expansion multiplicity-free; see \cite{bergeron2002skew}. Reconstructing the chain from its endpoint by peeling off these moves in decreasing order of value shows the map is injective, hence bijective onto the Pieri support.
-\end{proof}
-
-\iffalse
-\begin{proposition}[Complexity of $\textbf{\textsc{pieri}}$] \label{prop:piericomplexity}
-Let $M:=|T|$ be the number of admissible $k$-chains from $u$ of length at most $p$ that $\textbf{\textsc{pieri}}(u,p,k)$ returns. The algorithm runs in
-$$O\!\left(k\,(n-k)\,n\cdot M\right)$$
-elementary operations, that is $O(n^3)$ per enumerated permutation. Moreover, by Lemma~\ref{lemma:pierimultfree},
-$$M\;\leq\;\#\{\,w\in S_n\mid w\geq u,\ \ell(w)\leq \ell(u)+p\,\}.$$
-\end{proposition}
-\begin{proof}
-Processing one frontier node $(w,\beta)$ costs $O(k)$ to build $A$, and then iterates over the $n-k$ choices of $b$ and the at most $k$ elements of $A$; for each pair the Bruhat-cover test and the transposition each scan $O(n)$ positions. Thus a node costs $O\!\big(k+(n-k)\,k\,n\big)=O\!\big(k\,(n-k)\,n\big)$. By Lemma~\ref{lemma:pierimultfree} the number of nodes ever placed on a frontier equals $\sum_{t=0}^{p-1}N_t$, where $N_t$ is the number of length-$t$ chains; since $\sum_{t=0}^{p-1}N_t\leq\sum_{t=0}^{p}N_t=M$, the total cost is $O\!\big(k\,(n-k)\,n\cdot M\big)$. The bound on $M$ holds because every endpoint satisfies $w\geq u$ and $\ell(w)\leq\ell(u)+p$.
-\end{proof}
-\fi
-
-We now describe the $v$-side primitive. Its starting point is the structure of a \emph{dominant} double Schubert polynomial. If $\mu$ is dominant and the columns of its diagram have heights $\lambda_1,\ldots,\lambda_m$ (so that $(\lambda_1,\ldots,\lambda_m)=\code(\mu^{-1})$), then $\sch_\mu(x;z)$ factors as a product of factorial elementary symmetric polynomials of maximal degree, one per column of the shape,
+The starting point of the $v$-side primitive is the structure of a \emph{dominant} double Schubert polynomial. If $\mu$ is dominant and the columns of its diagram have heights $\lambda_1,\ldots,\lambda_m$ (so that $(\lambda_1,\ldots,\lambda_m)=\code(\mu^{-1})$), then $\sch_\mu(x;z)$ factors as a product of factorial elementary symmetric polynomials of maximal degree, one per column of the shape,
 $$\sch_\mu(x;z)=\prod_{i=1}^{m}E_{\lambda_i,\,\lambda_i}(x;z_i)$$
 (Lemma \ref{lemma:dominantfactor}). For a general $v$ one writes $\sch_v(x;z)$ by applying divided differences in the $z$-variables to the dominant polynomial $\sch_{\mu^{-1}}(x;z)$ with $\mu=\dom(v^{-1})$, whose column heights are the parts of $\theta(v^{-1})$; because that polynomial factors by column, the divided-difference action decouples and may be carried out one column (one variable $z_i$) at a time. Applied to a single column this produces a \emph{signed} descending expansion. The following primitive carries it out.
 
@@ -719,32 +520,14 @@ Applied without the edge $\mu$, the signed descending expansion produces many ex
 Let $\theta:=\theta(v^{-1})$ with nonzero parts in columns $1,\ldots,L$, and let $\nu:=v\,\dom(v^{-1})$. Processing columns from $i=L$ down to $i=1$, maintain for each column a set of live labels (initialized at column $L$ to the single label $\nu$). At column $i$, with $k=i$ and edge $\mu_i:=\dom$ of the shape truncated below column $i$, call $\textbf{\textsc{kdown}}(w,\mu_i,\theta_i,k)$ for each live label $w$; record its signed output triples as the transitions out of $w$, and let their endpoints be the live labels seeding column $i-1$. The collected transitions form the path dictionaries used by $\textbf{\textsc{schubmult}}$.
 \end{method}
 
-\begin{lemma}[Correctness of the edge filter] \label{lemma:edgefilter}
-A permutation $w'$ produced by a descending $k$-strip chain from $w$ is retained by $\textbf{\textsc{kdown}}(w,\mu,p,k)$ if and only if $w'$ lies beneath $\mu$, i.e. $\mathrm{inv}(w'\mu)=\mathrm{inv}(\mu)-\mathrm{inv}(w')$. In the assembly of Method~\ref{method:vpaths} the retained signed labels are exactly the terms of $\sch_v(x;z)$ contributed through column $i$, so no extraneous (cancelling) label propagates to column $i-1$.
-\end{lemma}
-\begin{proof}
-The retention test is the identity $\mathrm{inv}(w'\mu)=\mathrm{inv}(\mu)-\mathrm{inv}(w')$ checked in step (2); this is precisely the condition that $w'\leq\mu$ with $\ell(w'\mu)=\ell(\mu)-\ell(w')$. The factorization of the dominant polynomial by column, together with the column-wise decoupling of the $z$-divided differences, identifies the beneath-$\mu$ endpoints at column $i$ with the surviving monomials of $\sch_v(x;z)$ after processing that column; the extraneous chains are exactly those leaving the shape, which the edge discards before they seed column $i-1$.
-\end{proof}
-
-\iffalse
-\begin{proposition}[Complexity of $\textbf{\textsc{kdown}}$] \label{prop:kdowncomplexity}
-Let $R:=|D|$ be the number of retained signed triples and $F^\ast$ the total number of frontier nodes generated by $\textbf{\textsc{kdown}}(w,\mu,p,k)$. The algorithm runs in
-$$O\!\left(n^2\cdot F^\ast\right)$$
-elementary operations, and $R\leq F^\ast$. Consequently $\textbf{\textsc{vpaths}}(v)$, which invokes $\textbf{\textsc{kdown}}$ once per live label across the $L\leq\min(n-1,\ell_v)$ columns and by Lemma~\ref{lemma:edgefilter} propagates only retained labels, runs in $O\!\big(n^2\cdot\Phi_v\big)$ operations, where $\Phi_v$ is the total number of frontier nodes generated over all columns.
-\end{proposition}
-\begin{proof}
-Processing one frontier node scans $O(n)$ candidate positions, each requiring an $O(n)$ Bruhat-descent test and $O(n)$ transposition, so $O(n^2)$ per node; summing over the $F^\ast$ nodes gives $O(n^2F^\ast)$. Each retained triple arises from a distinct frontier node, so $R\leq F^\ast$. In $\textbf{\textsc{vpaths}}$, by Lemma~\ref{lemma:edgefilter} the labels seeding column $i-1$ are only the retained (beneath-edge) endpoints of column $i$, so the live-label count never includes extraneous paths; summing the per-column frontier work gives $O(n^2\Phi_v)$.
-\end{proof}
-\fi
-
 \begin{method}[The algorithm \textbf{\textsc{schubmult}}] \label{method:schubmult}
 Fix $n$ and let $u,v\in S_n$. The algorithm $\textbf{\textsc{schubmult}}(u,v)$ computes the expansion of $\sch_u(x;z)\,\sch_v(x;z)$ in the Schubert basis as follows. Set $\theta:=\theta(v^{-1})$ and let
 $$L:=\#\{i\mid\theta_i\neq 0\}$$
-be the number of nonzero parts. The algorithm proceeds in $L$ layers. It maintains a \emph{front}, a collection of nodes each consisting of an intermediate permutation on the $u$-side paired with a label on the $v$-side, initialized to the single node $(u,\,e)$. At layer $i$ it replaces each node by the nodes obtained by combining one $u$-side cover, generated by $\textbf{\textsc{pieri}}(\,\cdot\,,\theta_i,\theta_i)$ (Method~\ref{method:pieri}), with one $v$-side transition, generated by $\textbf{\textsc{vpaths}}(v)$ (Method~\ref{method:vpaths}), accumulating coefficients in the coefficient ring. After all $L$ layers the surviving coefficients at $v$-label $v\dom(v^{-1})$ give the structure constants.
+be the number of nonzero parts. The algorithm proceeds in $L$ layers. It maintains a \emph{front}, a collection of nodes each consisting of an intermediate permutation on the $u$-side paired with a label on the $v$-side, initialized to the single node $(u,\,e)$. At layer $i$ it replaces each node by the nodes obtained by combining one $u$-side cover, generated by the classical Pieri rule, i.e.\ by $\textbf{\textsc{qpieri}}(\,\cdot\,,\theta_i,\theta_i)$ of Method~\ref{method:qpieri} below with the quantum covers discarded, with one $v$-side transition, generated by $\textbf{\textsc{vpaths}}(v)$ (Method~\ref{method:vpaths}), accumulating coefficients in the coefficient ring. After all $L$ layers the surviving coefficients at $v$-label $v\dom(v^{-1})$ give the structure constants.
 \end{method}
 
 \paragraph{Quantum version.}
-The same path organization gives the quantum multiplication algorithm, the routine \texttt{schubmult\_q\_double\_fast} of \cite{schubmult}. The $v$-side is unchanged except for the shape: the path dictionaries of Method~\ref{method:vpaths} are built over the columns of $\medtheta:=\medtheta(v^{-1})$ (Definition \ref{def:codetheta}), with $\nu:=v\,\medperm(v^{-1})$ in place of $v\dom(v^{-1})$, and by Theorem \ref{theorem:quandoublemed} they enumerate the chains $1=v_0\Tom1\cdots\Tom m v_m=\nu$ together with the data $\ell_i$, $\sigma_i$, $D_i$ of each step. On the $u$-side, the classical $k$-strip covers of Method \ref{method:pieri} are replaced by the covers of the quantum Bruhat graph (Definition \ref{def:cover}, Remark~\ref{remark:qkbruhat}), including the length-decreasing moves, whose contributions carry the corresponding $q$-monomials. We first describe the two $u$-side primitives, which enumerate the chains of Theorem \ref{theorem:pierigeneral} and the compatible pairs of Corollary \ref{corollary:lowerdegrees}.
+The same path organization gives the quantum multiplication algorithm, the routine \texttt{schubmult\_q\_double\_fast} of \cite{schubmult}. The $v$-side is unchanged except for the shape: the path dictionaries of Method~\ref{method:vpaths} are built over the columns of $\medtheta:=\medtheta(v^{-1})$ (Definition \ref{def:codetheta}), with $\nu:=v\,\medperm(v^{-1})$ in place of $v\dom(v^{-1})$, and by Theorem \ref{theorem:quandoublemed} they enumerate the chains $1=v_0\Tom1\cdots\Tom m v_m=\nu$ together with the data $\ell_i$, $\sigma_i$, $D_i$ of each step. On the $u$-side, the classical covers are replaced by the covers of the quantum Bruhat graph (Definition \ref{def:cover}, Remark~\ref{remark:qkbruhat}), including the length-decreasing moves, whose contributions carry the corresponding $q$-monomials. We first describe the two $u$-side primitives, which enumerate the chains of Theorem \ref{theorem:pierigeneral} and the compatible pairs of Corollary \ref{corollary:lowerdegrees}.
 
 \begin{method}[$\textbf{\textsc{qpieri}}(u,p,k)$] \label{method:qpieri}
 Given $u\in S_\infty$, $k\geq1$ and $0\leq p\leq k$, the algorithm returns a list $T$ of triples $(w,t,\mathbf q)$ with $w\in S_\infty$, $0\leq t\leq p$ and $\mathbf q$ a monomial in the $q_i$.
@@ -758,7 +541,7 @@ Given $u\in S_\infty$, $k\geq1$ and $0\leq p\leq k$, the algorithm returns a lis
   Then set $F\gets F'$.
 \item Return $T$.
 \end{enumerate}
-Only finitely many $b$ qualify in (b): if $w$ fixes every position $>N$ then no $t_{ab}$ with $b>\max(N,k)+1$ is a cover of $w$ (the values $w(r)=r$ at positions $\max(N,k)<r<b$ lie between $w(a)$ and $w(b)=b$), so $b$ ranges over $k<b\leq\min(b_{\mathrm{last}},\max(N,k)+1)$. This is the routine \texttt{elem\_sym\_perms\_q} of \cite{schubmult}; at $q=0$, i.e.\ discarding the quantum covers, its endpoints are those of Method \ref{method:pieri} (Lemma \ref{lemma:pierimultfree} and Theorem \ref{theorem:pierigeneral} at $q=0$), the chains being indexed by weakly decreasing positions $b$ rather than by decreasing values.
+Only finitely many $b$ qualify in (b): if $w$ fixes every position $>N$ then no $t_{ab}$ with $b>\max(N,k)+1$ is a cover of $w$ (the values $w(r)=r$ at positions $\max(N,k)<r<b$ lie between $w(a)$ and $w(b)=b$), so $b$ ranges over $k<b\leq\min(b_{\mathrm{last}},\max(N,k)+1)$. This is the routine \texttt{elem\_sym\_perms\_q} of \cite{schubmult}; at $q=0$, i.e.\ discarding the quantum covers, it enumerates the chains of the classical Pieri rule of \cite{sottile,samuelmolev} (Theorem \ref{theorem:pierigeneral} at $q=0$).
 \end{method}
 
 \begin{lemma}[Correctness of \textbf{\textsc{qpieri}}] \label{lemma:qpieri}
@@ -811,162 +594,6 @@ By Theorem \ref{theorem:quandoublemed}, $\qsch_v(x;z)$ is the sum over the $v$-s
 
 The classical algorithm is the specialization $q=0$ with $\medtheta$ replaced by $\theta$, in which the doubled factor is the product $E_{p_1,k}E_{p_2,k}$ and the paired step may be split into two ordinary ones. Thus the two algorithms share the same layer-by-layer structure, while their Pieri transitions reflect the classical or quantum multiplication rule, respectively.
 
-The algorithmic construction is one way to compute products. We now turn to
-a complementary operator description, which packages the quantum
-multiplication rules in the Fomin--Gelfand--Postnikov difference operators.
-
-\subsection{Difference operators and multiplication coefficients}
-
-\iffalse
-\begin{definition}[$\ell_u$, $\ell_v$, $P_u$, $B$, $\Delta$] \label{def:complexityquantities}
-For $u,v\in S_n$ write $\ell_u:=\ell(u)$ and $\ell_v:=\ell(v)$, and set
-$$P_u:=\#\{\,w\in S_n\mid w\geq u \text{ and } \ell(w)\leq \ell_u+\ell_v\,\}.$$
-Write $\theta:=\theta(v^{-1})$. The two \emph{per-layer branchings} are
-$$B:=\max_{i}\ \max_{w}\ \bigl|\textbf{\textsc{pieri}}(w,\theta_i,\theta_i)\bigr|,\qquad
-\Delta:=\max_{i}\ \max_{\lambda}\ \#\{\text{kdown triples }(\lambda',c,\varepsilon)\text{ carried by }\lambda\text{ in column }i\}:$$
-$B$ is the maximum number of $u$-side covers generated by a single $\textbf{\textsc{pieri}}$ step (Proposition~\ref{prop:piericomplexity}), and $\Delta$ is the maximum number of $v$-side kdown triples generated from a single label (Proposition~\ref{prop:kdowncomplexity}). Each branching enumerates a family of $k$-strips indexed by (nonempty) subsets of at most $n$ eligible positions, so
-$$B\leq 2^{n}-1,\qquad \Delta\leq 2^{n}-1;$$
-the bound on $B$ is sharp, attained at $w=w_0$ (where $\textbf{\textsc{pieri}}(w_0,n-1,n)$ produces exactly $2^{n}-1$ covers).
-\end{definition}
-
-\begin{theorem}[Complexity of \textbf{\textsc{schubmult}}] \label{thm:complexity}
-The asymptotic complexity of $\textbf{\textsc{schubmult}}(u,v)$ is
-$$O\!\left(\,\min(n-1,\ell_v)\cdot P_u\cdot 2^{\ell_v}\cdot B\cdot\Delta\cdot n\,\right)$$
-operations in the coefficient ring, where $B$ and $\Delta$ are the $u$-side (Pieri) and $v$-side (kdown-triple) per-layer branchings of Definition~\ref{def:complexityquantities}. This is $O\!\left(2^{\,\binom{n}{2}+n\log_2 n}\right)$ in the worst case, and $O\!\left(2^{\,n\log_2 n}\right)$ when $v$ is dominant.
-\end{theorem}
-\begin{remark}
-Note that this does not exceed the time complexity of multiplication of two arbitrary polynomials in $n$ variables in the monomial basis of degree at most $\binom{n}{2}$, which is $O\!\left(2^{\,\binom{n}{2}}\right)$.
-\end{remark}
-\begin{proof}
-By Method~\ref{method:schubmult} the algorithm runs in $L=\#\{i\mid\theta_i(v^{-1})\neq 0\}\leq\min(n-1,\ell_v)$ layers. Write $\mu:=\dom(v^{-1})$, so that $\sum_i\theta_i(v^{-1})=\ell(\mu)$; note that $\ell(\mu)\geq\ell_v$, with equality if and only if $v$ is dominant, so the total degree processed on the shape is in general strictly larger than $\ell_v$. The key point is that the two sides are yoked: at layer $i$ a $u$-side degree $u_i$ and a $v$-side degree $v_i$ are paired with $u_i+v_i=\theta_i$, and the $v$-side descends from $v\mu$ to the identity, so $\sum_i v_i=\ell(v\mu)$. Hence the total degree added on the $u$-side is
-$$\sum_i u_i=\sum_i\theta_i-\sum_i v_i=\ell(\mu)-\ell(v\mu)=\ell_v,$$
-using $\ell(v\mu)=\ell(\mu)-\ell(v)$ (as $v^{-1}\leq\mu$ in weak order). Thus every intermediate $u$-side permutation satisfies $w\geq u$ and $\ell(w)\leq\ell_u+\ell_v$, so there are at most $P_u$ of them. The $v$-side labels lie in the lower interval $[e,v\mu]$; since $\ell(v\mu)=\ell(\mu)$ can exceed $\ell_v$, we bound their number by $2^{\ell(\mu)}$, but the edge filter of Lemma~\ref{lemma:edgefilter} retains only those beneath the running dominant edge, of which there are at most $2^{\ell_v}$ live at once. Hence the front at the start of each layer has at most $P_u\cdot 2^{\ell_v}$ nodes.
-
-We now account for the work \emph{exactly}. Write $\Phi_i$ for the set of front nodes $(w,\lambda)$ present at the start of layer $i$, each a $u$-side permutation $w$ paired with a $v$-side label $\lambda$. The innermost body of the algorithm matches one $\textbf{\textsc{pieri}}$ cover of $w$ against one kdown triple of $\lambda$, and is executed precisely
-$$W\;=\;\sum_{i=1}^{L}\ \sum_{(w,\lambda)\in\Phi_i}\beta_i(w)\,\delta_i(\lambda)$$
-times, where $\beta_i(w):=\bigl|\textbf{\textsc{pieri}}(w,\theta_i,\theta_i)\bigr|$ is the $u$-side Pieri branching of Proposition~\ref{prop:piericomplexity} and $\delta_i(\lambda)$ is the number of kdown triples of Proposition~\ref{prop:kdowncomplexity} carried by $\lambda$ in column $i$. This is a genuine \emph{product}: at every node the $v$-side kdown branching $\delta_i(\lambda)$ multiplies---rather than adds to---the $u$-side Pieri branching $\beta_i(w)$, so the signed kdown factor enters the running time as a bona fide multiplicative branching, not as a lower-order additive term. Bounding each factor by its maximum, $\beta_i(w)\leq B$ and $\delta_i(\lambda)\leq\Delta$, and the node count by $|\Phi_i|\leq P_u\cdot 2^{\ell_v}$, gives
-$$W\;\leq\;L\cdot P_u\cdot 2^{\ell_v}\cdot B\cdot\Delta,$$
-and each executed body costs $O(n)$ ring and permutation operations; this is the stated bound.
-
-For the worst case substitute $P_u\leq n!\leq 2^{\,n\log_2 n}$, $\ell_v\leq\binom{n}{2}$, and $B,\Delta\leq 2^{n}-1$. Because $\log_2(B\,\Delta)\leq 2n=O(n)$, the two branchings---in particular the kdown-triple factor $\Delta$---contribute only $O(n)$ to the exponent, which is absorbed by the $n\log_2 n$ term; hence $W=2^{\,\binom{n}{2}+n\log_2 n+O(n)}=O\!\left(2^{\,\binom{n}{2}+n\log_2 n}\right)$, and the leading exponent $\binom{n}{2}$ is unchanged. If $v$ is dominant then $\theta(v^{-1})=\code(v^{-1})$, $\ell(\mu)=\ell_v$, every path step carries a $+1$ sign, and each layer's $v$-side is a single path: the number of live labels is $O(\ell_v)$ and the kdown branching collapses to $\Delta=1$, so no term is produced and later canceled. The bound becomes $O(\ell_v\cdot P_u\cdot B\cdot n)=O(2^{\,n\log_2 n})$.
-\end{proof}
-
-\begin{remark}
-The quantum algorithm has the same overall shape---$L$ layers, a front of $(u\text{-side},\,v\text{-side})$ nodes---but three features make it genuinely more involved than the classical case, all confined to the $u$-side; the $v$-side is \emph{identical}.
-
-First, the layer sequence is the \emph{medium theta} $\medtheta(v^{-1})$ of Definition~\ref{def:codetheta}, not the sorted partition $\theta(v^{-1})$ used in the classical algorithm. Classically a repeated part of $\theta(v^{-1})$ costs nothing extra: it amounts to multiplying by a product of two elementary symmetric polynomials in the same variables, which is a single ordinary Pieri step. In the quantum setting there is no such simple description, so the algorithm instead iterates over $\medtheta(v^{-1})$, which is \emph{almost} strict: an equal consecutive pair $\medtheta_i=\medtheta_{i+1}$ is retained only when it is preceded by a strict drop of at least two, and every such pair is processed as a single \emph{paired} step by a quantum double elementary symmetric Pieri rule (the routine \texttt{double\_elem\_sym\_q}), whose $u$-side branching is the \emph{product} of two single-column Pieri branchings rather than one. The number of nonzero parts of $\medtheta(v^{-1})$ is at most $\min(n-1,\ell_v)$---forming $\medtheta$ from $\code(v^{-1})$ creates no new nonzero part---and, since a paired step consumes two parts at once, so is the number of steps.
-
-Second, the $v$-side is unaffected: it uses the same increasing-path (kdown-triple) machinery, now over Theorem~\ref{theorem:quandoublemed}, so the number of $v$-labels is still at most $2^{\ell_v}$ and the kdown-triple branching $\Delta$ is unchanged. Only the column shape it runs over changes, from $\theta(v^{-1})$ to $\medtheta(v^{-1})$, and this does not affect either bound.
-
-Third, on the $u$-side the quantum covers of Remark~\ref{remark:qkbruhat} may \emph{decrease} length and carry a $q$-degree. Two consequences follow. (a) Because the $u$-side climbs the full over-shape $\medperm(v^{-1})$ before the $v$-side filters it back down, an intermediate $u$-permutation $w$ can have length \emph{exceeding} $\ell_u+\ell_v$; the correct bound is $\ell(w)\leq\ell_u+|\medtheta(v^{-1})|$, and we simply bound the number of reachable $w$ by $n!$. (b) A node is a pair $(w,d)$ of a permutation with a $q$-degree, and the same $w$ may in principle be reached at several $q$-degrees; grading by $q$-degree keeps the transition graph acyclic, since each length-decreasing cover $t_{ab}$ raises $\sum_i d_i$ by the strictly positive amount $b-a$. In the implementation the coefficient attached to each front node is in fact a \emph{single} $q$-monomial, because the $q$-degree there is determined by the pair (intermediate permutation, $v$-label); the number of distinct $q$-degrees a coefficient could carry is at most $Q_{u,v}$ (Definition~\ref{def:quantumfront}), which we use as a safe bound on coefficient size.
-\end{remark}
-
-\begin{definition}[$\widehat P_{u,v}$, $B_q$, $Q_{u,v}$] \label{def:quantumfront}
-For $u,v\in S_n$ set
-
-$$\widehat P_{u,v}:=\#\{\,w\in S_n\mid \ell(w)\leq \ell_u+|\medtheta(v^{-1})|\,\}\;\leq\; n!,$$
-and let $B_q$ be the maximum number of covers produced by a single-column quantum Pieri step $\textbf{\textsc{pieri}}^q(w,\medtheta_i,\medtheta_i)$ (the quantum analogue of $B$; the routine \texttt{elem\_sym\_perms\_q}). Since each quantum cover is a quantum $k$-strip, indexed by a subset of at most $n$ eligible positions of one of two types (length-increasing or quantum length-decreasing),
-$$B_q\leq 4^{n}=2^{O(n)},\qquad\text{and a paired step contributes at most } B_q^2=2^{O(n)}.$$
-Finally set
-$$Q_{u,v}:=\binom{\lfloor(\ell_u+\ell_v)/2\rfloor+n-1}{n-1},$$
-an upper bound on the number of $q$-monomials in any coefficient (a nonzero $q^d$ requires $\sum_i d_i\leq\tfrac12(\ell_u+\ell_v)$).
-\end{definition}
-
-\begin{theorem}[Complexity of quantum \textbf{\textsc{schubmult}}] \label{thm:quantumcomplexity}
-The asymptotic complexity of the quantum form of $\textbf{\textsc{schubmult}}(u,v)$ is
-$$O\!\left(\,\min(n-1,\ell_v)\cdot \widehat P_{u,v}\cdot 2^{\ell_v}\cdot B_q^{2}\cdot\Delta\cdot Q_{u,v}\cdot n\,\right)$$
-operations in the coefficient ring, where the $v$-side kdown-triple factor $\Delta$ is identical to the classical case, the per-layer $u$-side branching is at most $B_q$ for a single column and at most $B_q^2$ for a paired column, and $Q_{u,v}$ bounds the size of each $q$-coefficient. In the worst case this is at most
-$$2^{\binom{n}{2}}\cdot n!\cdot Q_{u,v}\cdot 2^{O(n)},$$
-whose leading exponent is $\binom{n}{2}$, the same as in the classical bound of Theorem \ref{thm:complexity}.
-\end{theorem}
-
-\begin{proof}
-\emph{Layers.} The quantum algorithm runs over the nonzero parts of $\medtheta(v^{-1})$, processing a retained pair of equal consecutive parts as one paired step; hence the number of steps is at most the number of nonzero parts of $\medtheta(v^{-1})$, which is at most $\min(n-1,\ell_v)$ (forming $\medtheta(v^{-1})$ from $\code(v^{-1})$ creates no new nonzero part, and there are at most $\min(n-1,\ell_v)$ nonzero entries to begin with).
-
-\emph{The $v$-side is unchanged.} As in Theorem~\ref{thm:complexity}, the number of live $v$-labels is at most $2^{\ell_v}$ and the per-label kdown-triple branching is at most $\Delta$; Theorem~\ref{theorem:quandoublemed} uses the same increasing-path structure, so nothing here differs from the classical case.
-
-\emph{The $u$-side.} The $u$-side climbs the over-shape $\medperm(v^{-1})$, so every intermediate permutation $w$ satisfies $\ell(w)\leq\ell_u+|\medtheta(v^{-1})|$; length-decreasing quantum covers only lower $\ell(w)$, so this bound persists and there are at most $\widehat P_{u,v}\leq n!$ reachable permutations. At a single-column layer the $u$-branching is at most $B_q$; at a paired (equal-part) layer the routine \texttt{double\_elem\_sym\_q} composes two quantum Pieri steps, so the $u$-branching is at most $B_q^2$. Both are $2^{O(n)}$.
-
-\emph{Coefficients.} Each front coefficient is a $\mathbb Z$-combination of monomials $q^d$ with $\sum_i d_i\leq\tfrac12(\ell_u+\ell_v)$, of which there are at most $Q_{u,v}$; hence each coefficient-ring operation costs $O(Q_{u,v}\cdot n)$. (In fact each front coefficient is a single $q$-monomial, the $q$-degree being determined by the node, so this factor is pessimistic; we retain it as a rigorous upper bound.)
-
-\emph{Assembly.} Exactly as in Theorem~\ref{thm:complexity}, the work is the layered product $\sum_i\sum_{(w,\lambda)\in\Phi_i}\beta^q_i(w)\,\delta_i(\lambda)$ with $\beta^q_i\leq B_q^2$ and $\delta_i\leq\Delta$; bounding the node count by $\widehat P_{u,v}\cdot 2^{\ell_v}$ and multiplying by $B_q^2\cdot\Delta$, the $O(Q_{u,v}\cdot n)$ per-operation cost, and the $\min(n-1,\ell_v)$ layers gives the stated bound. For the worst case use $\widehat P_{u,v}\leq n!$, $\ell_v\leq\binom{n}{2}$, and $B_q,\Delta=2^{O(n)}$; since $\log_2\!\big(n!\,B_q^2\,\Delta\,Q_{u,v}\big)=O(n\log n)=o\!\big(\binom{n}{2}\big)$, the leading exponent is $\binom{n}{2}$, exactly as in the classical bound.
-\end{proof}
-\fi
-%\begin{definition}[$\chi_{j;n}$, $\chi^{(n)}$]
-
-
-
-
-\begin{definition}[$\chi_{j;n}$, $\chi^{(n)}$]
-Recall the commuting difference operators $\chi_{j;n}$, $j\leq n$, of Fomin, Gelfand, and Postnikov \cite{fomin1997quantum}, acting on polynomials in $x_1,\ldots,x_n$ (with coefficients in any further variables):
-$$\chi_{j;n}=x_j-\sum_{1\leq i<j}q_{ij}\partial^{t_{ij}}+\sum_{j<k\leq n} q_{jk}\partial^{t_{jk}},$$
-where for a transposition $t$ we write $\partial^{t}$ for the divided difference operator $\partial_t$ in the $x$-variables associated with any reduced word of $t$, so that $\partial^{t}\sch_v(x;z)=\sch_{vt}(x;z)$ if $\ell(vt)=\ell(v)-\ell(t)$ and $\partial^t\sch_v(x;z)=0$ otherwise. We denote the sequence $(\chi_{1;n},\ldots,\chi_{n;n})$ with $n$ fixed by $\chi^{(n)}$. Fomin, Gelfand and Postnikov proved \cite{fomin1997quantum} that if $v\in S_n$ then
-$$\qsch_v(\chi^{(n)})(1) = \sch_v(x),$$
-and hence, by Lemma \ref{lemma:quantumtoordinary} with $y=0$ (whose coefficients $\sch_{v_1}(0;z)$ commute with the operators),
-$$\qsch_v(\chi^{(n)};z)(1) = \sum_{v_1\cdot v_2=v}\sch_{v_1}(0;z)\sch_{v_2}(x)=\sch_v(x;z).$$
-We specify a more precise formula, as follows.
-\end{definition}
-
-\begin{theorem}
-Suppose $v\in S_n$. Then
-$$\qsch_v(\chi^{(n)};z)=\sum_{u\in S_{n},d} q^dc_{u,v}^{1,d}(x;z)\partial^u$$
-\end{theorem}
-\begin{proof}
-Note that if $\sch_u(x)$ has at most $n$ variables, then
-$$\qsch_u(\chi^{(n)};y)\qsch_v(\chi^{(n)};z)=\sum_{w,d} q^dc_{u,v}^{w,d}(y;z)\qsch_w(\chi^{(n)};y)$$
-We thus have that
-$$(\qsch_u(\chi^{(n)};y)\qsch_v(\chi^{(n)};z))(1)=\sum_{w,d} q^dc_{u,v}^{w,d}(y;z)\sch_w(x;y)$$
-This is also equal to
-$$\qsch_v(\chi^{(n)};z)(\sch_u(x;y))$$
-due to the fact that $(\qsch_u(\chi^{(n)};y))(1)=\sch_u(x;y)$. To obtain the coefficient of $\partial^u$ in $\qsch_v(\chi^{(n)};z)$, we set $y=x$ after applying this operator. Since $\sch_w(x;x)=0$ unless $w=1$, we have that
-$$\qsch_v(\chi^{(n)};z)(\sch_u(x;y))|_{y=x}=\sum_d q^dc_{u,v}^{1,d}(x;z)$$
-and the result follows.
-\end{proof}
-
-%\begin{lemma}
-%Let $k$ be an integer and let $v\in S_\infty$. Then
-%$$\sum_d q^dc_{s_k,v}^{1,d}(x;z) = \sum_{i\leq k < j} q_{ij}\sch_{vt_{ij}}(x;z)$$
-%\end{lemma}
-%\begin{proof}
-%This value is equal to
-%$$\qsch_{s_k}(\chi^{(n)};y)(\sch_v(x;z))$$
-%then setting $y=x$ for sufficiently large $n$. We also have
-%$$\qsch_{s_k}(\chi^{(n)};y) = \sch_{s_k}(x;y)+\sum_{1\leq i\leq k<j\leq n}q_{ij}\partial^{t_{ij}}$$
-%Thus
-%$$\qsch_{s_k}(\chi^{(n)};y)(\sch_v(x;z))=\sum_w c_{s_k,v}^w(y;z)\sch_w(x;y)+\sum_{1\leq i\leq k<j\leq n}q_{ij}\sch_{vt_{ij}}(x;z)$$
-%Setting $y=z$, the terms involving $\sch_w(x;y)$ disappear, and we are left with the desired result.
-%\end{proof}
-
-\begin{theorem}
-Let $k$ be an integer and let $v,w\in S_\infty$. Then
-$$\sum_d q^dc_{s_k,v}^{w,d}(y;z)=c_{s_k,v}^{w}(y;z)+\sum_{i\leq k < j} q_{ij}\sch_{vt_{ij}w^{-1}}(y;z),$$
-where the sum is over those $i<j$ with $\ell(vt_{ij})=\ell(v)-\ell(t_{ij})$, and $\sch_{vt_{ij}w^{-1}}(y;z)$ is to be read as $0$ unless $\ell(vt_{ij})=\ell(vt_{ij}w^{-1})+\ell(w)$.
-\end{theorem}
-\begin{proof}
-We have that the desired value is equal to the coefficient of $\sch_w(x;y)$ in
-$$\qsch_{s_k}(\chi^{(n)};y)(\sch_{v}(x;z))$$
-We have that
-$$\qsch_{s_k}(\chi^{(n)};y)=\sch_{s_k}(x;y)+\sum_{i\leq k<j\leq n}q_{ij}\partial^{t_{ij}}$$
-Applying this operator, we obtain
-$$\sum_{i\leq k<j\leq n} q_{ij}\sch_{vt_{ij}}(x;z)+\sum_w c_{s_k,v}^w(y;z)\sch_w(x;y)$$
-Applying the Cauchy formula (Lemma \ref{lemma:quantumtoordinary} at $q=0$), this is equal to
-$$\sum_{i\leq k<j}\ \sum_{u}q_{ij}\sch_{vt_{ij}u^{-1}}(y;z)\sch_u(x;y)+\sum_w c_{s_k,v}^w(y;z)\sch_w(x;y),$$
-the inner sum being over the reduced factorizations $vt_{ij}=(vt_{ij}u^{-1})\cdot u$.
-Setting $u=w$ and allowing $n$ to be sufficiently large, we obtain the result.
-\end{proof}
-
-% \begin{proof}[Proof of Theorem \ref{theorem:coeffreduce}]
-% It suffices to prove this for $v=w_0(n)$. We have
-% $$\qsch_{w_0(n)}(\chi;z)=\sum_{u,d} q^dc_{u,w_0(n)}^{1,d}(x;z)\partial^u$$
-% Fixing the particular $d$ in the statement of the theorem, we must have that $u=s'$. By the Pieri formula,
-% $$c_{s',w_0(n)}^{1,d}(x;z)=\sch_{w_0(n)s'}(x;z)$$
-% Thus if we compute the coefficient of $q^d\sch_w(x;y)$ in 
-% $$(\qsch_{w_0(n)}(\chi;z))(\sch_u(x;y))$$
-% we obtain
-% $$c_{us',w_0(n)s'}^w(y;z)$$
-% and the result follows.
-% \end{proof}
-
 \section{Quantum to classical reduction} \label{section:quantclass}
 
 In this section we extend the quantum-to-classical reduction of Huang and Li \cite{huang2015equivariant} from the equivariant quantum structure constants $c_{u,v}^{w,d}(y;y)$ to the triple constants. We write $\mathrm{sgn}_i(w)=1$ if $w(i)>w(i+1)$ and $\mathrm{sgn}_i(w)=0$ otherwise, $\delta_i\in Q^\vee$ for the weak composition with a single $1$ in position $i$, and $|d|=\sum_id_i$; the bracket $\langle d\rangle_i=2d_i-d_{i-1}-d_{i+1}$ was defined in Section \ref{section:definitions}. We say that $u\in S_\infty$ is \emph{$k$-Grassmannian} if $k$ is its only descent.
@@ -1012,61 +639,6 @@ For (1), we note that since $\mathrm{sgn}_i(v_2)\leq \mathrm{sgn}_i(v)$ for any 
 
 For (2), we note that if $\mathrm{sgn}_k(w)+\langle d\rangle_k=\mathrm{sgn}_k(u)+\mathrm{sgn}_k(v)=2$, then since $\mathrm{sgn}_k(v_2)=\mathrm{sgn}_k(v)$ for any factorization $v_1\cdot v_2=v$ such that $c_{u,v_2}^{w,d}(y;y)\neq 0$, Theorem \ref{theorem:quantclass}(2) holds for each term in the sum in Lemma \ref{lemma:quantumtoordinary}, and the result follows.
 \end{proof}
-
-\begin{corollary}[$z$-version of Corollary \ref{corollary:quantclass28}(2)] \label{corollary:quantclass28z}
-Let $u,v,w\in S_\infty$ and $d\in Q^\vee$, and fix an index $i$ with $\mathrm{sgn}_i(v)=0$. If $\langle d\rangle_i=\mathrm{sgn}_i(u)=1$ and $\mathrm{sgn}_i(w)=0$, then
-$$c_{u,v}^{w,d}(y;z)=c_{us_i,v}^{ws_i,d-\delta_i}(y;z).$$
-\end{corollary}
-\begin{proof}
-Since $\mathrm{sgn}_i(v_2)\leq \mathrm{sgn}_i(v)=0$ for every factorization $v_1\cdot v_2=v$, the hypotheses of Corollary \ref{corollary:quantclass28}(2) hold for each term $c_{u,v_2}^{w,d}(y;y)$ appearing in Lemma \ref{lemma:quantumtoordinary}, so $c_{u,v_2}^{w,d}(y;y)=c_{us_i,v_2}^{ws_i,d-\delta_i}(y;y)$. Resumming via Lemma \ref{lemma:quantumtoordinary} gives the claim.
-\end{proof}
-
-% \begin{lemma}
-% Suppose $c_{u,v}^{w,d}(y;z)\neq 0$ and $0\leq p\leq k$. Then for all $w'$ such that $u\tom{k} w'$ we have that $c_{u,v}^{w',d'}(y;z)\neq 0$ if and only if there exist $d = d_0, d_1,\ldots,d_p = d'$ and
-% $w=w_0\tom{k} w_1\tom{k}\cdots\tom{k} w_p=w'$
-% such that for each $0< a \leq p$, either
-% \begin{enumerate}
-% \item $d_a = d_{a-1}$ and $\ell(w_a) = \ell(w_{a-1}) + 1$, or
-% \item $\ell(w_a) = \ell(w_{a-1}) - 1$ and $\langle d_a\rangle_k = \langle d_{a-1}\rangle_k + 2$, $\langle d_a\rangle_{k-1} = \langle d_{a-1}\rangle_{k-1} - 1$, $\langle d_a\rangle_{k+1} = \langle d_{a-1}\rangle_{k+1} - 1$, and $\langle d_a\rangle_j = \langle d_{a-1}\rangle_j$ for all other $j$.
-% \item There exist $q\leq k \leq r$ with $q\neq r$ such that 
-% $$\ell(w_a) = \ell(w_{a-1}) - 2(r-q) + 1$$
-% and $\langle d_a\rangle_q = \langle d_{a-1}\rangle_q + 1$, $\langle d_a\rangle_r = \langle d_{a-1}\rangle_r + 1$, $\langle d_a\rangle_{q-1} = \langle d_{a-1}\rangle_{q-1} - 1$, $\langle d_a\rangle_{r+1} = \langle d_{a-1}\rangle_{r+1} - 1$, and $\langle d_a\rangle_j = \langle d_{a-1}\rangle_j$ for all other $j$.
-% \end{enumerate}
-% \end{lemma}
-
-% Thus if $c_{u,v}^{w,d}(y;z) = p(y;z)\neq 0$, then for each $i$ we have that
-% $$\langle d\rangle_i \geq \ell(w) + \deg p - \ell(u) - \ell(v)$$
-
-\begin{lemma}[Reduction to a coroot supported at $k$] \label{lemma:offkreduction}
-Let $u,v,w\in S_\infty$ and let $d\in Q^\vee$. Suppose $v$ has precisely one descent, which is $k$. If $c_{u,v}^{w,d}(y;z)\neq 0$, then there exist $u',w'\in S_\infty$ and $d'\in Q^\vee$ with $0\leq d'\leq d$ such that
-$$c_{u,v}^{w,d}(y;z)=c_{u',v}^{w',d'}(y;z)$$
-and $\langle d'\rangle_i\leq 0$ for all $i\neq k$. Moreover, if $d'\neq 0$ then $\langle d'\rangle_k>0$.
-\end{lemma}
-\begin{proof}
-Suppose $\langle d\rangle_i>0$ for some $i\neq k$, and choose such an $i$ to be maximal. Because $v$ is $k$-Grassmannian, $\mathrm{sgn}_i(v)=0$, so Theorem \ref{theorem:quantclassz}(1) forces
-$$\mathrm{sgn}_i(w)+\langle d\rangle_i\leq \mathrm{sgn}_i(u)+\mathrm{sgn}_i(v)=\mathrm{sgn}_i(u)\leq 1.$$
-Since $\langle d\rangle_i\geq 1$, we conclude $\langle d\rangle_i=1$, $\mathrm{sgn}_i(u)=1$, and $\mathrm{sgn}_i(w)=0$. These are exactly the hypotheses of Corollary \ref{corollary:quantclass28z} (note $\mathrm{sgn}_i(v)=0$), so
-$$c_{u,v}^{w,d}(y;z)=c_{us_i,v}^{ws_i,d-\delta_i}(y;z).$$
-Moreover $\langle d\rangle_i=2d_i-d_{i-1}-d_{i+1}=1$ with $d_{i\pm 1}\geq 0$ forces $d_i\geq 1$, so $d-\delta_i\in Q^\vee$ with $0\leq d-\delta_i\leq d$ and $|d-\delta_i|<|d|$. Replacing $(u,w,d)$ by $(us_i,v\text{ fixed},ws_i,d-\delta_i)$ and iterating, the quantity $|d|$ strictly decreases at each step, so the process terminates in a triple $(u',w',d')$ with $\langle d'\rangle_i\leq 0$ for all $i\neq k$.
-
-Finally, for any finitely supported $d'\in Q^\vee$ the values $\langle d'\rangle_i=2d'_i-d'_{i-1}-d'_{i+1}$ telescope to $\sum_i\langle d'\rangle_i=0$. Hence $\langle d'\rangle_k=-\sum_{i\neq k}\langle d'\rangle_i\geq 0$, with equality if and only if $\langle d'\rangle_i=0$ for all $i$, i.e.\ $d'=0$. Thus $d'\neq 0$ implies $\langle d'\rangle_k>0$.
-\end{proof}
-
-% \begin{lemma}
-% %Suppose $u,v,w$ are such that $u\Tom{i} w$, $v\Tom{i} w$, and $D_i(u,w)=D_i(v,w)$. Then $u=v$.
-% Suppose $(v_0,v_1,\ldots,v_n)$ and $(v_0',\ldots,v_n')$ are such that $v_{i-1}\Tom{i} v_i$, $v_{i-1}'\Tom{i} v_i'$ for all $i$, $v_0=v_0'=1$, and $v_n=v_n'=v$ for some $n$. Suppose also that $D_i(v_{i-1},v_i)=D_{i}(v_{i-1}',v_i')$ for all $i$. Then $v_i=v_i'$ for all $i$.
-% \end{lemma}
-% \begin{proof}
-% This is true if $\ell(v_n)=0$. Otherwise, consider the right descent. There are only two places where it can occur.
-% \end{proof}
-
-
-% %Acting on $321$-avoiding, all the elem syms are Schubs.
-
-% \begin{theorem} \label{theorem:nocan}
-% No two terms in Theorem \ref{theorem:orddouble} directly cancel each other.
-% \end{theorem}
-% \begin{proof}
 
 \section{Proof of the Pieri formula} \label{section:proofpieri}
 
@@ -1424,20 +996,6 @@ $$\kappa_{ak}q_{k-1}(u,wt_{ak})=\qw_u(\rho)\qw_u(C)\,\kappa_{ak}\qw_\omega(\tau_
 and $\fx_{k-1}(u,wt_{ak})=\fx_{k-1}(u,w)\setminus\{u(a)\}=\fx_{k-2}(u,w)$ as in the proof of Lemma \ref{lemma:reflectioncancel}. Thus the summand of type (M) equals $-q_{k-1}c_{k-2}(u,w)$ and cancels the quantum term; when the condition fails, both vanish.
 \end{proof}
 
-\begin{lemma}[Vanishing] \label{lemma:vanishing}
-Suppose $u,w\in S_\infty$, let $k>1$, and suppose $u\ntom{k}w$. Then
-\begin{align*}
-(y_{w(k)}-z_1)\,c_{k-1}(u,w)
-&+\sum_{\substack{b>k,\ wt_{kb}\lup w}}\kappa_{kb}\,c_{k-1}(u,wt_{kb})
--\sum_{\substack{a<k,\ wt_{ak}\lup w}}\kappa_{ak}\,c_{k-1}(u,wt_{ak})\\
-&+q_{k-1}c_{k-2}(u,w)=0,
-\end{align*}
-where $\kappa_{rs}=\kappa(wt_{rs},t_{rs})$.
-\end{lemma}
-\begin{proof}
-If $u(k)=w(k)$, then $u\ntom{k-1}w$ by Lemma \ref{lemma:leveldichotomy}(i), so the diagonal term vanishes, and the rest is Lemma \ref{lemma:reflectioncancel}. If $u(k)\neq w(k)$ and $B>k$, the diagonal and quantum terms vanish and the Monk summands sum to $c_k(u,w)=0$ by Lemma \ref{lemma:movedcancel}(a). If $u(k)\neq w(k)$ and $B=k$, this is Lemma \ref{lemma:movedcancel}(b).
-\end{proof}
-
 We now record the recurrence satisfied by the quantum factorial elementary polynomials, which drives the induction.
 
 \begin{lemma} \label{lemma:elemrecursion}
@@ -1489,7 +1047,7 @@ by Lemma \ref{lemma:elemrecursion}. The remaining contributions are the reflecti
 
 \emph{Case 2: $u(k)\neq w(k)$ and $B>k$.} By Lemma \ref{lemma:movedcancel}(a), the diagonal term \eqref{eq:diag} and the quantum term \eqref{eq:rec} vanish, and the Monk summands \eqref{eq:up}--\eqref{eq:down} sum to $c_k(u,w)$. (When $u\tom{k}w$, Lemma \ref{lemma:pieriknotkn1} identifies the single surviving summand: it is indexed by $t_{kB}$, with $v=wt_{kB}$, $u\tom{k-1}v$, $\fx_k(u,w)=\fx_{k-1}(u,v)$ and $\kappa_{kB}\,q_{k-1}(u,v)=q_k(u,w)$, the factor $\kappa_{kB}$ being $1$ or $q_{kB}$ according as $t_{kB}$ is a classical or a quantum cover of $v$; this is the step at which the quantum drop terms of Lemma \ref{lemma:singlevariable} and the quantum weight of Definition \ref{definition:pieri} interlock.)
 
-\emph{Case 3: $u(k)\neq w(k)$ and $B=k$.} Here $u\ntom{k}w$, since $C$ contains no element greater than $k$, so $c_k(u,w)=0$; and \eqref{eq:diag}--\eqref{eq:rec} vanishes by Lemma \ref{lemma:movedcancel}(b) (equivalently, by Lemma \ref{lemma:vanishing}).
+\emph{Case 3: $u(k)\neq w(k)$ and $B=k$.} Here $u\ntom{k}w$, since $C$ contains no element greater than $k$, so $c_k(u,w)=0$; and \eqref{eq:diag}--\eqref{eq:rec} vanishes by Lemma \ref{lemma:movedcancel}(b).
 
 By Lemma \ref{lemma:leveldichotomy} these cases are exhaustive. In all cases $[\qsch_w](\qsch_u\qelem_{k,k})=c_k(u,w)$, completing the induction and the proof.
 \end{proof}
@@ -1630,24 +1188,7 @@ Since $\sum_i\ell(v_{i-1},v_i)=\ell(y)$, the signs combine to $\prod_i(-1)^{\sig
 A strict dominant permutation is dominant, so Theorem \ref{theorem:orddouble} applies to $v$ and $\mu$ and expresses $\sch_v(x;z)$ as the sum, over the chains $1=v_0\Tom{1}\cdots\Tom{k}v_k=v\mu$, of $\prod_i(-1)^{\sigma_i}E_{\thop_i-\ell_i,\thop_i}(x;z_{D_i})$, where $\ell_i=\ell(v_{i-1},v_i)$, $\sigma_i=\sigma_i(v_{i-1},v_i)$ and $D_i=D_i(v_{i-1},v_i)$. Apply $\mathcal Q$ to both sides. The left-hand side becomes $\qsch_v(x;z)$. On the right, by Lemma \ref{lemma:Ehe} each factor is $E_{\thop_i-\ell_i,\thop_i}(x;z_{D_i})=\sum_{m}c_{i,m}\,e_m(x_1,\ldots,x_{\thop_i})$ with coefficients $c_{i,m}\in\mathbb Z[z]$, and multiplying out, each term $\prod_ie_{m_i}(x_1,\ldots,x_{\thop_i})$ of the product over $i$ is a standard elementary monomial because $\thop_1>\cdots>\thop_k$. Hence $\mathcal Q$ sends the product to $\prod_i\sum_mc_{i,m}\,e^{(q)}_m(x_1,\ldots,x_{\thop_i})=\prod_i\qelem_{\thop_i-\ell_i,\thop_i}(x;z_{D_i})$, again by Lemma \ref{lemma:Ehe}.
 \end{proof}
 
-\begin{lemma}[Two equal columns] \label{lemma:twocolumns}
-Let $0\leq p_1,p_2\leq k$ and let $z,z'$ be two alphabets. Then $E_{p_1,k}(x;z)\,E_{p_2,k}(x;z')$ is a $\mathbb Z[z,z']$-linear combination of the standard elementary monomials $e_a(x_1,\ldots,x_k)\,e_b(x_1,\ldots,x_{k+1})$, $0\leq a,b\leq k+1$.
-\end{lemma}
-\begin{proof}
-By Lemma \ref{lemma:Ehe} the product is a $\mathbb Z[z,z']$-combination of the products $e_a(x_1,\ldots,x_k)e_b(x_1,\ldots,x_k)$ with $a,b\leq k$, so it suffices to treat these. Such a product is a symmetric polynomial in $x_1,\ldots,x_k$, and by the Pieri rule $e_a\,e_b=\sum_\lambda s_\lambda(x_1,\ldots,x_k)$, the sum being over the partitions $\lambda$ with at most two columns ($\lambda_1\leq2$), at most $k$ rows, obtained by adding a vertical strip of size $a$ to the column $(1^b)$. For such a $\lambda$, $s_\lambda(x_1,\ldots,x_k)$ is the Schubert polynomial of the Grassmannian permutation $w$ with descent at $k$ and shape $\lambda$, and by the determinantal formula of Fomin, Gelfand and Postnikov \cite{fomin1997quantum} (recalled in Remark \ref{remark:medtheta}; see also \cite{ciocan1999partial}),
-$$s_\lambda(x_1,\ldots,x_k)=\sch_w(x)=\det\big(e_{\lambda'_i+j-i}(x_1,\ldots,x_{k+j-1})\big)_{1\leq i,j\leq\lambda_1}=e_{\lambda'_1}(x_{\leq k})\,e_{\lambda'_2}(x_{\leq k+1})-e_{\lambda'_2-1}(x_{\leq k})\,e_{\lambda'_1+1}(x_{\leq k+1})$$
-when $\lambda_1=2$ (and simply $e_{\lambda'_1}(x_{\leq k})$ when $\lambda_1\leq1$), a combination of standard elementary monomials of the required form.
-\end{proof}
-
-In particular $\qelem_{p_1,p_2;k}(x;z,z')=\mathcal Q\big(E_{p_1,k}(x;z)E_{p_2,k}(x;z')\big)$ is obtained by replacing each $e_a(x_{\leq k})e_b(x_{\leq k+1})$ in this expansion by $e^{(q)}_a(x_{\leq k})e^{(q)}_b(x_{\leq k+1})$; for $p_1=p_2=k$ this is the quantum Giambelli determinant of Remark \ref{remark:medtheta}.
-
-\begin{proof}[Proof of Theorem \ref{theorem:quandoublemed}]
-A permutation of medium shape is dominant, so Theorem \ref{theorem:orddouble} applies to $v$ and $\mu$ and gives $\sch_v(x;z)$ as the sum over the chains $1=v_0\Tom1\cdots\Tom mv_m=v\mu$ of $\prod_{i=1}^m(-1)^{\sigma_i}E_{\medtheta_i-\ell_i,\medtheta_i}(x;z_{D_i})$. Apply $\mathcal Q$; the left-hand side becomes $\qsch_v(x;z)$, and we must show that $\mathcal Q$ acts on each product on the right factor by factor, where the factors are the single columns $F_i=E_{\medtheta_i-\ell_i,\medtheta_i}(x;z_{D_i})$, $i\in\mathcal S$, and the doubled columns $F_i=E_{\medtheta_i-\ell_i,\medtheta_i}(x;z_{D_i})E_{\medtheta_i-\ell_{i+1},\medtheta_i}(x;z_{D_{i+1}})$, $i\in\mathcal P$. By Lemma \ref{lemma:Ehe} a single factor $F_i$ is a combination of elementary polynomials in the alphabet $x_{\leq\medtheta_i}$, and by Lemma \ref{lemma:twocolumns} a doubled factor $F_i$ is a combination of products $e_a(x_{\leq k})e_b(x_{\leq k+1})$ with $k=\medtheta_i$. We claim that the alphabets attached in this way to distinct factors are pairwise distinct; then every term of the expanded product $\prod_iF_i$ is a standard elementary monomial, $\mathcal Q$ acts on it factor by factor, and the theorem follows from Lemma \ref{lemma:Ehe} for the single factors and from \eqref{eq:qelemdouble} for the doubled ones.
-
-For the claim, write $h(i)=\medtheta_i$ and recall that $h$ is weakly decreasing, that $h(i)=h(i+1)$ exactly for $i\in\mathcal P$, and that $i\in\mathcal P$ with $i>1$ forces $h(i-1)\geq h(i)+2$. Two single indices $i<i'$ have $h(i)>h(i')$, for $h(i)=h(i')$ would force $h(i)=h(i+1)$, i.e.\ $i\in\mathcal P$. A single index $i$ and a paired index $i'$ (with alphabets $x_{\leq h(i')}$ and $x_{\leq h(i')+1}$): if $i<i'$ then $i'>1$ and $h(i)\geq h(i'-1)\geq h(i')+2$; if $i>i'+1$ then $h(i)\leq h(i'+1)=h(i')$, and $h(i)=h(i')$ would make $h(i'+1)=h(i'+2)$ with $h(i')=h(i'+1)<h(i'+1)+2$, contradicting the medium shape; so $h(i)\leq h(i')-1$. Finally two paired indices $i'<i''$ satisfy $h(i')=h(i'+1)\geq h(i''-1)\geq h(i'')+2$, so the alphabets $x_{\leq h(i')},x_{\leq h(i')+1}$ and $x_{\leq h(i'')},x_{\leq h(i'')+1}$ are pairwise distinct. This proves the claim.
-\end{proof}
-
-The medium shape can also be reached from the strict shape by divided differences, one for each retained pair; this explains the form of the doubled factor and gives a second proof of Theorem \ref{theorem:quandoublemed}. For $k\geq1$ and $i\geq1$ write $\qsch_{d_2[k]}(x;z_i,z_{i+1})$ for the quantum double Schubert polynomial of the $k\times2$ rectangle (Section \ref{section:additional}) with $(z_1,z_2)$ replaced by $(z_i,z_{i+1})$, i.e.\ $\qsch_{d_2[k]}(x;z_i,z_{i+1})=\mathcal Q\big(E_{k,k}(x;z_i)E_{k,k}(x;z_{i+1})\big)=\qelem_{k,k;k}(x;z_i,z_{i+1})$.
+We prove Theorem \ref{theorem:quandoublemed} by reaching the medium shape from the strict shape by divided differences, one for each retained pair; this also explains the form of the doubled factor. For $k\geq1$ and $i\geq1$ write $\qsch_{d_2[k]}(x;z_i,z_{i+1})$ for the quantum double Schubert polynomial of the $k\times2$ rectangle (Section \ref{section:additional}) with $(z_1,z_2)$ replaced by $(z_i,z_{i+1})$, i.e.\ $\qsch_{d_2[k]}(x;z_i,z_{i+1})=\mathcal Q\big(E_{k,k}(x;z_i)E_{k,k}(x;z_{i+1})\big)=\qelem_{k,k;k}(x;z_i,z_{i+1})$.
 
 \begin{corollary}[Factorization for the medium shape] \label{corollary:mediumfactor}
 Let $\mu$ be a dominant permutation of medium shape with $\medtheta=\code(\mu)$, paired indices $\mathcal P$ and single indices $\mathcal S$ as in Theorem \ref{theorem:quandoublemed}, and let $\nu=\mu\prod_{i\in\mathcal P}s_i$. Then $\nu$ is strict dominant, $\code(\nu)$ is $\medtheta$ with the first entry of each retained pair increased by one, $\mu=\nu\prod_{i\in\mathcal P}s_i$ with $\ell(\mu)=\ell(\nu)-|\mathcal P|$, and
@@ -1660,11 +1201,11 @@ $$P_{k+1}(z_i)P_k(z_{i+1})-P_{k+1}(z_{i+1})P_k(z_i)=P_k(z_i)P_k(z_{i+1})\big[(x_
 so $-\partial^i\big(P_{k+1}(z_i)P_k(z_{i+1})\big)=P_k(z_i)P_k(z_{i+1})$. Applying $\mathcal Q$, which is multiplicative on $P_{k+1}(z_i)P_k(z_{i+1})$ (distinct alphabets, Lemma \ref{lemma:dominantfactor}) and commutes with $\partial^i$, gives $-\partial^i\big(\qelem_{k+1,k+1}(x;z_i)\qelem_{k,k}(x;z_{i+1})\big)=\mathcal Q\big(P_k(z_i)P_k(z_{i+1})\big)=\qsch_{d_2[k]}(x;z_i,z_{i+1})$.
 \end{proof}
 
-\begin{remark}[Second proof of Theorem \ref{theorem:quandoublemed}] \label{remark:secondproofmed}
+\begin{proof}[Proof of Theorem \ref{theorem:quandoublemed}]
 Exactly as in the proof of Theorem \ref{theorem:orddouble}, $\qsch_v(x;z)=(-1)^{\ell(y)}\partial^y\qsch_{\mu^{-1}}(x;z)$ (the identity \eqref{eq:leftdd} holds for the quantum polynomials, $\mathcal Q$ commuting with the $z$-divided differences). Insert the factorization of Corollary \ref{corollary:mediumfactor} and expand by the ascending Leibniz formula, Lemma \ref{lemma:skewfacts}(iii), treating each doubled factor as a single factor. The skew operators $\partial^w_u$ are $\mathbb Z[q][x]$-linear and so commute with $\mathcal Q$; hence, by Lemma \ref{lemma:skewfacts}(iii) once more and Theorem \ref{theorem:skewtop},
 $$\partial^{w}_{u}\,\qsch_{d_2[k]}(x;z_i,z_{i+1})=\mathcal Q\Big(\sum_{u\leq u'\leq w}\partial^{u'}_u\big(E_{k,k}(x;z_i)\big)\,\partial^{w}_{u'}\big(E_{k,k}(x;z_{i+1})\big)\Big)=\sum_{u\Tom iu'\Tom{i+1}w}(-1)^{\ell_i+\ell_{i+1}-\sigma_i-\sigma_{i+1}}\,\qelem_{k-\ell_i,\,k-\ell_{i+1};\,k}\big(x;z_{D_i},z_{D_{i+1}}\big),$$
-with $\ell_i,\sigma_i,D_i$ attached to $u\Tom iu'$ and $\ell_{i+1},\sigma_{i+1},D_{i+1}$ to $u'\Tom{i+1}w$, while the single factors are evaluated by Theorem \ref{theorem:skewtop} and Lemma \ref{lemma:Ehe} as in the proof of Theorem \ref{theorem:quandouble}. Collecting the signs as in the proof of Theorem \ref{theorem:orddouble} gives Theorem \ref{theorem:quandoublemed}. In this form the theorem is literally Theorem \ref{theorem:quandouble} for $\nu=\mu\prod_{i\in\mathcal P}s_i$ with the divided differences $\partial^i$, $i\in\mathcal P$, applied first: the two Pieri steps at columns $i,i+1$ of the strict shape, in $k+1$ and $k$ variables, are replaced by the doubled step in $k$ variables.
-\end{remark}
+with $\ell_i,\sigma_i,D_i$ attached to $u\Tom iu'$ and $\ell_{i+1},\sigma_{i+1},D_{i+1}$ to $u'\Tom{i+1}w$, while the single factors are evaluated by Theorem \ref{theorem:skewtop} and Lemma \ref{lemma:Ehe} as in the proof of Theorem \ref{theorem:quandouble}. Collecting the signs as in the proof of Theorem \ref{theorem:orddouble} gives the theorem. In this form it is literally Theorem \ref{theorem:quandouble} for $\nu=\mu\prod_{i\in\mathcal P}s_i$ with the divided differences $\partial^i$, $i\in\mathcal P$, applied first: the two Pieri steps at columns $i,i+1$ of the strict shape, in $k+1$ and $k$ variables, are replaced by the doubled step in $k$ variables.
+\end{proof}
 
 \section{Iterated and doubled Pieri formulas} \label{section:additional}
 
@@ -1767,7 +1308,7 @@ Theorem \ref{theorem:doubledpieri} is an identity of polynomials in $z_1,z_2$, i
 Now expand both factors by \eqref{eq:Eexpansion}: $E_{p_1,k}(x;z)E_{p_2,k}(x;z')=\sum_{a,b}c_{p_1,k,a}(z)c_{p_2,k,b}(z')\,e_a(x_{\leq k})e_b(x_{\leq k})$. Apply $\theta$, which is linear over $\mathbb Z[z,z']$, multiply by $\qsch_u(x;y)$, insert \eqref{eq:nonfactorialdoubled}, and sum first over $a$ and then over $b$ using \eqref{eq:Ereduction} with $(A,n)=(\fx_k(u,v),n_k(u,v))$ and $(\fx_k(v,w),n_k(v,w))$ respectively; this gives the asserted coefficient, which vanishes unless $n_k(u,v)\leq p_1$ and $n_k(v,w)\leq p_2$.
 \end{proof}
 
-We first prove an \emph{alternating} version of the doubled formula (Theorem \ref{theorem:alternatingdoubled}), and reduce the positive version, Theorem \ref{theorem:doubledpieri}, to a single combinatorial identity about pairs of chains, \eqref{eq:Jk} below (Proposition \ref{prop:doubledreduction}). We prove \eqref{eq:Jk} directly for $k=1$ (Lemma \ref{lemma:J1}) and $k=2$ (Proposition \ref{prop:J2}); the case $k=2$ exhibits the mechanism. For general $k$ we pass to a termwise reformulation \eqref{eq:Bk} based on the quantum Giambelli formula, prove that the pairs of chains organize into blocks along which \eqref{eq:Bk} telescopes (Lemma \ref{lemma:blocks}), reduce \eqref{eq:Bk} to an identity between the ends of the blocks and the mixed chains that move the position $k+1$ (Proposition \ref{prop:junction}), and prove that identity by an explicit injection, built from a single local lemma which generalizes the up/down pairing of Lemma \ref{lemma:updown} (Theorem \ref{theorem:junction}). This completes the proof of Theorem \ref{theorem:doubledpieri} for all $k$.
+We first prove an \emph{alternating} version of the doubled formula (Theorem \ref{theorem:alternatingdoubled}), and reduce the positive version, Theorem \ref{theorem:doubledpieri}, to a single combinatorial identity about pairs of chains, \eqref{eq:Jk} below (Proposition \ref{prop:doubledreduction}). To prove \eqref{eq:Jk} we pass to a termwise reformulation \eqref{eq:Bk} based on the quantum Giambelli formula, prove that the pairs of chains organize into blocks along which \eqref{eq:Bk} telescopes (Lemma \ref{lemma:blocks}), reduce \eqref{eq:Bk} to an identity between the ends of the blocks and the mixed chains that move the position $k+1$ (Proposition \ref{prop:junction}), and prove that identity by an explicit injection, built from a single local lemma which generalizes the up/down pairing of Lemma \ref{lemma:updown} (Theorem \ref{theorem:junction}). This completes the proof of Theorem \ref{theorem:doubledpieri} for all $k$.
 
 \subsubsection*{The recurrence}
 
@@ -1792,16 +1333,6 @@ W_k=Q_k(z_1)\big[(x_{k+1}-z_2)Q_k(z_2)+q_kQ_{k-1}(z_2)\big]-\big[(x_{k+1}-z_1)Q_
 Dividing by $z_1-z_2$ (all terms are divisible, $W_k$ being antisymmetric in $z_1,z_2$) gives $\qsch_{d_2[k]}=Q_kQ_k-q_k\qsch_{d_2[k-1]}$, which is the first identity, and iterating it gives the second.
 \end{proof}
 
-\begin{remark}[A Pieri-theoretic proof of Lemma \ref{lemma:thetaPP}] \label{remark:pieriproofrecursion}
-The recurrence can also be read off from the Pieri formula itself. Apply Theorem \ref{theorem:pieri} to $u=c[k,k]=[2,3,\ldots,k+1,1]$, whose quantum double Schubert polynomial is $\qelem_{k,k}(x;y)$, with a second alphabet $z$:
-$$\qelem_{k,k}(x;y)\,\qelem_{k,k}(x;z)=\sum_{c[k,k]\tom{k}w}q_k(c[k,k],w)\prod_{a\in\fx_k(c[k,k],w)}(y_a-z_1)\,\qsch_w(x;y).$$
-One checks that every nonempty set $\fx_k(c[k,k],w)$ contains the value $2=u(1)$, and that the only $w$ with $\fx_k(c[k,k],w)=\emptyset$ are $w=d_2[k]$, with $q_k(c[k,k],w)=1$, and $w=d_2[k-1]$, with $q_k(c[k,k],w)=q_k$ (we have verified both statements for $k\leq5$). Substituting $z_1=y_2$ therefore kills every coefficient of positive degree and leaves $\qelem_{k,k}(x;y_1)\qelem_{k,k}(x;y_2)=\qsch_{d_2[k]}(x;y)+q_k\qsch_{d_2[k-1]}(x;y)$, which is the recurrence with $z$ renamed $y$. For $k=3$ the expansion reads, with permutations written by their codes,
-\begin{align*}
-\qelem_{3,3}(x;y)\qelem_{3,3}(x;z)&=(y_2-z_1)(y_3-z_1)(y_4-z_1)\,\qsch_{(1,1,1)}+(y_2-z_1)(y_3-z_1)\,\qsch_{(1,1,2)}\\
-&\quad+(y_2-z_1)\,\qsch_{(1,2,2)}+\qsch_{(2,2,2)}+q_3\big[(y_2-z_1)(y_3-z_1)\,\qsch_{(1,1)}+(y_2-z_1)\,\qsch_{(1,2)}+\qsch_{(2,2)}\big].
-\end{align*}
-\end{remark}
-
 Multiplying the second identity of Lemma \ref{lemma:thetaPP} by $\qsch_u(x;y)$ and expanding each product by \eqref{eq:allk} gives an unconditional, if alternating, doubled Pieri formula.
 
 \begin{theorem}[Alternating doubled Pieri formula] \label{theorem:alternatingdoubled}
@@ -1824,25 +1355,7 @@ $$[\qsch_w]\big(\qsch_u\,\qsch_{d_2[k]}\big)=\mathrm{All}_k(u,w)-q_k[\qsch_w]\bi
 while $\mathrm{Comp}_k=\mathrm{All}_k-\mathrm{Inc}_k$. The two sides of Theorem \ref{theorem:doubledpieri} therefore differ by $\mathrm{Inc}_k(u,w)-q_k\mathrm{Comp}_{k-1}(u,w)$. The last assertion follows by induction on $k$.
 \end{proof}
 
-\begin{remark}[The Monk induction] \label{remark:monkinduction}
-One might hope to prove Theorem \ref{theorem:doubledpieri} by an induction in the position $k$ parallel to the proof of Theorem \ref{theorem:pieri}, avoiding \eqref{eq:Jk}. The relevant recurrence is obtained from Lemma \ref{lemma:thetaPP} and Lemma \ref{lemma:elemrecursion}:
-\begin{multline*}
-\qsch_{d_2[k]}(x;z)=(x_k-z_2)\,\qelem_{k,k}(x;z_1)\qelem_{k-1,k-1}(x;z_2)\\
-+q_{k-1}\,\qelem_{k,k}(x;z_1)\qelem_{k-2,k-2}(x;z_2)-q_k\,\qsch_{d_2[k-1]}(x;z).
-\end{multline*}
-Multiplying by $\qsch_u(x;y)$ and expanding $\qsch_u\qelem_{k,k}(x;z_1)=\sum_vc_k(u,v)\qsch_v$, the first two terms become
-$$\sum_vc_k(u,v)\big[(x_k-z_2)\,\qsch_v\,\qelem_{k-1,k-1}(x;z_2)+q_{k-1}\,\qsch_v\,\qelem_{k-2,k-2}(x;z_2)\big],$$
-and the inductive step of the proof of Theorem \ref{theorem:pieri} (equation \eqref{eq:pieriexpand} with $u$ replaced by $v$) shows that the coefficient of $\qsch_w$ in the bracket is $c_k(v,w)$. Hence the Monk cancellation reproduces $\mathrm{All}_k(u,w)$ and the induction reduces to \eqref{eq:Jk} again: the Monk summands are indexed by the second chain alone, whereas compatibility is a property of the pair of chains. The machinery of Section \ref{section:proofpieri} is nevertheless the natural language for a proof of \eqref{eq:Jk}, as the case $k=2$ below illustrates: the letter $t_{k,k+1}$, which is present in every incompatible pair and is the quantum Monk neighbour carrying the weight $q_k$, is the pivot of the detours.
-\end{remark}
-
-The identity \eqref{eq:Jk} says that the terms omitted from the iterated Pieri formula at level $k$ are exactly accounted for, with an extra factor $q_k$, by the doubled formula one level down. Its left-hand side is a sum over pairs of chains whose cycles overlap, and the following lemma shows that such an overlap forces a quantum step.
-
-\begin{lemma} \label{lemma:incompatquantum}
-Let $u\tom{k}v\tom{k}w$ and suppose that a cycle $c$ of $u^{-1}v$ and a cycle $d$ of $v^{-1}w$ have the same top $B$ and share an element $a\leq k$. Then at least one of $c$ (as a $u$-tight cycle) and $d$ (as a $v$-tight cycle) has a descent, i.e.\ contains a quantum step. Consequently every term of $\mathrm{Inc}_k(u,w)$ is divisible by $q_k$, and \eqref{eq:Jk} holds after setting $q=0$; in particular the doubled formula specializes at $q=0$ to the classical iterated Pieri formula, as it must.
-\end{lemma}
-\begin{proof}
-Write $c=(a_p,\ldots,a_1,B)$ with values $\beta_0=u(B)$, $\beta_j=u(a_j)$, and $d=(b_r,\ldots,b_1,B)$ with values $\gamma_0=v(B)$, $\gamma_j=v(b_j)$. By Lemma \ref{lemma:tight}(iv) we may process $c$ first among the cycles of $u^{-1}v$, so $v(B)=\beta_p$ and $v(a_i)=\beta_{i-1}$; and $d$ first among the cycles of $v^{-1}w$. Suppose neither cycle has a descent, so that by Corollary \ref{corollary:cyclic} $\beta_0>\beta_1>\cdots>\beta_p$ and $\gamma_0>\gamma_1>\cdots>\gamma_r$. If $a=a_i=b_j$ with $i,j\geq1$, then $\gamma_j=v(a_i)=\beta_{i-1}>\beta_p=\gamma_0>\gamma_j$, a contradiction. For the consequence, note that a quantum step $t_{ab}$ of a level-$k$ chain has $a\leq k<b$, so $q_{ab}=q_a\cdots q_{b-1}$ is divisible by $q_k$; and at $q=0$ both sides of \eqref{eq:Jk} vanish.
-\end{proof}
+The identity \eqref{eq:Jk} says that the terms omitted from the iterated Pieri formula at level $k$ are exactly accounted for, with an extra factor $q_k$, by the doubled formula one level down. Its left-hand side is a sum over pairs of chains whose cycles overlap, and the following lemma locates the overlap.
 
 \begin{lemma}[Overlapping cycles have top $k+1$] \label{lemma:overlap}
 Let $u\tom{k}v\tom{k}w$, and suppose that a cycle $c$ of $u^{-1}v$ and a cycle $d$ of $v^{-1}w$ have the same top $B$ and share an element $a\leq k$. Then $B=k+1$, and moreover $k\in c\cup d$, i.e.\ one of the two cycles contains the transposition $t_{k,k+1}$. Consequently a pair of chains in which either step contains no transposition $t_{\cdot,k+1}$ is compatible, and in an incompatible pair both steps contain a cycle with top $k+1$, these two cycles overlap, no other pair of cycles does, and the letter $t_{k,k+1}$ occurs in one of the two chains.
@@ -1855,115 +1368,9 @@ Let $\eta$ be the value at the position $r$ when the letters of $c$ are applied.
 If $\eta>\beta_p$, the first statement forces $\beta_p=\min\Gamma$ and $\eta>\max\Gamma$, while the second forces $\Gamma'\cap(\beta_p,\eta)=\emptyset$; but $\beta_{i-1}\in\Gamma\setminus\{\beta_p\}$ lies in $(\beta_p,\eta)$ and belongs to $\Gamma'$, a contradiction. If $\eta<\beta_p$, the second statement forces $\eta=\min(\Gamma'\cup\{\eta\})$ and $\beta_p=\max\Gamma'$, while the first forces $\Gamma\cap(\eta,\beta_p)=\emptyset$; but $\beta_{i-1}\in\Gamma'\setminus\{\beta_p\}$ lies in $(\eta,\beta_p)$ and belongs to $\Gamma$, again a contradiction. This proves the claim, hence $B=k+1$ and $k\in c\cup d$. The consequences follow because a step contains at most one cycle with a given top.
 \end{proof}
 
-The second ingredient of the detours is the following general form of the two detours of $t_{12}$ met in the case $k=2$ (Lemma \ref{lemma:detour} below). For a permutation $\rho$ and $a<k$ put $x=\rho(a)$, $y=\rho(k)$, $z=\rho(k+1)$, and say that $\rho$ is \emph{even} or \emph{odd at $(a,k)$} according to the parity of the pattern of $(x,y,z)$.
-
-\begin{lemma}[Detours of $t_{ak}$] \label{lemma:generaldetour}
-Let $\rho\in S_\infty$ and $a<k$, and consider the two words
-$$E=t_{k,k+1}\,t_{a,k+1}\,t_{k,k+1},\qquad O=t_{a,k+1}\,t_{k,k+1}\,t_{a,k+1},$$
-both equal to $t_{ak}$. Then $E$ is a path of covers from $\rho$ if and only if $t_{ak}$ is a cover of $\rho$ and $\rho$ is even at $(a,k)$, and $O$ is a path of covers from $\rho$ if and only if $t_{ak}$ is a cover of $\rho$ and $\rho$ is odd at $(a,k)$. In either case the weight of the path is $q_k\,\kappa(\rho,t_{ak})$.
-\end{lemma}
-\begin{proof}
-Let $J=\{\rho(r):a<r<k\}$; the positions $a,k,k+1$ carry $(x,y,z)$ and the letters of $E$ and $O$ only permute these three values, leaving $J$ in place. By Definition \ref{def:cover}, $t_{ak}$ is a cover of $\rho$ iff $(x,y)$ is $J$-admissible, and $t_{k,k+1}$ is a cover of every permutation. Along $E$ the values at $(a,k,k+1)$ are $(x,y,z)\to(x,z,y)\to(y,z,x)\to(y,x,z)$, so $E$ is a path of covers iff $(x,y)$ is $(J\cup\{z\})$-admissible, i.e.\ (Lemma \ref{lemma:admissible}(i)) iff $(x,y)$ is $J$-admissible and $\{z\}$-admissible; and $(x,y)$ is $\{z\}$-admissible exactly when $x<y$ and $z\notin(x,y)$ or $x>y$ and $z\in(y,x)$, i.e.\ when the pattern of $(x,y,z)$ is even. Along $O$ the values are $(x,y,z)\to(z,y,x)\to(z,x,y)\to(y,x,z)$, so $O$ is a path of covers iff $(x,z)$ is $(J\cup\{y\})$-admissible and $(z,y)$ is $(J\cup\{x\})$-admissible. If so, then $(z,y)$ is $J$-admissible and Lemma \ref{lemma:admissible}(iii) (with $\gamma=z$, $\beta=y$, $\alpha=x$, $I=J$) shows that $(x,y)$ is $J$-admissible, while $\{y\}$-admissibility of $(x,z)$ says that the pattern of $(x,z,y)$ is even, i.e.\ that of $(x,y,z)$ is odd. Conversely, if $(x,y)$ is $J$-admissible and the pattern is odd, the three odd orders $x<z<y$, $z<y<x$, $y<x<z$ are checked directly: in the first, $J\cap(x,y)=\emptyset$ gives $(J\cup\{y\})\cap(x,z)=\emptyset$ and $(J\cup\{x\})\cap(z,y)=\emptyset$; in the second, $J\subseteq(y,x)$ gives $J\cup\{y\}\subseteq(z,x)$ and $(J\cup\{x\})\cap(z,y)=\emptyset$; in the third, $J\subseteq(y,x)$ gives $(J\cup\{y\})\cap(x,z)=\emptyset$ and $J\cup\{x\}\subseteq(y,z)$. For the weights, the cover types along $E$ are determined by the signs of $y-z$, $x-y$, $z-x$ and along $O$ by those of $x-z$, $y-x$, $z-y$; in each of the three even, respectively odd, orders exactly one of the two letters $t_{k,k+1}$, or else the middle letter, is quantum when $t_{ak}$ is classical, and the quantum letter $t_{a,k+1}$ of weight $q_{a,k+1}=q_{ak}q_k$ occurs, with the two others classical, when $t_{ak}$ is quantum; in all cases the weight is $q_k\kappa(\rho,t_{ak})$.
-\end{proof}
-
-Lemma \ref{lemma:overlap} makes rigorous the first of the two observations recorded after Theorem \ref{conjecture:incompatible} below, and the lifting part of the bijection of \eqref{eq:Bk}; it also identifies the letter $t_{k,k+1}$, the quantum Monk neighbour of weight $q_k$, as the pivot of every incompatible pair (cf.\ Remark \ref{remark:monkinduction}).
-
-\begin{lemma}[The case $k=1$] \label{lemma:J1}
-The identity \eqref{eq:Jk} holds for $k=1$: $\mathrm{Inc}_1(u,w)=q_1\delta_{u,w}$. Consequently Theorem \ref{theorem:doubledpieri} holds for $k=1$.
-\end{lemma}
-\begin{proof}
-A level-$1$ chain is either trivial or a single transposition $t_{1B}$, $B\geq2$. A pair $u\tom1v\tom1w$ with a trivial step has no overlapping cycles and is compatible, so an incompatible pair has $v=ut_{1B}$ and $w=vt_{1B'}$ with the cycles $\{1,B\}$ and $\{1,B'\}$ sharing their top, i.e.\ $B'=B$ and $w=u$; conversely every such pair is incompatible, as the two cycles meet in $1$. We claim that $B=2$. For any $v$ and $B$, the length change $\ell(vt_{1B})-\ell(v)$ equals $\pm(1+2m)$, where $m$ is the number of positions $1<j<B$ whose value lies between $v(1)$ and $v(B)$, the sign being $+$ if $v(1)<v(B)$. If $u\lup ut_{1B}$ is a classical cover then $u(1)<u(B)$ and $m=0$; in $v=ut_{1B}$ the values at $1$ and $B$ are exchanged, so $\ell(vt_{1B})=\ell(v)-1$, and this is a quantum cover only if $-1=-2(B-1)+1$, i.e.\ $B=2$. If $u\lup ut_{1B}$ is a quantum cover then $u(1)>u(B)$ and $-(1+2m)=-2(B-1)+1$, so $m=B-2$, every intermediate position having a value between $u(B)$ and $u(1)$; then $\ell(vt_{1B})=\ell(v)+1+2(B-2)$, which is a classical cover only if $B=2$. Thus the incompatible pairs with source $u$ are exactly $u\tom1ut_{12}\tom1u$, with one classical and one quantum step; the weight is $q_{12}=q_1$, and both fixed sets are empty since position $1$ is moved in each step. Hence $\mathrm{Inc}_1(u,w)=q_1\delta_{u,w}=q_1\mathrm{Comp}_0(u,w)$, and Proposition \ref{prop:doubledreduction} gives the last assertion.
-\end{proof}
-
-
-\subsubsection*{The case $k=2$}
-
-We now prove \eqref{eq:Jk} for $k=2$. The proof is a model for what a proof of the general case has to accomplish: the incompatible pairs at level $2$ turn out to be exactly the compatible pairs at level $1$ in which one step---a transposition $t_{12}$ or the empty step---has been replaced by a ``detour'' through the position $3$, carrying the extra factor $q_2$.
-
-Throughout, for a permutation $\rho$ and $a<b$ we say that $t_{ab}$ is a \emph{classical cover at $\rho$} if $\ell(\rho t_{ab})=\ell(\rho)+1$ and a \emph{quantum cover at $\rho$} if $\ell(\rho t_{ab})=\ell(\rho)-2(b-a)+1$, and we put $\kappa_{ab}(\rho)=1$, respectively $\kappa_{ab}(\rho)=q_{ab}$; if neither holds, $t_{ab}$ is \emph{not a cover} at $\rho$. Since $\ell(\rho t_{ab})-\ell(\rho)=\pm(1+2m)$, where $m$ is the number of positions $a<j<b$ with $\rho(j)$ between $\rho(a)$ and $\rho(b)$ and the sign is that of $\rho(b)-\rho(a)$, we have the following criterion, which we use constantly.
-
-\begin{lemma}[Cover criterion] \label{lemma:covercriterion}
-$t_{ab}$ is a classical cover at $\rho$ if and only if $\rho(a)<\rho(b)$ and no $\rho(j)$, $a<j<b$, lies in the open interval $(\rho(a),\rho(b))$; it is a quantum cover at $\rho$ if and only if $\rho(a)>\rho(b)$ and every $\rho(j)$, $a<j<b$, lies in $(\rho(b),\rho(a))$. In particular the cover type of $t_{ab}$ at $\rho$ depends only on $\rho(a)$, $\rho(b)$ and the \emph{set} $\{\rho(j):a<j<b\}$. Consequently:
-\begin{enumerate}
-\item[(i)] If $t_{ab}$ is a cover at $\rho$ and at $\rho'$, where $\rho'(a)=\rho(b)$, $\rho'(b)=\rho(a)$ and $\{\rho'(j):a<j<b\}=\{\rho(j):a<j<b\}$, then $b=a+1$; and for $b=a+1$ the transposition $t_{a,a+1}$ is a cover at every permutation, classical or quantum according as $\rho(a)<\rho(a+1)$ or $\rho(a)>\rho(a+1)$.
-\item[(ii)] For every $\rho$ the word $t_{23}t_{23}$ is a path of covers from $\rho$ back to $\rho$ with exactly one quantum step, of total weight $q_2$.
-\end{enumerate}
-\end{lemma}
-\begin{proof}
-The criterion restates the length formula; (i) is the argument of Lemma \ref{lemma:J1} (if the first cover is classical the second requires $1=2(b-a)-1$, and if it is quantum the second requires $1+2(b-a-1)=1$); (ii) is the case $a=2$, $b=3$ of (i).
-\end{proof}
-
-\begin{lemma}[Level $1$] \label{lemma:comp1}
-For $u,w\in S_\infty$,
-$$\mathrm{Comp}_1(u,w)=\begin{cases}(y_{u(1)}-z_1)(y_{u(1)}-z_2)&\text{if }w=u,\\[2pt]
-\kappa_{1b}(u)\big[(y_{u(1)}-z_1)+(y_{u(b)}-z_2)\big]&\text{if }w=ut_{1b},\ b\geq2,\ t_{1b}\text{ a cover at }u,\\[2pt]
-\kappa_{1b}(u)\,\kappa_{1b'}(ut_{1b})&\text{if }u^{-1}w\text{ is the $3$-cycle }1\mapsto b'\mapsto b\mapsto1,\ b\neq b',\\
-&\quad t_{1b}\text{ a cover at }u\text{ and }t_{1b'}\text{ a cover at }ut_{1b},\\[2pt]
-0&\text{otherwise.}\end{cases}$$
-\end{lemma}
-\begin{proof}
-A level-$1$ chain is trivial or a single cover $t_{1b}$, and by Lemma \ref{lemma:J1} the only incompatible level-$1$ pairs are $u\tom1ut_{12}\tom1u$. The pair (trivial, trivial) gives the first line; the pairs (trivial, $t_{1b}$) and ($t_{1b}$, trivial) give the two terms of the second line, with fixed values $u(1)$, respectively $w(1)=u(b)$; and ($t_{1b}$, $t_{1b'}$) with $b\neq b'$ gives the third line, where $u^{-1}w=t_{1b}t_{1b'}$ is the $3$-cycle $1\mapsto b'\mapsto b\mapsto1$, which determines $b$ and $b'$. The three cases are disjoint, and no other $w$ occurs.
-\end{proof}
-
-The incompatible pairs at level $2$ are described by the next three lemmas. We write a level-$2$ chain as a word in the transpositions $t_{1b},t_{2b}$ ($b\geq3$) read from left to right, so that a pair of chains is a word with a cut, and we call the letters $t_{13},t_{23}$ the \emph{core letters} and the letters $t_{ab}$ with $b\geq4$ the \emph{spectators}. Recall that within a step the $b$'s are weakly decreasing and the $a$'s are distinct, so a step contains at most two letters, and a step containing a spectator contains at most one core letter, which comes after the spectator and uses the other position.
-
-\begin{lemma}[The overlapping cycles have top $3$] \label{lemma:topthree}
-Let $u\tom2v\tom2w$ be incompatible, and let $c$ (a cycle of $u^{-1}v$) and $d$ (a cycle of $v^{-1}w$) have the same top $B$ and share an element $a\in\{1,2\}$. Then $B=3$.
-\end{lemma}
-\begin{proof}
-This is the case $k=2$ of Lemma \ref{lemma:overlap}.
-\end{proof}
-
-\begin{lemma}[Shapes] \label{lemma:shapes}
-Let $u\tom2v\tom2w$ be incompatible and let $S_i\subseteq\{1,2\}$ be the set of $a$ such that $t_{a3}$ occurs in step $i$. Then $S_1\cap S_2\neq\emptyset$, and the word formed by the core letters, with its cut, is one of
-\begin{align*}
-&\mathrm{K}_0=t_{23}\,|\,t_{23},\qquad \mathrm{K}_1=t_{13}t_{23}\,|\,t_{23},\qquad \mathrm{K}_1'=t_{23}\,|\,t_{23}t_{13},\\
-&\mathrm{K}_2=t_{13}t_{23}\,|\,t_{13},\qquad \mathrm{K}_2'=t_{13}\,|\,t_{23}t_{13},\qquad \mathrm{K}_3=t_{23}t_{13}\,|\,t_{23},\qquad \mathrm{K}_3'=t_{23}\,|\,t_{13}t_{23},\\
-&\mathrm{K}_4=t_{13}t_{23}\,|\,t_{13}t_{23},\qquad \mathrm{K}_4'=t_{23}t_{13}\,|\,t_{23}t_{13}.
-\end{align*}
-A step with two core letters contains nothing else; a step with one core letter $t_{a3}$ may in addition begin with one spectator $t_{a'b}$, $a'\neq a$, $b\geq4$. Every spectator position $b$ lies in the support of $u^{-1}w$, and if both steps contain spectators (which happens only for $\mathrm K_0$) their positions are distinct. The products of the words are: $e$ for $\mathrm K_0$; $t_{13}$ for $\mathrm K_1,\mathrm K_1'$; $t_{12}$ for $\mathrm K_2,\mathrm K_2',\mathrm K_3,\mathrm K_3'$; $t_{13}t_{12}$ for $\mathrm K_4$ and $t_{12}t_{13}$ for $\mathrm K_4'$.
-\end{lemma}
-\begin{proof}
-By Lemma \ref{lemma:topthree} the overlapping cycles are $S_1\cup\{3\}$ and $S_2\cup\{3\}$, and they share an element of $\{1,2\}$, so $S_1\cap S_2\neq\emptyset$. The constraints on the letters of a step were recalled above. It remains to exclude some core words. If $S_1=S_2=\{1\}$, the two letters $t_{13}$ are separated at most by a spectator $t_{2b}$; writing $(x,y,z)$ for the values at $(1,2,3)$ when the first $t_{13}$ is applied and $y'$ for the value at position $2$ when the second is applied, Lemma \ref{lemma:covercriterion} gives, if the first is classical, $x<z$, $y\notin(x,z)$ and $y'\in(x,z)$, while $t_{2b}$ at $(z,y,x)$ is classical only if $y<y'$ and $x\notin(y,y')$ and quantum only if $y>y'$ and $x\in(y',y)$, both impossible; the case of a quantum first letter is symmetric. The same computation excludes $t_{23}t_{13}\,|\,t_{13}$ and $t_{23}t_{13}\,|\,t_{2b}t_{13}$, and Lemma \ref{lemma:covercriterion}(i) excludes $t_{13}\,|\,t_{13}t_{23}$, $t_{13}t_{23}\,|\,t_{23}t_{13}$ and $t_{23}t_{13}\,|\,t_{13}t_{23}$, in which two letters $t_{13}$ are separated by nothing or by $t_{23}t_{23}$, which preserves the value at position $2$. What remains is the list. Two spectators at the same position $b\geq4$ can only occur in $\mathrm K_0$, as $t_{1b}t_{23}\,|\,t_{1b}t_{23}$, and are excluded by Lemma \ref{lemma:covercriterion}(i) since $t_{23}$ preserves the set of values at positions $2,\ldots,b-1$; hence every spectator position lies in the support of $u^{-1}w$. The products are immediate from $t_{13}t_{23}t_{13}=t_{23}t_{13}t_{23}=t_{12}$.
-\end{proof}
-
-\begin{lemma}[Detours of $t_{12}$] \label{lemma:detour}
-Let $\rho$ be a permutation and let $D_1=t_{13}t_{23}t_{13}$, $D_2=t_{23}t_{13}t_{23}$, both equal to $t_{12}$. Exactly one of $D_1$, $D_2$ is a path of covers from $\rho$ to $\rho t_{12}$, namely $D_1$ if the pattern of $(\rho(1),\rho(2),\rho(3))$ is an odd permutation ($132$, $213$ or $321$) and $D_2$ if it is even ($123$, $231$ or $312$); its weight is $q_2\,\kappa_{12}(\rho)$. The intermediate permutations are $\rho t_{13}$, $\rho t_{13}t_{23}$ for $D_1$ and $\rho t_{23}$, $\rho t_{23}t_{13}$ for $D_2$; in particular the values at the position not moved by the one-letter part of each cut are, for $D_1$, $\rho(2)$ at position $2$ after the first letter and $\rho(1)$ at position $2$ after the second, and for $D_2$, $\rho(1)$ at position $1$ after the first letter and $\rho(2)$ at position $1$ after the second.
-\end{lemma}
-\begin{proof}
-This is the case $a=1$, $k=2$ of Lemma \ref{lemma:generaldetour}, with $D_1=O$ and $D_2=E$; note that $t_{12}$ is a cover of every permutation. For the reader's convenience we also record the direct verification. Write $(x,y,z)$ for the values at $(1,2,3)$. For $D_1$ the first letter is a cover iff $x<z<y$ (classical) or $z<y<x$ (quantum) or $y<x<z$ (classical), and in these cases the remaining two letters are covers of types $(q,c)$, $(c,c)$, $(c,q)$ respectively, by Lemma \ref{lemma:covercriterion}; the total weight is $q_2$, $q_1q_2$, $q_1q_2$, which is $q_2\kappa_{12}(\rho)$ since $\kappa_{12}(\rho)=1$ iff $x<y$. For $D_2$ the first letter is always a cover, and the second is a cover iff $z<x<y$ (classical), $x<y<z$ (classical) or $y<z<x$ (quantum), with third letters of types $c$, $q$, $c$ and total weights $q_2$, $q_2$, $q_1q_2$. The six order types are thus split three and three, and the intermediate permutations are read off from the words.
-\end{proof}
-
-\begin{proposition}[The case $k=2$] \label{prop:J2}
-The identity \eqref{eq:Jk} holds for $k=2$. Consequently Theorem \ref{theorem:doubledpieri} holds for $k\leq2$.
-\end{proposition}
-\begin{proof}
-Fix $u$ and write $x=u(1)$, $y=u(2)$, $z=u(3)$. By Lemma \ref{lemma:comp1} we must show that $\mathrm{Inc}_2(u,w)$ equals $q_2$ times the expression of that lemma. By Lemma \ref{lemma:shapes} the incompatible pairs with source $u$ are the words listed there, with at most one spectator per step, and $\pi=u^{-1}w$ is accordingly $e$, $t_{1b}$ ($b\geq2$), or a $3$-cycle $t_{1b}t_{1b'}$; in particular $\mathrm{Inc}_2(u,w)=0$ whenever $\mathrm{Comp}_1(u,w)=0$, and we go through the remaining cases. We say that a level-$2$ word and a level-$1$ word \emph{match} if they are simultaneously paths of covers, with level-$2$ weight equal to $q_2$ times the level-$1$ weight.
-
-\emph{$\pi=e$.} The only word is $\mathrm K_0$ without spectators, $u\tom2ut_{23}\tom2u$, which is always a path of covers of weight $q_2$ (Lemma \ref{lemma:covercriterion}(ii)) and fixes the value $x$ at position $1$ in both steps. Its contribution $q_2(y_x-z_1)(y_x-z_2)$ is $q_2\,\mathrm{Comp}_1(u,u)$.
-
-\emph{$\pi=t_{12}$.} The words are $\mathrm K_2,\mathrm K_2'$ (the two cuts of $D_1$) and $\mathrm K_3,\mathrm K_3'$ (the two cuts of $D_2$), without spectators. By Lemma \ref{lemma:detour} exactly one detour is a path of covers, of weight $q_2\kappa_{12}(u)$, and its two cuts are both admissible (each step has distinct $a$'s and equal $b$'s) and incompatible. The fixed values are $\{y\}$, $\emptyset$ and $\emptyset$, $\{x\}$ for the two cuts of $D_1$, and $\{x\}$, $\emptyset$ and $\emptyset$, $\{y\}$ for those of $D_2$, so in either case $\mathrm{Inc}_2(u,ut_{12})=q_2\kappa_{12}(u)\big[(y_x-z_1)+(y_y-z_2)\big]=q_2\,\mathrm{Comp}_1(u,ut_{12})$.
-
-\emph{$\pi=t_{13}$.} The words are $\mathrm K_1=t_{13}t_{23}\,|\,t_{23}$ and $\mathrm K_1'=t_{23}\,|\,t_{23}t_{13}$ without spectators. In $\mathrm K_1$ the letter $t_{13}$ is applied at $u$ and is followed by $t_{23}t_{23}$, always a path of weight $q_2$; the fixed values are $\emptyset$ and $\{z\}$ (the value at position $1$ after $t_{13}t_{23}$). In $\mathrm K_1'$ the letters $t_{23}t_{23}$ return to $u$ and $t_{13}$ is again applied at $u$; the fixed values are $\{x\}$ and $\emptyset$. Both match $t_{13}$ at $u$, and the sum is $q_2\kappa_{13}(u)[(y_x-z_1)+(y_z-z_2)]=q_2\,\mathrm{Comp}_1(u,ut_{13})$.
-
-\emph{$\pi=t_{1b}$, $b\geq4$.} The words are $\mathrm K_0$ with one spectator, $t_{1b}t_{23}\,|\,t_{23}$ and $t_{23}\,|\,t_{1b}t_{23}$. In the first, $t_{1b}$ is applied at $u$; in the second, at $ut_{23}$, where the values $u(1)$, $u(b)$ and the set of values at positions $2,\ldots,b-1$ are the same as at $u$, so the cover type is the same by Lemma \ref{lemma:covercriterion}. The fixed values are $\emptyset,\{u(b)\}$ and $\{x\},\emptyset$, and the sum is $q_2\kappa_{1b}(u)[(y_x-z_1)+(y_{u(b)}-z_2)]=q_2\,\mathrm{Comp}_1(u,ut_{1b})$.
-
-\emph{$\pi=t_{1b}t_{1b'}$ with $b,b'\geq4$.} The only word is $t_{1b}t_{23}\,|\,t_{1b'}t_{23}$, with both fixed sets empty; $t_{1b}$ is applied at $u$ and $t_{1b'}$ at $ut_{1b}t_{23}$, where the values at positions $1$ and $b'$ and the set of values at the positions between them agree with those at $ut_{1b}$. Hence the word matches the level-$1$ pair $t_{1b}\,|\,t_{1b'}$, and $\mathrm{Inc}_2(u,w)=q_2\kappa_{1b}(u)\kappa_{1b'}(ut_{1b})=q_2\,\mathrm{Comp}_1(u,w)$.
-
-\emph{$\pi=t_{13}t_{1b}$ or $t_{1b}t_{13}$ with $b\geq4$.} The words are $\mathrm K_1$ with the spectator $t_{1b}$ in the second step, $t_{13}t_{23}\,|\,t_{1b}t_{23}$, and $\mathrm K_1'$ with the spectator in the first step, $t_{1b}t_{23}\,|\,t_{23}t_{13}$; the fixed sets are empty. In the first, $t_{1b}$ is applied at $ut_{13}t_{23}$, which agrees with $ut_{13}$ at position $1$ and on the set of values at positions $2,\ldots,b-1$; in the second, $t_{13}$ is applied at $ut_{1b}t_{23}t_{23}=ut_{1b}$. So they match $t_{13}\,|\,t_{1b}$ and $t_{1b}\,|\,t_{13}$ respectively.
-
-\emph{$\pi=t_{13}t_{12}$ or $t_{12}t_{13}$.} The words are $\mathrm K_4=t_{13}\cdot D_2$ with the cut after the first letter of $D_2$, and $\mathrm K_4'=D_2\cdot t_{13}$ with the cut after the second letter of $D_2$; the fixed sets are empty, and the level-$1$ pairs are $t_{13}\,|\,t_{12}$ and $t_{12}\,|\,t_{13}$. In $\mathrm K_4$ the detour $D_2$ is applied at $ut_{13}$, and in $\mathrm K_4'$ at $u$, and $t_{13}$ is applied at $u$, respectively at $ut_{12}$. By Lemma \ref{lemma:detour}, $D_2$ is a path of covers at a permutation $\rho$ exactly when the pattern of $(\rho(1),\rho(2),\rho(3))$ is even, and then has weight $q_2\kappa_{12}(\rho)$; one checks directly from Lemma \ref{lemma:covercriterion} that if $t_{13}$ is a cover at $u$ then the pattern of $ut_{13}$ at positions $1,2,3$ is even, and that if the pattern of $u$ at positions $1,2,3$ is even then $t_{13}$ is a cover at $ut_{12}$ (in both cases the three values $x,y,z$ satisfy $x<z<y$ or $y<x<z$ or $z<y<x$ up to the relevant exchange). Hence $\mathrm K_4$ matches $t_{13}\,|\,t_{12}$ and $\mathrm K_4'$ matches $t_{12}\,|\,t_{13}$, and no other words contribute to these $\pi$. (When the pattern of $u$ is odd, both sides vanish for $\pi=t_{12}t_{13}$: $D_1$ is the detour at $u$, and the words $D_1\cdot t_{13}$ are excluded by Lemma \ref{lemma:shapes}, while $t_{13}$ is not a cover at $ut_{12}$.)
-
-\emph{$\pi=t_{12}t_{1b}$ or $t_{1b}t_{12}$ with $b\geq4$.} These are the only cases in which the matching changes the spectator: the words are, for $\pi=t_{1b}t_{12}$, $\mathrm K_2$ with spectator, $t_{13}t_{23}\,|\,t_{2b}t_{13}$, and $\mathrm K_3'$ with spectator, $t_{1b}t_{23}\,|\,t_{13}t_{23}$; and for $\pi=t_{12}t_{1b}$, $\mathrm K_2'$ with spectator, $t_{2b}t_{13}\,|\,t_{23}t_{13}$, and $\mathrm K_3$ with spectator, $t_{23}t_{13}\,|\,t_{1b}t_{23}$ (here $t_{13}t_{23}t_{2b}t_{13}=t_{12}t_{2b}=t_{1b}t_{12}$ and $t_{2b}t_{12}=t_{12}t_{1b}$). All fixed sets are empty, so we must show that the sum of the weights of the level-$2$ words equals $q_2$ times the weight of the level-$1$ pair $t_{1b}\,|\,t_{12}$, respectively $t_{12}\,|\,t_{1b}$. The $\mathrm K_3,\mathrm K_3'$ words match directly: in $\mathrm K_3$, $D_2$ is applied at $u$ and $t_{1b}$ at $ut_{23}t_{13}$, which agrees with $ut_{12}$ at position $1$ and on the set of values at positions $2,\ldots,b-1$; in $\mathrm K_3'$, $t_{1b}$ is applied at $u$ and $D_2$ at $ut_{1b}t_{23}t_{23}=ut_{1b}$. They are present exactly when the pattern of $u$, respectively of $ut_{1b}$, at positions $1,2,3$ is even. The $\mathrm K_2,\mathrm K_2'$ words involve the spectator $t_{2b}$, whose cover condition at a permutation $\rho$ compares $\rho(2)$ with $\rho(b)$ and involves the values at positions $3,\ldots,b-1$, whereas the level-$1$ letter $t_{1b}$ compares $\rho'(1)$ with $\rho'(b)$ and involves positions $2,\ldots,b-1$. By Lemma \ref{lemma:covercriterion} and Lemma \ref{lemma:detour}, the validity and the weights of all the words in this case, as well as of the level-$1$ pairs, depend only on the relative order of the four values $x,y,z,\beta=u(b)$ and on which of the five intervals they cut out contain some value $u(j)$, $3<j<b$; this leaves $24\cdot2^5$ configurations, and for each of them one verifies the identity by Lemma \ref{lemma:covercriterion}. For instance, if $x<z<y$ (so that $D_1$ is the detour at $u$, of weight $q_2$) and $\beta<x$ with every $u(j)$, $3<j<b$, in $(\beta,y)$, the level-$1$ pair $t_{12}\,|\,t_{1b}$ has weight $1\cdot q_{1b}$ (a classical $t_{12}$ followed by a quantum $t_{1b}$ at $(y,x,z,\ldots,\beta)$), while on the level-$2$ side $\mathrm K_3$ is absent, and in $\mathrm K_2'$ the spectator $t_{2b}$ is a quantum cover at $u$ of weight $q_{2b}$ and the detour at $ut_{2b}$, whose pattern $(x,\beta,z)$ is odd, is $D_1$ with weight $q_2\kappa_{12}(ut_{2b})=q_2q_1$; the total $q_1q_2q_{2b}=q_2q_{1b}$ agrees. We have carried out this finite verification by computer, in the stronger form that for every one of the $24\cdot 2^5$ configurations (realized by a permutation of at most $9$ letters, with one value in each occupied interval), and also for the $6$ configurations without spectator, the full identity $\mathrm{Inc}_2(u,w)=q_2\mathrm{Comp}_1(u,w)$ holds for all $w$, where $\mathrm{Inc}_2$ is computed from all level-$2$ chains without using Lemma \ref{lemma:shapes}; this also re-checks all the preceding cases.
-
-This exhausts the possible $\pi$ by Lemma \ref{lemma:shapes}, and proves \eqref{eq:Jk} for $k=2$. The last assertion follows from Lemma \ref{lemma:J1} and Proposition \ref{prop:doubledreduction}.
-\end{proof}
-
-The proof exhibits the mechanism behind \eqref{eq:Jk}: every incompatible pair at level $2$ is a compatible pair at level $1$ in which either the empty step has been replaced by $t_{23}t_{23}$ or the letter $t_{12}$ by one of its two detours $t_{13}t_{23}t_{13}$, $t_{23}t_{13}t_{23}$ through the position $3$, with the cut between the two Pieri steps placed inside the detour; the detour always contains exactly one more quantum step than the letter it replaces, which accounts for the factor $q_2$, and the values fixed at position $2$ during the detour are the values fixed at position $1$ before and after the original letter, in the reverse order for $D_1$ (which is why \eqref{eq:Jk} is not termwise). For general $k$ the detours are replaced by the ``junction moves'' of Theorem \ref{theorem:junction} below, in which the letter $t_{k,k+1}$ travels through a cycle with top $k+1$.
-
-\begin{theorem} \label{conjecture:incompatible}
+\begin{corollary} \label{conjecture:incompatible}
 The identity \eqref{eq:Jk} holds for all $k\geq1$ and all $u,w\in S_\infty$; consequently Theorem \ref{theorem:doubledpieri} holds for all $k$.
-\end{theorem}
+\end{corollary}
 \begin{proof}
 This is proved below: by Proposition \ref{prop:giambelliform} and Theorem \ref{theorem:junction}, Theorem \ref{theorem:doubledpieri} holds for every $k$, and Proposition \ref{prop:doubledreduction} then gives \eqref{eq:Jk}.
 \end{proof}
@@ -2006,7 +1413,7 @@ For all $k\geq1$ and $u,w\in S_\infty$ there is an equality of multisets
 Proposition \ref{prop:junction} and Theorem \ref{theorem:junction} below.
 \end{proof}
 
-Unlike \eqref{eq:Jk}, the identity \eqref{eq:Bk} is an equality of multisets, so it calls for a bijection. We first show that the greater part of this bijection is forced: the compatible pairs with given $(u,w)$ fall into explicit \emph{blocks}, inside which the terms of $\mathcal T$ and $\mathcal S$ cancel telescopically, and the unblocked ends of the blocks are matched with the chains of $\mathcal M_k$ and $\mathcal M'_k$ that do not move the position $k+1$. This reduces \eqref{eq:Bk} to an identity between the blocked ends of the blocks and the mixed chains that do move $k+1$ (Proposition \ref{prop:junction}); in the simplest situation that identity is exactly the up/down pairing of Lemma \ref{lemma:updown} (Remark \ref{remark:elementaryjunction}), and we then prove it in general (Theorem \ref{theorem:junction}).
+Unlike \eqref{eq:Jk}, the identity \eqref{eq:Bk} is an equality of multisets, so it calls for a bijection. We first show that the greater part of this bijection is forced: the compatible pairs with given $(u,w)$ fall into explicit \emph{blocks}, inside which the terms of $\mathcal T$ and $\mathcal S$ cancel telescopically, and the unblocked ends of the blocks are matched with the chains of $\mathcal M_k$ and $\mathcal M'_k$ that do not move the position $k+1$. This reduces \eqref{eq:Bk} to an identity between the blocked ends of the blocks and the mixed chains that do move $k+1$ (Proposition \ref{prop:junction}); in the simplest situation that identity is exactly the up/down pairing of Lemma \ref{lemma:updown}, and we then prove it in general (Theorem \ref{theorem:junction}).
 
 \subsubsection*{Blocks, and the reduction of \eqref{eq:Bk} to its junctions}
 
@@ -2048,7 +1455,7 @@ with equality if and only if $c_j$ is $u'$-tight and $d_j$ is $v_j$-tight. Equal
 For the consequence write $A_j=\fx_k(u,v_j)$ and $B_j=\fx_k(v_j,w)$. For $i_{\min}<j\leq i_{\max}$, (ii) and (iii) give $A_j\cup\{c(v_j)\}=A_j\cup\{u(x_j)\}=A_{j-1}$ and $B_j=B_{j-1}\cup\{w(x_j)\}=B_{j-1}\cup\{c(v_{j-1})\}$, while the $q$-weights agree by (i); thus $S(v_j)=T(v_{j-1})$. Summing $(z_1-z_2)\omega_k(u,v_j,w)=T(v_j)-S(v_j)$ over the block, all terms cancel except $T(v_{i_{\max}})$ and $S(v_{i_{\min}})$.
 \end{proof}
 
-We call $v_{i_{\max}}$ the \emph{head} and $v_{i_{\min}}$ the \emph{tail} of the block; the head is \emph{blocked} if $i_{\max}<n$ (some $x_j$ lies in $\supp\rho_1$) and the tail is \emph{blocked} if $i_{\min}>0$ (some $x_j$ lies in $\supp\rho_2$). Thus a block is the set of all cuts of the merged word $t_{x_1,k+1}\cdots t_{x_n,k+1}$ that are not obstructed by a spectator cycle of $\rho_1$ or $\rho_2$ sharing a position with $X$, and the transit value $c(v_j)$ runs through the values of $u$ at $x_n,x_{n-1},\ldots,x_1,k+1$ as the cut moves from right to left. The block lemma is the general form of the ``two cuts of a detour'' met in the proof of Proposition \ref{prop:J2}.
+We call $v_{i_{\max}}$ the \emph{head} and $v_{i_{\min}}$ the \emph{tail} of the block; the head is \emph{blocked} if $i_{\max}<n$ (some $x_j$ lies in $\supp\rho_1$) and the tail is \emph{blocked} if $i_{\min}>0$ (some $x_j$ lies in $\supp\rho_2$). Thus a block is the set of all cuts of the merged word $t_{x_1,k+1}\cdots t_{x_n,k+1}$ that are not obstructed by a spectator cycle of $\rho_1$ or $\rho_2$ sharing a position with $X$, and the transit value $c(v_j)$ runs through the values of $u$ at $x_n,x_{n-1},\ldots,x_1,k+1$ as the cut moves from right to left.
 
 \begin{proposition}[Reduction of \eqref{eq:Bk} to junctions] \label{prop:junction}
 Let $u,w\in S_\infty$. Let $\mathcal M_k^{\mathrm{mov}}(u,w)\subseteq\mathcal M_k(u,w)$ be the sub-multiset of the chains $u\tom{k}v\tom{k+1}w$ whose second step moves the position $k+1$, let $\mathcal M'^{\,\mathrm{mov}}_k(u,w)\subseteq\mathcal M'_k(u,w)$ consist of the chains $u\tom{k+1}v\tom{k}w$ whose first step moves $k+1$, and let $\mathcal T^{\mathrm{bl}}(u,w)$, respectively $\mathcal S^{\mathrm{bl}}(u,w)$, be the multiset of $T(v)$ over the blocked heads $v$, respectively of $S(v)$ over the blocked tails $v$, of the blocks of compatible pairs $u\tom{k}v\tom{k}w$. Then \eqref{eq:Bk} holds for $(u,w)$ if and only if
@@ -2063,11 +1470,8 @@ $$\{T(v):v\text{ a head}\}\uplus\mathcal M'_k(u,w)=\{S(v):v\text{ a tail}\}\uplu
 Now let $v=v_n$ be an unblocked head, so $d=1$ and $v(k+1)=w(k+1)$. By Lemma \ref{lemma:leveldichotomy}(i), applied with $k+1$ in place of $k$, $v\tom{k+1}w$ with $q_{k+1}(v,w)=q_k(v,w)$ and $\fx_{k+1}(v,w)=\fx_k(v,w)\cup\{v(k+1)\}$; thus $u\tom{k}v\tom{k+1}w$ is a chain of $\mathcal M_k(u,w)\setminus\mathcal M_k^{\mathrm{mov}}(u,w)$, and its triple is $T(v)$. Conversely, let $u\tom{k}v\tom{k+1}w$ be a chain not moving $k+1$. By the same lemma $v\tom{k}w$ with the same weight, the second step has no cycle with top $k+1$, so the pair $u\tom{k}v\tom{k}w$ is compatible with cut $i=n$; hence it is the head of its block, this head is unblocked ($x_1,\ldots,x_n$ avoid $\supp\rho_1$ as the cycles of $\pi_1$ are disjoint), and its triple is $T(v)$. Since distinct blocks have distinct heads, $v\mapsto v$ is a bijection between the unblocked heads and the chains of $\mathcal M_k(u,w)$ not moving $k+1$, preserving the triples. Symmetrically, the unblocked tails $v_0$ (for which $c=1$ and $u(k+1)=v_0(k+1)$) correspond bijectively to the chains $u\tom{k+1}v\tom{k}w$ not moving $k+1$, with $S(v_0)=\big(q,\fx_{k+1}(u,v_0),\fx_k(v_0,w)\big)$. Cancelling these two families gives the equivalence with \eqref{eq:junction}. The remaining assertions follow from Proposition \ref{prop:giambelliform}.
 \end{proof}
 
-The identity \eqref{eq:junction} concerns only the \emph{junctions} of the blocks: a blocked head $v_{i_{\max}}$, whose next cut is obstructed by a cycle $e$ of $\rho_1$ with top $B\geq k+2$ through $x_{i_{\max}+1}$, and a blocked tail $v_{i_{\min}}$, obstructed by a cycle of $\rho_2$ through $x_{i_{\min}}$, together with the mixed chains in which the position $k+1$ is moved by a cycle with top $B\geq k+2$. The correspondence realising \eqref{eq:junction} \emph{transports} the obstructing cycle $e$ across $X$: in the simplest case a blocked tail with block data $(\rho_1,X,\rho_2)$ and $e\subseteq\rho_2$ through $x_j$, $j=i_{\min}$, is matched with the blocked head of the block with data $(\rho_1\cdot XeX^{-1},X,\rho_2e^{-1})$, in which $e$ has been conjugated into the first step and is attached to $x_{j-1}$, so that the cut $j-1$ is skipped; in general pivots of $X$ migrate into the transported cycle or out of it, exactly as in the words $F_m$ of Lemma \ref{lemma:updown}, and a chain of $\mathcal M_k^{\mathrm{mov}}$ is matched in the same way with the head obtained by transporting the cycle through $k+1$ into the first step. The simplest junction is already in this paper:
+The identity \eqref{eq:junction} concerns only the \emph{junctions} of the blocks: a blocked head $v_{i_{\max}}$, whose next cut is obstructed by a cycle $e$ of $\rho_1$ with top $B\geq k+2$ through $x_{i_{\max}+1}$, and a blocked tail $v_{i_{\min}}$, obstructed by a cycle of $\rho_2$ through $x_{i_{\min}}$, together with the mixed chains in which the position $k+1$ is moved by a cycle with top $B\geq k+2$. The correspondence realising \eqref{eq:junction} \emph{transports} the obstructing cycle $e$ across $X$: in the simplest case a blocked tail with block data $(\rho_1,X,\rho_2)$ and $e\subseteq\rho_2$ through $x_j$, $j=i_{\min}$, is matched with the blocked head of the block with data $(\rho_1\cdot XeX^{-1},X,\rho_2e^{-1})$, in which $e$ has been conjugated into the first step and is attached to $x_{j-1}$, so that the cut $j-1$ is skipped; in general pivots of $X$ migrate into the transported cycle or out of it, exactly as in the words $F_m$ of Lemma \ref{lemma:updown}, and a chain of $\mathcal M_k^{\mathrm{mov}}$ is matched in the same way with the head obtained by transporting the cycle through $k+1$ into the first step. The simplest junction, in which the obstructing cycle is a single transposition $t_{k+1,B}$, is exactly Lemma \ref{lemma:updown} (applied with $k+1,B$ in the roles of $k,B$): its words $F_{\mathrm{up}}$, $F_{\mathrm{std}}$ and $F_m$ are a chain of $\mathcal M_k^{\mathrm{mov}}$, a chain of $\mathcal M'^{\,\mathrm{mov}}_k$ with trivial second step, and the blocked heads with block data $\big((x_n,\ldots,x_m,B),(x_m,\ldots,x_1,k+1),1\big)$, and they reappear below as the junction word $J=F_{\mathrm{up}}$ and its resolutions $J_0=F_{\mathrm{std}}$, $J_m\sim F_m$.
 
-\begin{remark}[The elementary junction is Lemma \ref{lemma:updown}] \label{remark:elementaryjunction}
-Let $u\in S_\infty$, let $x_1,\ldots,x_n\leq k<k+1<B$ be distinct, let $Y=(x_n,\ldots,x_1,k+1,B)$ and $w=uY$, and apply Lemma \ref{lemma:updown} with $\psi=u$ and with $k+1,B,x_1,\ldots,x_n$ in the roles of $k,B,z_1,\ldots,z_s$. Its three families of words are, in the present language: $F_{\mathrm{up}}=(x_n,\ldots,x_1,k+1)\cdot t_{k+1,B}$, the chain $u\tom{k}ut_{x_1,k+1}\cdots t_{x_n,k+1}\tom{k+1}w$ of $\mathcal M_k^{\mathrm{mov}}(u,w)$ (the whole cycle $(x_n,\ldots,x_1,k+1)$ in the first step, the position $k+1$ moved by $t_{k+1,B}$ in the second); $F_{\mathrm{std}}$, the pivot factorization of $Y$, i.e.\ the chain $u\tom{k+1}w\tom{k}w$ of $\mathcal M'^{\,\mathrm{mov}}_k(u,w)$ with trivial second step; and $F_m=(x_{m-1},\ldots,x_1,k+1)\,(x_n,\ldots,x_m,B)\,t_{x_m,k+1}$, $1\leq m\leq n$, the compatible pair with block data $\big((x_n,\ldots,x_m,B),\ (x_m,\ldots,x_1,k+1),\ 1\big)$ and cut $m-1$: here the spectator $(x_n,\ldots,x_m,B)$ is attached to the merged cycle at $x_m$ and has absorbed the pivots $x_{m+1},\ldots,x_n$, so the pair is the head of its block and is blocked ($i_{\max}=m-1$). All three kinds of terms carry the same triple $\big(q,\ u[1,k]\setminus\{u(x_1),\ldots,u(x_n)\},\ w[1,k]\big)$, where $u[1,k]=\{u(a):a\leq k\}$ (for $F_m$ the transit value is $c(v)=v(k+1)=w(x_m)$, the one value of $w[1,k]$ not fixed by the second step), $q$ denoting the common weight. Lemma \ref{lemma:updown} says: (a) if $F_{\mathrm{std}}$ is a cover path then so is $F_{\mathrm{up}}$, with the same weight, and no $F_m$ is, so that this term of $\mathcal M'^{\,\mathrm{mov}}_k$ cancels against this term of $\mathcal M_k^{\mathrm{mov}}$ in \eqref{eq:junction}; (b) if $F_{\mathrm{up}}$ is a cover path but $F_{\mathrm{std}}$ is not, then exactly one $F_m$ is, with the same weight, so that this term of $\mathcal M_k^{\mathrm{mov}}$ is matched with exactly one blocked head; and (c) a blocked head of the shape $F_m$ never occurs without its partner $F_{\mathrm{up}}$. Thus Lemma \ref{lemma:updown} is the junction correspondence of \eqref{eq:junction} restricted to these three families (the cluster of $(u,w)$ contains further terms, in which the first step does not use all of $x_1,\ldots,x_n$); the matched block then runs from its head $F_m$ down to its unblocked tail $v_0=u\,(x_n,\ldots,x_m,B)$, which is matched with the chain $u\tom{k+1}v_0\tom{k}w$ of $\mathcal M'_k$ as in the proof of Proposition \ref{prop:junction}. The general case of \eqref{eq:junction}, with an obstructing cycle with several elements below $k$, attached to an arbitrary pivot of $X$ or to $k+1$, and with several obstructing cycles, is treated next; the three families reappear there as the junction word $J=F_{\mathrm{up}}$ and its resolutions $J_0=F_{\mathrm{std}}$, $J_m\sim F_m$.
-\end{remark}
 \subsubsection*{Proof of the junction identity}
 
 We now prove \eqref{eq:junction}, and hence \eqref{eq:Bk} and Theorem \ref{theorem:doubledpieri}, for all $k$. Throughout we write $K=k+1$. The proof constructs, for every $u,w$ and every $q$-monomial $q$, an injective map from the \emph{sources} (the blocked tails and the chains of $\mathcal M_k^{\mathrm{mov}}$ of weight $q$) to the \emph{targets} (the blocked heads and the chains of $\mathcal M'^{\,\mathrm{mov}}_k$ of weight $q$) which preserves the triples, and a symmetry which exchanges sources and targets; the two together give \eqref{eq:junction}. The map is a sequence of local rewritings of the pair of chains, each governed by a single lemma (Lemma \ref{lemma:token}) which generalizes Lemma \ref{lemma:updown}; the lemma is proved not by tracking covers, but by comparing the formal $q$-weights of words.
@@ -2220,21 +1624,6 @@ Fix $k$, $u$, $w$, a monomial $q$, and $n$ so large that everything takes place 
 Now apply the reversal of Lemma \ref{lemma:reversal} to whole configurations: it sends a compatible pair $u\tom{k}v\tom{k}w$ to the pair $w_0w\tom{k}w_0v\tom{k}w_0u$ (the reversed pivot words are pivot words of the inverse permutations, which are tight by Lemma \ref{lemma:tight}(iii)), with the same weight, with block data $(\rho_2^{-1},X^{-1},\rho_1^{-1})$ and cut $n-i$, so that $i_{\min}$ and $i_{\max}$ are exchanged with $n-i_{\max}$ and $n-i_{\min}$: blocked tails go to blocked heads and conversely. Likewise it exchanges the chains of $\mathcal M_k^{\mathrm{mov}}$ for $(u,w)$ with those of $\mathcal M'^{\,\mathrm{mov}}_k$ for $(w_0w,w_0u)$. On triples it acts by $\sigma(q,A,B)=(q,w_0B,w_0A)$, where $w_0$ acts on values: indeed $\fx_k(w_0w,w_0v)=w_0\fx_k(v,w)$, $\fx_k(w_0v,w_0u)=w_0\fx_k(u,v)$ and $(w_0v)(K)=w_0(v(K))$, so that $S(w_0v)=\sigma(T(v))$ and $T(w_0v)=\sigma(S(v))$, and similarly for the mixed chains. Hence $\sigma(\mathrm{Tgt}(u,w))=\mathrm{Src}(w_0w,w_0u)$ and $\sigma(\mathrm{Src}(u,w))=\mathrm{Tgt}(w_0w,w_0u)$. Applying the first paragraph to $(w_0w,w_0u)$ gives $\mathrm{Src}(w_0w,w_0u)\subseteq\mathrm{Tgt}(w_0w,w_0u)$, i.e.\ $\mathrm{Tgt}(u,w)\subseteq\mathrm{Src}(u,w)$. Therefore $\mathrm{Src}(u,w)=\mathrm{Tgt}(u,w)$ for every $q$, which is \eqref{eq:junction}. The consequences follow from Propositions \ref{prop:junction} and \ref{prop:doubledreduction}.
 \end{proof}
 
-
-\begin{remark}[Specializations of $z_1$ and $z_2$] \label{remark:specialization}
-Both sides of \eqref{eq:Jk} have degree at most $k-1$ in $z_1$ and in $z_2$ (a pair with $\lvert\fx_k(u,v)\rvert=k$ has $v=u$ and is compatible, and similarly for the second step), so by interpolation it suffices to prove \eqref{eq:Jk} after the specializations $z_1=y_{u(i)}$, $z_2=y_{u(j)}$, $1\leq i,j\leq k$, which retain exactly the pairs whose first step moves position $i$ and whose second step moves the value $u(j)$. For $u=c[k,k]$ and $i=1$ this specialization kills every term of positive degree (Remark \ref{remark:pieriproofrecursion}); for general $u$, however, no value is common to all the nonempty fixed sets, and the specialized identities are not termwise.
-
-The situation is different on the diagonal $z_2=z_1$, that is, when both factors $\qelem_{k,k}$ are taken in the \emph{same} variable $z_1$. There the weight $\omega_k(u,v,w)$ depends only on the multiset $\fx_k(u,v)\uplus\fx_k(v,w)$, and we have verified, for all $u\in S_5$ and $k\leq5$ with chains in $S_7$, that \eqref{eq:Jk} becomes an identity of multisets:
-\begin{multline}\label{eq:Dk}
-\big\{\big(q_k(u,v)q_k(v,w),\ \fx_k(u,v)\uplus\fx_k(v,w)\big)\big\}_{\substack{u\tom{k}v\tom{k}w\\\text{incompatible}}}\\
-=\big\{\big(q_k\,q_{k-1}(u,v)q_{k-1}(v,w),\ \fx_{k-1}(u,v)\uplus\fx_{k-1}(v,w)\big)\big\}_{\substack{u\tom{k-1}v\tom{k-1}w\\\text{compatible}}},\tag{$\mathrm D_k$}
-\end{multline}
-whereas for every specialization with $z_1\neq z_2$ that we have tried (generic, or $z_1=y_c$, $z_2=y_{c'}$ with $c\neq c'$) the identity is not termwise; the example $u=132$, $k=2$, $w=312$ above already shows this, the two sides $q_2[(y_3-z_1)+(y_1-z_2)]$ and $q_2[(y_1-z_1)+(y_3-z_2)]$ agreeing termwise exactly when $z_1=z_2$. In particular the numbers of incompatible pairs at level $k$ and of compatible pairs at level $k-1$ with the same $(u,w)$ and the same $q$-weight coincide.
-
-In fact \eqref{eq:Dk} holds in the strongest possible termwise sense. Call the \emph{key} of a pair $u\tom{m}v\tom{m}w$ the triple $\big(w,\ q_m(u,v)q_m(v,w),\ \fx_m(u,v)\uplus\fx_m(v,w)\big)$. We have verified, for all $u\in S_6$ with chains in $S_7$ for $k=3$ ($41\,254$ incompatible pairs) and in $S_8$ for $k=4$ ($154\,073$ pairs), that for fixed $u$ the keys of the incompatible level-$k$ pairs are pairwise distinct, that the keys of the compatible level-$(k-1)$ pairs are pairwise distinct, and that multiplying the weight by $q_k$ maps the second set of keys bijectively onto the first. Thus for each compatible pair $u\tom{k-1}v'\tom{k-1}w$ there is a \emph{unique} incompatible pair $u\tom{k}v\tom{k}w$ with the same fixed-value multiset and $q_k$ times the weight, and this correspondence $v'\mapsto v$ is a bijection; \eqref{eq:Dk} would follow from a proof that the correspondence is well defined and surjective. Moreover, in the ``pure'' situation in which the level-$(k-1)$ pair has no cycles with top $k+1$ and no cycle with a larger top interacts with the detour, the bijection is given by two explicit detours generalizing Lemma \ref{lemma:detour}: if the top-$k$ cycles of the two steps have pivot sequences $C_1$ and $C_2$ (meeting only in $k$) and $P=C_1C_2=(p_1,\ldots,p_m)$ is their concatenation, then the image has top-$(k+1)$ cycles with pivot sequences either $c=(k)C_1$, $d=C_2(k)$ (the ``even'' form, the conjugate of $P$ by $t_{k,k+1}$ with the cut inside), or $c=P(k)$, $d=(p_1)$ when $C_1=\emptyset$ and $c=C_1$, $d=C_2(k,p_1)$ otherwise (the ``odd'' form, the conjugate by $t_{p_1,k+1}$); for $m=1$ the form is decided by the parity of the pattern of $(u(p_1),u(k),u(k+1))$, which is Lemma \ref{lemma:generaldetour}. When the level-$(k-1)$ pair has cycles with top $k+1$, these merge into $c$ and $d$ (as the letter $t_{13}$ merges into $\mathrm K_1,\mathrm K_1',\mathrm K_4,\mathrm K_4'$ for $k=2$), and we have not extracted a closed pivot formula beyond the canonical description by keys.
-
-The identity \eqref{eq:Dk} determines \eqref{eq:Jk} only on the diagonal; since \eqref{eq:Jk} is symmetric in $z_1,z_2$ but of degree up to $k-1$ in each, the off-diagonal part is not a consequence of it, and for the off-diagonal part the only termwise formulation we have found is \eqref{eq:Bk}.
-\end{remark}
 
 \begin{remark}[Why pairs, and why ``space'' is needed] \label{remark:medtheta}
 The doubled formula is a statement about the quantization of a product of two elementary polynomials in the \emph{same} alphabet $x_1,\ldots,x_k$. Expanded in standard elementary monomials, such a product uses the alphabets $x_1,\ldots,x_k$ and $x_1,\ldots,x_{k+1}$ (see the determinant below). Consequently, in a product of several factorial elementary polynomials, $\theta$ acts as $\theta(\cdots)\cdot\theta\big(E_{p_1,k}E_{p_2,k}\big)\cdot\theta(\cdots)$ only if no other factor uses the alphabets $x_1,\ldots,x_k$ or $x_1,\ldots,x_{k+1}$, that is, only if the equal pair of columns is preceded by a column of height at least $k+2$. This is precisely the condition under which the medium theta $\medtheta(v^{-1})$ of Definition \ref{def:codetheta} retains an equal consecutive pair, and it is the reason the quantum algorithm iterates over $\medtheta(v^{-1})$ rather than over the sorted code $\theta(v^{-1})$ (which may contain equal parts without the required space) or the strict shape $\thop(v^{-1})$ (which has no equal parts at all and is therefore larger). Three or more equal columns would require the alphabets $x_1,\ldots,x_{k+2}$ and beyond, and the doubled formula has no analogue for them; accordingly $\medtheta$ never retains more than two equal parts, the remaining ones being incremented as in the construction of $\theta$.
