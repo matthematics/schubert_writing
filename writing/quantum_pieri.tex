@@ -62,7 +62,7 @@ picture,baseline=(#2.base)]{\node(#2)[#1]{$#3$};}}
 \begin{document}
 
 \begin{abstract}
-We study products of quantum double Schubert polynomials with different sets of equivariant parameters. Expanding $\qsch_u(x;y)\qsch_v(x;z)$ in the basis $\{\qsch_w(x;y)\}$ defines the triple quantum Schubert structure constants $c_{u,v}^{w,d}(y;z)$, which recover the equivariant quantum Littlewood--Richardson coefficients when $z=y$ and the classical triple Schubert structure constants when $q=0$. We present a proof due to Xiao and Yue that these constants are polynomials in the differences $y_i-z_j$ with nonnegative integer coefficients. We prove a Pieri formula for multiplication by a quantum factorial elementary polynomial, with terms indexed by a quantum analogue of Sottile's relation and coefficients given by monomials in the quantum parameters times products of differences $y_a-z_1$. The proof uses a self-contained analysis of chains in the quantum Bruhat graph. A second Pieri formula treats the quantization of a product of two elementary polynomials and identifies the compatible pairs of chains needed for multiplication. We also extend the Peterson--Woodward comparison formula and the quantum-to-classical reduction of Leung--Li and Huang--Li to the triple constants; the comparison formula reduces parabolic computations to the complete flag case. Finally, we describe and prove correct the algorithms implemented in the package \texttt{schubmult} for computing these constants.
+We study products of quantum double Schubert polynomials with different sets of equivariant parameters. Expanding $\qsch_u(x;y)\qsch_v(x;z)$ in the basis $\{\qsch_w(x;y)\}$ defines the triple quantum Schubert structure constants $c_{u,v}^{w,d}(y;z)$, which recover the equivariant quantum Littlewood--Richardson coefficients when $z=y$ and the classical triple Schubert structure constants when $q=0$. These constants are polynomials in the differences $y_i-z_j$ with nonnegative integer coefficients; the proof, due to Tongren Xiao and Yihua Yue, appears as an appendix. We prove a Pieri formula for multiplication by a quantum factorial elementary polynomial, with terms indexed by a quantum analogue of Sottile's relation and coefficients given by monomials in the quantum parameters times products of differences $y_a-z_1$. The proof uses a self-contained analysis of chains in the quantum Bruhat graph. A second Pieri formula treats the quantization of a product of two elementary polynomials and identifies the compatible pairs of chains needed for multiplication. We also extend the Peterson--Woodward comparison formula and the quantum-to-classical reduction of Leung--Li and Huang--Li to the triple constants; the comparison formula reduces parabolic computations to the complete flag case. Finally, we describe and prove correct the algorithms implemented in the package \texttt{schubmult} for computing these constants.
 \end{abstract}
 \maketitle
 
@@ -87,9 +87,9 @@ In this paper we study the coefficients obtained when the two factors carry \emp
 $$\qsch_u(x;y)\qsch_v(x;z)=\sum_{w,d}q^d\,c_{u,v}^{w,d}(y;z)\,\qsch_w(x;y).$$
 We call the $c_{u,v}^{w,d}(y;z)$ the \emph{triple quantum Schubert structure constants}. At $z=y$ they recover the equivariant quantum structure constants, and at $q=0$ they recover the triple Schubert structure constants $c_{u,v}^w(y;z)$ of \cite{samuelmolev}, which were recently shown by Gao and Xiong \cite{gao2025grahampositivitytripleschubert} to be polynomials in the differences $y_i-z_j$ with nonnegative integer coefficients. The triple constants carry strictly more information than the equivariant ones: the equivariant quantum constant $c_{u,v}^{w,d}(y;y)$ is a specialization of $c_{u,v}^{w,d}(y;z)$, while conversely $c_{u,v}^{w,d}(y;z)$ is recovered from the constants $c_{u,v_2}^{w,d}(y;y)$, $v_2$ ranging over the right factors of the reduced factorizations $v=v_1\cdot v_2$, by the quantum Cauchy identity (Lemma \ref{lemma:quantumtoordinary}).
 
-Our main results are the following.
+The main results of this paper are the following; the first is due to Xiao and Yue, the rest are ours.
 \begin{enumerate}
-\item \emph{Positivity} (Theorem \ref{theorem:positivity}). The constants $c_{u,v}^{w,d}(y;z)$ lie in $\mathbb Z_{\geq0}[y_i-z_j]$. The proof, which we reproduce from the manuscript of Xiao and Yue \cite{xiaoyuequantumpositivity} with their permission, combines the geometric argument of Mihalcea with the Graham-positivity theorem of Gao and Xiong for $B^-$-stable effective cycles.
+\item \emph{Positivity} (Theorem \ref{theorem:positivity}). The constants $c_{u,v}^{w,d}(y;z)$ lie in $\mathbb Z_{\geq0}[y_i-z_j]$. This theorem and its proof are due to Tongren Xiao and Yihua Yue \cite{xiaoyuequantumpositivity}, who kindly agreed to include the proof as Appendix \ref{appendix:positivity}; it combines the geometric argument of Mihalcea with the Graham-positivity theorem of Gao and Xiong for $B^-$-stable effective cycles. We include it because it settles what would otherwise be a conjecture about the constants studied here.
 \item \emph{A quantum Pieri formula} (Theorem \ref{theorem:pieri}). Let $\qelem_{k,k}(x;z)=\qsch_{s_1s_2\cdots s_k}(x;z)$ be the quantum factorial elementary polynomial. We prove
 $$\qsch_u(x;y)\qelem_{k,k}(x;z)=\sum_{u\tom{k} w}q_k(u,w)\prod_{a\in\fx_k(u,w)}(y_a-z_1)\,\qsch_w(x;y),$$
 where $\tom{k}$ is a quantum analogue of the relation introduced by Sottile \cite{sottile} for the classical Pieri rule, $q_k(u,w)$ is a monomial in the $q_i$ recording the length-decreasing steps of a chain from $u$ to $w$ in the quantum Bruhat graph, and $\fx_k(u,w)$ is the set of values fixed by the chain in the first $k$ positions. This is an explicit instance of the positivity theorem, and it is the engine of the multiplication algorithm. The proof occupies Section \ref{section:proofpieri}; it proceeds by induction on $k$ via the single-variable Monk formula, and rests on an intrinsic description of the chains (every nontrivial cycle of $u^{-1}w$ has exactly one element exceeding $k$, and a single length identity) which makes the term-by-term cancellations tractable. In the non-equivariant case the quantum Pieri formula for complete flag manifolds is due to Ciocan-Fontanine \cite{ciocan1999partial} and Postnikov \cite{postnikov1999quantum}.
@@ -97,9 +97,9 @@ where $\tom{k}$ is a quantum analogue of the relation introduced by Sottile \cit
 \item \emph{Algorithms} (Sections \ref{section:algorithms} and \ref{section:quantclass}). We describe the algorithms implemented in the package \texttt{schubmult} \cite{schubmult} for computing products of (quantum) double Schubert polynomials, which combine the Pieri formula on one factor with a signed expansion of the other factor into products of factorial elementary polynomials. We prove this expansion, in its classical form (Theorem \ref{theorem:orddouble}) and in two quantum forms, over a strict dominant shape (Theorem \ref{theorem:quandouble}) and over the ``medium'' shape actually used by the implementation, in which a pair of equal columns is allowed when it is preceded by a drop of at least two and contributes a single doubled factor (Theorem \ref{theorem:quandoublemed}); the key step is a formula for the skew divided differences, in the sense of \cite{samuelleibniz,samuelmolev}, of a product $\prod_{j\leq k}(x_j-z_i)$ with respect to the $z$-variables (Theorem \ref{theorem:skewtop}), in which the terms of the iterated Monk rule that revisit a position cancel by a rotation argument (Lemma \ref{lemma:rotation}). The quantum algorithm also uses a ``doubled'' Pieri rule (Theorem \ref{theorem:doubledpieri}) for the quantization of a product of two elementary polynomials in the same variables, which is obtained from two iterated Pieri steps by omitting the pairs of chains that are not compatible in a precise cycle-theoretic sense. We prove this doubled rule in general (Theorem \ref{theorem:doubledpieri}): it is equivalent to a termwise identity between pairs of chains (Theorem \ref{theorem:termwise}) which telescopes along explicit blocks of pairs and is then established by an injection built from a single local lemma, a generalization of the up/down pairing used in the proof of the Pieri formula (Theorem \ref{theorem:junction}). Finally, we extend the quantum-to-classical reduction of Leung--Li and Huang--Li to the triple constants.
 \end{enumerate}
 
-The paper is organized as follows. Section \ref{section:definitions} defines the triple constants, proves the positivity theorem and treats the parabolic case. Section \ref{section:pieri} states the Pieri formula, whose proof is given in Section \ref{section:proofpieri}. Section \ref{section:algorithms} states the expansion formulas for (quantum) double Schubert polynomials and describes the multiplication algorithms built on them; the expansion formulas are proved in Section \ref{section:proofvside}. Section \ref{section:quantclass} treats the quantum-to-classical reduction, Section \ref{section:additional} the general-degree and doubled Pieri formulas, and Section \ref{section:pw} proves the parabolic reduction via the Peterson--Woodward comparison formula.
+The paper is organized as follows. Section \ref{section:definitions} defines the triple constants, states the positivity theorem and treats the parabolic case. Section \ref{section:pieri} states the Pieri formula, whose proof is given in Section \ref{section:proofpieri}. Section \ref{section:algorithms} states the expansion formulas for (quantum) double Schubert polynomials and describes the multiplication algorithms built on them; the expansion formulas are proved in Section \ref{section:proofvside}. Section \ref{section:quantclass} treats the quantum-to-classical reduction, Section \ref{section:additional} the general-degree and doubled Pieri formulas, and Section \ref{section:pw} proves the parabolic reduction via the Peterson--Woodward comparison formula. Appendix \ref{appendix:positivity}, by Xiao and Yue, contains the proof of the positivity theorem.
 
-\textbf{Acknowledgements.} We thank Tongren Xiao and Yihua Yue for permission to include their proof of Theorem \ref{theorem:positivity}, and Rui Xiong and Changzheng Li for making us aware of their work.
+\textbf{Acknowledgements.} We thank Tongren Xiao and Yihua Yue for contributing Appendix \ref{appendix:positivity}, their proof of Theorem \ref{theorem:positivity}, and Rui Xiong and Changzheng Li for making us aware of their work.
 
 \section{Triple quantum Schubert structure constants} \label{section:definitions}
 
@@ -142,7 +142,7 @@ index the polynomials by $S_\infty=\bigcup_nS_n$, and work in the polynomial rin
 $$\qsch_u(x;y)\qsch_v(x;z)=\sum_{w,d}q^dc_{u,v}^{w,d}(y;z)\qsch_w(x;y),$$
 the sum being over $w\in S_\infty$ and all degrees $d$, with only finitely many nonzero terms. The coefficients $c_{u,v}^{w,d}(y;z)$ are the \emph{triple quantum Schubert structure constants}, which are polynomials in $y$ and $z$ with integer coefficients.
 
-The finite-dimensional meaning of this expansion is the following. Given $u,v\in S_n$, choose $N$ so large that every $w$ occurring in the expansion lies in $S_N$ and every occurring $d$ has $d_i=0$ for $i\geq N$; this holds for all sufficiently large $N$, since there are finitely many terms. Then the expansion is an identity in $\mathbb Z[q_1,\ldots,q_{N-1}][x_1,\ldots,x_N,y,z]$, and reducing it modulo the ideal of Kim's presentation of $QH_T^*(\mathrm{Fl}_N)$ \cite{kim1996equivariant} (the ideal $J_{qy}^N$ recalled in the proof of Theorem \ref{theorem:positivity}) identifies it, by \cite{lam2014quantum}, with the expansion of the product of the two corresponding classes in the Schubert basis of $QH_T^*(\mathrm{Fl}_N)$, with $z=y$. Thus $c_{u,v}^{w,d}(y;y)$ is the equivariant quantum Littlewood--Richardson coefficient of $\mathrm{Fl}_N$ for every such $N$, and the degree vector $d$ is the degree $\sum_id_i\alpha_i^\vee$ of a rational curve in $\mathrm{Fl}_N$. Note that $w\notin S_n$ and $d_i\neq0$ for $i\geq n-1$ do occur: for instance $\qsch_{21}(x;y)^2=(y_2-y_1)\qsch_{21}(x;y)+\qsch_{231}(x;y)+q_1$, the last term coming from the quantum Monk formula in $\mathrm{Fl}_N$ for any $N\geq3$.
+The finite-dimensional meaning of this expansion is the following. Given $u,v\in S_n$, choose $N$ so large that every $w$ occurring in the expansion lies in $S_N$ and every occurring $d$ has $d_i=0$ for $i\geq N$; this holds for all sufficiently large $N$, since there are finitely many terms. Then the expansion is an identity in $\mathbb Z[q_1,\ldots,q_{N-1}][x_1,\ldots,x_N,y,z]$, and reducing it modulo the ideal of Kim's presentation of $QH_T^*(\mathrm{Fl}_N)$ \cite{kim1996equivariant} (the ideal $J_{qy}^N$ recalled in Appendix \ref{appendix:positivity}) identifies it, by \cite{lam2014quantum}, with the expansion of the product of the two corresponding classes in the Schubert basis of $QH_T^*(\mathrm{Fl}_N)$, with $z=y$. Thus $c_{u,v}^{w,d}(y;y)$ is the equivariant quantum Littlewood--Richardson coefficient of $\mathrm{Fl}_N$ for every such $N$, and the degree vector $d$ is the degree $\sum_id_i\alpha_i^\vee$ of a rational curve in $\mathrm{Fl}_N$. Note that $w\notin S_n$ and $d_i\neq0$ for $i\geq n-1$ do occur: for instance $\qsch_{21}(x;y)^2=(y_2-y_1)\qsch_{21}(x;y)+\qsch_{231}(x;y)+q_1$, the last term coming from the quantum Monk formula in $\mathrm{Fl}_N$ for any $N\geq3$.
 
 The product respects the grading where for each $i$, $\deg x_i=\deg y_i=\deg z_i=1$ and $\deg q_i=2$, in which $\qsch_w$ is homogeneous of degree $\ell(w)$. In particular, if $c_{u,v}^{w,d}(y;z)\neq 0$, then
 $$\deg c_{u,v}^{w,d}(y;z)=\ell(u)+\ell(v)-\ell(w)-2\sum_i d_i;$$
@@ -174,86 +174,11 @@ What we use below is only that each individual step of a $\tom{k}$ chain is a co
 
 \subsection{Positivity}
 
-For $d=(0,\ldots,0)$, this is the ordinary triple Schubert calculus structure constant, and it was proved in \cite{gao2025grahampositivitytripleschubert} that these have the positivity property that they are polynomials in the differences $y_i-z_j$ with nonnegative integer coefficients. We will refer to this as \emph{triple Schubert positivity}. Our first main result is that it persists in the quantum setting.
-\begin{theorem}[Triple quantum Schubert positivity] \label{theorem:positivity}
+For $d=(0,\ldots,0)$, this is the ordinary triple Schubert calculus structure constant, and it was proved in \cite{gao2025grahampositivitytripleschubert} that these have the positivity property that they are polynomials in the differences $y_i-z_j$ with nonnegative integer coefficients. We will refer to this as \emph{triple Schubert positivity}. The following theorem of Xiao and Yue \cite{xiaoyuequantumpositivity} shows that it persists in the quantum setting.
+\begin{theorem}[Xiao--Yue; triple quantum Schubert positivity] \label{theorem:positivity}
 For all $u,v,w$ and $d$, the structure constants $c_{u,v}^{w,d}(y;z)$ are polynomials in the differences $y_i-z_j$ with nonnegative integer coefficients.
 \end{theorem}
-\begin{proof}
-The proof below is adapted from the manuscript of Tongren Xiao and Yihua Yue \cite{xiaoyuequantumpositivity}, with their permission. Their product is written with the output basis carrying the parameters of the second factor. Commutativity of multiplication therefore identifies their coefficient $C_{v,u}^{w,d}(z,y)$ with $c_{u,v}^{w,d}(y;z)$. It is enough to prove that $C_{u,v}^{w,d}(y,t)$ is in $\mathbb{Z}_{\geq 0}[t_i-y_j]$.
-
-Fix $u,v,w\in S_n$, increasing $n$ if necessary so that all permutations and parameters occurring in the coefficient under consideration are included. Write
-$\mathbf a=(t_1,\ldots,t_n,y_1,\ldots,y_n)$, and let $\tau\in S_{2n}$ interchange the two blocks, so that $\tau\mathbf a=(y_1,\ldots,y_n,t_1,\ldots,t_n)$. Regard the product expansion in $S_{2n}$:
-\begin{equation}\label{eq:xiaoyue-product}
-\qsch_u(x;\tau\mathbf a)\qsch_v(x;\mathbf a)
-=\sum_{w\in S_{2n}}C_{u,v}^{w,\tau}(\mathbf a;q)\qsch_w(x;\mathbf a).
-\end{equation}
-We recall the geometric interpretation of these coefficients. Let $e_i(x)$ and $E_i(x,q)$ denote, respectively, the elementary symmetric polynomials and their quantum analogues in $2n$ variables, and set
-\[
-J_{\mathbf a}^{2n}=\langle e_i(x)-e_i(\mathbf a):1\leq i\leq 2n\rangle,\qquad
-J_{q\mathbf a}^{2n}=\langle E_i(x,q)-e_i(\mathbf a):1\leq i\leq 2n\rangle.
-\]
-The Fomin--Gelfand--Postnikov deformation map \cite{fomin1997quantum}, extended $\mathbb Z[\mathbf a]$-linearly, induces
-\[
-\overline{\mathcal Q}:\mathbb Z[x,\mathbf a]/J_{\mathbf a}^{2n}
-\longrightarrow \mathbb Z[x,\mathbf a,q]/J_{q\mathbf a}^{2n}.
-\]
-The classical Borel presentation identifies the source with $H_T^*(X)$, and Kim's presentation \cite{kim1996equivariant} identifies the target with $QH_T^*(X)$, where $X=\mathrm{Fl}_{2n}$. Under the Lam--Shimozono identification \cite{lam2014quantum} of quantum double Schubert polynomials with quantum Schubert classes, \eqref{eq:xiaoyue-product} is the quantum equivariant Littlewood--Richardson expansion for the classes obtained by applying $\overline{\mathcal Q}$ to the first factor. Consequently,
-\begin{equation}\label{eq:xiaoyue-eqlr}
-C_{u,v}^{w,\tau}(\mathbf a;q)
-=\sum_{d\geq0}q^d(\pi_{M_d})^T_*
-\left(
-\operatorname{ev}_1^*[\tau X_u]^T\,
-\operatorname{ev}_2^*[X_v]^T\,
-\operatorname{ev}_3^*[Y_w]^T
-\right).
-\end{equation}
-Here $M_d=\overline M_{0,3}(X,d)$, $\operatorname{ev}_i:M_d\to X$ are the evaluation maps, $\pi_{M_d}:M_d\to\mathrm{pt}$ is the structure map, and $X_r$ and $Y_r$ denote the Schubert and opposite Schubert varieties indexed by $r$.
-
-For each effective degree $d$, put
-\[
-F=(\operatorname{ev}_1,\operatorname{ev}_2):M_d\longrightarrow X\times X,\qquad
-I_{u,v}^d=F^{-1}(\tau X_u\times X_v),\qquad
-\Gamma_{u,v}^d=(\operatorname{ev}_3)_*[I_{u,v}^d].
-\]
-The incidence scheme $I_{u,v}^d$ is reduced and locally irreducible, and all its irreducible components have codimension $\ell(u)+\ell(v)$. Indeed, the moduli space $M_d$ is irreducible by Thomsen's theorem \cite{thomsen1998irreducibility}, and Mihalcea's incidence lemma \cite[Lemma~6.3]{mihalcea2006positivity} applies after diagonal translation by $a_0=1\times w_0\in S_{2n}$, where $w_0$ is the longest element in the second block: it identifies $\tau X_u\times X_v$ with $w_0^{(2n)}X_u\times X_v$. The codimension is therefore
-\[
-\operatorname{codim}_X(w_0^{(2n)}X_u)+\ell(v)=\ell(u)+\ell(v).
-\]
-By the incidence formula of Mihalcea \cite[Section~3.1]{mihalcea2006positivity}, this gives
-\begin{equation}\label{eq:xiaoyue-incidence}
-\operatorname{ev}_1^*[\tau X_u]^T\,
-\operatorname{ev}_2^*[X_v]^T\cap[M_d]^T=[I_{u,v}^d]_T.
-\end{equation}
-
-The cycle $\Gamma_{u,v}^d$ is effective and $B^-(\tau)$-invariant. To see invariance, write $N^-(\tau)=N^-\cap\tau N^-\tau^{-1}$ and $B^-(\tau)=TN^-(\tau)$. The varieties $X_v$ and $\tau X_u$ are stable under the corresponding actions, so their product, its inverse image under the equivariant map $F$, and its proper push-forward under $\operatorname{ev}_3$ are $B^-(\tau)$-invariant. Effectivity follows from the reducedness of $I_{u,v}^d$.
-
-There is a unique expansion
-\[
-[\Gamma_{u,v}^d]_T=\sum_{r\in S_{2n}}p_{u,v}^{r,d}(\mathbf a)[X_r]_T
-\quad\text{in }H_T^*(X).
-\]
-By Gao and Xiong's Graham--positivity theorem for $B^-(\tau)$-invariant effective cycles \cite[Theorem~2.4 and Corollary~2.5]{gao2025grahampositivitytripleschubert},
-\[
-p_{u,v}^{r,d}(\mathbf a)\in
-\mathbb Z_{\geq0}[t_i-y_j:1\leq i,j\leq n].
-\]
-Finally, by equivariant Poincaré duality, \eqref{eq:xiaoyue-incidence}, and the projection formula,
-\[
-(\operatorname{ev}_3)^T_*
-\left(\operatorname{ev}_1^*[\tau X_u]^T
-\operatorname{ev}_2^*[X_v]^T\right)
-=[\Gamma_{u,v}^d]_T,
-\]
-and hence the degree-$d$ summand of \eqref{eq:xiaoyue-eqlr} is
-\[
-(\pi_X)^T_*\bigl([\Gamma_{u,v}^d]_T[Y_w]^T\bigr)
-=\sum_{r\in S_{2n}}p_{u,v}^{r,d}(\mathbf a)
-(\pi_X)^T_*\bigl([X_r]^T[Y_w]^T\bigr)
-=p_{u,v}^{w,d}(\mathbf a).
-\]
-Thus every coefficient $C_{u,v}^{w,d}(y,t)$ is in
-$\mathbb Z_{\geq0}[t_i-y_j]$. Replacing $(u,v,y,t)$ by $(v,u,z,y)$ proves the asserted positivity of $c_{u,v}^{w,d}(y;z)$.
-\end{proof}
+The proof, due to Tongren Xiao and Yihua Yue \cite{xiaoyuequantumpositivity}, is given in Appendix \ref{appendix:positivity}.
 
 
 \subsection{The parabolic case} \label{section:definitions:parabolic}
@@ -1705,6 +1630,91 @@ $$\sum_{v_1\cdot v_2=v}c_{u,v_2}^{w\omega_P\omega_{P'},\lambda_B}(y;y)\,\sch_{v_
 
 \begin{proof}[Proof of Proposition \ref{prop:parabolic}]
 Let $d_P\in Q^\vee/Q^\vee_P$ with Peterson--Woodward lift $d=\lambda_B$. In type $A$, $\langle\alpha_i,d\rangle=2d_i-d_{i-1}-d_{i+1}=\langle d\rangle_i$, so the parabolic subgroup $P'$ of Proposition \ref{prop:huangli} is generated by $\{s_i\in P\mid\langle d\rangle_i=0\}$, that is, by $\{s_i\mid i\in z_P(d)\}$, and $\omega_P\omega_{P'}=w_Pw_{z_P(d)}$. The claim is therefore Corollary \ref{corollary:pwz}. (The passage from $S_n$ to $S_\infty$, i.e.\ from $P$ to $\pcomp P$, is the stability discussed after Definition \ref{def:parabolic}.)
+\end{proof}
+
+\appendix
+\section{Proof of the positivity theorem} \label{appendix:positivity}
+\begin{center}
+\textsc{by Tongren Xiao and Yihua Yue}
+\end{center}
+
+This appendix proves Theorem \ref{theorem:positivity}. The argument is taken from \cite{xiaoyuequantumpositivity}; it combines the geometric argument of Mihalcea \cite{mihalcea2006positivity} with the Graham-positivity theorem of Gao and Xiong \cite{gao2025grahampositivitytripleschubert} for $B^-$-stable effective cycles.
+
+\begin{proof}[Proof of Theorem \ref{theorem:positivity}]
+Our product is written with the output basis carrying the parameters of the second factor, so commutativity of multiplication identifies the coefficient $C_{v,u}^{w,d}(z,y)$ below with $c_{u,v}^{w,d}(y;z)$. It is therefore enough to prove that $C_{u,v}^{w,d}(y,t)$ is in $\mathbb{Z}_{\geq 0}[t_i-y_j]$.
+
+Fix $u,v,w\in S_n$, increasing $n$ if necessary so that all permutations and parameters occurring in the coefficient under consideration are included. Write
+$\mathbf a=(t_1,\ldots,t_n,y_1,\ldots,y_n)$, and let $\tau\in S_{2n}$ interchange the two blocks, so that $\tau\mathbf a=(y_1,\ldots,y_n,t_1,\ldots,t_n)$. Regard the product expansion in $S_{2n}$:
+\begin{equation}\label{eq:xiaoyue-product}
+\qsch_u(x;\tau\mathbf a)\qsch_v(x;\mathbf a)
+=\sum_{w\in S_{2n}}C_{u,v}^{w,\tau}(\mathbf a;q)\qsch_w(x;\mathbf a).
+\end{equation}
+We recall the geometric interpretation of these coefficients. Let $e_i(x)$ and $E_i(x,q)$ denote, respectively, the elementary symmetric polynomials and their quantum analogues in $2n$ variables, and set
+\[
+J_{\mathbf a}^{2n}=\langle e_i(x)-e_i(\mathbf a):1\leq i\leq 2n\rangle,\qquad
+J_{q\mathbf a}^{2n}=\langle E_i(x,q)-e_i(\mathbf a):1\leq i\leq 2n\rangle.
+\]
+The Fomin--Gelfand--Postnikov deformation map \cite{fomin1997quantum}, extended $\mathbb Z[\mathbf a]$-linearly, induces
+\[
+\overline{\mathcal Q}:\mathbb Z[x,\mathbf a]/J_{\mathbf a}^{2n}
+\longrightarrow \mathbb Z[x,\mathbf a,q]/J_{q\mathbf a}^{2n}.
+\]
+The classical Borel presentation identifies the source with $H_T^*(X)$, and Kim's presentation \cite{kim1996equivariant} identifies the target with $QH_T^*(X)$, where $X=\mathrm{Fl}_{2n}$. Under the Lam--Shimozono identification \cite{lam2014quantum} of quantum double Schubert polynomials with quantum Schubert classes, \eqref{eq:xiaoyue-product} is the quantum equivariant Littlewood--Richardson expansion for the classes obtained by applying $\overline{\mathcal Q}$ to the first factor. Consequently,
+\begin{equation}\label{eq:xiaoyue-eqlr}
+C_{u,v}^{w,\tau}(\mathbf a;q)
+=\sum_{d\geq0}q^d(\pi_{M_d})^T_*
+\left(
+\operatorname{ev}_1^*[\tau X_u]^T\,
+\operatorname{ev}_2^*[X_v]^T\,
+\operatorname{ev}_3^*[Y_w]^T
+\right).
+\end{equation}
+Here $M_d=\overline M_{0,3}(X,d)$, $\operatorname{ev}_i:M_d\to X$ are the evaluation maps, $\pi_{M_d}:M_d\to\mathrm{pt}$ is the structure map, and $X_r$ and $Y_r$ denote the Schubert and opposite Schubert varieties indexed by $r$.
+
+For each effective degree $d$, put
+\[
+F=(\operatorname{ev}_1,\operatorname{ev}_2):M_d\longrightarrow X\times X,\qquad
+I_{u,v}^d=F^{-1}(\tau X_u\times X_v),\qquad
+\Gamma_{u,v}^d=(\operatorname{ev}_3)_*[I_{u,v}^d].
+\]
+The incidence scheme $I_{u,v}^d$ is reduced and locally irreducible, and all its irreducible components have codimension $\ell(u)+\ell(v)$. Indeed, the moduli space $M_d$ is irreducible by Thomsen's theorem \cite{thomsen1998irreducibility}, and Mihalcea's incidence lemma \cite[Lemma~6.3]{mihalcea2006positivity} applies after diagonal translation by $a_0=1\times w_0\in S_{2n}$, where $w_0$ is the longest element in the second block: it identifies $\tau X_u\times X_v$ with $w_0^{(2n)}X_u\times X_v$. The codimension is therefore
+\[
+\operatorname{codim}_X(w_0^{(2n)}X_u)+\ell(v)=\ell(u)+\ell(v).
+\]
+By the incidence formula of Mihalcea \cite[Section~3.1]{mihalcea2006positivity}, this gives
+\begin{equation}\label{eq:xiaoyue-incidence}
+\operatorname{ev}_1^*[\tau X_u]^T\,
+\operatorname{ev}_2^*[X_v]^T\cap[M_d]^T=[I_{u,v}^d]_T.
+\end{equation}
+
+The cycle $\Gamma_{u,v}^d$ is effective and $B^-(\tau)$-invariant. To see invariance, write $N^-(\tau)=N^-\cap\tau N^-\tau^{-1}$ and $B^-(\tau)=TN^-(\tau)$. The varieties $X_v$ and $\tau X_u$ are stable under the corresponding actions, so their product, its inverse image under the equivariant map $F$, and its proper push-forward under $\operatorname{ev}_3$ are $B^-(\tau)$-invariant. Effectivity follows from the reducedness of $I_{u,v}^d$.
+
+There is a unique expansion
+\[
+[\Gamma_{u,v}^d]_T=\sum_{r\in S_{2n}}p_{u,v}^{r,d}(\mathbf a)[X_r]_T
+\quad\text{in }H_T^*(X).
+\]
+By Gao and Xiong's Graham--positivity theorem for $B^-(\tau)$-invariant effective cycles \cite[Theorem~2.4 and Corollary~2.5]{gao2025grahampositivitytripleschubert},
+\[
+p_{u,v}^{r,d}(\mathbf a)\in
+\mathbb Z_{\geq0}[t_i-y_j:1\leq i,j\leq n].
+\]
+Finally, by equivariant Poincaré duality, \eqref{eq:xiaoyue-incidence}, and the projection formula,
+\[
+(\operatorname{ev}_3)^T_*
+\left(\operatorname{ev}_1^*[\tau X_u]^T
+\operatorname{ev}_2^*[X_v]^T\right)
+=[\Gamma_{u,v}^d]_T,
+\]
+and hence the degree-$d$ summand of \eqref{eq:xiaoyue-eqlr} is
+\[
+(\pi_X)^T_*\bigl([\Gamma_{u,v}^d]_T[Y_w]^T\bigr)
+=\sum_{r\in S_{2n}}p_{u,v}^{r,d}(\mathbf a)
+(\pi_X)^T_*\bigl([X_r]^T[Y_w]^T\bigr)
+=p_{u,v}^{w,d}(\mathbf a).
+\]
+Thus every coefficient $C_{u,v}^{w,d}(y,t)$ is in
+$\mathbb Z_{\geq0}[t_i-y_j]$. Replacing $(u,v,y,t)$ by $(v,u,z,y)$ proves the asserted positivity of $c_{u,v}^{w,d}(y;z)$.
 \end{proof}
 
 \bibliographystyle{acm}
