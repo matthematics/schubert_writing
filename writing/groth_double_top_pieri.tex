@@ -1,0 +1,159 @@
+\documentclass{amsart}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[margin=1in]{geometry}
+
+\newtheorem{theorem}{Theorem}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\DeclareMathOperator{\groth}{\mathfrak{G}}
+\DeclareMathOperator{\Supp}{Supp}
+\newcommand{\fgn}{\ominus}
+
+\title{A Top-Degree Pieri Formula for Double Grothendieck Polynomials}
+\author{Matthew J. Samuel}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section{Conventions}
+
+Let $\beta$ be a formal parameter, and write
+\[
+a\fgn b = a+b+\beta ab,
+\qquad
+\overline{a}=\frac{-a}{1+\beta a}
+\]
+for the multiplicative formal group law and its formal inverse. Permutations are in
+one-line notation, $\ell(u)$ denotes the inversion length, and $t_{ab}$ exchanges
+positions $a<b$. We use the double Grothendieck polynomials $\groth_u(x;y)$ with
+the normalization
+\[
+\groth_{w_0}(x;y)=\prod_{i+j\le n}(x_i\fgn y_j),
+\qquad
+\groth_{us_i}(x;y)=\pi_i^x\groth_u(x;y)
+\quad\text{if }\ell(us_i)<\ell(u),
+\]
+where
+\[
+\pi_i^x f=\frac{(1+\beta x_{i+1})f-(1+\beta x_i)s_i^x f}{x_i-x_{i+1}}.
+\]
+Thus $\groth_{21}(x;y)=x_1\fgn y_1$.
+
+For an alphabet $\mathcal{Y}=(Y_1,\ldots,Y_n)$, write
+\[
+E_{n,n}(\mathcal{Y};-z)=\prod_{j=1}^n(Y_j+z).
+\]
+This is the top-degree factorial elementary symmetric polynomial; in particular,
+\[
+E_{k,k}(x;-z)=\prod_{i=1}^k(x_i+z).
+\]
+
+\begin{definition}[Marked $k$-Pieri support]
+For $u\in S_\infty$ and $k\ge 1$, let $\Supp_k(u)$ be the set of endpoints of
+marked $k$-Pieri chains starting at $u$. A chain is a saturated increasing
+Bruhat chain
+\[
+u=u_0\lessdot u_1\lessdot\cdots\lessdot u_r=w,
+\qquad
+u_j=u_{j-1}t_{a_jb_j},\quad a_j\le k<b_j,
+\]
+with $b_1\ge\cdots\ge b_r$, whose covers are marked or unmarked subject to the
+following conditions:
+\begin{enumerate}
+\item if $a_j=a_i$ for some $i<j$, then cover $j$ is unmarked;
+\item if $j>1$ and
+$\neg\bigl((b_j<b_{j-1})\lor(b_j=b_{j-1}\text{ and }a_j>a_{j-1})\bigr)$,
+then cover $j-1$ is marked;
+\item every cover in the maximal initial segment with equal $b_j$ and strictly
+decreasing $a_j$ is marked (in particular, the first cover is marked).
+\end{enumerate}
+The support consists of endpoints admitting such a marking with at most $k$
+marked covers. Equivalently, it is the union, over $0\le p\le k$, of the
+supports in the Grothendieck-basis expansions of
+$e_p(x_1,\ldots,x_k)\groth_u(x)$.
+\end{definition}
+
+\section{The formula}
+
+For $u,w\in S_\infty$, consider the first $k$ positions of their one-line
+notations. Define
+\begin{align*}
+F_k(u,w)&=\{i\le k:w(i)=u(i)\},\\
+L_k(u,w)&=\{i\le k:u(i)=w(j)\text{ for some }j<i\},\\
+O_k(u,w)&=\{1,\ldots,k\}\setminus\bigl(F_k(u,w)\cup L_k(u,w)\bigr).
+\end{align*}
+Thus $F_k$ consists of fixed window positions, $L_k$ records values that move
+left within the window, and $O_k$ consists of values that leave the window or
+move right within it. Put
+\[
+m_k(u,w)=k-|F_k(u,w)|,\qquad d(u,w)=\ell(w)-\ell(u),
+\qquad n_k(u,w)=|F_k(u,w)|+|L_k(u,w)|.
+\]
+Define the coefficient prefactor and alphabet
+\begin{align*}
+\rho_k(u,w)
+&=\beta^{\,d(u,w)-m_k(u,w)}(-\beta)^{|L_k(u,w)|}
+  \prod_{i\in O_k(u,w)}\frac{1}{1+\beta y_{u(i)}},\\
+\mathcal{Y}_k(u,w)
+&=\bigl(\overline{y_{u(i)}}:i\in F_k(u,w)\bigr)
+  \,\cup\,\,
+  \bigl(-1/\beta\bigr)^{|L_k(u,w)|}.
+\end{align*}
+The order of the entries in $\mathcal{Y}_k(u,w)$ is immaterial.
+
+\begin{theorem}[Top-degree double Grothendieck Pieri formula]
+\label{thm:top-pieri}
+For $u\in S_\infty$, $k\ge1$, and an additional variable $z$ independent of
+$x$ and $y$,
+\begin{equation}\label{eq:top-pieri}
+\groth_u(x;y)\,E_{k,k}(x;-z)
+=\sum_{w\in\Supp_k(u)}
+\rho_k(u,w)\,
+E_{n_k(u,w),\,n_k(u,w)}\bigl(\mathcal{Y}_k(u,w);-z\bigr)\,
+\groth_w(x;y).
+\end{equation}
+The apparent negative powers of $\beta$ in the alphabet are canceled by the
+factor $(-\beta)^{|L_k(u,w)|}$ in $\rho_k(u,w)$.
+\end{theorem}
+
+Since $E_{n,n}(\mathcal{Y};-z)=\prod_{Y\in\mathcal{Y}}(Y+z)$, the coefficient
+of $\groth_w(x;y)$ in \eqref{eq:top-pieri} can equivalently be written
+\begin{equation}\label{eq:top-pieri-coeff}
+\beta^{\,d(u,w)-m_k(u,w)}
+\prod_{i\in F_k(u,w)}
+\left(z-\frac{y_{u(i)}}{1+\beta y_{u(i)}}\right)
+\prod_{i\in L_k(u,w)}(1-\beta z)
+\prod_{i\in O_k(u,w)}\frac{1}{1+\beta y_{u(i)}}.
+\end{equation}
+The product over an empty set is $1$. In particular, this form of the
+coefficient is regular at $\beta=0$ on the stated support.
+
+\begin{remark}[Classical specialization]
+At $\beta=0$, only terms with $d(u,w)=m_k(u,w)$ remain. These are the
+$k$-Bruhat Pieri endpoints, and \eqref{eq:top-pieri-coeff} specializes to
+\[
+\prod_{i\in F_k(u,w)}(z-y_{u(i)}).
+\]
+Consequently \eqref{eq:top-pieri} specializes to the top-degree double
+Schubert Pieri formula, with the sign of the auxiliary variable determined by
+$E_{k,k}(x;-z)=\prod_i(x_i+z)$.
+\end{remark}
+
+\begin{example}
+Take $u=21$ and $k=2$. The support is
+$\{21,231,312,321\}$, and the formula gives
+\begin{align*}
+(x_1+z)(x_2+z)\groth_{21}(x;y)
+={}&(z+\overline{y_2})(z+\overline{y_1})\groth_{21}(x;y)\\
+&+\frac{z+\overline{y_2}}{1+\beta y_1}\groth_{231}(x;y)
++\frac{z+\overline{y_1}}{1+\beta y_2}\groth_{312}(x;y)\\
+&+\frac{1}{(1+\beta y_1)(1+\beta y_2)}\groth_{321}(x;y).
+\end{align*}
+\end{example}
+
+\end{document}
