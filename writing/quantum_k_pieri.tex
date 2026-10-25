@@ -35,12 +35,21 @@ coefficients are indexed by endpoints of admissible chains in the
 quantum Bruhat graph. A cyclic rotation of values turns these chains
 into the Pieri chains of Lenart and Sottile in the classical
 $k$-Bruhat order; this gives uniqueness of the chain to each endpoint
-and a closed formula for its quantum degree. We prove the formula for
-$k=1$, at $y=0$ for all $k$, and on the hyperplane $z=1/\beta$ for all
-$k$, where it is an equivariant quantum $K$-Chevalley formula for the
-line bundle $\mathcal O(-\varpi_k)$ indexed by chains; the general
-equivariant case is reduced to a junction identity whose remaining
-part is stated precisely.
+and a closed formula for its quantum degree. The formula is first
+proved for $k=1$ and $k=2$, at $y=0$ for all $k$, at $q=0$ for all
+$k$ (the classical equivariant case), and on the hyperplane
+$z=1/\beta$ for all $k$, where it is an equivariant quantum
+$K$-Chevalley formula for the line bundle $\mathcal O(-\varpi_k)$
+indexed by chains. For general $k$ the equivariant dependence is shown
+to be rigid once a single identity, the backtrack identity, is known;
+that identity involves only chains and left edges and is reduced to a
+statement about permutations of $k$ letters, which is proved when the
+prefix of the chain moves position $k-1$ and otherwise rewritten, by a
+braid bijection between $(k-1)$-chains and $(k-2)$-chains and the
+Yang--Baxter relations of the quantum Bruhat graph, as an identity
+between chains that is free of the equivariant parameter $z$. The
+latter identity is proved by an explicit bijection between two
+families of chains, which completes the proof of the formula.
 \end{abstract}
 
 \section{Polynomial conventions}
@@ -277,11 +286,27 @@ $s$ and $D$ (by a rotation of values to the classical $k$-Bruhat
 order), polynomiality of the
 top block, the full formula for $k=1$, the full formula at $y=0$
 for all $k$ (Theorem~\ref{thm:noneq}, from the Naito--Sagaki
-marked-chain formula), and the full equivariant formula at
+marked-chain formula), the full equivariant formula at
 $z=1/\beta$ for all $k$ (Theorem~\ref{thm:a-zero}, by the junction
-identity). The remaining step for the general equivariant
-formula is specified at the end of the section; that step is not
-proved here.
+identity), the full equivariant formula at $q=0$ for all $k$
+(Theorem~\ref{thm:classical}, by the junction identity and a
+bootstrap from $y=0$), and the full formula for $k=2$
+(Proposition~\ref{prop:backtrack-known}). For general $k$ the
+same bootstrap reduces the junction identity to the backtrack identity
+\eqref{eq:backtrack}, a statement about chains and left edges alone
+(Theorem~\ref{thm:backtrack-implies}); that identity is proved for
+$k=2$, at $q=0$ and at $z=1/\beta$, and in
+Section~\ref{sec:block} it is reduced to the block identity
+\eqref{eq:block} on $S_k$, proved when position $k-1$ is moved by the
+prefix of the chain (Proposition~\ref{prop:block-notfresh}) and
+otherwise reduced to the identity \eqref{eq:wild}
+(Theorem~\ref{thm:braid-reduction}); Section~\ref{sec:ybe} writes it
+as an operator identity, using the Yang--Baxter relations of the
+quantum Bruhat graph, eliminates the left paths from it
+(Proposition~\ref{prop:chain-form}), proves it when no position
+below $k-1$ is fresh (Theorem~\ref{thm:F-minimal}), and then in
+general (Theorem~\ref{thm:block}), which completes the proof of
+Theorem~\ref{prop:top} (Corollary~\ref{cor:main}).
 
 \subsection{Finiteness and the power of \texorpdfstring{$\beta$}{beta}}
 
@@ -1096,9 +1121,15 @@ $s(\gamma_w)-r(\gamma_w)=s-m$ and $h(\gamma_w)-1=|\Left|$. This is
 \eqref{eq:coefficient} at $y=0$.
 \end{proof}
 
-Thus the only part of Theorem~\ref{prop:top} that remains open is
-the dependence on the equivariant parameters $y$. At $z=1/\beta$ this
-dependence is settled in Theorem~\ref{thm:a-zero} below.
+Thus the only part of Theorem~\ref{prop:top} that remains after this
+point is the dependence on the equivariant parameters $y$. At
+$z=1/\beta$ this dependence is settled in Theorem~\ref{thm:a-zero}
+below, at $q=0$ in Theorem~\ref{thm:classical}, whose proof uses
+Theorem~\ref{thm:noneq} to fix an integer multiplicity, and for $k=2$
+in Proposition~\ref{prop:backtrack-known}; in general it is reduced,
+by the same use of Theorem~\ref{thm:noneq}, to the backtrack identity
+of Section~\ref{sec:backtrack}, which is proved in
+Sections~\ref{sec:block} and~\ref{sec:ybe}.
 
 \subsection{Reduction of level \texorpdfstring{$k$}{k} to levels \texorpdfstring{$k-1$}{k-1} and \texorpdfstring{$k-2$}{k-2}}
 \label{sec:reduction}
@@ -1937,13 +1968,20 @@ $(k-2)$-chain to some $v$ followed by a line path $v\to w$, and by
 cancelling all remaining terms in pairs. The $k=1$ case shows the
 pattern: there $P_{k-2}=0$, every nonempty line path is a single
 up-path, and the matching is the identity. The complete case analysis
-for $k\geq2$ is not carried out in this version.
+for $k\geq2$ is carried out below only at $q=0$
+(Theorem~\ref{thm:classical}), where the matching is obtained by
+counting rather than by an explicit bijection, and at $a=0$
+(Theorem~\ref{thm:a-zero}).
 
 \subsection{Special cases}
 \label{sec:special}
 
 Two specializations isolate the two difficulties of the junction
-identity from each other.
+identity from each other. The first, $q=0$, is settled completely
+below (Theorem~\ref{thm:classical}); Section~\ref{sec:backtrack} then
+shows that its proof extends to arbitrary $q$ modulo one identity,
+proves that identity for $k=2$, and Sections~\ref{sec:block}
+and~\ref{sec:ybe} prove it in general.
 
 \paragraph{The classical case \texorpdfstring{$q=0$}{q=0}.}
 Set all $q_j=0$. Then all edges are Bruhat covers, the level-$(k-2)$
@@ -2142,53 +2180,222 @@ the constant factors yields the stated formula.
 \end{proof}
 
 Thus at $q=0$ a word contributes either nothing or a single product.
-In the surviving words every entry of the decreasing suffix of the
-block is a fresh position whose value, after the block, has moved to
-the left (status $\Left$ at level $k$), and the suffix contributes
-exactly the factor $a^S$ of \eqref{eq:coefficient} for these values.
-What remains for the classical case is the matching: for every $w$,
-the words with $\Sigma(\omega)\neq0$ and endpoint $w$ must have total
-weight $\widehat C^{(k)}_{u,w}+a\widehat C^{(k-1)}_{u,w}$. We have
-verified for all $u\in S_5$ and all $k\leq5$ that there is in fact
-\emph{at most one} such word for each $w$, and that its $\Sigma(\omega)$
-equals the right side; in the examples the surviving word is obtained
-from the $k$-chain, or from the $(k-1)$-chain when $w\in E(u,k-1)$,
-by commutations of disjoint transpositions as in
-Lemma~\ref{lem:commute} and braid relations such as
-$t_{kb}t_{ab}=t_{ak}t_{kb}$ and $t_{ab}t_{ak}=t_{ak}t_{kb}$, which
-convert labels into junction labels $(a,k)$ and right edges $(k,b)$.
-We have not proved this matching.
+We now show that this product depends only on the endpoint $w$, not
+on the word. Call a word with $\Sigma(\omega)\neq0$ \emph{surviving}.
+For $j\geq0$ and arbitrary $w$ put
+\[
+ \Phi^{(j)}(u,w):=\beta^{\ellength(w)-\ellength(u)}
+   \prod_{i=1}^{j}\phi_i(u,w;j),
+\]
+the endpoint factors of \eqref{eq:coefficient} at $q=0$, evaluated at
+$w$ whether or not $w\in E(u,j)$. Since
+$s(u,w;j)=\ellength(w)-\ellength(u)$ at $q=0$, we have
+$\Phi^{(j)}(u,w)=\widehat C^{(j)}_{u,w}$ for $w\in E(u,j)$. As
+$\phi_i(u,w;k)=\phi_i(u,w;k-1)$ for $i<k$,
+\begin{equation}\label{eq:Phi-step}
+ \Phi^{(k)}(u,w)=\phi_k(u,w;k)\,\Phi^{(k-1)}(u,w),
+ \qquad
+ \Phi^{(k)}(u,w)\big|_{y=0}
+ =\beta^{\ellength(w)-\ellength(u)}(1-a)^{|\Fix(u,w;k)|}a^{|\Left(u,w;k)|}.
+\end{equation}
 
-There is also a second route in the classical case, which has no
-quantum analogue. Since $\prod_{j\leq k}(x_j+z)$ is symmetric in
-$x_i,x_{i+1}$ for $i\neq k$, the isobaric divided difference
-$\pi_i^x$ commutes with multiplication by it, and
+\begin{proposition}[Surviving words carry the endpoint weight]
+\label{prop:survivor-weight}
+Let $q=0$ and let $\omega$ be a surviving word from $u$ to $w$. If no
+label of $\omega$ involves position $k$, then $w(k)=u(k)$ and
+$\Sigma(\omega)=\Phi^{(k)}(u,w)+a\,\Phi^{(k-1)}(u,w)$. Otherwise
+$w(k)\neq u(k)$ and $\Sigma(\omega)=\Phi^{(k)}(u,w)$.
+\end{proposition}
+
+\begin{proof}
+Write $\omega=\gamma_{>k}(a_1',k)\cdots(a_m',k)(k,b_1)\cdots(k,b_r)$,
+let $v_0=u\gamma_{>k}$, and let $v$ be the permutation reached after
+the block, so that $|\omega|=\ellength(w)-\ellength(u)$. By
+Proposition~\ref{prop:classical-word}, $J=m$, so the cut $j=m$ is
+valid: $\gamma_{>k}(a_1',k)\cdots(a_m',k)$ is an admissible
+$(k-1)$-chain from $u$ to $v$; and $a_m'$ is fresh when $m\geq1$. We
+compare the factors in Proposition~\ref{prop:classical-word}(3) with
+the statuses of $u(1),\ldots,u(k)$ in $w$ at level $k$.
+
+The right edges touch only the positions $k,b_1,\ldots,b_r$, all
+greater than every $i<k$. A value $u(i)$, $i<k$, sitting at one of
+these positions in $v$ is in $\Out$ in $v$ at level $k-1$ and in $w$
+at level $k$; any other $u(i)$ does not move. Hence
+$\phi_i(u,v;k-1)=\phi_i(u,w;k)$ for all $i<k$.
+
+Suppose $m=0$. Then $v(k)=u(k)$, so $c(\omega)=u(k)$ and
+$\Sigma(\omega)=\beta^{|\omega|}t_{u(k)}^{-1}\prod_{i<k}\phi_i(u,w;k)$.
+If $r=0$ then $w=v$, $u(k)\in\Fix$, and
+$t_{u(k)}^{-1}=\phi_k(u,w;k)+a$, which gives the first assertion by
+\eqref{eq:Phi-step}. If $r\geq1$, the edge $(k,b_1)$ moves $u(k)$ to
+position $b_1$, which is not touched again; so $u(k)\in\Out$ and
+$t_{u(k)}^{-1}=\phi_k(u,w;k)$.
+
+Suppose $m\geq1$. Position $k$ is first touched by $(a_1',k)$, which
+moves $u(k)$ to $a_1'<k$, and position $a_1'$ is not touched again,
+because the block entries are distinct and the right edges touch only
+positions $\geq k$. So $u(k)\in\Left(u,w;k)$ and $\phi_k(u,w;k)=a$.
+Since $a_m'$ is fresh, $(a_m',k)$ moves $u(a_m')$ to position $k$;
+thus $c(\omega)=u(a_m')$, and $u(a_m')$ ends at $k$ or at $b_1$, so
+$\phi_{a_m'}(u,w;k)=t_{u(a_m')}^{-1}$. Hence the factor
+$t_{c(\omega)}^{-1}$ together with the factor $a$ that the suffix
+entry $a_m'$ contributes to $a^S$ equals
+$\phi_{a_m'}(u,w;k)\,\phi_k(u,w;k)$. For the remaining positions
+$i<k$, $i\neq a_m'$, we show that the factor assigned to $i$ in
+Proposition~\ref{prop:classical-word}(3) is $\phi_i(u,v;k-1)$, which
+is $\phi_i(u,w;k)$. If $i=a_r'$ is fresh with $r<m$, then $u(i)$ is
+moved by $(a_r',k)$ to $k$ and by $(a_{r+1}',k)$ to $a_{r+1}'$, where it
+stays; the assigned factor is $a$ when $a_{r+1}'<a_r'$ (whether or not
+$r$ lies in the suffix) and $t_{u(i)}^{-1}$ when $a_{r+1}'>a_r'$, in
+agreement with the status $\Left$, respectively $\Out$, of $u(i)$ in
+$v$. If $i$ is not a fresh block entry, the assigned factor is
+$\phi_i^0=\phi_i(u,v_0;k-1)$, and the proof of
+Proposition~\ref{prop:classical-word}(3), applied to the valid cut
+$j=m$, shows that the status of $u(i)$ is the same in $v_0$ and in $v$.
+Multiplying all factors gives
+$\Sigma(\omega)=\beta^{|\omega|}\prod_{i\leq k}\phi_i(u,w;k)
+=\Phi^{(k)}(u,w)$.
+\end{proof}
+
+The proposition reduces the classical junction identity to counting
+surviving words, and the count can be read off from the
+non-equivariant case.
+
+\begin{theorem}[The classical case]\label{thm:classical}
+Theorem~\ref{prop:top} holds at $q=0$: for all $k\geq1$ and
+$u\in S_\infty$,
+\[
+ \prod_{i=1}^k(x_i+z)\,\G_u(x;y)
+ =\sum_{w\in E(u,k)}
+   \beta^{\ellength(w)-\ellength(u)-m}
+   \prod_{c\in\Fix}\Bigl(z-\frac{y_c}{1+\beta y_c}\Bigr)
+   (1-\beta z)^{|\Left|}
+   \prod_{c\in\Out}\frac1{1+\beta y_c}\;\G_w(x;y),
+\]
+where $E(u,k)$ is the set of endpoints of the Lenart--Sottile chains
+from $u$ in the $k$-Bruhat order and $\Fix,\Left,\Out,m$ are taken
+with respect to $(u,w;k)$.
+\end{theorem}
+
+\begin{proof}
+At $q=0$ only chains without quantum edges contribute, since by
+Corollary~\ref{cor:rotation}(1) no endpoint is reached by two
+admissible chains; the contributing chains are the saturated chains
+in the $k$-Bruhat order satisfying (P0) and (P1), with $D=0$ and
+$s=\ellength(w)-\ellength(u)$. So the displayed formula is
+\eqref{eq:main} at $q=0$, and as in the rest of this paragraph we
+take the quantum Bruhat graph to consist of Bruhat edges only. We
+induct on $k$. The case $k=1$ is
+Proposition~\ref{prop:k-one}. For $k\geq2$, by
+Proposition~\ref{prop:reduction} at $q=0$ it suffices to prove
+\eqref{eq:junction-classical}, that is
+\eqref{eq:classical-junction-hat} for every $w$. Fix $w$. If
+$w(k)=u(k)$, this is Lemma~\ref{lem:classical-diagonal}. Let
+$w(k)\neq u(k)$ and let $N_w$ be the number of surviving words from
+$u$ to $w$, a nonnegative integer that does not depend on $y$ or $z$,
+since by Proposition~\ref{prop:classical-word}(3) survival is a
+combinatorial condition on the word. Every surviving word to $w$ has
+a label involving position $k$, by Proposition~\ref{prop:survivor-weight},
+so the right side of \eqref{eq:classical-junction-hat} equals
+$N_w\,\Phi^{(k)}(u,w)$.
+
+We rewrite the left side. The sets $E(u,k)$ and $E(u,k-1)$ do not both
+contain $w$: along a $k$-chain the value in the window position $k$
+can only increase, while along a $(k-1)$-chain the value in the
+outside position $k$ can only decrease, so $w\in E(u,k)\cap E(u,k-1)$
+forces $w(k)=u(k)$. If $w\in E(u,k-1)$, its chain contains a label
+with upper index $k$, because $w(k)\neq u(k)$ and no other label
+touches position $k$; the first one, $(\alpha,k)$, moves $u(k)$ to
+position $\alpha<k$, and $u(k)$ stays there, since afterwards only
+labels with upper index $k$ occur by condition~3, position $\alpha$ is
+touched only by the label $(\alpha,k)$, and labels are not repeated.
+Thus $u(k)\in\Left(u,w;k)$, and by
+\eqref{eq:Phi-step}
+$a\,\widehat C^{(k-1)}_{u,w}=a\,\Phi^{(k-1)}(u,w)=\Phi^{(k)}(u,w)$.
+Therefore the left side of \eqref{eq:classical-junction-hat} equals
+$c_w\,\Phi^{(k)}(u,w)$ with
+$c_w=[w\in E(u,k)]+[w\in E(u,k-1)]\in\{0,1\}$, and we must show
+$N_w=c_w$.
+
+For this we specialize to $y=0$. Theorem~\ref{thm:noneq} at $q=0$
+gives $B_j\G_u(x;0)=P_j(u)|_{y=0}$ for $j=k-1$ and $j=k$, where
+$B_j=\prod_{i\leq j}(x_i+z)$. Together with
+$\beta B_k+aB_{k-1}=X_kB_{k-1}$ and Lemma~\ref{lem:line-chevalley} at
+$y=0$, this yields \eqref{eq:junction-classical} at $y=0$, hence
+\eqref{eq:classical-junction-hat} at $y=0$ for our $w$:
+$N_w\,\Phi^{(k)}(u,w)|_{y=0}=c_w\,\Phi^{(k)}(u,w)|_{y=0}$. By
+\eqref{eq:Phi-step} the common factor is the nonzero polynomial
+$\beta^{\ellength(w)-\ellength(u)}(1-a)^{|\Fix|}a^{|\Left|}$, so
+$N_w=c_w$. Hence \eqref{eq:classical-junction-hat} holds for all $y$,
+which completes the induction.
+\end{proof}
+
+\begin{corollary}[The matching]\label{cor:matching}
+Let $q=0$ and $w(k)\neq u(k)$. There is exactly one surviving word
+from $u$ to $w$ if $w\in E(u,k)\cup E(u,k-1)$, and none otherwise.
+\end{corollary}
+
+\begin{remark}
+The proof counts the surviving words without constructing them. When
+$u(k)\in\Out(u,w;k)$ the surviving word is easy to describe: it is
+$\gamma_w$ with its labels $(k,b)$ moved to the end. Indeed the first
+label $(k,b)$ of $\gamma_w$ ends its run, as $u(k)$ would otherwise
+move left; every later label $(k,b')$ ends its run by condition~4,
+since $k$ is then a repeated lower index and $(k,b')\prec(a,b')$ is
+impossible for $a<k$. So each $(k,b)$ commutes, as a transposition,
+with all labels after it; the rearranged word has the same product
+and the same length, hence is again a chain of covers, and its chain
+part $\gamma_{>k}$ is admissible, since a label with a repeated lower
+index that was followed by a removed $(k,b)$ is now followed by a
+label with smaller upper index. When $u(k)\in\Left(u,w;k)$ the surviving word is related
+to $\gamma_w$, or to the $(k-1)$-chain when $w\in E(u,k-1)$, by braid
+relations such as $t_{kb}t_{ab}=t_{ak}t_{kb}$ and
+$t_{ab}t_{ak}=t_{ak}t_{kb}$ as well; for $u=21435$, $k=3$, $w=43215$
+the $(k-1)$-chain is $(1,4),(2,4),(1,3),(2,3)$ and the surviving word is
+$(1,4)\,|\,(1,3),(2,3)\,|\,(3,4)$. We have verified
+Corollary~\ref{cor:matching} and Proposition~\ref{prop:survivor-weight}
+directly for all $u\in S_5$ and $k\leq5$.
+\end{remark}
+
+Theorem~\ref{thm:classical} is the classical equivariant case of
+Theorem~\ref{prop:top}; together with Theorems~\ref{thm:noneq} and
+\ref{thm:a-zero} it leaves open only the simultaneous presence of
+$q$, $y$, and $a$. The argument has a feature worth isolating: the
+word lemma shows that the $y$-dependence of every term that survives
+cancellation is the same, namely that of the endpoint weight, after
+which the integer multiplicity is fixed by the non-equivariant
+formula. The quantum junction identity has the same shape, with
+backtracks and the level-$(k-2)$ terms as additional ingredients, and
+a quantum word lemma of this kind would complete the proof in the
+same way.
+
+Theorem~\ref{thm:classical} has a consequence in the $x$-variables,
+which has no quantum analogue. Since $\prod_{j\leq k}(x_j+z)$ is
+symmetric in $x_i,x_{i+1}$ for $i\neq k$, the isobaric divided
+difference $\pi_i^x$ commutes with multiplication by it, and
 $\pi^x_i\G_u=\G_{us_i}$ when $us_i<u$, $\pi^x_i\G_w=-\beta\G_w$ when
-$ws_i>w$. Hence the classical coefficients must satisfy
+$ws_i>w$. Hence the classical coefficients satisfy
 \begin{equation}\label{eq:x-recursion}
  C_{us_i,w'}
  =\begin{cases}
    C_{u,w's_i}-\beta\,C_{u,w'}& w's_i>w',\\
    0& w's_i<w',
   \end{cases}
- \qquad(us_i<u,\ i\neq k,\ q=0).
+ \qquad(us_i<u,\ i\neq k,\ q=0),
 \end{equation}
-We have verified that the closed form \eqref{eq:coefficient} at $q=0$
-satisfies \eqref{eq:x-recursion} for all $u\in S_4$ and all $k$ (1200
-instances). The identity is suggestive: when a window value $c$ moves
-from position $i+1$ to position $i$, the two terms on the right
-combine as $(1+\beta y_c)^{-1}-\beta(z+\overline y_c)=1-\beta z$,
-which is the origin of the factor $(1-\beta z)^{|\Left|}$. Granting
-\eqref{eq:x-recursion} for the chain combinatorics, the classical
-theorem for all $u$ follows by descending induction in the right weak
-order from the case of $k$-Grassmannian $u$ (no descents outside
-position $k$). For such $u$ the product is symmetric in
-$x_1,\ldots,x_k$ and in the remaining variables, all endpoints are
-again $k$-Grassmannian (checked for all $u\in S_6$), and the statement
-is an equivariant $K$-theoretic Pieri rule for the Grassmannian,
+a statement about the chain combinatorics that we had verified
+directly for all $u\in S_4$ before Theorem~\ref{thm:classical} was
+available. The identity shows where the factor $(1-\beta z)^{|\Left|}$
+comes from: when a window value $c$ moves from position $i+1$ to
+position $i$, the two terms on the right combine as
+$(1+\beta y_c)^{-1}-\beta(z+\overline y_c)=1-\beta z$. Conversely,
+\eqref{eq:x-recursion} would reduce the classical theorem by
+descending induction in the right weak order to the $k$-Grassmannian
+permutations $u$ (no descents outside position $k$), for which all
+endpoints are again $k$-Grassmannian and the statement is an
+equivariant $K$-theoretic Pieri rule for the Grassmannian,
 multiplying by $\prod_{j\le k}(x_j+z)=(1-\beta z)^k\prod_j(x_j\oplus z')$
-with $z'=z/(1-\beta z)$; the expansion of this product into the
-classes $\G_{c[k,p]}$ is the case $u=e$ of Theorem~\ref{prop:top}.
+with $z'=z/(1-\beta z)$; we do not pursue this.
 
 \paragraph{The case \texorpdfstring{$k=2$}{k=2}.}
 For $k=2$ a line path has at most one left edge, namely $(1,2)$, and
@@ -2295,8 +2502,10 @@ is the validity in the quantum Bruhat graph of the sorted and braided
 sequences; Lemma~\ref{lem:sort} settles the sorting for chains
 without descents, and Lemma~\ref{lem:commute} is the local step for
 moving a right edge past a label with smaller upper index in general,
-but the braided segments $(2,b)(1,b)$ are not covered, and we have
-not completed this case analysis.
+but the braided segments $(2,b)(1,b)$ are not covered. This case
+analysis is superseded by Section~\ref{sec:backtrack}, where the case
+$k=2$ is proved in full (Proposition~\ref{prop:backtrack-known}) by
+discarding the right edges first.
 
 \paragraph{The \texorpdfstring{$y$}{y}-recursion.}
 Finally, there is a reduction that is valid for all $q$ and does not
@@ -2320,6 +2529,2331 @@ theorem for all $u\in S_n$ to the single permutation $u=w_0^{(n)}$,
 for which the chains are indexed by subsets of $\{1,\ldots,k\}$ in the
 classical case; the quantum case of this base is not simpler than the
 general one, which is why we rely on the Chevalley induction instead.
+
+\subsection{The general case: reduction to the backtrack identity}
+\label{sec:backtrack}
+
+We now return to the junction identity with $q$, $y$ and $a$ all
+present, and show that the bootstrap of Theorem~\ref{thm:classical}
+goes through verbatim once a single identity is available. That
+identity involves no right edges, no endpoint set $E(u,k)$ and no
+equivariant bootstrap; it is proved below for $k=2$, which completes
+the proof of Theorem~\ref{prop:top} for $k=2$, it holds at $a=0$ and
+at $q=0$, and it has been verified for all $u\in S_5$ and all $k$.
+Section~\ref{sec:block} reduces it further, to an identity on
+permutations of $k$ letters, and proves it in one of the two
+resulting cases; Section~\ref{sec:ybe} proves the other case, first
+when the prefix of the chain moves every position below $k-1$ and
+then in general.
+
+Throughout, $k\geq2$ and $u$ are fixed. We extend the normalization
+of Section~\ref{sec:special} to arbitrary $q$: for $j\geq0$ and
+$v\in E(u,j)$,
+\[
+ \widehat C^{(j)}_{u,v}:=\beta^{j}C^{(j)}_{u,v}
+ =q^{D(u,v;j)}\beta^{s(u,v;j)}\prod_{i=1}^{j}\phi_i(u,v;j),
+\]
+again by $\beta(z+\overline y_c)=t_c^{-1}-a$ and $m+|\Fix|=j$, and
+$\widehat C^{(j)}_{u,v}=0$ for $v\notin E(u,j)$.
+
+\paragraph{Left and right paths.}
+A line path $\pi$ at $k$ from $x$ (Definition~\ref{def:line-path}) is
+the concatenation of its \emph{left path} $\lambda=(a_1,k)\cdots(a_s,k)$
+and its \emph{right path} $(k,b_1)\cdots(k,b_t)$, and $v(\pi)$ is the
+endpoint of $\lambda$; conversely a left path from $x$ followed by a
+right path from its endpoint is a line path. A \emph{left composite}
+at level $j\in\{k-1,k-2\}$ is a pair $(\gamma,\lambda)$ consisting of
+an admissible $j$-chain $\gamma$ from $u$ to some $x$ and a left path
+$\lambda$ at $k$ from $x$; its \emph{endpoint} is the endpoint $v$ of
+$\lambda$, its \emph{word} is the label sequence $\gamma\lambda$, and
+its weight is
+\[
+ \operatorname{wt}(\gamma,\lambda)
+ :=(a\beta^2q_{k-1})^{[j=k-2]}\,
+   (-\beta)^{|\lambda|}q^{D(\lambda)}\,t_{v(k)}^{-1}\,
+   \widehat C^{(j)}_{u,x}.
+\]
+Let $M_{u,v}$ be the sum of the weights of all left composites with
+endpoint $v$, and for a right path $\varrho$ from $v$ to $w$ let
+$r_{v,w}$ be the sum of $\beta^{t(\varrho)}q^{D(\varrho)}$ over such
+paths. Multiplying \eqref{eq:junction-coeff} by $\beta^{k-1}$ and
+splitting every line path into its left and right paths gives
+\begin{equation}\label{eq:junction-split}
+ (1-\beta^2q_{k-1})\,\widehat C^{(k)}_{u,w}
+ =\sum_{v}M_{u,v}\,r_{v,w}
+  -a(1-\beta^2q_{k-1})\,\widehat C^{(k-1)}_{u,w}.
+\end{equation}
+
+\paragraph{The endpoint weight.}
+For arbitrary $v$ put
+\[
+ \Psi(u,v):=\prod_{i=1}^{k}\phi_i(u,v;k)
+   +[\,v(k)=u(k)\,]\;a\prod_{i=1}^{k-1}\phi_i(u,v;k-1),
+\]
+so that $\Psi(u,v)=\prod_{i\leq k}\phi_i(u,v;k)$ if $v(k)\neq u(k)$
+and $\Psi(u,v)=t_{u(k)}^{-1}\prod_{i<k}\phi_i(u,v;k-1)$ if
+$v(k)=u(k)$, because then $\phi_k(u,v;k)=t^{-1}_{u(k)}-a$. We say
+that a quantity is \emph{rigid at $v$} if it equals $N\,\Psi(u,v)$
+with $N$ independent of $y$. Note that
+$\Psi(u,v)|_{y=0}=(1-a)^{|\Fix|}a^{|\Left|}\neq0$, where the sets are
+taken at level $k$ if $v(k)\ne u(k)$ and at level $k-1$ otherwise.
+
+\begin{lemma}[Right paths preserve the endpoint weight]
+\label{lem:right-paths}
+Let $v$ be the endpoint of a left composite and let $\varrho$ be a
+right path at $k$ from $v$ to $w$. Then $\Psi(u,w)=\Psi(u,v)$, and
+$w(k)=u(k)$ only if $\varrho$ is empty.
+\end{lemma}
+
+\begin{proof}
+In $v$ the value $u(k)$ sits at a position $\leq k$: a chain at level
+$k-1$ or $k-2$ and a left path touch position $k$ only through labels
+$(a,k)$, which move $u(k)$ to $a<k$, and from then on $u(k)$ is moved
+only by labels whose two positions are at most $k$, since in a chain
+the labels with upper index greater than $k$ precede those with upper
+index at most $k$. The right path touches only the positions
+$k,b_1,\ldots,b_t$ with $b_i>k$, and sends the value at $k$ to $b_1$
+and the value at $b_i$ to $b_{i+1}$ or, for $i=t$, to $k$. Hence if
+$v(k)=u(k)$ and $\varrho\neq\varnothing$ then $w(k)\neq u(k)$, and if
+$v(k)\neq u(k)$ then $u(k)$ is at a position $<k$ in both $v$ and $w$.
+This proves the second assertion.
+
+For $i<k$, let $p$ be the position of $u(i)$ in $v$. If $p<k$ it is
+untouched by $\varrho$; if $p\geq k$ then $u(i)$ ends at a position
+$\geq k>i$, so its status is $\Out$ in $v$ and in $w$. Thus
+$\phi_i(u,v;k-1)=\phi_i(u,v;k)=\phi_i(u,w;k)$ for all $i<k$. If
+$v(k)\neq u(k)$, then $u(k)$ is in $\Left$ for both $v$ and $w$ and
+both weights equal $\prod_{i\leq k}\phi_i$. If $v(k)=u(k)$ and
+$\varrho=\varnothing$, then $w=v$. If $v(k)=u(k)$ and
+$\varrho\neq\varnothing$, then $u(k)$ ends at a position $>k$, so
+$\phi_k(u,w;k)=t^{-1}_{u(k)}$ and
+$\Psi(u,w)=t^{-1}_{u(k)}\prod_{i<k}\phi_i(u,w;k)=\Psi(u,v)$.
+\end{proof}
+
+\begin{proposition}[Reduction to left rigidity]\label{prop:left-rigidity}
+Let $k\geq2$ and suppose that Theorem~\ref{prop:top} holds at levels
+$k-1$ and $k-2$ for $u$. If $M_{u,v}$ is rigid at every $v$, then the
+junction identity \eqref{eq:junction-coeff} holds for $u$ at every
+$w$, and hence Theorem~\ref{prop:top} holds at level $k$ for $u$.
+\end{proposition}
+
+\begin{proof}
+Write $M_{u,v}=N_v\Psi(u,v)$ with $N_v$ independent of $y$. By
+Lemma~\ref{lem:right-paths},
+\[
+ \sum_vM_{u,v}\,r_{v,w}=\widetilde N_w\,\Psi(u,w),
+ \qquad \widetilde N_w=\sum_vN_v\,r_{v,w},
+\]
+with $\widetilde N_w$ independent of $y$. We show that the difference
+of the two sides of \eqref{eq:junction-split} is a $y$-free multiple
+of $\Psi(u,w)$. Since \eqref{eq:junction-split}
+holds at $y=0$---Theorem~\ref{thm:noneq} at levels $k$, $k-1$, $k-2$
+together with Lemma~\ref{lem:two-step} and
+Lemma~\ref{lem:line-chevalley} at $y=0$ give \eqref{eq:junction} at
+$y=0$, exactly as in the proof of
+Proposition~\ref{prop:reduction}---and $\Psi(u,w)|_{y=0}\neq0$, the
+multiple is zero and \eqref{eq:junction-split} holds identically. By
+Proposition~\ref{prop:reduction} this is Theorem~\ref{prop:top} at
+level $k$.
+
+Suppose $w(k)\neq u(k)$. Put
+$c_j=[w\in E(u,j)]\,q^{D(u,w;j)}\beta^{s(u,w;j)}$ for $j=k,k-1$. Then
+$\widehat C^{(k)}_{u,w}=c_k\prod_{i\leq k}\phi_i(u,w;k)$. If
+$w\in E(u,k-1)$, the $(k-1)$-chain to $w$ contains a label with upper
+index $k$, as nothing else touches position $k$; the first one,
+$(\alpha,k)$, moves $u(k)$ to position $\alpha<k$, and $u(k)$ stays
+there, because the later labels all have upper index $k$ and the only
+one touching position $\alpha$ would be a repetition of
+$(\alpha,k)$. Thus $u(k)\in\Left(u,w;k)$, $\phi_k(u,w;k)=a$, and
+$a\,\widehat C^{(k-1)}_{u,w}=c_{k-1}\prod_{i\leq k}\phi_i(u,w;k)$.
+Hence the difference of the two sides of \eqref{eq:junction-split} equals
+\[
+ \bigl((1-\beta^2q_{k-1})(c_k+c_{k-1})-\widetilde N_w\bigr)\,\Psi(u,w).
+\]
+
+Suppose $w(k)=u(k)$. By \eqref{eq:diag-step},
+$\widehat C^{(k)}_{u,w}=(t^{-1}_{u(k)}-a)\widehat C^{(k-1)}_{u,w}$ and
+$\widehat C^{(k-1)}_{u,w}=c_{k-1}\prod_{i<k}\phi_i(u,w;k-1)$, so the
+difference of the two sides of \eqref{eq:junction-split} is
+$\bigl((1-\beta^2q_{k-1})c_{k-1}-\widetilde N_w\bigr)\,
+ t^{-1}_{u(k)}\prod_{i<k}\phi_i(u,w;k-1)
+ =\bigl((1-\beta^2q_{k-1})c_{k-1}-\widetilde N_w\bigr)\Psi(u,w)$.
+\end{proof}
+
+The proposition absorbs the diagonal case: \eqref{eq:diag-cancel} and
+Proposition~\ref{prop:k2-diag} are no longer needed separately, since
+the bootstrap handles $w(k)=u(k)$ and $w(k)\neq u(k)$ alike. It also
+shows why the right edges can be ignored: they never change the
+$y$-dependence.
+
+\paragraph{Distinct left composites.}
+A level-$(k-1)$ left composite $(\gamma,\lambda)$ is \emph{distinct}
+if no label of $\lambda$ occurs in $\gamma$, that is, if the labels of
+its word are pairwise distinct. Let $A_{u,v}$ be the sum of the
+weights of the distinct left composites with endpoint $v$.
+
+\begin{lemma}[Distinct left composites are classical]
+\label{lem:distinct-rotation}
+Let $\vartheta=u(k)$, $\rho=\rho_\vartheta$, and
+$\sigma_j(x)=\#\{i\leq j:\ x(i)\leq\vartheta\}$.
+\begin{enumerate}
+\item For a distinct left composite with word $\omega$ and endpoint
+ $v$, every edge of the rotated word is a Bruhat edge, and
+ $q^{D(\omega)}=q^{\sigma(v)-\sigma(u)}$.
+\item Rotation is a bijection from the distinct left composites from
+ $u$ onto the left composites from $\rho u$ in the classical setting
+ $q=0$, and
+ \[
+  A_{u,v}=q^{\sigma(v)-\sigma(u)}\,
+   \beta^{\ellength(\rho v)-\ellength(\rho u)}\,
+   n_{\rho u,\rho v}\;\Psi(u,v),
+ \]
+ where $n_{u',v'}$ is the number of surviving words from $u'$ to $v'$
+ with empty right part, in the sense of
+ Proposition~\ref{prop:classical-word}. In particular $A_{u,v}$ is
+ rigid at every $v$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+The labels of $\omega=\gamma\lambda$ satisfy $a\leq k-1<b$, are
+pairwise distinct, and have weakly decreasing upper indices, since
+those of $\gamma$ are at least $k$ and those of $\lambda$ equal $k$.
+Lemma~\ref{lem:rotation} with $k-1$ in place of $k$ shows that every
+rotated edge is Bruhat, and Lemma~\ref{lem:sigma}, with the same
+substitution, gives the degree. For (2), the rotated chain is an
+admissible $(k-1)$-chain of Bruhat covers from $\rho u$ by
+Corollary~\ref{cor:rotation}, the rotated left path is a left path of
+Bruhat covers, and conversely every classical left composite from
+$\rho u$ rotates back to a distinct left composite from $u$ by
+Corollary~\ref{cor:cyclic} and the distinctness of the labels. The
+statuses $\Fix,\Left,\Out$ are determined by positions and are
+unchanged by rotation, and $t_c$ becomes $t'_{\rho(c)}$ in the
+relabelled alphabet $y'_{\rho(c)}=y_c$. Hence the weight of a distinct
+left composite is $q^{\sigma(v)-\sigma(u)}$ times the weight, at $q=0$
+and in the alphabet $y'$, of its rotation. At $q=0$, the left
+composites with a given word $\omega$ are the cuts of $\omega$ in
+Proposition~\ref{prop:classical-word} with $r=0$ right edges, their
+total is $\Sigma(\omega)$, and by
+Proposition~\ref{prop:survivor-weight} it equals
+$\beta^{|\omega|}\Psi$ for surviving words and $0$ otherwise---both
+cases of that proposition give $\Psi$ by its definition, and the
+proofs of both propositions use only the chain and block labels,
+never the right edges. Transporting back, using
+$\Psi(\rho u,\rho v)(y')=\Psi(u,v)(y)$ and
+$|\omega|=\ellength(\rho v)-\ellength(\rho u)$, gives the formula.
+\end{proof}
+
+\paragraph{The backtrack identity.}
+By Lemma~\ref{lem:distinct-rotation}, $M_{u,v}$ is rigid if and only if
+$M_{u,v}-A_{u,v}$ is, and $M_{u,v}-A_{u,v}$ is the contribution of the
+level-$(k-1)$ left composites with a repeated label together with all
+level-$(k-2)$ left composites. We shall prove, in
+Sections~\ref{sec:block} and~\ref{sec:ybe}, that this contribution is
+exactly $-\beta^2q_{k-1}A_{u,v}$:
+\begin{equation}\label{eq:backtrack}
+ M_{u,v}=(1-\beta^2q_{k-1})\,A_{u,v}
+ \qquad\text{for every }v .
+\end{equation}
+We call \eqref{eq:backtrack} the \emph{backtrack identity}. It is a
+statement about $(k-1)$-chains, $(k-2)$-chains and left edges only.
+
+\begin{theorem}\label{thm:backtrack-implies}
+Let $k\geq2$ and suppose Theorem~\ref{prop:top} holds at levels $k-1$
+and $k-2$ for $u$. If the backtrack identity \eqref{eq:backtrack}
+holds for $(u,k)$, then Theorem~\ref{prop:top} holds at level $k$ for
+$u$. Consequently, if \eqref{eq:backtrack} holds for all $u$ and all
+$k\geq2$, then Theorem~\ref{prop:top} holds in general.
+\end{theorem}
+
+\begin{proof}
+By \eqref{eq:backtrack} and Lemma~\ref{lem:distinct-rotation},
+$M_{u,v}$ is rigid at every $v$, so
+Proposition~\ref{prop:left-rigidity} applies. The second statement is
+the induction on $k$, with Proposition~\ref{prop:k-one} as the base
+and $P_{-1}=0$, $P_0(u)=\G^q_u$.
+\end{proof}
+
+\begin{proposition}\label{prop:backtrack-known}
+The backtrack identity \eqref{eq:backtrack} holds (i) for $k=2$ and
+every $u$; (ii) at $a=0$; (iii) at $q=0$. Consequently
+Theorem~\ref{prop:top} holds for $k=2$, for all $u$ and all $q$, $y$,
+$z$.
+\end{proposition}
+
+\begin{proof}
+(iii) At $q=0$ the level-$(k-2)$ composites vanish, both sides of
+\eqref{eq:backtrack} are sums over level-$(k-1)$ left composites, and
+no word has a repeated label: all block edges are Bruhat covers, so the
+value at position $k$ strictly decreases along the block, and a
+repeated label $(a,k)$ would return a larger value to position $k$.
+
+(ii) At $a=0$ only Left-free chains contribute and the level-$(k-2)$
+composites vanish. The analysis in the proof of
+Theorem~\ref{thm:a-zero} applies to words without right edges: a
+distinct word has zero or two valid cuts, and in the latter case the
+two composites cancel, so $A_{u,v}$ is the sum over the composites
+$(\gamma,\varnothing)$ with $\gamma$ free of upper index $k$; a word
+with a repeated label has a single valid cut and the block
+\eqref{eq:single-cut-block}; those with $m\geq3$ cancel in pairs under
+moving the backtrack; and the remaining ones,
+$(\gamma\,(k-1,k),(k-1,k))$, have weight $-\beta^2q_{k-1}$ times the
+weight of $(\gamma,\varnothing)$ by Lemma~\ref{lem:peel}(2), where at
+$a=0$ the correction of Lemma~\ref{lem:peel}(3) is absent.
+
+(i) Let $k=2$. The left paths at $2$ are $\varnothing$ and $(1,2)$;
+a $1$-chain is $(1,b_1)\cdots(1,b_s)$ with $b_1>\cdots>b_s\geq2$, so
+$(1,2)$ can only be its last label; and the only $0$-chain is empty.
+Every $v$ is the endpoint of at most one $1$-chain $\gamma_v$. Fix $v$
+and let $v'=vt_{12}$, with $\kappa$ and $\kappa'$ the weights of the
+edges $v'\to v$ and $v\to v'$, so that $\kappa\kappa'=q_1$. The left
+composites with endpoint $v$ are $(\gamma_v,\varnothing)$,
+$(\gamma_{v'},(1,2))$, and, if $v\in\{u,ut_{12}\}$, the level-$0$
+composites $(\varnothing,\varnothing)$ or $(\varnothing,(1,2))$. If
+neither $v$ nor $v'$ is in $E(u,1)$ there is nothing to prove, so by
+Lemma~\ref{lem:peel}(1) one of the following holds.
+
+If $\gamma_v$ exists, does not contain $(1,2)$, and is nonempty, then
+$\gamma_{v'}=\gamma_v(1,2)$, and $(\gamma_{v'},(1,2))$ is the only
+composite with a repeated label. By Lemma~\ref{lem:peel}(2),
+$\widehat C^{(1)}_{u,v'}=\beta\kappa'\widehat C^{(1)}_{u,v}$, so
+$M_{u,v}=t^{-1}_{v(2)}\widehat C^{(1)}_{u,v}(1-\beta^2q_1)
+ =(1-\beta^2q_1)A_{u,v}$.
+
+If $v=u$, then $\gamma_u=\varnothing$,
+$\widehat C^{(1)}_{u,u}=t^{-1}_{u(1)}-a$,
+$\widehat C^{(1)}_{u,ut_{12}}=\beta\kappa' t^{-1}_{u(1)}$ by
+Lemma~\ref{lem:peel}(3), and the three composites give
+\[
+ M_{u,u}=t^{-1}_{u(2)}\bigl((t^{-1}_{u(1)}-a)
+   -\beta^2q_1t^{-1}_{u(1)}+a\beta^2q_1\bigr)
+ =(1-\beta^2q_1)\,t^{-1}_{u(2)}(t^{-1}_{u(1)}-a)
+ =(1-\beta^2q_1)A_{u,u}.
+\]
+
+If $\gamma_v=\gamma'(1,2)$ with $\gamma'\neq\varnothing$, then
+$\gamma_{v'}=\gamma'$, both composites are distinct, and
+$\widehat C^{(1)}_{u,v}=\beta\kappa\widehat C^{(1)}_{u,v'}$ by
+Lemma~\ref{lem:peel}(2) makes their weights cancel: $M_{u,v}=A_{u,v}=0$.
+
+If $v=ut_{12}$, the composites are $((1,2),\varnothing)$,
+$(\varnothing,(1,2))$ at level $1$, and $(\varnothing,(1,2))$ at
+level $0$, with weights $\beta\kappa t^{-2}_{u(1)}$,
+$-\beta\kappa t^{-1}_{u(1)}(t^{-1}_{u(1)}-a)$ and
+$-a\beta^3q_1\kappa t^{-1}_{u(1)}$; thus
+$A_{u,v}=a\beta\kappa t^{-1}_{u(1)}$ and
+$M_{u,v}=(1-\beta^2q_1)A_{u,v}$.
+
+Finally, if $v\notin E(u,1)$ but $v'\in E(u,1)$, then $\gamma_{v'}$
+contains $(1,2)$, for otherwise $\gamma_{v'}(1,2)$ would be a chain to
+$v$; so $v'=\operatorname{end}(\gamma'(1,2))$ and
+$v=\operatorname{end}(\gamma')\in E(u,1)$, a contradiction. This
+proves (i), and the last assertion follows from
+Theorem~\ref{thm:backtrack-implies} with Proposition~\ref{prop:k-one}.
+\end{proof}
+
+\begin{lemma}[Repeated labels]\label{lem:repeat}
+Let $(\gamma,\lambda)$ be a level-$(k-1)$ left composite. Every label
+occurring twice in its word occurs once in $\gamma$ and once in
+$\lambda$, and if some label occurs twice then $(k-1,k)$ occurs in the
+word.
+\end{lemma}
+
+\begin{proof}
+The labels of $\gamma$ are distinct, and so are those of $\lambda$.
+Suppose the word has a repeated label, and let $(a,k)$ be the first
+label of $\lambda$ that already occurs in $\gamma$, at block index $r$
+of $\gamma$. The labels preceding this edge are pairwise distinct, so
+by Lemma~\ref{lem:rotation} (with $k-1$ in place of $k$ and
+$\vartheta=u(k)$) all preceding edges are Bruhat in the rotated order.
+Along a Bruhat edge $(a',k)$ the value at position $k$ is replaced by
+the smaller value at $a'$, and no value at a position strictly between
+$a'$ and $k$ lies between the two. Let $e$ be the value at $k$ just
+before the chain label $(a,k)$ and $e'<e$ the value just after it;
+then $e$ sits at position $a$ from then on, since only the label
+$(a,k)$ touches position $a$. If $a=k-1$ we are done, so let $a<k-1$.
+All labels between the chain label $(a,k)$ and the repeated edge have
+upper index $k$, so if one of them touches position $k-1$ it is
+$(k-1,k)$ and we are done. Otherwise let $c$ be the value at $k-1$,
+constant along this stretch. The chain label $(a,k)$ is a Bruhat edge
+with $k-1$ strictly between $a$ and $k$, so $c\notin(e',e)$. Every
+subsequent edge before the repeated one has lower index $a'<k-1$ and
+lowers the value at $k$ from some $f$ to some $f'<f$ with
+$c\notin(f',f)$; hence, if $y$ denotes the value at $k$ just before
+the repeated edge, $c\notin(y,e')$, and so $c\notin(y,e)$. But the repeated edge is a
+quantum edge in the rotated order, since the value $e$ at $a$ exceeds
+the value $y$ at $k$, and a quantum edge $(a,k)$ requires every value
+at a position strictly between $a$ and $k$, in particular $c$, to lie
+in $(y,e)$. This contradiction shows that position $k-1$ is touched,
+so $(k-1,k)$ occurs.
+\end{proof}
+
+\begin{lemma}[The first family]\label{lem:first-family}
+Let $(\gamma,\lambda)$ be a distinct level-$(k-1)$ left composite whose
+word does not contain $(k-1,k)$. Then
+$(\gamma\,(k-1,k),\ (k-1,k)\,\lambda)$ is a left composite, and:
+\begin{enumerate}
+\item if $\gamma$ has a label with lower index $k-1$, its weight is
+ $-\beta^2q_{k-1}\operatorname{wt}(\gamma,\lambda)$;
+\item otherwise $\gamma$ is a $(k-2)$-chain, $(\gamma,\lambda)$ is also
+ a level-$(k-2)$ left composite, and the weights of the three
+ composites $(\gamma,\lambda)$ at both levels and
+ $(\gamma(k-1,k),(k-1,k)\lambda)$ add up to
+ $(1-\beta^2q_{k-1})\operatorname{wt}(\gamma,\lambda)$.
+\end{enumerate}
+Every left composite with a repeated label whose chain ends with
+$(k-1,k)$, whose left path begins with $(k-1,k)$, and which has no
+other repeated label arises in this way, and so does every level-$(k-2)$
+left composite whose word contains neither $(k-1,k)$ nor a label of
+upper index $k-1$. Consequently the backtrack identity
+\eqref{eq:backtrack} holds if and only if it holds after discarding
+these composites together with the distinct composites whose word does
+not contain $(k-1,k)$; that is, if and only if the remaining left
+composites---the distinct ones containing $(k-1,k)$, the ones with a
+repeated label not of the form just described, and the level-$(k-2)$
+ones containing $(k-1,k)$ or a label of upper index $k-1$---satisfy
+\eqref{eq:backtrack} among themselves.
+\end{lemma}
+
+\begin{proof}
+Let $x$ be the endpoint of $\gamma$, $x'=xt_{k-1,k}$, and let
+$\kappa,\kappa'$ be the weights of the edges $x\to x'$ and $x'\to x$,
+so $\kappa\kappa'=q_{k-1}$. By Lemma~\ref{lem:peel}(1),
+$\gamma(k-1,k)$ is an admissible $(k-1)$-chain, and $(k-1,k)\lambda$
+is a left path from $x'$ because $(k-1,k)\notin\lambda$ and $k-1$ is
+the largest lower index. The new composite has the same endpoint $v$,
+one more chain label and one more line label, and its weight is
+$-\beta\kappa'\,(-\beta)^{|\lambda|}q^{D(\lambda)}t^{-1}_{v(k)}
+ \widehat C^{(k-1)}_{u,x'}$. Since $(k-1,k)\notin\gamma$, the value
+$u(k-1)$ is not at position $k$ in $x$. In case (1),
+$x(k-1)\neq u(k-1)$ and Lemma~\ref{lem:peel}(2) gives
+$\widehat C^{(k-1)}_{u,x'}=\beta\kappa\,\widehat C^{(k-1)}_{u,x}$, whence
+the claim. In case (2), $\gamma$ has no label with lower index $k-1$,
+so it is an admissible $(k-2)$-chain with the same data, and
+Lemma~\ref{lem:peel}(3) gives
+$\widehat C^{(k-1)}_{u,x}=(t^{-1}_{u(k-1)}-a)\widehat C^{(k-2)}_{u,x}$ and
+$\widehat C^{(k-1)}_{u,x'}=\beta\kappa\,t^{-1}_{u(k-1)}\widehat C^{(k-2)}_{u,x}$.
+With $X=(-\beta)^{|\lambda|}q^{D(\lambda)}t^{-1}_{v(k)}\widehat C^{(k-2)}_{u,x}$
+the three weights are $X(t^{-1}_{u(k-1)}-a)$,
+$-\beta^2q_{k-1}X\,t^{-1}_{u(k-1)}$ and $a\beta^2q_{k-1}X$, whose sum is
+$(1-\beta^2q_{k-1})X(t^{-1}_{u(k-1)}-a)$.
+
+Conversely, removing the two labels $(k-1,k)$ from a composite of the
+first kind gives a distinct composite with the same endpoint whose
+word avoids $(k-1,k)$, and a level-$(k-2)$ composite of the second kind
+is a distinct level-$(k-1)$ composite by Lemma~\ref{lem:repeat}, with
+a $(k-2)$-chain as chain part. The last assertion follows, since the
+composites discarded contribute $(1-\beta^2q_{k-1})$ times the
+discarded part of $A_{u,v}$.
+\end{proof}
+
+\begin{remark}[Evidence and structure for $k\geq3$]
+\label{rem:backtrack-evidence}
+We have verified \eqref{eq:backtrack} for all $u\in S_5$ and
+$2\leq k\leq5$, by evaluating both sides over a prime field at random
+values of $\beta,q,y,a$; by Theorem~\ref{thm:backtrack-implies} this
+reproves Theorem~\ref{prop:top} in that range. The same computations
+show that $M_{u,v}$ is rigid at every $v$, that $A_{u,v}$ agrees with
+the rotated classical sum of Lemma~\ref{lem:distinct-rotation}, and
+that \eqref{eq:backtrack} holds separately for each prefix: grouping
+the left composites by the labels of their chain with upper index
+greater than $k$, each group satisfies \eqref{eq:backtrack} on its own.
+Thus the identity is a statement about the positions $1,\ldots,k$
+alone; Section~\ref{sec:block} proves this
+(Proposition~\ref{prop:block-reduction}). The composites left over by
+Lemma~\ref{lem:first-family} all
+involve the label $(k-1,k)$, and a second exact cancellation accounts
+for many of them: a composite $(\gamma'(k-1,k)\mu,\ (k-1,k)\nu)$ with
+$\mu\neq\varnothing$ and the level-$(k-2)$ composite $(\gamma'\mu',\nu)$,
+where $\mu'$ is $\mu$ with its upper indices $k$ replaced by $k-1$,
+have opposite weights whenever both are directed paths, by the braid
+relation $t_{k-1,k}\,t_{ak}=t_{a,k-1}\,t_{k-1,k}$ applied along $\mu$
+and $\kappa\kappa'=q_{k-1}$. Section~\ref{sec:block} turns this
+cancellation into a bijection (Lemma~\ref{lem:braid-bijection}) and
+isolates what remains for $k\geq3$ as the identity \eqref{eq:wild},
+in which the directedness exceptions of the braid relation appear as
+the wild chains. For $k=2$
+neither phenomenon occurs, which is why the identity is immediate
+there. The reduction replaces the difficulties noted after
+Corollary~\ref{cor:rotation} and in Section~\ref{sec:mechanism}---that
+line paths do not rotate to Bruhat paths, the backtracks, and the
+diagonal case with $q$---by this one identity: left paths of distinct
+composites rotate together with the chain
+(Lemma~\ref{lem:distinct-rotation}), the right paths and the diagonal
+are handled by Lemma~\ref{lem:right-paths} and
+Proposition~\ref{prop:left-rigidity}, and the backtracks are the
+content of \eqref{eq:backtrack}.
+\end{remark}
+
+\subsection{The block model and the braid reduction}
+\label{sec:block}
+
+This subsection reduces the backtrack identity \eqref{eq:backtrack}
+to a statement about permutations of $k$ letters, proves it in one
+of the two resulting cases, and in the other case rewrites it as an
+identity, \eqref{eq:wild}, that involves neither $a$ nor the
+fixed value at position $k-1$ and in which no repeated label occurs.
+Three facts drive this: non-fresh window values never change status
+inside a chain (Lemma~\ref{lem:inert}); the factor
+$1-\beta^2q_{k-1}$ is $(1-\beta E)(1+\beta E)$ for the edge
+$E=(k-1,k)$, whose double traversal has weight $q_{k-1}$
+(Proposition~\ref{prop:step-identity}); and the $(k-1)$-chains
+containing $(k-1,k)$ are in bijection with a class of $(k-2)$-chains
+by the braid relation of Lemma~\ref{lem:braid}
+(Lemma~\ref{lem:braid-bijection}). Section~\ref{sec:ybe} then
+recasts the identity in terms of edge operators and proves it.
+
+\paragraph{The closed form of $A$.}
+We first make Lemma~\ref{lem:distinct-rotation} explicit. For
+$v\in E(u,k-1)$ let $\gamma_v$ be its $(k-1)$-chain and call its
+labels with upper index $k$ its \emph{block}; the positions
+$i\leq k-1$ that are lower indices of no label of $\gamma_v$ with
+upper index greater than $k$ are \emph{fresh}. Say that $\gamma_v$
+has a \emph{fresh suffix} if every entry of the longest strictly
+decreasing suffix of its block (read by lower indices) is fresh.
+
+\begin{lemma}\label{lem:A-closed}
+For every $v$,
+\[
+ A_{u,v}=[\,v\in E(u,k-1)\text{ and }\gamma_v\text{ has a fresh suffix}\,]\;
+ \widehat C^{(k-1)}_{u,v}\;\psi_k(v),
+ \qquad
+ \psi_k(v)=\begin{cases} a& v(k)\neq u(k),\\ t^{-1}_{u(k)}& v(k)=u(k).\end{cases}
+\]
+\end{lemma}
+
+\begin{proof}
+By Lemma~\ref{lem:distinct-rotation},
+$A_{u,v}=q^{\sigma(v)-\sigma(u)}\beta^{\ellength(\rho v)-\ellength(\rho u)}n_{\rho u,\rho v}\Psi(u,v)$,
+and by Proposition~\ref{prop:classical-word}(3) a word with empty
+right part survives exactly when $J=m$, that is when the whole word
+is an admissible chain, and its decreasing suffix is fresh. Since
+there is at most one chain from $\rho u$ to $\rho v$
+(Corollary~\ref{cor:rotation}), $n_{\rho u,\rho v}\in\{0,1\}$, and it
+is $1$ exactly when $v\in E(u,k-1)$ and $\gamma_v$, which has the same
+labels as its rotation, has a fresh suffix. In that case the rotated
+chain is a Bruhat chain, so
+$\beta^{\ellength(\rho v)-\ellength(\rho u)}=\beta^{s(u,v;k-1)}$ and,
+by Lemma~\ref{lem:sigma}, $q^{\sigma(v)-\sigma(u)}=q^{D(u,v;k-1)}$;
+finally $\Psi(u,v)=\prod_{i<k}\phi_i(u,v;k-1)\,\psi_k(v)$, because
+$u(k)\in\Left(u,v;k)$ when $v(k)\neq u(k)$ (proof of
+Proposition~\ref{prop:left-rigidity}).
+\end{proof}
+
+\paragraph{Where the factor $1-\beta^2q_{k-1}$ comes from.}
+For a formal combination $\Theta=\sum_v\theta_v\G^q_v$ with $x$-free
+coefficients write
+\[
+ \mathcal U_k\Theta=\sum_v\theta_v\sum_{\lambda}
+   \frac{(-\beta)^{|\lambda|}q^{D(\lambda)}}{1+\beta y_{\operatorname{end}(\lambda)(k)}}
+   \G^q_{\operatorname{end}(\lambda)},
+ \qquad
+ \mathcal R_k\Theta=\sum_v\theta_v\sum_{\varrho}\beta^{|\varrho|}q^{D(\varrho)}
+   \G^q_{\operatorname{end}(\varrho)},
+\]
+the sums over left paths $\lambda$ and right paths $\varrho$ at $k$
+from $v$, so that $\mathcal T_k=\mathcal R_k\mathcal U_k$ and
+$M_{u,v}$ is the coefficient of $\G^q_v$ in
+$\mathcal U_k\widehat H_{k-1}$, where
+$\widehat H_{k-1}=\widehat P_{k-1}+a\beta^2q_{k-1}\widehat P_{k-2}$
+and $\widehat P_j=\sum_x\widehat C^{(j)}_{u,x}\G^q_x$. Let
+$\mathcal R'_{k-1}$ be defined like $\mathcal R_{k-1}$ but with the
+right paths at $k-1$ restricted to upper indices $b>k$, let
+$\mathcal U'_k$ be defined like $\mathcal U_k$ but with the left paths
+at $k$ restricted to lower indices $a\leq k-2$, and put
+$\mathcal V_k=\mathcal U'_k\mathcal R'_{k-1}$. Finally let $A^{(j)}$
+denote the vector of Lemma~\ref{lem:A-closed} at level $j$, that is
+$A^{(k)}=\sum_vA_{u,v}\G^q_v$ and $A^{(k-1)}$ the same with $k-1$ in
+place of $k$.
+
+\begin{proposition}\label{prop:step-identity}
+$\mathcal U_k\mathcal T_{k-1}=(1-\beta^2q_{k-1})\,\mathcal V_k\,\mathcal U_{k-1}$.
+Consequently, if Theorem~\ref{prop:top} holds at levels
+$\leq k-1$ for $u$ and \eqref{eq:backtrack} holds for $(u,k-1)$, then
+\eqref{eq:backtrack} holds for $(u,k)$ if and only if
+\begin{equation}\label{eq:step-identity}
+ \mathcal V_k A^{(k-1)}=A^{(k)}+a\,\mathcal U_k\widehat P_{k-2}.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+A right path at $k-1$ ends with $(k-1,k)$ or not, and a left path at
+$k$ begins with $(k-1,k)$ or not; the edge $(k-1,k)$ exists from every
+permutation, and its two traversals have weights with product
+$q_{k-1}$. Writing $E$ for the operator $\G^q_x\mapsto\kappa_x\G^q_{xt_{k-1,k}}$,
+we have $\mathcal R_{k-1}=(1+\beta E)\mathcal R'_{k-1}$,
+$\mathcal U_k=\mathcal U'_k(1-\beta E)$ and $E^2=q_{k-1}$, whence
+$\mathcal U_k\mathcal T_{k-1}=\mathcal U'_k(1-\beta^2E^2)\mathcal R'_{k-1}\mathcal U_{k-1}$.
+For the second statement, the two-step identities of
+Lemma~\ref{lem:two-step} give
+$\beta H_{k-1}=T_{k-1}H_{k-2}/(1-\beta^2q_{k-1})-aB^q_{k-2}$, so with
+$\mathbf h_j:=\beta^jH_j\G^q_u=\widehat H_j/(1-\beta^2q_j)$ (by
+\eqref{eq:step-two} and the Theorem at levels $j,j-1$) and
+Lemma~\ref{lem:line-chevalley},
+$\mathbf h_{k-1}=\mathcal T_{k-1}\mathbf h_{k-2}/(1-\beta^2q_{k-1})-a\widehat P_{k-2}$.
+Now \eqref{eq:backtrack} for $(u,k)$ says
+$\mathcal U_k\mathbf h_{k-1}=A^{(k)}$, and \eqref{eq:backtrack} for
+$(u,k-1)$ says $\mathcal U_{k-1}\mathbf h_{k-2}=A^{(k-1)}$; by the
+operator identity,
+$\mathcal U_k\mathbf h_{k-1}=\mathcal V_k\mathcal U_{k-1}\mathbf h_{k-2}-a\,\mathcal U_k\widehat P_{k-2}
+=\mathcal V_kA^{(k-1)}-a\,\mathcal U_k\widehat P_{k-2}$.
+\end{proof}
+
+Identity \eqref{eq:step-identity} contains no factor
+$1-\beta^2q_{k-1}$ and no repeated edge $(k-1,k)$; all three terms are
+explicit by Lemma~\ref{lem:A-closed}. We have verified it for all
+$u\in S_5$ and $2\leq k\leq5$. We do not use it below, but it
+explains the shape of \eqref{eq:backtrack}: the two traversals of the
+junction edge that are hidden in the product
+$\mathcal R_{k-1}\mathcal U_k$ account for the factor
+$1-\beta^2q_{k-1}$.
+
+\paragraph{Non-fresh values are inert.}
+Fix $u$ and $k$, and an admissible $(k-1)$-chain $\eta$ from $u$ all
+of whose labels have upper index greater than $k$; every left
+composite at level $k-1$ or $k-2$ whose chain begins with the labels
+of upper index $>k$ equal to $\eta$ will be said to have
+\emph{prefix} $\eta$. Put $x_0=u\eta$ and let
+$F=\{p\leq k-1:\ x_0(p)=u(p)\}$ be the set of fresh positions; by
+Corollary~\ref{cor:rotation}(2) these are the positions that are lower
+indices of no label of $\eta$. Position $k$ is never touched by
+$\eta$. Note that level-$(k-2)$ composites with prefix $\eta$ exist
+only if $\eta$ is a $(k-2)$-chain, that is if $k-1\in F$.
+
+\begin{lemma}[Inertness]\label{lem:inert}
+Let $(\gamma,\lambda)$ be a left composite at level $j\in\{k-1,k-2\}$
+with prefix $\eta$, and let $i\leq j$ with $x_0(i)\neq u(i)$. Then the
+status of $u(i)$ (Left or Out) is the same in $x_0$ and in the endpoint
+of $\gamma$. More precisely, if $u(i)$ is at a position $p<i$ in $x_0$,
+then no label of $\gamma$ after $\eta$ has lower index $p$; if it is at
+a position $p>i$, $p\leq k-1$, the labels of $\gamma$ after $\eta$ move
+it only to positions greater than $p$; and if it is at a position
+greater than $k$, it is not moved.
+\end{lemma}
+
+\begin{proof}
+The last case is clear, since the labels after $\eta$ have upper index
+$k$ or $k-1$. Rotate by $\rho_\vartheta$ with $\vartheta=u(j+1)$; by
+Corollary~\ref{cor:rotation}, $\gamma$ becomes a saturated chain in
+the $j$-Bruhat order satisfying (P0) and (P1), with the same labels,
+and statuses are determined by positions, so we may argue in the
+rotated chain. Let $p_0=i,b_1,p_1,b_2,\ldots,b_r,p_r=p$ be the
+successive positions of $u(i)$ along $\eta$, so that $\eta$ contains
+the labels $(p_{s-1},b_s)$ and $(p_s,b_s)$ in this order, with
+$b_1>b_2>\cdots>b_r>k$ by condition~3 and the distinctness of labels.
+Suppose $p<i$. Then some $s$ has $p_{s-1}>p_s$; take the largest. The
+prohibition lemma \cite[Lemma~2.9]{lenart2007pieri} states that a
+chain satisfying (P0) and (P1) contains no subsequence
+$(j',m),\ldots,(i',m),\ldots,(i',l)$ with $i'<j'\leq j<l<m$. Applied to
+$(p_{s-1},b_s),(p_s,b_s)$ it shows that no later label has lower index
+$p_s$ and upper index $<b_s$; every later label has upper index
+$\leq b_s$, and $(p_s,b_s)$ itself is not repeated. If $s<r$ the label
+$(p_s,b_{s+1})$ contradicts this, so $s=r$, and no label after
+$(p_r,b_r)$, in particular none after $\eta$, has lower index $p$.
+Suppose $p>i$. Position $p$ is not fresh, so $p$ is a repeated lower
+index at every later label with lower index $p$, and by condition~4
+the label following such a label $(p,b)$ is $(p',b)$ with $p'>p$ or
+has a smaller upper index. If $(p,k)$ occurs after $\eta$, it moves
+$u(i)$ to position $k$; the next label is $(p',k)$ with $p'>p$, which
+moves $u(i)$ to $p'$, or has upper index $k-1$, after which position
+$k$ is not touched. Position $p'$ can be touched again only by
+$(p',k-1)$, which moves $u(i)$ to $k-1$; then $p'$ is repeated, so the
+next label is $(p'',k-1)$ with $p''>p'$, which moves $u(i)$ to $p''$,
+a position touched by no later label. If instead $(p,k-1)$ occurs, the
+same argument applies from position $k-1$. In all cases $u(i)$ only
+moves to positions greater than $p>i$, so it remains Out at the
+endpoint of $\gamma$.
+\end{proof}
+
+\paragraph{The block model.}
+Let $\xi$ be a sequence of $k$ distinct positive integers, regarded as
+the values at positions $1,\ldots,k$, and let $F\subseteq\{1,\ldots,k-1\}$.
+The quantum Bruhat graph on these $k$ positions is the one of $S_k$,
+with the edge condition of Lemma~\ref{lem:arc} applied to the values
+of $\xi$. A \emph{block chain at level $j\in\{k-1,k-2\}$} is a
+directed path from $\xi$ with labels $(a_1,b_1),\ldots,(a_m,b_m)$,
+$a_i\leq j<b_i\leq k$, that are pairwise distinct, have weakly
+decreasing upper indices, and satisfy: if $i<m$ and $a_i\notin F$ or
+$a_i=a_h$ for some $h<i$, then $(a_i,b_i)\prec(a_{i+1},b_{i+1})$.
+Its weight is
+\[
+ \widehat C_F(\mu)=\beta^{m}q^{D(\mu)}\prod_{p\in F,\ p\leq j}\phi_p(\xi,x),
+ \qquad
+ \phi_p(\xi,x)=\begin{cases}
+  t^{-1}_{\xi(p)}-a& x(p)=\xi(p),\\
+  a& \xi(p)\text{ is at a position }<p\text{ in }x,\\
+  t^{-1}_{\xi(p)}& \text{otherwise},
+ \end{cases}
+\]
+where $x$ is the endpoint of $\mu$; level $k-2$ is used only when
+$k-1\in F$. A \emph{block composite} is a pair $(\mu,\lambda)$ of a
+block chain and a left path at $k$ from its endpoint, with weight
+\[
+ (a\beta^2q_{k-1})^{[j=k-2]}\,(-\beta)^{|\lambda|}q^{D(\lambda)}\,t^{-1}_{v(k)}\,\widehat C_F(\mu),
+\]
+$v$ the endpoint of $\lambda$; it is \emph{distinct} if it is at level
+$k-1$ and no label of $\lambda$ occurs in $\mu$. Let $M^F_{\xi,v}$ and
+$A^F_{\xi,v}$ be the sums of the weights of all, respectively of the
+distinct, block composites with endpoint $v$. The \emph{block identity}
+is
+\begin{equation}\label{eq:block}
+ M^F_{\xi,v}=(1-\beta^2q_{k-1})\,A^F_{\xi,v}\qquad\text{for all }v\in S_k.
+\end{equation}
+
+\begin{proposition}[Reduction to the block model]\label{prop:block-reduction}
+Let $\eta$, $x_0$ and $F$ be as above and let $\xi$ be the restriction
+of $x_0$ to positions $1,\ldots,k$. The block chains for $(\xi,F)$ are
+exactly the parts after $\eta$ of the admissible chains from $u$ with
+prefix $\eta$, and for every $v$ the sum of the weights of the left
+composites with prefix $\eta$ and endpoint $v$ equals
+$c_\eta\,M^F_{\xi,v'}$, where $v'$ is the restriction of $v$ to
+positions $1,\ldots,k$ and
+\[
+ c_\eta=\beta^{|\eta|}q^{D(\eta)}\prod_{i\leq k-1,\ i\notin F}\phi_i(u,x_0;k-1);
+\]
+the same holds for the distinct composites, with $A$ in place of $M$.
+Consequently, if \eqref{eq:block} holds for all $(\xi,F)$, then the
+backtrack identity \eqref{eq:backtrack} holds for all $u$ and $k$,
+and Theorem~\ref{prop:top} follows. Conversely, every pair $(\xi,F)$
+arises from some $(u,\eta)$ in this way.
+\end{proposition}
+
+\begin{proof}
+The labels after $\eta$ have upper index at most $k$, so they are
+distinct from those of $\eta$, and the conditions of
+Definition~\ref{def:chain} for them reduce to the conditions on block
+chains: a lower index $a_i$ is repeated in the whole chain exactly when
+$a_i\notin F$ or $a_i$ occurs earlier after $\eta$. Directedness of a
+label $(a,b)$ with $a<b\leq k$ depends only on the values at positions
+$a,\ldots,b$. The weight of a left composite with prefix $\eta$ is
+$\beta^{|\eta|}q^{D(\eta)}$ times the block weight, except for the
+status factors $\phi_i(u,x;j)$ of the indices $i\leq j$ with
+$i\notin F$, which by Lemma~\ref{lem:inert} equal $\phi_i(u,x_0;k-1)$
+at every chain endpoint $x$, and which for $j=k-2$ run over the same
+set of indices because $k-1\in F$; the factor $t^{-1}_{v(k)}$ is the
+same on both sides, and so is distinctness. Summing over the prefixes
+$\eta$ for which $u\eta$ agrees with $v$ outside positions $1,\ldots,k$
+(block chains do not move the other positions) gives
+$M_{u,v}=\sum_\eta c_\eta M^{F_\eta}_{\xi_\eta,v'}$ and likewise for
+$A$, so \eqref{eq:block} for all $(\xi_\eta,F_\eta)$ implies
+\eqref{eq:backtrack}, and Theorem~\ref{thm:backtrack-implies} applies.
+For the converse, given $(\xi,F)$ with $\xi\in S_k$ after
+standardization, let $u(i)=2\xi(i)-1$ for $i\leq k$, enumerate the
+positions $p\notin F$ as $p_1,\ldots,p_r$, put $u(k+r+1-s)=2\xi(p_s)$,
+and fill the remaining positions with the remaining values. Then
+$\eta=(p_1,k+r),(p_2,k+r-1),\ldots,(p_r,k+1)$ is a chain of Bruhat
+covers (each label exchanges the adjacent values $2\xi(p_s)-1$ and
+$2\xi(p_s)$) with distinct lower indices, hence admissible, and
+$u\eta$ restricted to positions $\leq k$ has the relative order of
+$\xi$, with fresh set $F$.
+\end{proof}
+
+We have verified \eqref{eq:block} for every $\xi\in S_k$ and every
+$F$ for $k\leq5$, and for a random sample of configurations with
+$k=6$; by Proposition~\ref{prop:block-reduction} this covers all
+$u\in S_\infty$ for $k\leq5$.
+
+\begin{proposition}[The block identity when position $k-1$ is not fresh]
+\label{prop:block-notfresh}
+If $k-1\notin F$, then \eqref{eq:block} holds.
+\end{proposition}
+
+\begin{proof}
+There are no level-$(k-2)$ composites. If $(k-1,k)$ occurs in a block
+chain it is the last label, since $k-1$ is a repeated lower index and
+no label $(a,k)$ with $a>k-1$ exists. By Lemma~\ref{lem:peel}(1),
+$\mu\mapsto\mu(k-1,k)$ is a bijection from the block chains not
+containing $(k-1,k)$ onto those containing it, and
+$\widehat C_F(\mu(k-1,k))=\beta\kappa\widehat C_F(\mu)$ with
+$\kappa$ the weight of the edge $(k-1,k)$ from the endpoint of $\mu$:
+no fresh value sits at position $k-1$, and a fresh value at position
+$k$ moves to $k-1$, where it is still Out. Write $x$ for the endpoint
+of $\mu$ and $x'=xt_{k-1,k}$, with $\kappa'$ the weight of $x'\to x$,
+$\kappa\kappa'=q_{k-1}$. The block composites are of four kinds:
+(i) $(\mu,\lambda)$ with $(k-1,k)\notin\mu\lambda$; (ii)
+$(\mu,(k-1,k)\lambda')$ with $(k-1,k)\notin\mu$; (iii)
+$(\mu(k-1,k),\lambda')$ with $\lambda'$ a left path from $x'$ avoiding
+$k-1$; (iv) $(\mu(k-1,k),(k-1,k)\lambda)$. In (ii) and (iii), $\lambda'$
+is a left path from $x'$ with lower indices $\leq k-2$, and the two
+weights are $-\beta\kappa$ and $\beta\kappa$ times the same quantity,
+so (ii) and (iii) cancel in pairs, also after restricting to distinct
+composites. In (iv), $\lambda$ is a left path from $x$, and the weight
+is $\beta\kappa\cdot(-\beta)\kappa'=-\beta^2q_{k-1}$ times the weight
+of the composite $(\mu,\lambda)$ of kind (i). The composites of kind
+(i) are distinct by Lemma~\ref{lem:repeat}, those of kind (iv) are
+not, so $M^F_{\xi,v}=(1-\beta^2q_{k-1})\sum_{\text{(i)}}$ and
+$A^F_{\xi,v}=\sum_{\text{(i)}}$.
+\end{proof}
+
+In the language of Proposition~\ref{prop:block-reduction}, the
+backtrack identity therefore holds prefix by prefix whenever the
+prefix $\eta$ moves position $k-1$. From now on $k-1\in F$, and we
+write $t^\ast=t_{\xi(k-1)}$.
+
+\paragraph{The braid bijection.}
+A block chain at level $k-2$ is $\mu\nu$ with $\mu$ the labels of
+upper index $k$ and $\nu$ those of upper index $k-1$. Let
+$\rho=\rho_{\vartheta}$ with $\vartheta=\xi(k)$. Call $\mu\nu$
+\emph{tame} if no lower index of $\nu$ occurs in $\mu$ and every edge of
+$\nu$ is a Bruhat edge after rotation by $\rho$ (in particular if
+$\nu=\varnothing$), and \emph{wild} otherwise. For a sequence $\nu$ of
+labels of upper index $k-1$ let $\tilde\nu$ be the same sequence with
+upper index $k$.
+
+\begin{lemma}[Braid bijection]\label{lem:braid-bijection}
+Let $k-1\in F$. The map $\mu(k-1,k)\tilde\nu\mapsto\mu\nu$ is a
+bijection from the block chains at level $k-1$ containing $(k-1,k)$
+onto the tame block chains at level $k-2$. If $\gamma=\mu(k-1,k)\tilde\nu$
+corresponds to $c=\mu\nu$ with endpoint $x$, then $\gamma$ ends at
+$xt_{k-1,k}$, every edge of $\gamma$ is Bruhat after rotation by
+$\rho$, and
+\[
+ \widehat C_F(\gamma)=\beta\kappa_x\,\widehat C_F(c)\cdot
+ \begin{cases} a&\nu\neq\varnothing,\\ t^{\ast}&\nu=\varnothing,\end{cases}
+\]
+where $\kappa_x$ is the weight of the edge $x\to xt_{k-1,k}$.
+\end{lemma}
+
+\begin{proof}
+A level-$(k-1)$ block chain containing $(k-1,k)$ has the form
+$\mu(k-1,k)\tilde\nu$ with all lower indices of $\mu$ and $\tilde\nu$ at
+most $k-2$, since labels are distinct. Admissibility of
+$\mu(k-1,k)\tilde\nu$ and of $\mu\nu$ are equivalent: labels are
+distinct in both; upper indices are weakly decreasing in both; the
+label after the last label $(a,k)$ of $\mu$ is $\succ(a,k)$ in both
+(it is $(k-1,k)$, respectively a label of upper index $k-1$); at
+$(k-1,k)$ no condition is imposed because $k-1\in F$; and inside
+$\tilde\nu$ and $\nu$ the repeated lower indices and the required
+inequalities between consecutive lower indices are the same. The two
+label sequences have the same product of transpositions, by the braid
+relation $t_{k-1,k}t_{bk}=t_{b,k-1}t_{k-1,k}$ applied to each label of
+$\nu$ in turn.
+
+Directedness. Let $x_\mu$ be the endpoint of $\mu$ and $c^\ast=\xi(k-1)$,
+$c_\mu=x_\mu(k)$. The path $\mu(k-1,k)$ is directed, has distinct
+labels of upper index $k$, so by Lemma~\ref{lem:rotation} (with $k-1$
+in place of $k$) its edges are Bruhat after rotation; hence
+$c^\ast<c_\mu$ in the rotated order. Suppose $\gamma$ is directed; then
+all its edges are rotated-Bruhat, again by Lemma~\ref{lem:rotation}. Along $\tilde\nu$ the value at
+position $k$ decreases from $c^\ast$, and the cover condition for a
+label $(b,k)$ involves the positions $b+1,\ldots,k-1$, where position
+$k-1$ holds $c_\mu$, which exceeds every value that position $k$ takes
+along $\tilde\nu$. Therefore the same label $(b,k-1)$, applied in
+$\mu\nu$ at the corresponding moment, exchanges the same two values,
+with the same intermediate values except that $c_\mu$ is no longer
+among them; it is a rotated-Bruhat edge, and $\mu\nu$ is tame.
+Conversely, if $\mu\nu$ is tame the same comparison shows that each
+label $(b,k)$ of $\tilde\nu$ is a Bruhat cover after rotation, the only
+additional intermediate value being $c_\mu$, which lies above the
+interval in question. By Corollary~\ref{cor:cyclic} the two paths are
+directed in the quantum Bruhat graph, and by Lemma~\ref{lem:braid},
+applied at each step, they have the same quantum weight up to the
+weight $\kappa_x$ of the final edge $x\to xt_{k-1,k}$ of the braided
+form $\mu\nu(k-1,k)$; the endpoints agree.
+
+Weights. The chain $\gamma$ has one more label than $c$, which gives
+the factor $\beta$, and $q^{D(\gamma)}=\kappa_xq^{D(c)}$ was just
+shown. For $p\in F$, $p\leq k-2$, the value $\xi(p)$ occupies the same
+position in the endpoints of $\gamma$ and of $c$ unless it is at
+position $k-1$ or $k$, where it is Out in both. The value $c^\ast$ is
+moved by $(k-1,k)$ to position $k$ and, if $\tilde\nu\neq\varnothing$,
+by its first label $(b_1,k)$ to position $b_1<k-1$, where it stays;
+so $\phi_{k-1}$ is $a$ if $\nu\neq\varnothing$ and $t^\ast$ otherwise.
+\end{proof}
+
+\paragraph{The reduction.}
+For a block chain $c$ at level $k-2$ and a left path $\lambda$ at $k$
+from its endpoint put
+\[
+ \varpi(c,\lambda)=(-\beta)^{|\lambda|}q^{D(\lambda)}\,t^{-1}_{v(k)}\,\widehat C_F(c),
+\]
+the weight of the level-$(k-2)$ composite without its prefactor
+$a\beta^2q_{k-1}$. Let
+\begin{align*}
+ X_v&=\sum_{c\text{ wild}}\ \sum_{\lambda}\varpi(c,\lambda),\\
+ Y_v&=\sum_{c\text{ tame}}\ \sum_{\substack{\lambda=(k-1,k)\lambda'\\
+        \lambda'\text{ shares a lower index with }c}}\varpi(c,\lambda),
+\end{align*}
+both over composites with endpoint $v$.
+
+\begin{theorem}[Braid reduction]\label{thm:braid-reduction}
+Let $k-1\in F$. For every $v\in S_k$,
+\[
+ M^F_{\xi,v}-(1-\beta^2q_{k-1})A^F_{\xi,v}
+ =a\bigl(\beta^2q_{k-1}X_v-(1-\beta^2q_{k-1})Y_v\bigr).
+\]
+Hence the block identity \eqref{eq:block} holds for $(\xi,F)$ if and
+only if
+\begin{equation}\label{eq:wild}
+ \beta^2q_{k-1}\,X_v=(1-\beta^2q_{k-1})\,Y_v\qquad\text{for all }v\in S_k.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+We list all block composites with endpoint $v$ according to the
+level-$(k-2)$ chain $c=\mu\nu$ they are built from. Write $x$ for the
+endpoint of $c$, $x'=xt_{k-1,k}$, $\kappa=\kappa_x$, $\kappa'$ for the
+weight of $x'\to x$, so $\kappa\kappa'=q_{k-1}$, and note that a left
+path from $x'$ beginning with $(k-1,k)$ is $(k-1,k)\lambda$ with
+$\lambda$ a left path from $x$ of lower indices $\leq k-2$, and
+conversely.
+
+(a) Level $k-2$: the composite $(c,\lambda)$, of weight
+$a\beta^2q_{k-1}\varpi(c,\lambda)$, for every $c$ and $\lambda$.
+
+(b) Level $k-1$, chain without $(k-1,k)$: such a chain is a level-$(k-2)$
+chain $c$ with $\nu=\varnothing$, and $\widehat C_F(c)$ at level $k-1$
+equals $(t^\ast-a)\widehat C_F(c)$ at level $k-2$. The composite
+$(c,\lambda)$ has weight $(t^\ast-a)\varpi(c,\lambda)$ for every left
+path $\lambda$ from $x$.
+
+(c) Level $k-1$, chain $\gamma=\mu(k-1,k)\tilde\nu$ containing
+$(k-1,k)$: by Lemma~\ref{lem:braid-bijection}, $\gamma$ corresponds to
+a tame $c$ and ends at $x'$. If the left path avoids $k-1$, it is a
+left path $\lambda$ from $x'$ with lower indices $\leq k-2$, and the
+weight is
+$\beta\kappa\,\theta\,\widehat C_F(c)(-\beta)^{|\lambda|}q^{D(\lambda)}t^{-1}_{v(k)}
+=-\theta\,\varpi(c,(k-1,k)\lambda)$, where $\theta=a$ if
+$\nu\neq\varnothing$ and $\theta=t^\ast$ otherwise. If the left path is
+$(k-1,k)\lambda$, then $\lambda$ is a left path from $x$ and the weight
+is $\beta\kappa\theta\widehat C_F(c)\cdot(-\beta)\kappa'\cdot(-\beta)^{|\lambda|}q^{D(\lambda)}t^{-1}_{v(k)}
+=-\beta^2q_{k-1}\theta\,\varpi(c,\lambda)$.
+
+Now fix $c$ and a left path $\lambda$ from $x$ and collect the terms.
+If $c$ is wild, only (a) contributes: $a\beta^2q_{k-1}\varpi(c,\lambda)$.
+If $c$ is tame with $\nu\neq\varnothing$ and $\lambda$ avoids $k-1$,
+(a) and the second part of (c) give
+$a\beta^2q_{k-1}\varpi-a\beta^2q_{k-1}\varpi=0$; if $\lambda=(k-1,k)\lambda'$,
+(a) and the first part of (c) give
+$a\beta^2q_{k-1}\varpi-a\varpi=-a(1-\beta^2q_{k-1})\varpi(c,\lambda)$.
+If $\nu=\varnothing$ and $\lambda$ avoids $k-1$, (a), (b) and the second
+part of (c) give
+$(a\beta^2q_{k-1}+(t^\ast-a)-\beta^2q_{k-1}t^\ast)\varpi
+=(1-\beta^2q_{k-1})(t^\ast-a)\varpi(c,\lambda)$; if
+$\lambda=(k-1,k)\lambda'$, they give
+$(a\beta^2q_{k-1}+(t^\ast-a)-t^\ast)\varpi=-a(1-\beta^2q_{k-1})\varpi(c,\lambda)$.
+
+The distinct composites are: those of (b) whose left path avoids
+$k-1$, all of which are distinct by Lemma~\ref{lem:repeat}; those of
+(b) with $\lambda=(k-1,k)\lambda'$ such that $\lambda'$ shares no
+lower index with $c$; and those of the first part of (c) whose
+$\lambda$ shares no lower index with $\mu$ or $\nu$. The second part
+of (c) repeats $(k-1,k)$. Hence $(1-\beta^2q_{k-1})A^F_{\xi,v}$ is, for
+$\nu=\varnothing$ and $\lambda$ avoiding $k-1$,
+$(1-\beta^2q_{k-1})(t^\ast-a)\varpi$; for $\nu=\varnothing$ and
+$\lambda=(k-1,k)\lambda'$ with $\lambda'$ sharing no index with $c$,
+$(1-\beta^2q_{k-1})(t^\ast-a-t^\ast)\varpi=-a(1-\beta^2q_{k-1})\varpi$;
+for $c$ tame with $\nu\ne\varnothing$ and $\lambda=(k-1,k)\lambda'$
+sharing no index, $-a(1-\beta^2q_{k-1})\varpi$; and $0$ otherwise.
+Subtracting, every term cancels except
+$-a(1-\beta^2q_{k-1})\varpi(c,\lambda)$ for tame $c$ and
+$\lambda=(k-1,k)\lambda'$ with $\lambda'$ sharing a lower index with
+$c$, and $a\beta^2q_{k-1}\varpi(c,\lambda)$ for wild $c$.
+\end{proof}
+
+\begin{remark}[The reduced identity]\label{rem:wild}
+Identity \eqref{eq:wild} is the remaining content of the backtrack
+identity, hence of Theorem~\ref{prop:top}, for $k\geq3$. Its left side
+runs over level-$(k-2)$ chains that are wild, that is whose
+$(k-1)$-labels either reuse a lower index of $\mu$ or contain an edge
+that is quantum after rotation by $\xi(k)$, followed by arbitrary left
+paths; its right side runs over tame chains followed by $(k-1,k)$ and
+a left path that returns to a lower index of the chain. Neither $a$
+nor $t^\ast$ appears. For $k=2$ there are no labels of upper index
+$k-1$ and no wild chains, both sides vanish, and
+Proposition~\ref{prop:backtrack-known}(i) is recovered. We have
+verified \eqref{eq:wild} for all $\xi\in S_k$ and all $F\ni k-1$ with
+$k\leq5$. The same computations show that $X_v$ and $Y_v$ are each
+rigid at $v$ in the sense of Section~\ref{sec:backtrack}---each is a
+$y$-free multiple of $\Psi(\xi,v)$---although neither is rigid word by
+word; the rigidity is produced by cancellations between words related
+by the braid relation $(k-1,k)(a,k)=(a,k-1)(k-1,k)$, the three forms
+$(a,k)(a,k-1)=(a,k-1)(k-1,k)=(k-1,k)(a,k)$ of a $3$-cycle, and the
+commutation $(a,k)(b,k-1)=(b,k-1)(a,k)$ for $a\neq b$. For instance,
+for $\xi=213$, $F=\{1,2\}$, $k=3$ and $v=123$, the wild chains are
+$(1,2)$ and $(1,3)(1,2)$, with
+$X_v=\beta q_1(1-\beta^2q_2)t_2^{-1}t_3^{-1}$ coming from the two
+composites $((1,2),\varnothing)$ and $((1,3)(1,2),(2,3))$, the second
+being the first with a backtrack inserted through the $3$-cycle, and
+$Y_v=\beta^3q_1q_2t_2^{-1}t_3^{-1}$ comes from the single composite
+$((1,3),(2,3)(1,3))$. Identity \eqref{eq:wild} is proved in
+Section~\ref{sec:ybe} (Theorem~\ref{thm:block}), which completes the
+proof of Theorem~\ref{prop:top}.
+
+The same computations ($k\leq5$) exhibit a finer structure. Both
+sides of \eqref{eq:wild} are polynomials in $q$, so \eqref{eq:wild}
+splits according to the $q$-degree $D$ of the word $c\lambda$ (with
+the convention that the factor $\beta^2q_{k-1}$ is counted in $D$):
+writing $X_{v,D}$, $Y_{v,D}$ for the parts of degree $D$, it reads
+$Y_{v,D}=\beta^2(X_{v,D-e_{k-1}}+Y_{v,D-e_{k-1}})$. Numerically,
+$X_{v,D}$ and $Y_{v,D}$ are each $y$-free multiples of $\Psi(\xi,v)$,
+and for every $v$ there are a sign $\epsilon_v\in\{0,\pm1\}$ and a
+degree $D_v$ such that
+$X_v=\epsilon_v(1-\beta^2q_{k-1})\beta^{m}q^{D_v}\Psi(\xi,v)/a$ and
+$Y_v=\epsilon_v\beta^2q_{k-1}\beta^{m}q^{D_v}\Psi(\xi,v)/a$, with
+$m=\ellength(v)-\ellength(\xi)+2|D_v|$; that is, $X_v+Y_v$ is a single
+monomial in $q$. When $v(k)=\xi(k)$ the monomial is the weight of the
+unique level-$(k-2)$ chain to $v$ (and $\epsilon_v=1$ exactly when
+that chain is wild); when $v(k)\neq\xi(k)$ both signs occur.
+\end{remark}
+
+\subsection{Operator form, Yang--Baxter relations, and the proof of the
+block identity}
+\label{sec:ybe}
+
+In this subsection we rewrite the block identity as an identity
+between operators built from the edges of the quantum Bruhat graph.
+The edge operators satisfy the Yang--Baxter relations of
+Brenti, Fomin and Postnikov \cite{brenti1999mixed}, which make the
+braid move of Lemma~\ref{lem:braid} and the $3$-cycle relations of
+Remark~\ref{rem:wild} exact; the wild chains are identified by a
+single inequality; the left paths are eliminated altogether, leaving
+an identity between chains (Proposition~\ref{prop:chain-form}). When
+no position below $k-1$ is fresh the block identity is then proved
+(Theorem~\ref{thm:F-minimal}) by an explicit bijection between two
+families of wild chains described through right-to-left maxima. For
+general $F$ the chain identity splits into components indexed by the
+subsets of the fresh positions below $k-1$, of which the top one is
+the case just proved; the other components involve chains with
+descents, whose structure is worked out in
+Lemmas~\ref{lem:shape}--\ref{lem:typeB}, and the same bijection,
+extended to these chains, proves them all (Theorem~\ref{thm:block}).
+This completes the proof of the backtrack identity, hence of
+Theorem~\ref{prop:top} (Corollary~\ref{cor:main}).
+
+\paragraph{Conventions.}
+Throughout, $k\geq3$, $\xi$ and $F\ni k-1$ are as in the block model,
+and $F'=F\cap\{1,\ldots,k-2\}$. Rotating all values by
+$\rho_{\xi(k)}$ (Section~\ref{sec:rotation}) changes the quantum
+weight of every directed path from $\xi$ to $v$ in the block by the
+same factor $q^{\sigma(v)-\sigma(\xi)}$, $\sigma_j(x)=\#\{i\leq j:x(i)\leq\xi(k)\}$,
+because an edge $(a,b)$ with $a\leq j<b$ changes $\sigma_j$ by $+1$
+exactly when it is quantum before and Bruhat after rotation, by $-1$
+in the opposite case, and otherwise not at all
+(Corollary~\ref{cor:cyclic}); the status factors depend only on
+positions, and tameness is defined through the rotated graph. Hence
+both sides of \eqref{eq:block} at $v$ are multiplied by the same unit,
+and we may and do assume that $\xi(k)=k$ is the largest value (the
+\emph{clean frame}). Then by Lemma~\ref{lem:rotation} every directed
+path from $\xi$ with pairwise distinct labels of upper index $k$ is a
+chain of Bruhat covers. We write $c^\ast=\xi(k-1)$ and
+$t^\ast=t_{c^\ast}^{-1}$ as before.
+
+Let $V$ be the free module on the symbols $\G_x$, $x\in S_k$, over the
+coefficient ring. For a label $(a,b)$, $a<b\leq k$, let $E_{ab}$ be
+the operator with $E_{ab}\G_x=\kappa\,\G_{xt_{ab}}$ if $x\to xt_{ab}$
+is an edge of the quantum Bruhat graph of weight $\kappa$, and
+$E_{ab}\G_x=0$ otherwise. For a word $w=\ell_1\ell_2\cdots\ell_r$ of
+labels put $P[w]=E_{\ell_r}\cdots E_{\ell_1}$, so that
+$P[w]\G_x$ is the weight of $w$ times $\G_{\operatorname{end}}$ if $w$
+is a directed path from $x$ and $0$ otherwise; products of operators
+are composed from right to left. We abbreviate
+\[
+ E=E_{k-1,k},\qquad K_a=E_{ak},\qquad L_a=E_{a,k-1}\qquad(1\leq a\leq k-2).
+\]
+
+\begin{lemma}[Yang--Baxter relations]\label{lem:ybe}
+\begin{enumerate}
+\item $E_{ab}E_{cd}=E_{cd}E_{ab}$ whenever $\{a,b\}\cap\{c,d\}=\varnothing$.
+\item For $a<b<c$ and a formal variable $\varepsilon$,
+\[
+ (1+\varepsilon E_{ab})(1+\varepsilon E_{ac})(1+\varepsilon E_{bc})
+ =(1+\varepsilon E_{bc})(1+\varepsilon E_{ac})(1+\varepsilon E_{ab}).
+\]
+Explicitly, in degree two,
+\begin{align}
+ P[(a,b)(b,c)]&=P[(b,c)(a,c)]+P[(a,c)(a,b)],\label{eq:ybe-C}\\
+ P[(b,c)(a,b)]&=P[(a,b)(a,c)]+P[(a,c)(b,c)],\label{eq:ybe-Cinv}
+\end{align}
+and in degree three $P[(a,b)(a,c)(b,c)]=P[(b,c)(a,c)(a,b)]$.
+\item $E_{a,a+1}^2=q_a$, and $E_{ab}^2=0$ if $b-a\geq2$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(1) and (2) are Corollary~4.1 of \cite{brenti1999mixed}, equations
+(2.3)--(2.4) there, for the quantum Bruhat operators $Q_\tau$ with the
+multiplicative function $E(\epsilon_a-\epsilon_b)=q_a\cdots q_{b-1}$;
+the operators of \cite{brenti1999mixed} act by left multiplication
+$w\mapsto\tau w$, and inversion $w\mapsto w^{-1}$, which preserves
+lengths, identifies them with our edge operators, which act by right
+multiplication. In (2) the two sides agree in degrees $0$ and $1$, and
+in degree two each side is a sum of three terms; the group elements
+$t_{ab}t_{bc}=t_{bc}t_{ac}=t_{ac}t_{ab}$ and
+$t_{bc}t_{ab}=t_{ab}t_{ac}=t_{ac}t_{bc}$ are the two $3$-cycles, and
+collecting the terms according to the $3$-cycle they represent gives
+\eqref{eq:ybe-C} and \eqref{eq:ybe-Cinv}. (3) The adjacent
+transposition is an edge from every permutation, and its two
+traversals have weights with product $q_a$. For $b-a\geq2$, a Bruhat
+edge $(a,b)$ requires the values at the positions strictly between $a$
+and $b$ to lie outside the interval spanned by the two exchanged
+values, while the reverse quantum edge would require them to lie
+inside it. We have also checked (1)--(3) directly for $k\leq6$.
+\end{proof}
+
+Since each $P[w]\G_x$ is either $0$ or a single monomial times a
+single basis vector, \eqref{eq:ybe-C} with $(a,b,c)=(a,k-1,k)$ says:
+for every $x$, the path $(a,k-1)(k-1,k)$ is directed from $x$ if and
+only if exactly one of $(k-1,k)(a,k)$ and $(a,k)(a,k-1)$ is, and then
+the weights agree. This sharpens Lemma~\ref{lem:braid}: the braid
+move fails exactly when the wild pattern $(a,k)(a,k-1)$ is directed.
+
+\begin{lemma}[Wild chains]\label{lem:wild-char}
+Let $c=\mu\nu$ be a level-$(k-2)$ block chain with endpoint $x$. Then
+$c$ is wild if and only if $x(k-1)$ lies in
+$\operatorname{arc}(\xi(k-1),\xi(k))\cup\{\xi(k)\}$; in the clean
+frame, if and only if $x(k-1)>c^\ast$.
+\end{lemma}
+
+\begin{proof}
+Work in the clean frame. Rotate by $\rho_{c^\ast}$; by
+Lemma~\ref{lem:rotation} with $k-2$ in place of $k$ (so
+$\vartheta=\xi(k-1)=c^\ast$), every edge of $c$ is Bruhat after this
+rotation. A Bruhat edge $(c,k-1)$ replaces the value at $k-1$ by the
+smaller value at $c$, and no other label of $c$ touches position
+$k-1$; so the value at position $k-1$, which starts at the rotated
+maximum $c^\ast$, strictly decreases in the rotated order
+$c^\ast+1<\cdots<k<1<\cdots<c^\ast$ at each label of $\nu$. Thus it runs first through values $\leq c^\ast$ and, once it
+has become larger than $c^\ast$, stays larger. By
+Corollary~\ref{cor:cyclic} an edge $(c,k-1)$ of $\nu$ applied at $y$
+is quantum in the clean frame exactly when $y(k-1)\leq c^\ast<y(c)$,
+that is, exactly when it carries the value at $k-1$ from $\leq c^\ast$
+to $>c^\ast$. Hence $\nu$ has a clean-frame quantum edge if and only
+if $x(k-1)>c^\ast$. Finally, if $\nu$ reuses a lower index $a_i$ of
+$\mu$, the value entering position $k-1$ at that label is the value
+$e_{i-1}$ that position $k$ held before the label $(a_i,k)$ of $\mu$,
+and $e_{i-1}>c^\ast$: along $\mu$ the value at $k$ decreases from
+$e_0=k$ through $e_1>\cdots>e_m$, position $k-1$ lies strictly between
+every $a_i$ and $k$ and holds $c^\ast$, so the cover condition gives
+$c^\ast\notin(e_i,e_{i-1})$ for all $i$, whence $c^\ast<e_m$. So in
+this case too $x(k-1)>c^\ast$, and conversely $x(k-1)>c^\ast$ forces a
+quantum edge of $\nu$.
+\end{proof}
+
+\paragraph{The block identity as an operator identity.}
+Put
+\[
+ \mathcal U'=(1-\beta K_1)(1-\beta K_2)\cdots(1-\beta K_{k-2}),\qquad
+ \mathcal K=(1+\beta K_{k-2})\cdots(1+\beta K_1),
+\]
+so that $\mathcal U'$ is the sum over left paths at $k$ with lower
+indices $\leq k-2$ of $(-\beta)^{|\lambda|}P[\lambda]$, the operator
+$\mathcal U_k$ of Section~\ref{sec:block} is $\mathcal U'(1-\beta E)$,
+and $\mathcal K$ is the sum over strictly increasing sequences
+$a_1<\cdots<a_m\leq k-2$ of $\beta^mP[(a_1,k)\cdots(a_m,k)]$, the
+Left-free chains with indices below $k-1$. Let $\mathcal U'_0$ be
+defined like $\mathcal U'$ with each $K_a$ replaced by its Bruhat
+part. By Lemma~\ref{lem:ybe}(3), $K_a^2=0$, so
+\begin{equation}\label{eq:UK}
+ \mathcal U'\mathcal K=\mathcal K\mathcal U'=1,
+\end{equation}
+the factors cancelling from the middle outwards. Let $\Theta$ be the
+diagonal operator $\G_v\mapsto t^{-1}_{v(k)}\G_v$, let $\Pi_w$ and
+$\Pi_t=1-\Pi_w$ be the projections onto the span of the $\G_x$ with
+$x(k-1)>c^\ast$, respectively $x(k-1)\leq c^\ast$, and put
+\[
+ \mathcal P=\sum_{c}\widehat C_F(c)\,\G_{\operatorname{end}(c)},\qquad
+ \mathcal Q_\varnothing=\sum_{c:\ \nu=\varnothing}\widehat C_F(c)\,\G_{\operatorname{end}(c)},
+\]
+the sums over the level-$(k-2)$ block chains $c=\mu\nu$. By
+Lemma~\ref{lem:wild-char}, $\Pi_w\mathcal P$ and $\Pi_t\mathcal P$
+are the wild and the tame parts of $\mathcal P$.
+
+\begin{proposition}[Operator form]\label{prop:operator-form}
+With $B=\beta^2q_{k-1}$,
+\begin{align}
+ \sum_vM^F_{\xi,v}\G_v&=\Theta\,\mathcal U'\Bigl[(1-B)(t^\ast-a)\mathcal Q_\varnothing
+  +a(1-B)\beta E\,\Pi_t\mathcal P+aB(1-\beta E)\Pi_w\mathcal P\Bigr],
+  \label{eq:M-operator}\\
+ \sum_vA^F_{\xi,v}\G_v&=\Theta\Bigl[\mathcal U'(t^\ast-a)\mathcal Q_\varnothing
+  +a\,\mathcal U'_0\,\beta E\,\Pi_t\mathcal P\Bigr],\label{eq:A-operator}
+\end{align}
+and \eqref{eq:wild} is equivalent to
+\begin{equation}\label{eq:W}
+ \Omega\,\mathcal P=0,\qquad
+ \Omega:=(1-B)(\mathcal U'-\mathcal U'_0)\,\beta E\,\Pi_t+B\,\mathcal U'(1-\beta E)\,\Pi_w .
+\end{equation}
+Moreover, writing $\mathcal P^0=\sum_c\beta^{|c|}q^{D(c)}\G_{\operatorname{end}(c)}$
+for the chain sum without status factors, \eqref{eq:W} holds if and
+only if $\Omega\,\Pi_S\mathcal P^0=0$ for every $S\subseteq F'$, where
+$\Pi_S$ projects onto the span of the $\G_x$ in which no value
+$\xi(p)$, $p\in S$, is Left and no value $\xi(p)$, $p\in F'\setminus S$,
+is fixed.
+\end{proposition}
+
+\begin{proof}
+Level-$(k-1)$ block chains without $(k-1,k)$ are the chains
+$c=\mu$ with $\nu=\varnothing$, with weight $(t^\ast-a)\widehat C_F(c)$,
+and those containing $(k-1,k)$ correspond by
+Lemma~\ref{lem:braid-bijection} to the tame chains $c$, with weight
+$\beta\kappa\theta_c\widehat C_F(c)$ at the endpoint
+$\operatorname{end}(c)t_{k-1,k}$, that is, their sum is
+$\beta E\bigl(t^\ast\mathcal Q_\varnothing+a(\Pi_t\mathcal P-\mathcal Q_\varnothing)\bigr)$.
+Hence the sum $\widehat H^F$ of the weights of the level-$(k-1)$
+block chains plus $aB$ times the sum of the weights of the
+level-$(k-2)$ block chains, each placed at its endpoint, is
+$\widehat H^F=(t^\ast-a)\mathcal Q_\varnothing+\beta E(t^\ast\mathcal Q_\varnothing+a\Pi_t\mathcal P-a\mathcal Q_\varnothing)+aB\mathcal P$,
+and by definition of the block composites
+$\sum_vM^F_{\xi,v}\G_v=\Theta\,\mathcal U'(1-\beta E)\widehat H^F$.
+Expanding with $(1-\beta E)\beta E=\beta E-B$ gives
+\eqref{eq:M-operator}. For \eqref{eq:A-operator}, the proof of
+Theorem~\ref{thm:braid-reduction} lists the distinct composites: those
+of kind (b) with left path avoiding $k-1$, with total
+$\Theta\mathcal U'(t^\ast-a)\mathcal Q_\varnothing$; those of kind (b)
+with left path $(k-1,k)\lambda'$ and those of kind (c) with left path
+$\lambda'$ avoiding $k-1$, in both cases with $\lambda'$ sharing no
+lower index with $c$, whose weights add up to
+$a\,(-\beta)^{|\lambda'|}q^{D}t^{-1}_{v(k)}\,\beta\kappa\,\widehat C_F(c)$
+for each tame $c$ and each such $\lambda'$, by the computation in that
+proof. The word $\mu(k-1,k)\tilde\nu\lambda'$ has pairwise distinct
+labels of upper index $k$ exactly when $\lambda'$ shares no lower index
+with $c$; by Lemma~\ref{lem:rotation} all its edges are then Bruhat,
+and conversely a repeated label is a quantum edge, since the position
+it touches holds a value exceeding the value at $k$ (as in the proof of
+Lemma~\ref{lem:repeat}). Therefore the left paths $\lambda'$ sharing no
+index with $c$ are exactly the left paths from
+$\operatorname{end}(c)t_{k-1,k}$ consisting of Bruhat edges, and the
+sum is $\Theta\,a\,\mathcal U'_0\beta E\Pi_t\mathcal P$. Subtracting
+$(1-B)$ times \eqref{eq:A-operator} from \eqref{eq:M-operator} and
+dividing by $a$ gives $\Theta\Omega\mathcal P$, which by
+Theorem~\ref{thm:braid-reduction} is $\sum_v(\beta^2q_{k-1}X_v-(1-\beta^2q_{k-1})Y_v)\G_v$;
+as $\Theta$ is invertible, \eqref{eq:wild} is equivalent to \eqref{eq:W}.
+
+For the last assertion write $s_p=t^{-1}_p-a$ for $p\in F'$. The
+status factor of $\xi(p)$ at a chain endpoint $x$ is $s_p$, $a$ or
+$s_p+a$ according as $\xi(p)$ is fixed, Left or Out in $x$, that is,
+$s_p(1-[\xi(p)\text{ Left}])+a(1-[\xi(p)\text{ fixed}])$. Expanding
+the product over $p\in F'$,
+$\mathcal P=\sum_{S\subseteq F'}s^S a^{|F'\setminus S|}\,\Pi_S\mathcal P^0$,
+where $s^S=\prod_{p\in S}s_p$. The operator $\Omega$ involves neither
+$a$ nor the equivariant parameters, and the monomials $s^S$ are
+linearly independent over $\mathbb Z[\beta,q,a]$; hence
+$\Omega\mathcal P=0$ if and only if $\Omega\Pi_S\mathcal P^0=0$ for
+every $S$.
+\end{proof}
+
+The last assertion says that \eqref{eq:wild} is equivalent to a family
+of identities that involve neither $a$ nor $y$: for each
+$S\subseteq F'$, the signed sum of the wild composites and the
+composites counted by $Y_v$ whose chain endpoint has no Left value
+among $\{\xi(p):p\in S\}$ and no fixed value among
+$\{\xi(p):p\in F'\setminus S\}$ vanishes. For $S=F'$ these are the
+composites whose chain has no Left value below $k-1$ at its endpoint;
+for $F'=\varnothing$ there is a single identity, treated next.
+
+\begin{remark}[The case $a=0$ in one line]
+At $a=0$ only Left-free chains contribute to $\widehat P_{k-1}$, each
+with status factor $\prod_{p\in F}t^{-1}_{p}$, and the level-$(k-2)$
+part of $\widehat H^F$ vanishes. The Left-free level-$(k-1)$ chains are
+the increasing sequences in $\{1,\ldots,k-1\}$, with operator
+$(1+\beta E)\mathcal K$, so by \eqref{eq:UK}
+\[
+ \mathcal U_k(1+\beta E)\mathcal K
+ =\mathcal U'(1-\beta E)(1+\beta E)\mathcal K
+ =(1-B)\,\mathcal U'\mathcal K=1-B,
+\]
+which is the block identity at $a=0$: $M^F|_{a=0}=(1-B)A^F|_{a=0}$,
+both sides being supported at $v=\xi$. This is the block-model form of
+Proposition~\ref{prop:backtrack-known}(ii).
+\end{remark}
+
+\paragraph{Eliminating the left paths.}
+The operator $\mathcal U'$ can be removed from the block identity
+altogether, at the price of a closed form for $A^F$. Let $c=\mu\nu$ be
+a level-$(k-2)$ block chain with $\nu=(c_1,k-1)\cdots(c_n,k-1)$,
+$n\geq1$, and $c_n\in F'$. The value $\xi(c_n)$ sits at position $k-1$
+in $\operatorname{end}(c)$, where it is Out, so $\widehat C_F(c)$
+contains the factor $t^{-1}_{\xi(c_n)}$; let $\widehat C^\flat_F(c)$
+denote $\widehat C_F(c)$ with this factor replaced by $a$, and put
+\[
+ \mathcal P^\flat_t=\sum_{\substack{c=\mu\nu\text{ tame}\\ \nu\neq\varnothing,\ c_n\in F'}}
+   \widehat C^\flat_F(c)\,\G_{\operatorname{end}(c)},
+ \qquad
+ \mathcal Q=\mathcal Q_\varnothing+\mathcal P^\flat_t .
+\]
+For $F=\{k-1\}$ we have $F'=\varnothing$ and $\mathcal Q=\mathcal Q_\varnothing$.
+
+\begin{proposition}[Chain form of the block identity]\label{prop:chain-form}
+Let $k-1\in F$. The block identity \eqref{eq:block} for $(\xi,F)$ is
+equivalent to
+\begin{equation}\label{eq:chain-form}
+ E\,\Pi_t\mathcal P+\beta q_{k-1}\,\mathcal P=(1+\beta E)\,\mathcal K E\,\mathcal Q .
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+We first compute $A^F$. The distinct block composites are those whose
+word has pairwise distinct labels, and the distinct composites with a
+given word $\omega$ are the valid cuts of $\omega$ in the sense of
+Proposition~\ref{prop:classical-word}. That proposition and its proof
+concern the composites with one fixed word and apply verbatim in the
+block model, where the fresh positions are those in $F$ and the
+non-fresh positions carry no status factor; in the clean frame every
+edge of a word with distinct labels is Bruhat (Lemma~\ref{lem:rotation}),
+so no power of $q$ occurs. Hence, exactly as in Lemma~\ref{lem:A-closed},
+$A^F_{\xi,v}$ is the sum of $\Sigma(\gamma)$ over the level-$(k-1)$
+block chains $\gamma$ with endpoint $v$ and a fresh suffix, where
+\[
+ \Sigma(\gamma)=\beta^{|\gamma|}\,t^{-1}_{v(k)}\,a^{S}
+ \prod_{p\in F\text{ not in }\gamma}(t^{-1}_{\xi(p)}-a)\prod_{r\leq|\gamma|-S}\psi_r ,
+\]
+$S$ is the length of the longest strictly decreasing suffix of the
+sequence of lower indices of $\gamma$, and $\psi_r$ is $a$ if the $r$th
+lower index is fresh and exceeds the next one, $t^{-1}_{\xi(a)}$ if it
+is a fresh index $a$ that is smaller than the next one or is the last
+index before the suffix, and $1$ if it is not fresh.
+
+The words of the composites counted by $\Theta(t^\ast-a)\mathcal U'\mathcal Q_\varnothing$
+are the words $\mu\lambda$ without the label $(k-1,k)$; these
+composites are all distinct (Lemma~\ref{lem:repeat}), and grouping them
+by their words shows that $\Theta(t^\ast-a)\mathcal U'\mathcal Q_\varnothing$
+is the part of $A^F$ coming from the chains $\gamma$ without
+$(k-1,k)$. The remaining chains are $\gamma=\mu(k-1,k)\tilde\nu$ with
+$c=\mu\nu$ tame (Lemma~\ref{lem:braid-bijection}). The lower indices
+of $\gamma$ are $a_1,\ldots,a_m,k-1,c_1,\ldots,c_n$; if $n=0$ the
+decreasing suffix is $(k-1)$, and if $n\geq1$ it ends with $c_n$ and
+its other entries are descents of an admissible chain, hence fresh. So
+$\gamma$ has a fresh suffix if and only if $n=0$ or $c_n\in F'$. For
+such $\gamma$ the factors $a^S$ and $\psi_r$ assign $a$ to the index
+$k-1$ (it is the suffix if $n=0$, and otherwise it is fresh and exceeds
+$c_1$), $a$ to $c_n$ if $n\geq1$, and to every other fresh index $p$ of
+$\gamma$ the factor $a$ or $t^{-1}_{\xi(p)}$ according as the next
+index is smaller or larger than $p$. The latter is the status factor of
+$\xi(p)$ in $\operatorname{end}(c)$: the label with lower index $p$
+moves $\xi(p)$ to position $k$ or $k-1$, the next label moves it to
+the position of the next index, and it stays there because no index is
+repeated in a tame chain; for $p=a_m$ the next index is $k-1>a_m$ and
+$\xi(a_m)$ ends at position $k$, Out. The indices of $F'$ outside
+$\gamma$ are fixed, and $k-1$ is in $\gamma$. Therefore $\Sigma(\gamma)=t^{-1}_{v(k)}\,a\beta\,\widehat C_F(\mu)$
+if $n=0$ and $\Sigma(\gamma)=t^{-1}_{v(k)}\,a\beta\,\widehat C^\flat_F(c)$
+if $n\geq1$, where $v=\operatorname{end}(\gamma)=\operatorname{end}(c)t_{k-1,k}$,
+and since the edge $\operatorname{end}(c)\to v$ is Bruhat in the clean
+frame,
+\[
+ \sum_vA^F_{\xi,v}\G_v=\Theta\bigl[(t^\ast-a)\,\mathcal U'\mathcal Q_\varnothing+a\beta\,E\,\mathcal Q\bigr].
+\]
+Comparing with \eqref{eq:M-operator}, the block identity reads
+\[
+ \mathcal U'\bigl[(1-B)(t^\ast-a)\mathcal Q_\varnothing+a(1-B)\beta E\Pi_t\mathcal P+aB(1-\beta E)\Pi_w\mathcal P\bigr]
+ =(1-B)\bigl[(t^\ast-a)\mathcal U'\mathcal Q_\varnothing+a\beta E\mathcal Q\bigr].
+\]
+Cancelling the terms with $\mathcal Q_\varnothing$, dividing by $a\beta$
+and applying $\mathcal K=\mathcal U'^{-1}$ \eqref{eq:UK} gives
+$(1-B)E\Pi_t\mathcal P+\beta q_{k-1}(1-\beta E)\Pi_w\mathcal P=(1-B)\mathcal KE\mathcal Q$,
+as $B/\beta=\beta q_{k-1}$. Now $1-B=(1-\beta E)(1+\beta E)$ and
+$1-\beta E$ is invertible, with inverse $(1+\beta E)/(1-B)$, because
+$E^2=q_{k-1}$. Cancelling $1-\beta E$ leaves
+$(1+\beta E)E\Pi_t\mathcal P+\beta q_{k-1}\Pi_w\mathcal P=(1+\beta E)\mathcal KE\mathcal Q$,
+and $(1+\beta E)E=E+\beta q_{k-1}$ turns this into \eqref{eq:chain-form}.
+\end{proof}
+
+Identity \eqref{eq:chain-form} involves chains only: on the left the
+tame chains followed by the edge $(k-1,k)$ and all chains with the
+factor $\beta q_{k-1}$, on the right the chains of $\mathcal Q$
+followed by $(k-1,k)$, by a strictly increasing sequence of labels
+$(c,k)$, $c\leq k-2$, and optionally by $(k-1,k)$ again.
+
+\paragraph{No fresh position below $k-1$.}
+Assume now $F=\{k-1\}$, so that $F'=\varnothing$ and no status factor
+appears below $k-1$. Condition~4 forbids every descent among lower
+indices $\leq k-2$, so the level-$(k-2)$ block chains are the directed
+words $\mu\nu$ with $\mu=(a_1,k)\cdots(a_m,k)$, $a_1<\cdots<a_m$, and
+$\nu=(c_1,k-1)\cdots(c_n,k-1)$, $c_1<\cdots<c_n$, where $\mu$ and $\nu$
+may share lower indices; we identify such a chain with the pair
+$(\mu,\nu)$ of increasing sequences, call it \emph{shared} if
+$\mu\cap\nu\neq\varnothing$, and note that shared chains are wild.
+With $\mathcal L=(1+\beta L_{k-2})\cdots(1+\beta L_1)$ we have
+$\mathcal Q_\varnothing=\mathcal K\G_\xi$ and
+$\mathcal P=\mathcal L\mathcal K\G_\xi$. The level-$(k-1)$ block
+chains are the words $\mu$ and the words $\mu(k-1,k)\tilde\nu$ with
+$\mu\cap\nu=\varnothing$, and by Lemma~\ref{lem:A-closed} the only
+ones with a fresh suffix are $\varnothing$ and the words
+$\mu(k-1,k)$; hence
+$\sum_vA^F_{\xi,v}\G_v=\Theta\bigl[(t^\ast-a)\G_\xi+a\beta E\mathcal K\G_\xi\bigr]$.
+For a pair $(\mu,\nu)$ with $|\nu|=n$ and $0\leq l\leq n$ put
+\[
+ Z_l(\mu,\nu)=P[\mu\,\nu_{\leq l}\,(k-1,k)\,\tilde\nu_{>l}]\,\G_\xi,
+ \qquad
+ W_l(\mu,\nu)=P[\mu\,(c_l,k)\,\nu_{\leq l}\,\tilde\nu_{>l}]\,\G_\xi\quad(l\geq1),
+\]
+where $\nu_{\leq l}$ consists of the first $l$ labels of $\nu$ and
+$\tilde\nu_{>l}$ of the remaining ones with upper index $k$. Thus
+$Z_0(\mu,\nu)=P[\mu(k-1,k)\tilde\nu]\G_\xi$ is the braided word and
+$Z_n(\mu,\nu)=E\,P[\mu\nu]\G_\xi$ is the chain followed by $(k-1,k)$.
+
+\begin{lemma}[Telescoping]\label{lem:telescoping}
+For every pair $(\mu,\nu)$ and $1\leq l\leq n$,
+$Z_l(\mu,\nu)-Z_{l-1}(\mu,\nu)=W_l(\mu,\nu)$. Consequently exactly one
+of the following holds: all $W_l$ vanish and $Z_0=Z_n$; or $Z_0=0$,
+$Z_n\neq0$, and exactly one $W_l$ is nonzero, equal to $Z_n$; or
+$Z_0=Z_n=0$ and all $W_l$ vanish.
+\end{lemma}
+
+\begin{proof}
+Write $c=c_l$. By \eqref{eq:ybe-C} with $(a,b,c)=(c,k-1,k)$,
+$EL_c=K_cE+L_cK_c$, and $K_c$ commutes with $L_{c'}$ for $c'\neq c$ by
+Lemma~\ref{lem:ybe}(1). Hence
+\begin{align*}
+ Z_l&=P[\tilde\nu_{>l}]\,E\,L_c\,P[\nu_{<l}]P[\mu]\G_\xi\\
+ &=P[\tilde\nu_{>l}]K_cE\,P[\nu_{<l}]P[\mu]\G_\xi
+  +P[\tilde\nu_{>l}]L_c\,P[\nu_{<l}]\,K_c\,P[\mu]\G_\xi
+ =Z_{l-1}+W_l .
+\end{align*}
+Each of $Z_0$, $Z_n$, $W_l$ is zero or a single monomial in $q$ times
+a basis vector, and $Z_0$, $Z_n$ have the same endpoint; so in
+$Z_n=Z_0+\sum_lW_l$ a nonzero $Z_0$ forces all $W_l$ to vanish, and a
+nonzero $Z_n$ with $Z_0=0$ forces exactly one $W_l$ to be nonzero.
+\end{proof}
+
+The proof uses only the Yang--Baxter relations, so the lemma and its
+proof apply verbatim to arbitrary words $\mu=(a_1,k)\cdots(a_m,k)$ and
+$\nu=(c_1,k-1)\cdots(c_n,k-1)$ with $c_1,\ldots,c_n$ pairwise
+distinct, with $Z_l$ and $W_l$ defined by the same formulas; we shall
+use it in this generality for general $F$.
+
+For a pair that is not shared the lemma recovers
+Lemma~\ref{lem:braid-bijection}: $Z_0=Z_n$ if the chain is tame and
+$Z_0=0$ if it is wild. For shared pairs it gives the new information
+that a directed braided word has the same weight as the chain followed
+by $(k-1,k)$. Let $\mathcal W$ be the set of directed wild pairs, and
+split it as $\mathcal W=\mathcal W_A\sqcup\mathcal W_B$, where
+$\mathcal W_B$ consists of the shared pairs with $Z_0\neq0$.
+
+\begin{proposition}\label{prop:F-minimal}
+Let $F=\{k-1\}$. The block identity \eqref{eq:block} for $(\xi,F)$ is
+equivalent to
+\begin{equation}\label{eq:star}
+ \sum_{(\mu,\nu)\in\mathcal W_B}\beta^{|\mu|+|\nu|}P[\mu\nu]\,\G_\xi
+ =\beta E\sum_{(\mu',\nu')\in\mathcal W_A}\beta^{|\mu'|+|\nu'|}P[\mu'\nu']\,\G_\xi .
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Here $\mathcal Q=\mathcal Q_\varnothing=\mathcal K\G_\xi$ and
+$\mathcal P=\mathcal L\mathcal K\G_\xi$, so by
+Proposition~\ref{prop:chain-form} the block identity is equivalent to
+\[
+ E\mathcal P_t+\beta q_{k-1}(\mathcal P_t+\mathcal P_w)=(1+\beta E)\,\mathcal KE\mathcal K\G_\xi,
+\]
+where $\mathcal P_t=\Pi_t\mathcal P$ and $\mathcal P_w=\Pi_w\mathcal P$
+are the tame and wild parts. Let
+$\mathcal R=\sum\beta^{|\mu|+|\nu|}Z_0(\mu,\nu)$ over the shared
+pairs. Since $\mathcal K E\mathcal K\G_\xi=\sum_{\mu,\nu}\beta^{|\mu|+|\nu|}Z_0(\mu,\nu)$
+over all pairs, and the non-shared pairs contribute
+$E\mathcal P_t$ by Lemma~\ref{lem:braid-bijection}, we have
+$\mathcal K E\mathcal K\G_\xi=E\mathcal P_t+\mathcal R$. Substituting,
+the right side becomes
+$E\mathcal P_t+\mathcal R+\beta E(E\mathcal P_t+\mathcal R)
+ =E\mathcal P_t+\beta q_{k-1}\mathcal P_t+(1+\beta E)\mathcal R$,
+so the block identity is equivalent to
+$(1+\beta E)\mathcal R=\beta q_{k-1}\mathcal P_w$. Now
+$\mathcal R=\sum_{\mathcal W_B}\beta^{|\mu|+|\nu|}Z_0(\mu,\nu)$, and by
+Lemma~\ref{lem:telescoping} $Z_0=Z_n=E\,P[\mu\nu]\G_\xi$ on
+$\mathcal W_B$, so
+$\beta E\mathcal R=\beta q_{k-1}\sum_{\mathcal W_B}\beta^{|\mu|+|\nu|}P[\mu\nu]\G_\xi$
+and $\mathcal R=E\sum_{\mathcal W_B}\beta^{|\mu|+|\nu|}P[\mu\nu]\G_\xi$.
+Since $\mathcal P_w$ is the sum of $\beta^{|\mu|+|\nu|}P[\mu\nu]\G_\xi$
+over $\mathcal W_A\sqcup\mathcal W_B$, cancelling the $\mathcal W_B$
+part and applying the invertible operator $E^{-1}=q_{k-1}^{-1}E$ gives
+\eqref{eq:star}.
+\end{proof}
+
+Identity \eqref{eq:star} says that the wild chains with a directed
+braided word are, up to the edge $(k-1,k)$ and a factor $\beta$,
+exactly the remaining wild chains. We now describe both families
+explicitly and match them. The description rests on the following
+elementary observation.
+
+\paragraph{Right-to-left maxima.}
+
+\begin{lemma}[Increasing chains are right-to-left maxima]\label{lem:rlmax}
+Let $z$ be an arrangement of distinct values at the positions
+$1,\ldots,b$ in which $z(b)$ is the largest value, and let
+$a_1<\cdots<a_m<b$. The word $(a_1,b)(a_2,b)\cdots(a_m,b)$ is a
+directed path from $z$ in the quantum Bruhat graph if and only if
+every $a_i$ is a right-to-left maximum of $z$ on the positions
+$1,\ldots,b-1$, that is, $z(a_i)>z(p)$ for all $a_i<p<b$. In that
+case all its edges are Bruhat, position $b$ carries the values
+$z(a_1)>z(a_2)>\cdots>z(a_m)$ in turn, and position $a_i$ receives
+$z(a_{i-1})$, where $z(a_0):=z(b)$.
+\end{lemma}
+
+\begin{proof}
+Induction on $m$, the case $m=0$ being empty. Suppose the first $m-1$
+labels form a directed path, that $a_1,\ldots,a_{m-1}$ are
+right-to-left maxima and that the edges are as described; so just
+before the label $(a_m,b)$ position $b$ carries $z(a_{m-1})$, position
+$a_m$ still carries $z(a_m)$, and the positions strictly between $a_m$
+and $b$, none of which is an $a_i$, carry their original values. If
+$m\geq2$, these values are smaller than $z(a_{m-1})$, because
+$a_{m-1}<a_m$ is a right-to-left maximum, and so is $z(a_m)$; a quantum
+edge $(a_m,b)$ would require $z(a_m)>z(a_{m-1})$. If $m=1$, position
+$b$ carries the largest value. So the edge $(a_m,b)$, if it exists, is
+Bruhat, and by Lemma~\ref{lem:arc} it exists if and only if no value
+at a position strictly between $a_m$ and $b$ lies in
+$(z(a_m),z(a_{m-1}))$; as these values are below $z(a_{m-1})$, this
+says that they are below $z(a_m)$, that is, $a_m$ is a right-to-left
+maximum. The edge then moves $z(a_m)$ to $b$ and $z(a_{m-1})$ to $a_m$.
+\end{proof}
+
+We apply this to the pairs $(\mu,\nu)$. Let
+\[
+ R_\xi=\{p\leq k-2:\ \xi(p)>\xi(p')\text{ for all }p<p'\leq k-1\}
+\]
+be the set of right-to-left maxima of $\xi$ on $\{1,\ldots,k-1\}$
+other than $k-1$ itself; their values exceed $c^\ast$. Let
+$H=\{p\leq k-2:\xi(p)<c^\ast\}$, let $H_{\max}$ be the set of
+right-to-left maxima of $\xi$ restricted to $H$, that is, the $p\in H$
+with $\xi(p)>\xi(p')$ for all $p'\in H$ with $p'>p$, and let
+$p_H=\max H$, with $p_H=0$ if $H=\varnothing$. For a word $\mu$ with
+lower indices $a_1<\cdots<a_m$ put $a_m=0$ if $m=0$ and
+\[
+ R_\mu=H_{\max}\ \cup\ \{a\in\mu:\ a>p_H\}\ \cup\ \{r\in R_\xi:\ r>a_m,\ r>p_H\}.
+\]
+We identify $\mu$ and $\nu$ with their sets of lower indices, and
+split $\nu=\nu^H\nu^L$, where $\nu^H$ consists of the labels of $\nu$
+with lower index $\leq p_H$ and $\nu^L$ of those with lower index
+$>p_H$; as $\nu$ is increasing, $\nu^H$ precedes $\nu^L$.
+
+\begin{lemma}[Directed pairs and their braided words]\label{lem:directed-pairs}
+Let $F=\{k-1\}$ and work in the clean frame.
+\begin{enumerate}
+\item The chain $\mu\nu$ is directed if and only if $\mu\subseteq R_\xi$
+ and $\nu\subseteq R_\mu$.
+\item Let $\mu\nu$ be directed. Along $\mu$ the value at position $k$
+ runs through $e_0=k>e_1>\cdots>e_m$, $e_i=\xi(a_i)$, position $a_i$
+ receives $e_{i-1}$, and $e_m>c^\ast$. Along $\nu$ the value at
+ position $k-1$ starts at $c^\ast$, then runs through the values
+ $\xi(c)$, $c\in\nu^H$, which are smaller than $c^\ast$ and decrease,
+ and then through the values of $\nu^L$, which exceed $c^\ast$ and
+ decrease: the value of $c=a_i\in\nu^L\cap\mu$ is $e_{i-1}>e_m$, and
+ the value of $c\in\nu^L\setminus\mu$ is $\xi(c)\in(c^\ast,e_m)$. In
+ particular $\mu\nu$ is wild if and only if $\nu^L\neq\varnothing$, and
+ it is shared if and only if $\nu^L\cap\mu\neq\varnothing$.
+\item $Z_0(\mu,\nu)\neq0$ if and only if $\mu\nu$ is directed and
+ $\nu^L\subseteq\mu$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(1) The word $\mu$ is a directed path from $\xi$ if and only if
+$\mu\subseteq R_\xi$, by Lemma~\ref{lem:rlmax} with $z=\xi$ and $b=k$.
+Let $x_\mu$ be its endpoint and $y=y_\mu$ the restriction of $x_\mu$
+to the positions $1,\ldots,k-2$; thus $y(a_i)=e_{i-1}$ and $y(p)=\xi(p)$
+for $p\notin\mu$, and $x_\mu(k-1)=c^\ast$. The labels of $\nu$
+involve only the positions $1,\ldots,k-1$. Rotate by $\rho_{c^\ast}$;
+by Corollary~\ref{cor:cyclic} $\nu$ is directed from $x_\mu$ if and
+only if it is directed from $\rho_{c^\ast}x_\mu$, where $c^\ast$ has
+become the largest value and sits at position $k-1$. By
+Lemma~\ref{lem:rlmax} with $b=k-1$, $\nu$ is directed if and only if
+its lower indices are right-to-left maxima of $\rho_{c^\ast}y$. In
+the rotated order every value below $c^\ast$ exceeds every value above
+$c^\ast$, and $\mu\cap H=\varnothing$ since the values of $\mu$ exceed
+$c^\ast$. Hence a position $p\in H$ is a right-to-left maximum of
+$\rho_{c^\ast}y$ if and only if $\xi(p)>\xi(p')$ for all $p'\in H$
+with $p'>p$, that is, $p\in H_{\max}$; and a position $p\notin H$ is
+one if and only if $p>p_H$ and $y(p)>y(p')$ for all $p<p'\leq k-2$,
+that is, $p$ is a right-to-left maximum of $y$ in the usual order.
+The latter are the positions $a_i\in\mu$---the values to the right of
+$a_i$ are $e_{i'-1}\leq e_i$ at the $a_{i'}$ with $i'>i$ and
+$\xi(p')<\xi(a_i)=e_i$ elsewhere, since $a_i\in R_\xi$---and the
+positions $p\notin\mu$ with $p>a_m$ and $p\in R_\xi$: for $p>a_m$ the
+arrangement $y$ agrees with $\xi$ at all positions $\geq p$, so $p$ is
+a right-to-left maximum of $y$ if and only if $\xi(p)>\xi(p')$ for
+all $p<p'\leq k-2$, which together with $\xi(p)>c^\ast=\xi(k-1)$ says
+$p\in R_\xi$; and for $p\notin\mu$ with $p<a_m$, let $i$ be minimal
+with $a_i>p$: then $y(a_i)=e_{i-1}$ exceeds $\xi(p)$, because
+$e_0=k$, and for $i\geq2$ the position $a_{i-1}<p$ is a right-to-left
+maximum of $\xi$. Hence the right-to-left maxima of $\rho_{c^\ast}y$
+are exactly the elements of $R_\mu$.
+
+(2) The statements about $\mu$ are Lemma~\ref{lem:rlmax}; $e_m>c^\ast$
+because position $k-1$ lies strictly between every $a_i$ and $k$, so
+the cover conditions give $c^\ast\notin(e_i,e_{i-1})$ for all $i$,
+whence $c^\ast<e_m$ by induction. Along $\nu$ the value at $k-1$ is
+replaced by $y(c)$ at the label $(c,k-1)$, and by
+Lemma~\ref{lem:rlmax} in the rotated frame these values strictly
+decrease in the rotated order $c^\ast+1<\cdots<k<1<\cdots<c^\ast$;
+the values of $\nu^H\subseteq H$ are $\xi(c)<c^\ast$ and the values of
+$\nu^L$ are $y(c)>c^\ast$, namely $e_{i-1}$ for $c=a_i\in\mu$, and
+$\xi(c)$ for $c\in R_\xi\setminus\mu$ with $c>a_m$, where
+$c^\ast<\xi(c)<\xi(a_m)=e_m$ because $a_m<c$ are both right-to-left
+maxima of $\xi$. The final value at $k-1$ exceeds $c^\ast$ exactly when
+$\nu^L\neq\varnothing$, so Lemma~\ref{lem:wild-char} gives the
+characterization of wild chains, and $\nu\cap\mu=\nu^L\cap\mu$ since
+$\mu\cap H=\varnothing$.
+
+(3) Compare the words $\mu\nu$ and $\mu(k-1,k)\tilde\nu$. After
+$\mu(k-1,k)$ the positions $1,\ldots,k-2$ carry $y$, position $k-1$
+carries $e_m$ and position $k$ carries $c^\ast$. Suppose both words are
+directed up to their $j$th label of $\nu$, respectively $\tilde\nu$,
+exclusive, and write $f_0=c^\ast$ and $f_i=y(c_i)$ for the values that
+position $k-1$ takes along $\nu$. The $j$th label $(c_j,k-1)$ of $\nu$
+exchanges the value $f_j$ at $c_j$, a position not touched by the
+earlier labels, with the value $f_{j-1}$ at $k-1$; the $j$th label
+$(c_j,k)$ of $\tilde\nu$ exchanges the same two values between the
+positions $c_j$ and $k$. The positions strictly between are the same,
+with the same values, except that $k-1$, carrying $e_m$, is
+intermediate for the second label only. By Lemma~\ref{lem:arc} the
+second label is an edge if and only if the first one is and
+$e_m\notin\operatorname{arc}(f_j,f_{j-1})$. Hence, by induction on
+$j$, $Z_0(\mu,\nu)\neq0$
+if and only if $\mu\nu$ is directed and
+$e_m\notin\operatorname{arc}(f_j,f_{j-1})$ for $j=1,\ldots,n$. We
+evaluate these conditions using (2). For a label of $\nu^H$ we have
+$f_j<f_{j-1}\leq c^\ast<e_m$, and the arc is $(f_j,f_{j-1})$, which
+does not contain $e_m$. For the first label of $\nu^L$ we have
+$f_{j-1}\leq c^\ast<f_j$, and the arc $\{f_j+1,\ldots,k\}\cup\{1,\ldots,f_{j-1}-1\}$
+avoids $e_m$ if and only if $f_j>e_m$. For a later label of $\nu^L$ we
+have $c^\ast<f_j<f_{j-1}$ and, inductively, $f_{j-1}>e_m$, so the arc
+$(f_j,f_{j-1})$ avoids $e_m$ if and only if $f_j>e_m$. Thus
+$Z_0(\mu,\nu)\neq0$ if and only if every value of $\nu^L$ exceeds
+$e_m$, which by (2) means $\nu^L\subseteq\mu$.
+\end{proof}
+
+\begin{proposition}[The two families]\label{prop:families}
+Let $F=\{k-1\}$, in the clean frame.
+\begin{enumerate}
+\item $\mathcal W_B$ is the set of pairs with $\mu\subseteq R_\xi$,
+ $\nu^H\subseteq H_{\max}$ and $\varnothing\neq\nu^L\subseteq\{a\in\mu:a>p_H\}$,
+ and $\mathcal W_A$ is the set of pairs with $\mu\subseteq R_\xi$,
+ $\nu\subseteq R_\mu$ and $\nu^L\not\subseteq\mu$.
+\item For $(\mu,\nu)\in\mathcal W_B$ let $j=\max\nu$, which lies in
+ $\mu$, and put
+ \[
+  \Phi(\mu,\nu)=\bigl(\mu_{<j},\ \nu\cup\mu_{>j}\bigr),
+ \]
+ where $\mu_{<j}$, $\mu_{>j}$ are the parts of $\mu$ below and above
+ $j$. For $(\mu',\nu')\in\mathcal W_A$ let $U=\nu'^L\setminus\mu'$,
+ which is nonempty, and put
+ \[
+  \Psi(\mu',\nu')=\bigl(\mu'\cup U,\ \nu'^H\cup(\nu'^L\cap\mu')\cup\{\min U\}\bigr).
+ \]
+ Then $\Phi\colon\mathcal W_B\to\mathcal W_A$ and
+ $\Psi\colon\mathcal W_A\to\mathcal W_B$ are mutually inverse
+ bijections, $|\Phi(\mu,\nu)|=|\mu|+|\nu|-1$, and
+ \[
+  P[\mu\nu]\,\G_\xi=E\,P[\Phi(\mu,\nu)]\,\G_\xi
+  \qquad\text{for all }(\mu,\nu)\in\mathcal W_B .
+ \]
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(1) By Lemma~\ref{lem:directed-pairs}, a pair is in $\mathcal W_B$
+(directed, shared, $Z_0\neq0$) if and only if $\mu\subseteq R_\xi$,
+$\nu\subseteq R_\mu$, $\nu^L\subseteq\mu$ and $\nu^L\cap\mu\neq\varnothing$;
+here $\nu^H\subseteq R_\mu\cap H=H_{\max}$, and
+$\nu^L\subseteq R_\mu\cap\mu=\{a\in\mu:a>p_H\}$. A pair is in
+$\mathcal W_A$ (directed, wild, $Z_0=0$) if and only if
+$\mu\subseteq R_\xi$, $\nu\subseteq R_\mu$, $\nu^L\neq\varnothing$ and
+$\nu^L\not\subseteq\mu$, and the third condition follows from the
+fourth.
+
+(2) Let $(\mu,\nu)\in\mathcal W_B$ and $(\mu',\nu')=\Phi(\mu,\nu)$.
+Since $\nu^L\subseteq\mu$ is nonempty, $j=\max\nu=\max\nu^L\in\mu$ and
+$j>p_H$. We have $\mu'=\mu_{<j}\subseteq R_\xi$, $\nu'^H=\nu^H\subseteq H_{\max}$
+and $\nu'^L=\nu^L_{<j}\cup\{j\}\cup\mu_{>j}$. Here
+$\nu^L_{<j}\subseteq\{a\in\mu':a>p_H\}\subseteq R_{\mu'}$, and
+$\{j\}\cup\mu_{>j}$ consists of elements of $R_\xi$ exceeding
+$\max\mu'$ and $p_H$, so it lies in $R_{\mu'}$ as well. Thus
+$\nu'\subseteq R_{\mu'}$, and $j\in\nu'^L\setminus\mu'$; by (1),
+$(\mu',\nu')\in\mathcal W_A$. Clearly $|\mu'|+|\nu'|=|\mu|+|\nu|-1$.
+
+Let $(\mu',\nu')\in\mathcal W_A$ and $(\mu,\nu)=\Psi(\mu',\nu')$. The
+elements of $U=\nu'^L\setminus\mu'\subseteq R_{\mu'}\setminus\mu'$ lie
+in $R_\xi$ and exceed $\max\mu'$ and $p_H$, so $\mu=\mu'\cup U\subseteq R_\xi$,
+and $\mu'<U$ elementwise. Further $\nu^H=\nu'^H\subseteq H_{\max}$ and
+$\nu^L=(\nu'^L\cap\mu')\cup\{\min U\}$ is a nonempty subset of $\mu$
+all of whose elements exceed $p_H$. By (1), $(\mu,\nu)\in\mathcal W_B$.
+
+The two maps are inverse to each other. Starting from
+$(\mu,\nu)\in\mathcal W_B$ with $j=\max\nu$, the pair
+$(\mu',\nu')=\Phi(\mu,\nu)$ has $\nu'^L\setminus\mu'=\{j\}\cup\mu_{>j}$
+with minimum $j$ and $\nu'^L\cap\mu'=\nu^L_{<j}$, so
+$\Psi(\mu',\nu')=(\mu_{<j}\cup\{j\}\cup\mu_{>j},\ \nu^H\cup\nu^L_{<j}\cup\{j\})=(\mu,\nu)$.
+Starting from $(\mu',\nu')\in\mathcal W_A$ with $c=\min U$, the pair
+$(\mu,\nu)=\Psi(\mu',\nu')$ has $\max\nu=c$, since $\nu'^L\cap\mu'\subseteq\mu'<U$,
+so $\mu_{<c}=\mu'$ and $\mu_{>c}=U\setminus\{c\}$, and
+$\Phi(\mu,\nu)=(\mu',\ \nu'^H\cup(\nu'^L\cap\mu')\cup U)=(\mu',\nu')$.
+
+For the identity of weights, let $(\mu,\nu)\in\mathcal W_B$,
+$j=\max\nu$ and $(\mu',\nu')=\Phi(\mu,\nu)$. The label $j$ is the
+$l_0$th label of $\nu'=\nu_{<j}\,(j,k-1)\,\overline{\mu_{>j}}$, where
+the bar converts upper indices $k$ to $k-1$ and $l_0=|\nu_{<j}|+1$. Using
+Lemma~\ref{lem:ybe}(1) to move the operators $K_a$, $a>j$, of
+$\mu_{>j}$ past $L_j$ and past the $L_c$, $c<j$, of $\nu_{<j}$, and to
+move $K_j$ past the latter,
+\[
+ P[\mu\nu]\G_\xi=P[\mu_{>j}]\,L_j\,P[\nu_{<j}]\,K_j\,P[\mu_{<j}]\G_\xi
+ =W_{l_0}(\mu',\nu').
+\]
+As $(\mu,\nu)$ is directed, $W_{l_0}(\mu',\nu')\neq0$, so
+Lemma~\ref{lem:telescoping} gives $Z_0(\mu',\nu')=0$ and
+$E\,P[\mu'\nu']\G_\xi=Z_{|\nu'|}(\mu',\nu')=W_{l_0}(\mu',\nu')=P[\mu\nu]\G_\xi$.
+\end{proof}
+
+The proof shows, in passing, that for $(\mu',\nu')\in\mathcal W_A$
+the unique nonzero defect $W_{l}(\mu',\nu')$ of
+Lemma~\ref{lem:telescoping} occurs at the first label of $\nu'$ whose
+lower index exceeds $p_H$ and is not in $\mu'$.
+
+\begin{theorem}[The block identity when only position $k-1$ is fresh]\label{thm:F-minimal}
+The block identity \eqref{eq:block} holds for $F=\{k-1\}$ and every
+$\xi$.
+\end{theorem}
+
+\begin{proof}
+By the conventions of this subsection we may assume the clean frame.
+By Proposition~\ref{prop:families}, summing
+$\beta^{|\mu|+|\nu|}P[\mu\nu]\G_\xi=\beta E\,\beta^{|\Phi(\mu,\nu)|}P[\Phi(\mu,\nu)]\G_\xi$
+over $(\mu,\nu)\in\mathcal W_B$ and using that $\Phi$ is a bijection
+onto $\mathcal W_A$ gives \eqref{eq:star}, and
+Proposition~\ref{prop:F-minimal} gives \eqref{eq:block}.
+\end{proof}
+
+\paragraph{General $F$: the components of the chain form.}
+We return to arbitrary $F\ni k-1$ and record what the chain form
+\eqref{eq:chain-form} looks like component by component. Write
+$s_p=t^{-1}_{\xi(p)}-a$ for $p\in F'$. The status factor of $\xi(p)$
+at a chain endpoint is $s_p$, $a$ or $s_p+a$ according as $\xi(p)$ is
+fixed, Left or Out, and in $\widehat C^\flat_F$ the factor of
+$\xi(c_n)$ is $a$. Expanding the products over $F'$, both sides of
+\eqref{eq:chain-form} become sums of monomials $s^Sa^{|F'\setminus S|}$,
+$S\subseteq F'$, with coefficients in the span of the
+$q^D\beta^m\G_v$; the operators $E$ and $\mathcal K$ do not involve
+$s$ or $a$. Hence \eqref{eq:chain-form} is equivalent to the family of
+identities
+\begin{equation}\label{eq:chain-form-S}
+ E\,\Pi_t\mathcal P^0_S+\beta q_{k-1}\mathcal P^0_S
+ =(1+\beta E)\,\mathcal KE\bigl(\mathcal Q^0_{\varnothing,S}+\mathcal P^{\flat,0}_{t,S}\bigr),
+ \qquad S\subseteq F',
+\end{equation}
+in which $\mathcal P^0_S$ and $\mathcal Q^0_{\varnothing,S}$ are the
+sums of $\beta^{|c|}q^{D(c)}\G_{\operatorname{end}(c)}$ over the
+chains $c$, respectively the chains $c=\mu$, whose endpoint has no Left
+value $\xi(p)$ with $p\in S$ and no fixed value $\xi(p)$ with
+$p\in F'\setminus S$, and $\mathcal P^{\flat,0}_{t,S}$ is the same sum
+over the tame chains with $c_n\in F'\setminus S$ for which the same
+holds when $\xi(c_n)$ is counted as Left. We call such chains
+\emph{$S$-admissible}. These identities contain neither $a$ nor the
+equivariant parameters.
+
+\begin{lemma}[Fresh descents leave a value Left]\label{lem:descent-left}
+Let $c=\mu\nu$ be a level-$(k-2)$ block chain with a descent, that is,
+two consecutive labels $(a_i,k)(a_{i+1},k)$ with $a_i>a_{i+1}$ or
+$(c_j,k-1)(c_{j+1},k-1)$ with $c_j>c_{j+1}$. Then some fresh value
+$\xi(p)$, $p\in F'$, is Left in $\operatorname{end}(c)$. More
+precisely, a descent of $\nu$ at $c_j$ leaves $\xi(c_j)$ Left, and a
+descent of $\mu$ at $a_i$ leaves $\xi(a_i)$ Left unless $\nu$ contains
+the label $(a_{i+1},k-1)$ preceded by a label with a larger lower
+index.
+\end{lemma}
+
+\begin{proof}
+Work in the clean frame. A descent $c_j>c_{j+1}$ of $\nu$ is allowed
+only if $c_j\in F'\setminus\mu$; the label $(c_j,k-1)$ moves $\xi(c_j)$
+to position $k-1$ and the next label moves it to position
+$c_{j+1}<c_j$, which no later label touches. A descent $a_i>a_{i+1}$
+of $\mu$ is allowed only if $a_i\in F'$; the value $e_i=\xi(a_i)$ ends
+at position $a_{i+1}<a_i$ after the label $(a_{i+1},k)$ and is moved
+again only if $\nu$ contains $(a_{i+1},k-1)$, say as its $j$th label.
+Suppose that all labels of $\nu$ before this one have lower indices
+smaller than $a_{i+1}$. Then at the $j$th label the positions $a_{i+1}$
+and $a_i$ still carry $e_i$ and $e_{i-1}$, and $a_i$ lies strictly
+between $a_{i+1}$ and $k-1$. The label exchanges $e_i$ with the value
+$f_{j-1}$ at position $k-1$; a quantum edge would need
+$e_{i-1}\in(f_{j-1},e_i)$, which is absurd, so the edge is Bruhat
+with $e_i<f_{j-1}$ and $e_{i-1}\notin(e_i,f_{j-1})$, that is,
+$f_{j-1}\in(e_i,e_{i-1})$. We show by descending induction that
+$f_{j'}\in(e_i,e_{i-1})$ for all $j'<j$, which is absurd for $j'=0$
+because $f_0=c^\ast<e_m\leq e_i$. Let $1\leq j'<j$ with
+$f_{j'}\in(e_i,e_{i-1})$. The value $f_{j'}$ is the value at position
+$c_{j'}$ after $\mu$; it is not one of the $e_h$, so $c_{j'}\notin\mu$
+and $f_{j'}=\xi(c_{j'})$. The cover condition of the $i$th label of
+$\mu$ says that no position in $(a_i,k-1]$ other than
+$a_1,\ldots,a_{i-1}$ carries a value in $(e_i,e_{i-1})$, so
+$c_{j'}<a_i$; also $c_{j'}<a_{i+1}$ by assumption. Hence the
+positions $a_{i+1}$ and $a_i$, carrying $e_i$ and $e_{i-1}$, lie
+strictly between $c_{j'}$ and $k-1$ at the $j'$th label. A quantum
+edge would need $e_{i-1}\in(f_{j'-1},f_{j'})$, contradicting
+$f_{j'}<e_{i-1}$; so the edge is Bruhat, $f_{j'}<f_{j'-1}$, and
+$e_{i-1}\notin(f_{j'},f_{j'-1})$ forces $f_{j'-1}<e_{i-1}$, that is,
+$f_{j'-1}\in(e_i,e_{i-1})$.
+\end{proof}
+
+\begin{corollary}\label{cor:top-component}
+For every $F\ni k-1$ and every $\xi$, the component $S=F'$ of
+\eqref{eq:chain-form-S} holds.
+\end{corollary}
+
+\begin{proof}
+For $S=F'$ the $S$-admissible chains are those without a Left fresh
+value, and $\mathcal P^{\flat,0}_{t,F'}=0$. By
+Lemma~\ref{lem:descent-left} the $S$-admissible chains have no
+descent, that is, $\mu$ and $\nu$ are increasing; conversely an
+increasing chain never moves a value to a smaller position. Hence
+$\mathcal P^0_{F'}=\mathcal L\mathcal K\G_\xi$ and
+$\mathcal Q^0_{\varnothing,F'}=\mathcal K\G_\xi$, and the component is
+the identity \eqref{eq:chain-form} for $(\xi,\{k-1\})$, which holds by
+Theorem~\ref{thm:F-minimal} and Proposition~\ref{prop:chain-form}.
+\end{proof}
+
+\paragraph{Chains with descents.}
+We now drop the assumption $F=\{k-1\}$. For the rest of this
+subsection $c=\mu\nu$ denotes a level-$(k-2)$ block chain for
+$(\xi,F)$ in the clean frame, with $\mu=(a_1,k)\cdots(a_m,k)$ and
+$\nu=(c_1,k-1)\cdots(c_n,k-1)$. Since the labels are distinct, the
+lower indices $a_1,\ldots,a_m$ are pairwise distinct, and so are
+$c_1,\ldots,c_n$; condition~4 allows a descent $a_i>a_{i+1}$ only when
+$a_i\in F'$, and a descent $c_j>c_{j+1}$ only when $c_j\in F'$ and
+$c_j\notin\mu$. We write $e_0=k$ and $e_i=\xi(a_i)$, let $y$ be the
+endpoint of $\mu$, and put $f_0=c^\ast$ and $f_j=y(c_j)$; as before we
+also write $\mu$ and $\nu$ for the sets of lower indices. The vectors
+$Z_l(\mu,\nu)$ and $W_l(\mu,\nu)$ are defined by the same formulas as
+before, and Lemma~\ref{lem:telescoping} applies to them.
+
+\begin{lemma}[Shape of a block chain]\label{lem:shape}
+\begin{enumerate}
+\item Every edge of $\mu$ is Bruhat. Along $\mu$ the value at position
+ $k$ runs through $e_0>e_1>\cdots>e_m$; we have $y(a_i)=e_{i-1}$,
+ $y(p)=\xi(p)$ for $p\notin\mu$, $y(k-1)=c^\ast$ and $y(k)=e_m$. For
+ every $i$, no position $p$ with $a_i<p\leq k-1$ other than
+ $a_1,\ldots,a_{i-1}$ satisfies $\xi(p)\in(e_i,e_{i-1})$; in particular
+ $c^\ast<e_m$.
+\item There is $j_0\in\{1,\ldots,n+1\}$ such that
+ $c^\ast=f_0>f_1>\cdots>f_{j_0-1}$ and
+ $f_{j_0}>f_{j_0+1}>\cdots>f_n>c^\ast$. The $j_0$th edge of $\nu$ is
+ quantum, all other edges of $\nu$ are Bruhat, and $c$ is wild if and
+ only if $j_0\leq n$. If $c_j\in\mu$, say $c_j=a_i$, then
+ $f_j=e_{i-1}>e_m$ and $j\geq j_0$; if $c_j\notin\mu$, then
+ $f_j=\xi(c_j)$. In particular $c_j\notin\mu$ for $j<j_0$.
+\item The $j$th label of $\nu$ exchanges the value $f_j$ at position
+ $c_j$ with the value $f_{j-1}$ at position $k-1$. If $j\neq j_0$, no
+ position strictly between $c_j$ and $k-1$ carries a value in
+ $(f_j,f_{j-1})$; if $j=j_0$, every position strictly between
+ $c_{j_0}$ and $k-1$ carries a value in $(f_{j_0-1},f_{j_0})$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(1) Lemma~\ref{lem:rotation}, applied to $\mu$ with $k-1$ in place of
+$k$, rotates by $\vartheta=\xi(k)=k$, which is the identity; so every
+edge of $\mu$ is Bruhat. A Bruhat edge $(a_i,k)$ replaces the value at
+$k$ by the smaller value at $a_i$, which is $\xi(a_i)$ because no
+earlier label of $\mu$ has lower index $a_i$, and it leaves the old
+value $e_{i-1}$ at $a_i$, where it stays. By Lemma~\ref{lem:arc} the
+edge requires that no value at a position strictly between $a_i$ and
+$k$ lies in $(e_i,e_{i-1})$; the positions $a_1,\ldots,a_{i-1}$ carry
+$e_0,\ldots,e_{i-2}$, which exceed $e_{i-1}$, and every other position
+still carries its value in $\xi$. Position $k-1$ is never a lower
+index of $\mu$, so $c^\ast\notin(e_i,e_{i-1})$ for all $i$, and
+$c^\ast<e_0$ gives $c^\ast<e_m$ by induction on $i$.
+
+(2) By Lemma~\ref{lem:rotation}, applied to $c$ with $k-2$ in place of
+$k$ and $\vartheta=\xi(k-1)=c^\ast$, every edge of the rotated chain
+is Bruhat, so along $\nu$ the value at position $k-1$ strictly
+decreases in the rotated order $c^\ast+1<\cdots<k<1<\cdots<c^\ast$;
+this gives the two decreasing runs, and by the last assertion of that
+lemma the $j$th edge is quantum exactly when $f_{j-1}\leq c^\ast<f_j$,
+that is for $j=j_0$. The chain is wild if and only if $f_n>c^\ast$
+(Lemma~\ref{lem:wild-char}), that is if and only if $j_0\leq n$. The
+value at position $c_j$ just before the $j$th label of $\nu$ is
+$y(c_j)$, because no earlier label of $\nu$ has lower index $c_j$; by
+(1) it is $e_{i-1}>e_m>c^\ast$ if $c_j=a_i$, which forces $j\geq j_0$,
+and $\xi(c_j)$ if $c_j\notin\mu$.
+
+(3) is Lemma~\ref{lem:arc}: for $j\neq j_0$ the edge is Bruhat with
+$f_j<f_{j-1}$, and $\operatorname{arc}(f_j,f_{j-1})=(f_j,f_{j-1})$;
+for $j=j_0$ it is quantum with $f_{j_0}>f_{j_0-1}$, and
+$\operatorname{arc}(f_{j_0},f_{j_0-1})$ is the complement of
+$[f_{j_0-1},f_{j_0}]$.
+\end{proof}
+
+For an increasing chain the labels of $\nu$ with $j<j_0$ form
+$\nu^H$ and those with $j\geq j_0$ form $\nu^L$. The next lemma
+extends to arbitrary chains the fact, contained in
+Lemma~\ref{lem:directed-pairs}(2), that the labels of $\nu^L$ with
+lower index in $\mu$ carry values above $e_m$ and the others values
+below $e_m$, and that the latter come last.
+
+\begin{lemma}[The labels after the quantum edge]\label{lem:after-quantum}
+Let $J=\{j:\ c_j\notin\mu\text{ and }c^\ast<\xi(c_j)<e_m\}$. Then
+$J=\{j\geq j_0:\ c_j\notin\mu\}=\{j\geq j_0:\ f_j<e_m\}$, and $J$ is a
+final segment of $\{1,\ldots,n\}$. Thus, if $J=\varnothing$, then
+$c_j\in\mu$ for every $j\geq j_0$; and if $J\neq\varnothing$ and
+$l^\ast=\min J$, then $c_j\in\mu$ for $j_0\leq j<l^\ast$ and
+$c_j\notin\mu$ for $j\geq l^\ast$. Moreover, writing $c_j=a_{i(j)}$
+for the labels of $\nu$ with lower index in $\mu$, the indices $i(j)$
+strictly increase with $j$.
+\end{lemma}
+
+\begin{proof}
+If $c_j\in\mu$ then $j\geq j_0$ and $f_j=e_{i(j)-1}$
+(Lemma~\ref{lem:shape}(2)); as the $f_j$ with $j\geq j_0$ strictly
+decrease, the $i(j)$ strictly increase. For $j\geq j_0$ the value
+$f_j$ differs from $e_m=y(k)$, and $f_j<e_m$ forces $c_j\notin\mu$ and
+then $f_j=\xi(c_j)\in(c^\ast,e_m)$, so $j\in J$; conversely $j\in J$
+gives $f_j=\xi(c_j)>c^\ast$, hence $j\geq j_0$, and $f_j<e_m$. So
+$J=\{j\geq j_0:f_j<e_m\}$, which is a final segment because the $f_j$,
+$j\geq j_0$, decrease. It remains to show that $c_j\in\mu$ whenever
+$j\geq j_0$ and $f_j>e_m$; together with the above this gives
+$J=\{j\geq j_0:c_j\notin\mu\}$ and the description of the labels
+$c_j$, $j\geq j_0$. Suppose not, and let $j$ be the least index
+with $j\geq j_0$, $f_j>e_m$ and $c_j\notin\mu$; then $f_j=\xi(c_j)$,
+and $e_m<\xi(c_j)<k=e_0$ gives a unique $h\in\{1,\ldots,m\}$ with
+$e_h<\xi(c_j)<e_{h-1}$. By Lemma~\ref{lem:shape}(1), applied to the
+$h$th label of $\mu$ and the position $c_j\notin\mu$, we get
+$c_j<a_h$; so $a_h$ lies strictly between $c_j$ and $k-1$ at the $j$th
+label of $\nu$. We use Lemma~\ref{lem:shape}(3).
+
+If $j=j_0$, every position strictly between $c_{j_0}$ and $k-1$
+carries a value smaller than $f_{j_0}=\xi(c_j)$. Position $a_h$ is not
+among $c_1,\ldots,c_{j_0-1}$, which are not in $\mu$, so it still
+carries $y(a_h)=e_{h-1}>\xi(c_j)$: a contradiction.
+
+If $j>j_0$, then $c_{j-1}\in\mu$ by the minimality of $j$ (as
+$f_{j-1}>f_j>e_m$), say $c_{j-1}=a_i$, and $f_{j-1}=e_{i-1}$. No
+position strictly between $c_j$ and $k-1$ carries a value in
+$(\xi(c_j),e_{i-1})$. From $e_{i-1}>\xi(c_j)>e_h$ we get $i\leq h$. If
+$h=i$, then $c_{j-1}=a_h>c_j$ is a descent of $\nu$ at a lower index
+of $\mu$, which condition~4 forbids. So $h>i$. If $a_h$ is not among
+$c_1,\ldots,c_{j-1}$, it carries $e_{h-1}$, and
+$\xi(c_j)<e_{h-1}<e_{i-1}$: a contradiction. If $a_h=c_{j'}$ with
+$j'\leq j-1$, then $j'\neq j-1$ because $a_h\neq a_i$, so $j'<j-1$;
+and $f_{j'}=e_{h-1}>c^\ast$ gives $j'\geq j_0$, whence
+$f_{j'}>f_{j-1}$, that is $e_{h-1}>e_{i-1}$ and $h<i$: a contradiction.
+\end{proof}
+
+\begin{lemma}[Types]\label{lem:types}
+For $0\leq l\leq n$ we have $Z_l(\mu,\nu)\neq0$ if and only if
+$J\subseteq\{1,\ldots,l\}$. Hence $Z_0(\mu,\nu)\neq0$ if and only if
+$J=\varnothing$; and if $J\neq\varnothing$ and $l^\ast=\min J$, then
+$Z_l(\mu,\nu)=0$ for $l<l^\ast$, $Z_l(\mu,\nu)=E\,P[\mu\nu]\G_\xi$ for
+$l\geq l^\ast$, and $W_{l^\ast}(\mu,\nu)=E\,P[\mu\nu]\G_\xi$ is the only
+nonzero $W_l(\mu,\nu)$.
+\end{lemma}
+
+\begin{proof}
+We compare the words $\mu\nu_{\leq l}(k-1,k)\tilde\nu_{>l}$ and
+$\mu\nu$ as in the proof of Lemma~\ref{lem:directed-pairs}(3). After
+$\mu\nu_{\leq l}(k-1,k)$, which is directed, the positions
+$1,\ldots,k-2$ carry the same values as after $\mu\nu_{\leq l}$, while
+position $k-1$ carries $e_m$ and position $k$ carries $f_l$. Suppose
+that both words agree in this way just before their $j$th labels
+$(c_j,k)$, respectively $(c_j,k-1)$, for some $j>l$. Both labels
+exchange the value $f_j$ at position $c_j$ with the value $f_{j-1}$,
+which sits at $k$ in the first word and at $k-1$ in the second; the
+positions strictly between are the same, with the same values, except
+that $k-1$, carrying $e_m$, is intermediate for the first label only.
+By Lemma~\ref{lem:arc} the first label is an edge if and only if the
+second one is and $e_m\notin\operatorname{arc}(f_j,f_{j-1})$, and then
+the two words agree again in the same way. Hence
+$Z_l(\mu,\nu)\neq0$ if and only if
+$e_m\notin\operatorname{arc}(f_j,f_{j-1})$ for all $j>l$.
+
+We evaluate this condition with Lemma~\ref{lem:shape}(2) and
+Lemma~\ref{lem:after-quantum}. For $j<j_0$ the arc is
+$(f_j,f_{j-1})\subseteq\{1,\ldots,c^\ast-1\}$, which does not contain
+$e_m>c^\ast$. For $j=j_0$ the arc is
+$\{f_{j_0}+1,\ldots,k\}\cup\{1,\ldots,f_{j_0-1}-1\}$, and since
+$e_m>c^\ast\geq f_{j_0-1}$ it contains $e_m$ if and only if
+$f_{j_0}<e_m$, that is $j_0\in J$. For $j>j_0$ the arc is
+$(f_j,f_{j-1})$, which contains $e_m$ if and only if
+$f_j<e_m<f_{j-1}$, that is $j\in J$ and $j-1\notin J$. As $J$ is a
+final segment of $\{j_0,\ldots,n\}$, the arc contains $e_m$ exactly
+for $j=\min J$. Hence $Z_l\neq0$ if and only if $J=\varnothing$ or
+$\min J\leq l$. The remaining assertions follow from
+Lemma~\ref{lem:telescoping}: $Z_l=Z_0+\sum_{h\leq l}W_h$ with at most
+one nonzero $W_h$, which must then be $W_{l^\ast}$, and
+$Z_n=E\,P[\mu\nu]\G_\xi$.
+\end{proof}
+
+We call $c$ of \emph{type~B} if $J=\varnothing$, that is if its
+braided word $Z_0(\mu,\nu)$ is directed, and of \emph{type~A}
+otherwise. A tame chain has $j_0=n+1$, hence is of type~B; a chain of
+type~A has $J\neq\varnothing$, hence $j_0\leq n$, and is wild. For
+increasing chains, type~B means $\nu^L\subseteq\mu$, and
+Lemma~\ref{lem:types} reduces to Lemma~\ref{lem:directed-pairs}(3).
+
+\begin{lemma}[Chains of type B]\label{lem:typeB}
+Let $c$ be of type~B.
+\begin{enumerate}
+\item If $c$ is wild, then $c_j\in\mu$ for every $j\geq j_0$. Thus the
+ lower indices that $\nu$ shares with $\mu$ are
+ $a_{i(j_0)},\ldots,a_{i(n)}$ with $i(j_0)<\cdots<i(n)$; in particular
+ $c_n\in\mu$, and no label of $\nu$ has a lower index $a_i$ with
+ $i>i(n)$.
+\item If $a_i>a_{i+1}$ is a descent of $\mu$, then $a_{i+1}\notin\nu$,
+ and $\xi(a_i)$ is Left in the endpoint of every prefix
+ $\mu\nu_{\leq l}$, $0\leq l\leq n$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(1) is Lemma~\ref{lem:after-quantum} with $J=\varnothing$, together
+with Lemma~\ref{lem:shape}(2) for the labels $j<j_0$.
+
+(2) Suppose $a_{i+1}=c_j$. Then $f_j=y(a_{i+1})=e_i>c^\ast$, so
+$j\geq j_0$, the chain is wild, and by (1) every $c_{j'}$ with
+$j'\geq j_0$ lies in $\mu$, with $i(j')$ increasing. Position $a_i$
+lies strictly between $c_j=a_{i+1}$ and $k-1$. If $j=j_0$, every such
+position carries a value smaller than $f_{j_0}=e_i$
+(Lemma~\ref{lem:shape}(3)); but $a_i$ is not among
+$c_1,\ldots,c_{j_0-1}$, which are not in $\mu$, so it carries
+$e_{i-1}>e_i$: a contradiction. If $j>j_0$, let $c_{j-1}=a_{i'}$; then
+$i'<i(j)=i+1$, so $i'\leq i$, and $f_{j-1}=e_{i'-1}$. If $i'=i$, then
+$c_{j-1}=a_i>a_{i+1}=c_j$ is a descent of $\nu$ at a lower index of
+$\mu$, which condition~4 forbids; so $i'<i$. No position strictly
+between $a_{i+1}$ and $k-1$ carries a value in $(e_i,e_{i'-1})$. If
+$a_i$ is not among $c_1,\ldots,c_{j-1}$, it carries $e_{i-1}$, and
+$e_i<e_{i-1}<e_{i'-1}$: a contradiction. If $a_i=c_{j''}$ with
+$j''<j$, then $i=i(j'')\leq i(j-1)=i'<i$: a contradiction.
+
+Finally, the value $\xi(a_i)=e_i$ is carried to position $k$ by the
+label $(a_i,k)$ and to position $a_{i+1}$ by the label $(a_{i+1},k)$,
+and no later label of $\mu$ and no label of $\nu$ has lower index
+$a_{i+1}$; so in the endpoint of every prefix $\mu\nu_{\leq l}$ it sits
+at $a_{i+1}<a_i$, where it is Left.
+\end{proof}
+
+\paragraph{The right side of the component identity.}
+Fix $S\subseteq F'$. Let $\mathcal C(S)$ be the set of $S$-admissible
+chains, $\mathcal T(S)$ the set of tame chains in $\mathcal C(S)$, and
+$\mathcal W_A(S)$, $\mathcal W_B(S)$ the sets of wild chains in
+$\mathcal C(S)$ of type~A, respectively of type~B; so
+$\mathcal C(S)=\mathcal T(S)\sqcup\mathcal W_A(S)\sqcup\mathcal W_B(S)$,
+and $\mathcal T(S)\sqcup\mathcal W_B(S)$ is the set of $S$-admissible
+chains of type~B. By an \emph{$S$-prefix} we mean a chain counted in
+$\mathcal Q^0_{\varnothing,S}+\mathcal P^{\flat,0}_{t,S}$: either a
+chain $\gamma=\mu$ in $\mathcal C(S)$, or a tame chain
+$\gamma=\mu\nu$ with $\nu\neq\varnothing$ and $c_n\in F'\setminus S$
+that is $S$-admissible when $\xi(c_n)$ is counted as Left. Expanding
+$\mathcal K$,
+\[
+ \mathcal KE\bigl(\mathcal Q^0_{\varnothing,S}+\mathcal P^{\flat,0}_{t,S}\bigr)
+ =\sum_{\gamma,\nu'}\beta^{|\gamma|+|\nu'|}\,P[\gamma\,(k-1,k)\,\tilde\nu']\,\G_\xi ,
+\]
+the sum over the $S$-prefixes $\gamma$ and the strictly increasing
+sequences $\nu'$ in $\{1,\ldots,k-2\}$, where $\tilde\nu'$ is the word
+of the labels $(c',k)$, $c'\in\nu'$, in increasing order.
+
+\begin{proposition}[The right side]\label{prop:right-side}
+Let $S\subseteq F'$. For a chain $c=\mu\nu$ of type~B in
+$\mathcal C(S)$ let $l_0(c)$ be the largest $j$ such that
+$c_j\in F'\setminus S$ and $c_j\notin\mu$, or $l_0(c)=0$ if there is
+no such $j$. Then
+\[
+ c\longmapsto\bigl(\mu\nu_{\leq l_0(c)},\ \nu_{>l_0(c)}\bigr)
+\]
+is a bijection from $\mathcal T(S)\sqcup\mathcal W_B(S)$ onto the set
+of pairs $(\gamma,\nu')$ of an $S$-prefix $\gamma$ and a strictly
+increasing sequence $\nu'$ for which $\gamma(k-1,k)\tilde\nu'$ is
+directed, and for these pairs
+$P[\gamma(k-1,k)\tilde\nu']\,\G_\xi=E\,P[c]\,\G_\xi$. Consequently
+\[
+ \mathcal KE\bigl(\mathcal Q^0_{\varnothing,S}+\mathcal P^{\flat,0}_{t,S}\bigr)
+ =E\sum_{c\in\mathcal T(S)\sqcup\mathcal W_B(S)}\beta^{|c|}P[c]\,\G_\xi .
+\]
+\end{proposition}
+
+\begin{proof}
+\emph{Step 1: the tail avoids the prefix.} Let $\gamma=\mu\nu_{\leq l}$
+be an $S$-prefix ($l\geq0$) and $\nu'=(c'_1<\cdots<c'_r)$ a strictly
+increasing sequence such that $\omega=\gamma(k-1,k)\tilde\nu'$ is
+directed. We claim that no $c'_h$ equals a $c_j$ with $j\leq l$.
+Suppose it does, and let $i$ be the least index with $c'_i=c_j$ for
+some $j\leq l$; so $l\geq1$. Since $\gamma$ is tame,
+$c^\ast=f_0>f_1>\cdots>f_l$. After $\gamma(k-1,k)$ position $k-1$
+carries $e_m$, which no label of $\tilde\nu'$ moves, and position $k$
+carries $g_0=f_l$; let $g_h$ be the value brought to position $k$ by
+the $h$th label of $\tilde\nu'$. Position $k-1$ lies strictly between
+$c'_h$ and $k$ for every $h$. By Lemma~\ref{lem:arc}, if the $h$th
+label is a quantum edge, then $g_h>g_{h-1}$ and every intermediate
+value, in particular $e_m$, lies in $(g_{h-1},g_h)$, so $g_h>e_m$; if
+it is a Bruhat edge, then $g_h<g_{h-1}$ and $e_m\notin(g_h,g_{h-1})$,
+so $g_h>e_m$ whenever $g_{h-1}>e_m$. Hence once some $g_h$ exceeds
+$e_m$, all later ones do. Now consider the $i$th label $(c_j,k)$.
+Position $c_j$ carries $f_{j-1}$: the $j$th label of $\nu$ put it
+there, and no later label of $\gamma$ or earlier label of $\tilde\nu'$
+has lower index $c_j$. Since $f_{j-1}\leq c^\ast<e_m$ and $e_m$ is
+intermediate, the label cannot be a quantum edge, so it is a Bruhat
+edge with $f_{j-1}<g_{i-1}$ and $e_m\notin(f_{j-1},g_{i-1})$, that is
+$g_{i-1}<e_m$. Then no $g_h$ with $h<i$ exceeds $e_m$, so the first
+$i-1$ labels of $\tilde\nu'$ are Bruhat edges and
+$g_{i-1}\leq g_0=f_l$. But $j\leq l$ gives $f_l<f_{j-1}<g_{i-1}$: a
+contradiction.
+
+\emph{Step 2: the word is a chain of type B in $\mathcal C(S)$, cut at
+$l_0$.} Keep $\gamma$, $\nu'$, $\omega$ as in Step~1 and let
+$c=\mu\nu$ with $\nu=\nu_{\leq l}\nu'$, the labels of $\nu'$ taken
+with upper index $k-1$. The word $c$ has pairwise distinct labels by
+Step~1, and it satisfies condition~4: inside $\gamma$ and inside the
+increasing $\nu'$ there is nothing to check; at the junction, if $l=0$
+the upper index drops from $k$ to $k-1$, and if $l\geq1$ and
+$c_l>c'_1$, then $c_l\in F'$ by the definition of an $S$-prefix and
+$c_l\notin\mu$ because $\gamma$ is tame (by the definition of tame
+chains, $\nu_{\leq l}$ shares no lower index with $\mu$), so the
+descent is allowed. By Lemma~\ref{lem:telescoping},
+$Z_n(\mu,\nu)=Z_l(\mu,\nu)+\sum_{h>l}W_h(\mu,\nu)$, where
+$Z_l(\mu,\nu)=P[\omega]\G_\xi\neq0$ and every term is zero or a
+monomial with coefficient $1$ times a basis vector; no cancellation
+can occur among such terms, so
+$Z_n(\mu,\nu)=E\,P[c]\G_\xi\neq0$, and $c$ is directed, hence a
+level-$(k-2)$ block chain. By Lemma~\ref{lem:types},
+$J(c)\subseteq\{1,\ldots,l\}$; if $J(c)\neq\varnothing$ this gives
+$l\geq\min J(c)\geq j_0$, so the prefix $\gamma$ would contain the
+quantum edge of $\nu$, contradicting its tameness. Hence
+$J(c)=\varnothing$, $c$ is of type~B, and
+$P[\omega]\G_\xi=Z_l(\mu,\nu)=Z_n(\mu,\nu)=E\,P[c]\G_\xi$.
+
+We compare the statuses of the fresh values $\xi(p)$, $p\in F'$, in
+the endpoints of $\gamma$ and of $c$. The labels of $\nu'$ are the
+only difference.
+\begin{itemize}
+\item If $p\notin\mu\cup\nu$, then $\xi(p)$ is fixed in both.
+\item If $p=c_l$ (with $l\geq1$), then $p\in F'\setminus S$, and
+ $\xi(p)$ is not fixed in either endpoint.
+\item If $p=c_j$ with $j<l$, then $p\notin\mu$ by
+ Lemma~\ref{lem:shape}(2), since $j<j_0$; the value $\xi(p)$ is moved
+ to $k-1$ by the $j$th label and to $c_{j+1}$ by the $(j+1)$th, and no
+ label of $\nu'$ has lower index $c_{j+1}$: the same position in both.
+\item If $p\in\nu'$ and $p\notin\mu$, then $\xi(p)$ is fixed in the
+ endpoint of $\gamma$, since no label of $\gamma$ has lower index $p$;
+ and in the endpoint of $c$ it is Out, because $\nu'$ is increasing:
+ the label $(p,k-1)$ moves it to $k-1$, and the next label, if any,
+ moves it to a position larger than $p$.
+\item If $p=a_i$, the value $e_i$ is carried to position $k$ and then,
+ if $i<m$, to $a_{i+1}$ by $\mu$. If $i=m$ or $a_{i+1}\notin\nu$, it
+ stays there in both endpoints. Otherwise $a_{i+1}\in\nu'$, because a
+ lower index of $\mu$ cannot occur in $\nu_{\leq l}$ (it would have
+ $j\geq j_0>l$); then $a_i<a_{i+1}$ by Lemma~\ref{lem:typeB}(2), the
+ value $e_i$ is Out at $a_{i+1}$ in the endpoint of $\gamma$, and in
+ the endpoint of $c$ it is Out as well, at position $k-1$ or at a
+ position larger than $a_{i+1}$, again because $\nu'$ is increasing.
+\end{itemize}
+Since $\gamma$ is an $S$-prefix, every $p\in F'\cap\nu'$ with
+$p\notin\mu$, whose value is fixed in the endpoint of $\gamma$,
+belongs to $S$. Hence the status of every $\xi(p)$ in the endpoint of
+$c$ is admissible for $S$: it is unchanged, or $p\in F'\setminus S$
+and the value is not fixed, or $p\in S$ and the value is Out. So
+$c\in\mathcal C(S)$, and $c\in\mathcal T(S)\sqcup\mathcal W_B(S)$.
+Finally $l_0(c)=l$: if $l\geq1$ then $c_l\in F'\setminus S$ and
+$c_l\notin\mu$, and no $j>l$ qualifies, since $c_j\in F'\cap\nu'$ with
+$c_j\notin\mu$ lies in $S$.
+
+\emph{Step 3: every chain of type B in $\mathcal C(S)$ arises.} Let
+$c=\mu\nu\in\mathcal T(S)\sqcup\mathcal W_B(S)$, $l=l_0(c)$,
+$\gamma=\mu\nu_{\leq l}$ and $\nu'=\nu_{>l}$. The sequence $\nu'$ is
+increasing: a descent $c_j>c_{j+1}$ with $j>l$ has $c_j\in F'$ and
+$c_j\notin\mu$ by condition~4, and $\xi(c_j)$ is Left in the endpoint
+of $c$ by Lemma~\ref{lem:descent-left}, so $c_j\notin S$ by
+$S$-admissibility; thus $c_j\in F'\setminus S$, $c_j\notin\mu$ and
+$j>l_0(c)$, which is absurd. The word $\gamma(k-1,k)\tilde\nu'$ is
+directed, because $Z_l(\mu,\nu)\neq0$ by Lemma~\ref{lem:types}. It
+remains to see that $\gamma$ is an $S$-prefix. If $l\geq1$, then
+$c_l\in F'\setminus S$ and $c_l\notin\mu$ by definition, and $\gamma$
+is tame: this is clear if $c$ is tame, and if $c$ is wild then
+$c_j\in\mu$ for all $j\geq j_0$ (Lemma~\ref{lem:typeB}(1)), so
+$c_l\notin\mu$ forces $l<j_0$, whence the first $l$ edges of $\nu$ are
+Bruhat and their lower indices lie outside $\mu$
+(Lemma~\ref{lem:shape}(2)). The comparison of statuses in
+Step~2 applies verbatim ($c$ is of type~B, $\nu'$ is increasing and
+avoids $\nu_{\leq l}$, and $c_l\notin\mu$) and shows that the
+endpoint of $\gamma$ satisfies the conditions for an $S$-prefix: the
+only values whose status differs from that in the endpoint of $c$ are
+$\xi(c_l)$, which is counted as Left and has $c_l\in F'\setminus S$,
+and the values $\xi(p)$ with $p\in F'\cap\nu'$, $p\notin\mu$, which
+are fixed in the endpoint of $\gamma$; these $p$ lie in $S$, for
+otherwise the index of $p$ in $\nu$ would exceed $l_0(c)$.
+
+\emph{Step 4.} The maps of Steps~2 and~3 are inverse to each other:
+Step~2 recovers $l=l_0(c)$ from $c$, and Step~3 produces the pair
+$(\mu\nu_{\leq l_0(c)},\nu_{>l_0(c)})$ whose word is $c$. The weights
+were computed in Step~2, and $|\gamma|+|\nu'|=|c|$.
+\end{proof}
+
+\begin{proposition}[The two families for general $F$]\label{prop:families-general}
+Let $S\subseteq F'$. For $c=\mu\nu\in\mathcal W_B(S)$ let $i_1$ be
+the index with $c_n=a_{i_1}$ (Lemma~\ref{lem:typeB}(1)) and put
+\[
+ \Phi(c)=\bigl((a_1,k)\cdots(a_{i_1-1},k),\
+  \nu\,(a_{i_1+1},k-1)\cdots(a_m,k-1)\bigr).
+\]
+For $c'=\mu'\nu'\in\mathcal W_A(S)$, with
+$\mu'=(a'_1,k)\cdots(a'_{m'},k)$, $\nu'=(c'_1,k-1)\cdots(c'_{n'},k-1)$
+and $l^\ast=\min J(c')$, put
+\[
+ \Psi(c')=\bigl(\mu'\,(c'_{l^\ast},k)(c'_{l^\ast+1},k)\cdots(c'_{n'},k),\
+  \nu'_{\leq l^\ast}\bigr).
+\]
+Then $\Phi\colon\mathcal W_B(S)\to\mathcal W_A(S)$ and
+$\Psi\colon\mathcal W_A(S)\to\mathcal W_B(S)$ are mutually inverse
+bijections, $|\Phi(c)|=|c|-1$, and
+\[
+ P[c]\,\G_\xi=E\,P[\Phi(c)]\,\G_\xi\qquad\text{for all }c\in\mathcal W_B(S).
+\]
+For increasing chains these are the maps of
+Proposition~\ref{prop:families}.
+\end{proposition}
+
+\begin{proof}
+Let $c\in\mathcal W_B(S)$ and $(\mu',\nu')=\Phi(c)$, so that
+$\mu'=(a_1,k)\cdots(a_{i_1-1},k)$ and $\nu'$ is $\nu$ followed by the
+labels $(a_i,k-1)$, $i>i_1$, in the order of $\mu$. The labels of
+$\nu'$ are distinct, because no $a_i$ with $i>i_1$ occurs in $\nu$
+(Lemma~\ref{lem:typeB}(1)). Condition~4 holds for the word
+$\mu'\nu'$: inside $\mu'$ and inside $\nu$ it holds as in $c$, where
+only the weaker requirement $c_j\notin\mu'$ is now needed for a
+descent of $\nu$; a descent $a_i>a_{i+1}$ with $i>i_1$ has
+$a_i\in F'$, and $a_i$ is neither in $\mu'$ nor an earlier lower index
+of $\nu'$; and at the junction, $c_n=a_{i_1}$ is neither in $\mu'$ nor
+an earlier lower index of $\nu'$, and if $a_{i_1}>a_{i_1+1}$ then
+$a_{i_1}\in F'$, since this is a descent of $\mu$. Now
+\[
+ P[c]=P[\nu]\,K_{a_m}\cdots K_{a_{i_1+1}}\,K_{a_{i_1}}\,P[\mu'],
+\]
+and the operators $K_{a_i}$, $i>i_1$, commute with every $L_{c_j}$
+(Lemma~\ref{lem:ybe}(1), as $a_i\neq c_j$), so
+\[
+ P[c]\,\G_\xi=K_{a_m}\cdots K_{a_{i_1+1}}\,P[\nu]\,K_{a_{i_1}}\,P[\mu']\,\G_\xi
+ =W_n(\mu',\nu') ,
+\]
+the word $\mu'(a_{i_1},k)\nu'_{\leq n}\tilde\nu'_{>n}$ of
+$W_n(\mu',\nu')$ being $\mu'$, then $(c_n,k)$, then $\nu$, then the
+labels $(a_i,k)$, $i>i_1$. Since $c$ is directed,
+$W_n(\mu',\nu')\neq0$, and Lemma~\ref{lem:telescoping} gives
+$Z_0(\mu',\nu')=0$ and
+$E\,P[\mu'\nu']\G_\xi=Z_{|\nu'|}(\mu',\nu')=W_n(\mu',\nu')=P[c]\G_\xi$.
+In particular $\Phi(c)$ is directed, hence a level-$(k-2)$ block
+chain, and it is of type~A, hence wild. Its endpoint is
+$\operatorname{end}(c)\,t_{k-1,k}$, and exchanging the values at the
+positions $k-1$ and $k$ does not change the status of any value
+$\xi(p)$ with $p\leq k-2$; so $\Phi(c)$ is $S$-admissible, and
+$\Phi(c)\in\mathcal W_A(S)$. Clearly $|\Phi(c)|=|c|-1$.
+
+Let $c'=\mu'\nu'\in\mathcal W_A(S)$, $l^\ast=\min J(c')$ and
+$(\mu'',\nu'')=\Psi(c')$. By Lemma~\ref{lem:after-quantum},
+$c'_j\notin\mu'$ for $j\geq l^\ast$, with
+$\xi(c'_j)\in(c^\ast,e'_{m'})$, while $c'_j\in\mu'$ for
+$j_0\leq j<l^\ast$ and $c'_j\notin\mu'$ for $j<j_0$, where $j_0$ and
+$e'_{m'}=\xi(a'_{m'})$ refer to $c'$ (and $e'_0=k$). We first show that
+$c'_{l^\ast}>a'_{m'}$ if $m'\geq1$. Suppose $c'_{l^\ast}<a'_{m'}$, so
+that $a'_{m'}$ lies strictly between $c'_{l^\ast}$ and $k-1$ at the
+$l^\ast$th label of $\nu'$, and apply Lemma~\ref{lem:shape}(3) to
+$c'$. If $l^\ast=j_0$, every such position carries a value smaller than
+$f'_{l^\ast}=\xi(c'_{l^\ast})<e'_{m'}$; but $a'_{m'}$ is not among
+$c'_1,\ldots,c'_{j_0-1}$, so it carries $e'_{m'-1}>e'_{m'}$: a
+contradiction. If $l^\ast>j_0$, then $c'_{l^\ast-1}=a'_i\in\mu'$ and
+$f'_{l^\ast-1}=e'_{i-1}$, and no such position carries a value in
+$(\xi(c'_{l^\ast}),e'_{i-1})$. If $i=m'$, then
+$c'_{l^\ast-1}=a'_{m'}>c'_{l^\ast}$ is a descent of $\nu'$ at a lower
+index of $\mu'$, which condition~4 forbids; so $i<m'$. If $a'_{m'}$ is
+not among $c'_1,\ldots,c'_{l^\ast-1}$, it carries $e'_{m'-1}$, and
+$\xi(c'_{l^\ast})<e'_{m'}<e'_{m'-1}<e'_{i-1}$: a contradiction. If
+$a'_{m'}=c'_{j'}$ with $j'<l^\ast$, then $j'\geq j_0$ and, the indices
+$i(\cdot)$ being increasing, $m'=i(j')\leq i(l^\ast-1)=i<m'$: a
+contradiction.
+
+Hence $\mu''\nu''$ satisfies condition~4: inside $\mu'$ there is
+nothing new; the junction $a'_{m'}<c'_{l^\ast}$ is an ascent; a descent
+$c'_j>c'_{j+1}$ with $j\geq l^\ast$ has $c'_j\in F'$, by condition~4
+for $c'$, as $c'_j\notin\mu'$ is not a repeated index there; and
+inside $\nu''=\nu'_{\leq l^\ast}$ a descent $c'_j>c'_{j+1}$, $j<l^\ast$,
+has $c'_j\in F'$ and $c'_j\notin\mu'$, hence $c'_j\notin\mu''$ since
+$c'_j$ is not among $c'_{l^\ast},\ldots,c'_{n'}$. The labels of
+$\mu''\nu''$ are distinct. Now
+\[
+ P[\mu''\nu'']=P[\nu'_{\leq l^\ast}]\,K_{c'_{n'}}\cdots K_{c'_{l^\ast+1}}\,K_{c'_{l^\ast}}\,P[\mu']
+ =K_{c'_{n'}}\cdots K_{c'_{l^\ast+1}}\,P[\nu'_{\leq l^\ast}]\,K_{c'_{l^\ast}}\,P[\mu'] ,
+\]
+by Lemma~\ref{lem:ybe}(1), and the right side applied to $\G_\xi$ is
+$W_{l^\ast}(\mu',\nu')$, which equals $E\,P[c']\G_\xi\neq0$ by
+Lemma~\ref{lem:types}. So $\Psi(c')$ is directed, hence a level-$(k-2)$
+block chain, with $P[\Psi(c')]\G_\xi=E\,P[c']\G_\xi$; it is wild,
+because $\nu''$ reuses the lower index $c'_{l^\ast}$ of $\mu''$; it is
+$S$-admissible, its endpoint being
+$\operatorname{end}(c')\,t_{k-1,k}$; and it is of type~B: the last
+value of $\mu''$ is $e''_{m''}=\xi(c'_{n'})$, and a label $c'_j$ of
+$\nu''$ with $c'_j\notin\mu''$ has $j<l^\ast$ and $c'_j\notin\mu'$,
+hence $j<j_0$ and $\xi(c'_j)=f'_j<c^\ast$, so $j\notin J(\Psi(c'))$.
+Thus $\Psi(c')\in\mathcal W_B(S)$.
+
+The two maps are inverse to each other. For $c'\in\mathcal W_A(S)$,
+the last label of $\nu''$ is $c'_{l^\ast}$, which is the $(m'+1)$th
+lower index of $\mu''$, so $\Phi(\Psi(c'))=(\mu',\nu'_{\leq l^\ast}\nu'_{>l^\ast})=c'$.
+For $c\in\mathcal W_B(S)$ with $(\mu',\nu')=\Phi(c)$, we determine
+$J(\Phi(c))$, which is computed with $e'_{m'}=e_{i_1-1}$: a label
+$c'_j$ of $\nu'$ with $j\leq n$ is $c_j$, which for $j<j_0$ has
+$\xi(c_j)=f_j<c^\ast$, and for $j\geq j_0$ is $a_{i(j)}$ with
+$i(j)\leq i_1$, so that $c_j\notin\mu'$ only for $j=n$, where
+$\xi(a_{i_1})=e_{i_1}\in(c^\ast,e_{i_1-1})$. Hence $\min J(\Phi(c))=n$,
+and $\Psi(\Phi(c))=\bigl(\mu'(a_{i_1},k)(a_{i_1+1},k)\cdots(a_m,k),\ \nu'_{\leq n}\bigr)=(\mu,\nu)=c$.
+\end{proof}
+
+\begin{theorem}[The block identity]\label{thm:block}
+The block identity \eqref{eq:block} holds for every $k\geq3$, every
+$\xi$ and every $F$.
+\end{theorem}
+
+\begin{proof}
+If $k-1\notin F$ this is Proposition~\ref{prop:block-notfresh}. Let
+$k-1\in F$. By Proposition~\ref{prop:chain-form} and the discussion
+preceding \eqref{eq:chain-form-S}, it suffices to prove
+\eqref{eq:chain-form-S} for every $S\subseteq F'$, in the clean frame.
+Write $\Sigma(\mathcal X)=\sum_{c\in\mathcal X}\beta^{|c|}P[c]\G_\xi$
+for a set $\mathcal X$ of chains. Then
+$\mathcal P^0_S=\Sigma(\mathcal C(S))$ and
+$\Pi_t\mathcal P^0_S=\Sigma(\mathcal T(S))$, so the left side of
+\eqref{eq:chain-form-S} is
+\[
+ E\,\Sigma(\mathcal T(S))+\beta q_{k-1}\bigl(\Sigma(\mathcal T(S))+\Sigma(\mathcal W_A(S))+\Sigma(\mathcal W_B(S))\bigr).
+\]
+By Proposition~\ref{prop:right-side} and $E^2=q_{k-1}$, the right side
+is
+\[
+ (1+\beta E)E\bigl(\Sigma(\mathcal T(S))+\Sigma(\mathcal W_B(S))\bigr)
+ =(E+\beta q_{k-1})\bigl(\Sigma(\mathcal T(S))+\Sigma(\mathcal W_B(S))\bigr).
+\]
+The difference of the two sides is
+$E\,\Sigma(\mathcal W_B(S))-\beta q_{k-1}\Sigma(\mathcal W_A(S))$. By
+Proposition~\ref{prop:families-general},
+\[
+ \Sigma(\mathcal W_B(S))=\sum_{c\in\mathcal W_B(S)}\beta^{|c|}E\,P[\Phi(c)]\G_\xi
+ =\beta E\sum_{c\in\mathcal W_B(S)}\beta^{|\Phi(c)|}P[\Phi(c)]\G_\xi
+ =\beta E\,\Sigma(\mathcal W_A(S)),
+\]
+so $E\,\Sigma(\mathcal W_B(S))=\beta E^2\Sigma(\mathcal W_A(S))=\beta q_{k-1}\Sigma(\mathcal W_A(S))$,
+and the difference vanishes.
+\end{proof}
+
+\begin{corollary}\label{cor:main}
+The backtrack identity \eqref{eq:backtrack} holds for every
+$u\in S_\infty$ and every $k\geq2$. Consequently
+Theorem~\ref{prop:top} holds for all $u$ and $k$.
+\end{corollary}
+
+\begin{proof}
+For $k=2$ the backtrack identity is
+Proposition~\ref{prop:backtrack-known}(i). For $k\geq3$ it follows
+from Theorem~\ref{thm:block} by Proposition~\ref{prop:block-reduction}.
+Theorem~\ref{thm:backtrack-implies} then gives Theorem~\ref{prop:top}.
+\end{proof}
+
+\begin{remark}
+The proof matches the two sides of \eqref{eq:chain-form-S} term by
+term: the terms $E\,P[c]\G_\xi$, $c\in\mathcal T(S)$, and
+$\beta q_{k-1}P[c]\G_\xi$, $c\in\mathcal T(S)\sqcup\mathcal W_B(S)$,
+occur on both sides, and the terms $\beta q_{k-1}P[c']\G_\xi$,
+$c'\in\mathcal W_A(S)$, of the left side are matched with the terms
+$E\,P[c]\G_\xi$, $c\in\mathcal W_B(S)$, of the right side through
+$\Phi$. We have checked the identities
+\eqref{eq:chain-form-S}, and the statements of
+Lemmas~\ref{lem:after-quantum}--\ref{lem:typeB} and
+Propositions~\ref{prop:right-side}--\ref{prop:families-general}, by
+computer for every $\xi\in S_k$, every $F\ni k-1$ and every
+$S\subseteq F'$ with $k\leq7$.
+\end{remark}
 
 \section{A small example and specializations}
 
@@ -2355,9 +4889,10 @@ quantum double Grothendieck polynomials and clearing the denominator.
 When all $q_i=0$, only paths without quantum edges contribute.
 The multiplier becomes $\prod_{i=1}^k(x_i+z)$, giving the
 classical double Grothendieck top-block formula as a specialization
-of Theorem~\ref{prop:top}. In particular, the
-equivariant classical specialization is itself new, rather than
-an appeal to a previously published top-block formula.
+of Theorem~\ref{prop:top}; this specialization is proved in
+Theorem~\ref{thm:classical}. The equivariant classical formula is
+itself new, rather than an appeal to a previously published top-block
+formula.
 
 \paragraph{Non-equivariant specialization.}
 When all $y_a=0$, the coefficient becomes
