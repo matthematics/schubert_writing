@@ -7,6 +7,7 @@
 \newtheorem{proposition}{Proposition}
 \newtheorem{theorem}[proposition]{Theorem}
 \newtheorem{lemma}[proposition]{Lemma}
+\newtheorem{corollary}[proposition]{Corollary}
 \newtheorem{conjecture}[proposition]{Conjecture}
 \newtheorem{definition}[proposition]{Definition}
 \newtheorem{remark}[proposition]{Remark}
@@ -31,7 +32,15 @@
 We prove a triple quantum K-Pieri formula expanding the product of a
 quantum double Grothendieck polynomial and a quantized top block. Its
 coefficients are indexed by endpoints of admissible chains in the
-quantum Bruhat graph.
+quantum Bruhat graph. A cyclic rotation of values turns these chains
+into the Pieri chains of Lenart and Sottile in the classical
+$k$-Bruhat order; this gives uniqueness of the chain to each endpoint
+and a closed formula for its quantum degree. We prove the formula for
+$k=1$, at $y=0$ for all $k$, and on the hyperplane $z=1/\beta$ for all
+$k$, where it is an equivariant quantum $K$-Chevalley formula for the
+line bundle $\mathcal O(-\varpi_k)$ indexed by chains; the general
+equivariant case is reduced to a junction identity whose remaining
+part is stated precisely.
 \end{abstract}
 
 \section{Polynomial conventions}
@@ -234,7 +243,10 @@ the window, as well as values that leave the window.
  \end{theorem}
 
  The formula is indexed by endpoints, so each endpoint appears once.
- The chain-independence of $D$ and $s$ is part of the theorem.
+ The chain-independence of $D$ and $s$ is part of the theorem; it is
+ proved in Corollary~\ref{cor:rotation}, which shows that there is
+ exactly one admissible chain to each endpoint and gives
+ $D$ and $s$ in closed form, see \eqref{eq:D-closed}.
 
  \begin{remark}[Rank and polynomial setting]
  The rank $R_0$ just makes the endpoint set finite; it does not impose
@@ -259,9 +271,15 @@ the coefficient has degree $k+\ellength(u)-\ellength(w)$.
 \section{Proof calculations}
 \label{sec:proof}
 
-The arguments below establish the rank bound, polynomiality of the
-top block, the full formula for $k=1$, and an all-$k$ non-equivariant
-marked-chain expansion. The remaining step for the general equivariant
+The arguments below establish the rank bound, the uniqueness of the
+admissible chain to each endpoint together with closed formulas for
+$s$ and $D$ (by a rotation of values to the classical $k$-Bruhat
+order), polynomiality of the
+top block, the full formula for $k=1$, the full formula at $y=0$
+for all $k$ (Theorem~\ref{thm:noneq}, from the Naito--Sagaki
+marked-chain formula), and the full equivariant formula at
+$z=1/\beta$ for all $k$ (Theorem~\ref{thm:a-zero}, by the junction
+identity). The remaining step for the general equivariant
 formula is specified at the end of the section; that step is not
 proved here.
 
@@ -298,7 +316,249 @@ many edges are required.
 
 This proves that the displayed power $\beta^{s-m}$ is nonnegative
 for each path, without presupposing independence of the path.
-It does not prove independence of $s$ or $D$ for a fixed endpoint.
+Independence of $s$ and $D$ for a fixed endpoint, and in fact
+uniqueness of the path, is proved next.
+
+\subsection{Rotation to the classical \texorpdfstring{$k$}{k}-Bruhat order}
+\label{sec:rotation}
+
+The quantum Bruhat graph has a cyclic symmetry, which we derive from
+the following reformulation of the edge condition. For $v\in S_R$ and
+$1\leq a<b\leq R$ put
+\[
+ A(v;a,b)=\{v(r):a<r<b\},
+\]
+the set of values at the positions strictly between $a$ and $b$.
+For distinct $x,y\in\{1,\ldots,R\}$ let $\operatorname{arc}(x,y)$ be
+the set of values met strictly between $x$ and $y$ when moving
+upward cyclically from $x$ to $y$:
+\[
+ \operatorname{arc}(x,y)=
+ \begin{cases}
+  \{x+1,\ldots,y-1\}& x<y,\\
+  \{x+1,\ldots,R\}\cup\{1,\ldots,y-1\}& x>y.
+ \end{cases}
+\]
+
+\begin{lemma}[Cyclic form of the edge condition]\label{lem:arc}
+Let $v\in S_R$ and $a<b$. Then $v\xrightarrow{(a,b)}vt_{ab}$ is an
+edge of the quantum Bruhat graph if and only if
+\[
+ A(v;a,b)\cap\operatorname{arc}(v(a),v(b))=\varnothing .
+\]
+The edge is a Bruhat edge if $v(a)<v(b)$ and a quantum edge if
+$v(a)>v(b)$.
+\end{lemma}
+
+\begin{proof}
+Passing from $v$ to $vt_{ab}$ changes the inversion status of the pair
+of positions $(a,b)$ and of the pairs $(a,r)$, $(r,b)$ with $a<r<b$
+exactly when $v(r)$ lies strictly between $v(a)$ and $v(b)$; no other
+pair is affected. Hence, if $v(a)<v(b)$,
+\[
+ \ellength(vt_{ab})=\ellength(v)+1+2\,\#\{r:a<r<b,\ v(a)<v(r)<v(b)\},
+\]
+and if $v(a)>v(b)$,
+\[
+ \ellength(vt_{ab})=\ellength(v)-1-2\,\#\{r:a<r<b,\ v(b)<v(r)<v(a)\}.
+\]
+A Bruhat edge therefore means $v(a)<v(b)$ and
+$A(v;a,b)\cap(v(a),v(b))=\varnothing$. A quantum edge means
+$v(a)>v(b)$ and that all $b-a-1$ intermediate values lie in
+$(v(b),v(a))$; since $A(v;a,b)$ does not contain $v(a)$ or $v(b)$,
+this says that $A(v;a,b)$ avoids the complement of $[v(b),v(a)]$,
+which is $\operatorname{arc}(v(a),v(b))$.
+\end{proof}
+
+For $0\leq\vartheta\leq R$ let $\rho=\rho_\vartheta$ be the cyclic
+shift of $\{1,\ldots,R\}$ given by
+\[
+ \rho(x)=x-\vartheta\ \ (x>\vartheta),\qquad
+ \rho(x)=x-\vartheta+R\ \ (x\leq\vartheta),
+\]
+so that $\rho(\vartheta)=R$ is the largest value when
+$\vartheta\geq1$, and the relabelled order of values is
+$\vartheta+1<\vartheta+2<\cdots<R<1<\cdots<\vartheta$.
+For $v\in S_R$ write $\rho v=\rho\circ v$ for the permutation
+obtained by relabelling the values of $v$. Since $\rho$ is a cyclic
+shift, $\rho(\operatorname{arc}(x,y))=\operatorname{arc}(\rho x,\rho y)$,
+and clearly $A(\rho v;a,b)=\rho(A(v;a,b))$. Lemma~\ref{lem:arc} gives
+at once:
+
+\begin{corollary}[Cyclic symmetry]\label{cor:cyclic}
+$(a,b)$ is an edge from $v$ if and only if it is an edge from
+$\rho v$. The two edges have the same type unless exactly one of
+$v(a),v(b)$ is at most $\vartheta$: the edge from $v$ is quantum and
+the edge from $\rho v$ is Bruhat exactly when
+$v(b)\leq\vartheta<v(a)$, and the edge from $v$ is Bruhat and the edge
+from $\rho v$ is quantum exactly when $v(a)\leq\vartheta<v(b)$.
+\end{corollary}
+
+The point of the following lemma is that, for the paths we consider,
+a single rotation removes all quantum edges at once. It uses only the
+distinctness of the labels and the weak decrease of the upper
+indices, not condition~4 of Definition~\ref{def:chain}.
+
+\begin{lemma}[Rotation lemma]\label{lem:rotation}
+Let $u\in S_R$, $1\leq k<R$, $\vartheta=u(k+1)$ and $\rho=\rho_\vartheta$.
+Let
+\[
+ u=v_0\xrightarrow{(a_1,b_1)}v_1\xrightarrow{(a_2,b_2)}\cdots
+   \xrightarrow{(a_s,b_s)}v_s
+\]
+be a directed path in the quantum Bruhat graph whose labels satisfy
+$a_i\leq k<b_i$, are pairwise distinct, and have
+$b_1\geq b_2\geq\cdots\geq b_s$. Then every edge of the rotated path
+$\rho v_0\to\rho v_1\to\cdots\to\rho v_s$ is a Bruhat edge.
+Consequently the $i$th edge of the original path is quantum if and
+only if $v_{i-1}(b_i)\leq\vartheta<v_{i-1}(a_i)$.
+\end{lemma}
+
+\begin{proof}
+Put $v_i'=\rho v_i$ and $N=R=\rho(\vartheta)$, the largest value;
+$N$ sits at position $k+1$ in $v_0'$. By Corollary~\ref{cor:cyclic}
+the rotated path is a directed path with the same labels, and the
+last assertion follows from the first by the same corollary. We show
+that no rotated edge is quantum.
+
+Position $k+1$ is involved in a label $(a,b)$ only when $b=k+1$.
+Let $(c_1,k+1),\ldots,(c_m,k+1)$ be the labels with upper index
+$k+1$, in order; by the weak decrease of upper indices they are the
+last $m$ labels of the path, and by distinctness the $c_l$ are
+pairwise distinct. Thus $N$ occupies position $k+1$ until the label
+$(c_1,k+1)$ is applied, and position $c_1$ from then on.
+
+Consider first an edge with label $(a,b)$, $b>k+1$. Then
+$a<k+1<b$, so $N\in A(v';a,b)$ for the permutation $v'$ at which it
+is applied. A quantum edge from $v'$ would have
+$A(v';a,b)\subseteq(v'(b),v'(a))$, which cannot contain the largest
+value. Hence the edge is Bruhat. The edge $(c_1,k+1)$ is Bruhat
+because the value $N$ at position $k+1$ exceeds the value at $c_1$.
+
+It remains to treat $(c_l,k+1)$ for $l\geq2$. We argue by induction
+on $l$, assuming that $(c_1,k+1),\ldots,(c_{l-1},k+1)$ are Bruhat
+edges of the rotated path. Put $e_0=N$ and let $e_h$ be the value at
+position $c_h$ immediately before the edge $(c_h,k+1)$, for
+$1\leq h\leq l$. Immediately before $(c_h,k+1)$ the value at position
+$k+1$ is $e_{h-1}$, so the Bruhat property of these edges gives
+\[
+ N=e_0>e_1>\cdots>e_{l-1},
+\]
+and after $(c_h,k+1)$ the value $e_{h-1}$ sits at position $c_h$,
+where it stays, since $c_h$ is not touched again. Position $c_l$ is
+touched by none of the labels $(c_h,k+1)$, $h<l$, so $x:=e_l$ has been
+the value at position $c_l$ throughout. For $h<l$ with $c_h<c_l$ the
+position $c_l$ lies strictly between $c_h$ and $k+1$, and the Bruhat
+condition for the edge $(c_h,k+1)$ gives $x\notin(e_h,e_{h-1})$.
+
+Suppose that the edge $(c_l,k+1)$ were quantum. Then $x>e_{l-1}$ and
+every value at a position strictly between $c_l$ and $k+1$ lies in
+$(e_{l-1},x)$; in particular $e_{h-1}<x$ whenever $h<l$ and $c_h>c_l$.
+Since $e_{l-1}<x<e_0$ and $x$ differs from every $e_h$, there is a
+unique $h\in\{1,\ldots,l-1\}$ with $e_h<x<e_{h-1}$. If $c_h<c_l$ this
+contradicts $x\notin(e_h,e_{h-1})$; if $c_h>c_l$ it contradicts
+$e_{h-1}<x$. Hence the edge is Bruhat.
+\end{proof}
+
+A saturated chain in the $k$-Bruhat order is a path of Bruhat edges
+with labels $(a,b)$, $a\leq k<b$. Lenart and Sottile
+\cite{lenart2007pieri} consider such chains subject to two conditions,
+(P1): $b_1\geq\cdots\geq b_s$, and (P0): if $i<s$ and $a_i=a_j$ for
+some $j<i$, then $(a_i,b_i)\prec(a_{i+1},b_{i+1})$, with the same
+order $\prec$ on labels as above; these are conditions 3 and 4 of
+Definition~\ref{def:chain}. Distinctness of labels is automatic for
+Bruhat chains satisfying (P1), since a repeated label would force
+equal upper indices in between and a return to a smaller permutation.
+Their uniqueness theorem \cite[Theorem~2.2]{lenart2007pieri} states
+that for given $v,w$ there is at most one saturated chain in the
+$k$-Bruhat order from $v$ to $w$ satisfying (P0) and (P1).
+
+\begin{corollary}[Classical reduction of the chains]\label{cor:rotation}
+Let $u\in S_R$, $1\leq k<R$ with $R\geq\max\{n(u),k\}+1$,
+$\vartheta=u(k+1)$ and $\rho=\rho_\vartheta$. Applying $\rho$ to all
+vertices is a bijection from the admissible $k$-chains from $u$ onto
+the saturated chains in the $k$-Bruhat order starting at $\rho u$ that
+satisfy (P0) and (P1); labels are preserved. Consequently:
+\begin{enumerate}
+\item For every $w\in E(u,k)$ there is exactly one admissible
+ $k$-chain from $u$ to $w$. In particular $s(u,w;k)$ and
+ $D(u,w;k)$ are well defined, and the chain is a shortest directed
+ path from $u$ to $w$ in the quantum Bruhat graph.
+\item Along an admissible chain the value at a position $i\leq k$
+ changes exactly at the labels with lower index $i$, and in the
+ rotated order it strictly increases at each of them; the value at a
+ position $b>k$ changes exactly at the labels with upper index $b$
+ and strictly decreases in the rotated order. In particular
+ $w(i)\neq u(i)$ as soon as $i$ is the lower index of some label, so
+ $m(u,w;k)$ equals the number of distinct lower indices of the chain.
+\item Each position is involved in at most one quantum edge, and
+\begin{equation}\label{eq:D-closed}
+ D_j(u,w;k)=
+ \begin{cases}
+  \#\{\,i\leq j:\ u(i)>u(k+1)\geq w(i)\,\}& j<k,\\[2pt]
+  \#\{\,b>j:\ u(b)\leq u(k+1)<w(b)\,\}& j\geq k,
+ \end{cases}
+ \qquad
+ s(u,w;k)=\ellength(w)-\ellength(u)+2\sum_jD_j(u,w;k).
+\end{equation}
+\end{enumerate}
+\end{corollary}
+
+\begin{proof}
+By Lemma~\ref{lem:rotation} the rotation of an admissible $k$-chain
+is a path of Bruhat edges with the same labels, hence a saturated
+chain in the $k$-Bruhat order, and conditions 3 and 4 are (P1) and
+(P0). Conversely, by Corollary~\ref{cor:cyclic} a chain in the
+$k$-Bruhat order from $\rho u$ with (P0) and (P1) rotates back to a
+directed path from $u$ with the same labels, which are distinct by the
+remark above; so it is an admissible $k$-chain. The inverse rotation
+is $\rho^{-1}$, so this is a bijection.
+
+(1) Two admissible chains from $u$ to $w$ rotate to two chains from
+$\rho u$ to $\rho w$ satisfying (P0) and (P1), which coincide by the
+uniqueness theorem of Lenart and Sottile. Each edge of the quantum
+Bruhat graph raises the length by at most one, so a directed path from
+$u$ to $w$ has at least $\ellength(\rho w)-\ellength(\rho u)$ edges;
+the rotated chain has exactly this many.
+
+(2) A Bruhat edge $(a,b)$ replaces the value at $a$ by the larger
+value at $b$ and the value at $b$ by the smaller value at $a$; no
+other position changes.
+
+(3) By Lemma~\ref{lem:rotation} the $i$th edge is quantum exactly
+when $v_{i-1}(b_i)\leq\vartheta<v_{i-1}(a_i)$, that is, when the value
+entering position $a_i$ is at most $\vartheta$ while the value leaving
+it exceeds $\vartheta$, and the value entering position $b_i$ exceeds
+$\vartheta$ while the value leaving it is at most $\vartheta$. In the
+rotated order the values $>\vartheta$ precede the values
+$\leq\vartheta$, so by (2) this transition happens at most once at
+each position, namely when the initial value at $a_i$ exceeds
+$\vartheta$ and the final one does not, and when the initial value at
+$b_i$ is at most $\vartheta$ and the final one exceeds it. A quantum
+edge $(a,b)$ contributes $1$ to $D_j$ exactly when $a\leq j<b$. For
+$j<k$ every quantum edge has $b>k>j$, so $D_j$ counts the quantum
+edges with $a\leq j$, which by the above is the first formula. For
+$j\geq k$ every quantum edge has $a\leq k\leq j$, so $D_j$ counts the
+quantum edges with $b>j$, giving the second formula. The formula for
+$s$ is \eqref{eq:length-degree}.
+\end{proof}
+
+\begin{remark}
+The corollary identifies the indexing set of Theorem~\ref{prop:top}:
+$w\in E(u,k)$ if and only if $\rho w$ is reached from $\rho u$ by a
+Lenart--Sottile chain, that is, $\rho u\xrightarrow{c(k)}\rho w$ in
+the notation of \cite{lenart2007pieri}, where $\rho$ rotates the
+values so that $u(k+1)$ becomes the largest. Thus the quantum
+endpoint set for $u$ is the classical endpoint set for $\rho u$, and
+the quantum degree records which window values drop from above
+$u(k+1)$ to at most $u(k+1)$, and which outside values rise across
+it. We have checked \eqref{eq:D-closed} against the direct
+enumeration of chains for all $u\in S_n$, $n\leq7$, and all $k$.
+Lemma~\ref{lem:rotation} also shows that the chains, but not the line
+paths of Section~\ref{sec:line-chevalley} below, can be analysed in
+the classical $k$-Bruhat order; backtracks such as
+$(k-1,k),(k-1,k)$ are inherently non-classical.
+\end{remark}
 
 \subsection{An explicit polynomial top block}
 
@@ -745,6 +1005,101 @@ length--degree identity used in Proposition~\ref{prop:k-one};
 the exponents $s-p$ are nonnegative.
 \end{proof}
 
+With Corollary~\ref{cor:rotation} in hand, the path-indexed sum
+\eqref{eq:marked-block} is in fact indexed by endpoints, and its
+exponents can be read off from the endpoint. Write $\gamma_w$ for the
+unique admissible $k$-chain from $u$ to $w\in E(u,k)$.
+
+\begin{lemma}[Forced marks count left moves]\label{lem:h-left}
+Let $w\in E(u,k)$, $w\neq u$. Then
+\[
+ r(\gamma_w)=m(u,w;k)
+ \qquad\text{and}\qquad
+ h(\gamma_w)=|\Left(u,w;k)|+1 .
+\]
+\end{lemma}
+
+\begin{proof}
+The first equality is Corollary~\ref{cor:rotation}(2). For the
+second, note first that $(a_i,b_i)\succ(a_{i+1},b_{i+1})$ means
+$b_i=b_{i+1}$ and $a_i>a_{i+1}$; call such an index $i$ a
+\emph{descent} of $\gamma_w$. If $i_0$ is the last index of the
+maximal initial segment with equal upper indices and decreasing lower
+indices, then $1,\ldots,i_0-1$ are descents and $i_0$ is not, so
+$F(\gamma_w)$ is the disjoint union of $\{i_0\}$ and the set of
+descents, and $h(\gamma_w)-1$ is the number of descents. We show that
+the descents are in bijection with $\Left(u,w;k)$.
+
+By Corollary~\ref{cor:rotation} we may rotate the values and assume
+that $\gamma_w$ is a saturated chain in the $k$-Bruhat order
+satisfying (P0) and (P1); the sets $\Fix,\Left,\Out$ and the
+descents only involve positions and are unchanged. Consider a
+maximal run $(a_1,b),\ldots,(a_p,b)$ of labels with the same upper
+index $b$, and let $\alpha_j$ be the value at position $a_j$ just
+before the label $(a_j,b)$ is applied, $\alpha_0$ the value at $b$
+before the run. Each label is a Bruhat cover, so
+$\alpha_0>\alpha_1>\cdots>\alpha_p$, and the net effect of the run is
+that $\alpha_0$ moves to $a_1$, $\alpha_j$ moves from $a_j$ to
+$a_{j+1}$ for $1\leq j<p$, and $\alpha_p$ moves from $a_p$ to $b$.
+Position $b$ is touched by no other label, so $\alpha_p$ stays at
+$b$ for ever, and every value entering the window from outside does
+so at the start of a run. In particular a value moves within the
+window only in steps $a_j\to a_{j+1}$, which is a move to the left
+exactly at a descent.
+
+Let $i$ be a descent, so that the labels $i$ and $i+1$ are consecutive
+labels $(a_j,b),(a_{j+1},b)$ of a run with $a_{j+1}<a_j$, and the
+value $\alpha_j$ moves from $a_j$ to $a_{j+1}$. By (P0) the lower index
+$a_j$ is a first occurrence, so position $a_j$ was untouched and
+$\alpha_j=u(a_j)$ is a window value making its first move. By the
+prohibition lemma of Lenart and Sottile
+\cite[Lemma~2.9]{lenart2007pieri}, a chain satisfying (P0) and (P1)
+contains no subsequence $(j',m),\ldots,(i',m),\ldots,(i',l)$ with
+$i'<j'\leq k<l<m$; applied with $(j',m)=(a_j,b)$ and
+$(i',m)=(a_{j+1},b)$, this says that position $a_{j+1}$ is never
+touched again (a later label $(a_{j+1},l)$ has $l<b$ by (P1) and
+distinctness). Hence $u(a_j)$ ends at position $a_{j+1}<a_j$ and lies
+in $\Left(u,w;k)$. Distinct descents move distinct values, so this
+gives an injection from descents into $\Left(u,w;k)$.
+
+Conversely let $c=u(i)\in\Left(u,w;k)$. It moves at least once;
+its first move is by a label $(i,b)$. If this label ends its run,
+$c$ stays at $b$ and is in $\Out$; otherwise $c$ moves to the lower
+index $a'$ of the next label. If $a'<i$ this is a descent, and $c$ is
+the value attached to it. If $a'>i$, then every later move of $c$
+starts from a position that has already been touched, so by (P0) it
+is a step to a larger lower index or the end of a run; thus $c$ only
+moves right or leaves the window, and ends in $\Out$, a
+contradiction. Hence every value in $\Left(u,w;k)$ is attached to a
+descent, and the correspondence is a bijection.
+\end{proof}
+
+\begin{theorem}[The non-equivariant case]\label{thm:noneq}
+Theorem~\ref{prop:top} holds at $y=0$: for every $k\geq1$ and
+$u\in S_\infty$,
+\[
+ B_k^q(x;z)\,\G_u^q(x;0)
+ =\sum_{w\in E(u,k)}
+   q^{D(u,w;k)}\beta^{s(u,w;k)-m(u,w;k)}
+   z^{|\Fix(u,w;k)|}(1-\beta z)^{|\Left(u,w;k)|}\,
+   \G_w^q(x;0).
+\]
+\end{theorem}
+
+\begin{proof}
+By Corollary~\ref{cor:rotation}(1) the sum in
+\eqref{eq:marked-block} has exactly one term for each
+$w\in E(u,k)\setminus\{u\}$, namely $\gamma=\gamma_w$, and the term
+$z^k\G_u^q$ is the term $w=u$ with $\Fix=\{u(1),\ldots,u(k)\}$.
+By Lemma~\ref{lem:h-left}, $k-r(\gamma_w)=k-m=|\Fix|$,
+$s(\gamma_w)-r(\gamma_w)=s-m$ and $h(\gamma_w)-1=|\Left|$. This is
+\eqref{eq:coefficient} at $y=0$.
+\end{proof}
+
+Thus the only part of Theorem~\ref{prop:top} that remains open is
+the dependence on the equivariant parameters $y$. At $z=1/\beta$ this
+dependence is settled in Theorem~\ref{thm:a-zero} below.
+
 \subsection{Reduction of level \texorpdfstring{$k$}{k} to levels \texorpdfstring{$k-1$}{k-1} and \texorpdfstring{$k-2$}{k-2}}
 \label{sec:reduction}
 
@@ -812,10 +1167,9 @@ For $j\geq0$ and $u\in S_\infty$ write
  \qquad P_0(u)=\G_u^q,\qquad P_{-1}(u)=0,
 \]
 for the right side of \eqref{eq:main} at level $j$, with
-$C^{(j)}_{u,w}$ given by \eqref{eq:coefficient}. Here the endpoint
-data $(s,D)$ entering $C^{(j)}_{u,w}$ are assumed well defined; this
-is part of what must be proved at each level, see
-Remark~\ref{rem:well-defined} below.
+$C^{(j)}_{u,w}$ given by \eqref{eq:coefficient}. The endpoint
+data $(s,D)$ entering $C^{(j)}_{u,w}$ are well defined by
+Corollary~\ref{cor:rotation}.
 
 \begin{proposition}[Reduction]\label{prop:reduction}
 Let $k\geq1$ and suppose Theorem~\ref{prop:top} holds at levels
@@ -888,26 +1242,28 @@ $v(\pi)$.
 
 \begin{remark}[Well-definedness]\label{rem:well-defined}
 The identity \eqref{eq:junction-coeff} is to be proved for each
-endpoint $w$. If some $w$ were reached by two admissible $k$-chains
-with different $(s,D)$, the left side would be ambiguous. Hence a
-proof of \eqref{eq:junction-coeff} must also show that, for each $w$,
-the right side is a single monomial in $q$ times the expected
-endpoint factors; this establishes the well-definedness claimed in
-Theorem~\ref{prop:top} at level $k$ along the way. The same situation
-occurs in the quantum Schubert proof, where path-independence of the
-quantum weight is proved through the cycle structure of $u^{-1}w$.
+endpoint $w$. By Corollary~\ref{cor:rotation} the data $(s,D)$
+entering $C^{(k)}_{u,w}$ are already known to be well defined, and
+$D$ is given by \eqref{eq:D-closed}; so the left side is unambiguous,
+and a proof of \eqref{eq:junction-coeff} need not establish
+path-independence separately. It does, however, have to show that the
+right side collapses to the single monomial $q^{D(u,w;k)}$ times the
+expected endpoint factors, and that it vanishes for $w\notin E(u,k)$.
+In the quantum Schubert proof the analogous path-independence was
+proved through the cycle structure of $u^{-1}w$; here it comes from
+the rotation to the classical $k$-Bruhat order.
 \end{remark}
 
 \paragraph{The diagonal case.}
 Suppose $u(k)=w(k)$. Position $k$ is touched by a $k$-chain only
-through labels $(k,b)$, and once touched it never regains its
-original value: the value $u(k)$ moves to a position $b>k$ that is
-never touched again, because later labels have second entry at most
-$b$ and distinct labels cannot repeat $(k,b)$. Hence the admissible
-$k$-chains from $u$ to $w$ are exactly the admissible $(k-1)$-chains
-from $u$ to $w$ all of whose labels have second entry at least $k+1$,
+through labels $(k,b)$, and by Corollary~\ref{cor:rotation}(2) a
+touched position never regains its original value. Hence the
+admissible $k$-chains from $u$ to $w$ have no label with lower index
+$k$; they are exactly the admissible $(k-1)$-chains from $u$ to $w$
+all of whose labels have second entry at least $k+1$,
 and for these chains the conditions of Definition~\ref{def:chain} at
-levels $k$ and $k-1$ coincide. The same argument at level $k-1$ shows
+levels $k$ and $k-1$ coincide. Corollary~\ref{cor:rotation}(2) at
+level $k-1$, where $k$ is an outside position, shows likewise
 that the $(k-1)$-chains to $w$ with some label $(a,k)$ have
 $w(k)\neq u(k)$. Therefore
 \[
@@ -941,6 +1297,440 @@ of the quantum Schubert proof: there the nonempty paths are single
 edges $t_{ak}$, $t_{kb}$ and the drop term is $q_{k-1}c_{k-2}(u,w)$.
 Note the combination $\beta C^{(k-1)}_{u,w}+aC^{(k-2)}_{u,w}$, the
 coefficient analogue of $\beta B_{k-1}^q+aB_{k-2}^q=T_{k-1}H_{k-2}$.
+
+\subsection{The case \texorpdfstring{$z=1/\beta$}{z=1/beta}: the Chevalley formula for \texorpdfstring{$\varpi_k$}{varpi\_k}}
+\label{sec:a-zero}
+
+At $z=1/\beta$, that is $a=0$, the junction identity loses its
+level-$(k-2)$ part and its last term, and we can prove it completely.
+This gives the full equivariant statement of Theorem~\ref{prop:top}
+on the hyperplane $a=0$, for all $k$ and $u$. Since
+$x_i+1/\beta=X_i/\beta$, the block is
+$B_k^q|_{z=1/\beta}=\beta^{-k}\Q(X_1\cdots X_k)=\beta^{-k}F_k^k
+=\beta^{-k}(1-\beta^2q_k)X_1\cdots X_k$, and the coefficient
+\eqref{eq:coefficient} specializes by
+$(1-\beta z)^{|\Left|}=0^{|\Left|}$ and
+$z+\overline y_c=(1+\beta y_c)^{-1}/\beta$ to
+\[
+ C^{(k)}_{u,w}\big|_{z=1/\beta}
+ =\begin{cases}
+   q^{D}\beta^{s-k}\prod_{i=1}^k(1+\beta y_{u(i)})^{-1}
+    & \Left(u,w;k)=\varnothing,\\
+   0&\text{otherwise},
+  \end{cases}
+\]
+using $m+|\Fix|=k$ and $\Fix\sqcup\Out=\{u(1),\ldots,u(k)\}$ when
+$\Left=\varnothing$. Thus the statement to be proved is the
+following.
+
+\begin{theorem}[Theorem~\ref{prop:top} at $z=1/\beta$]\label{thm:a-zero}
+For every $k\geq1$ and $u\in S_\infty$,
+\begin{equation}\label{eq:a-zero}
+ (1-\beta^2q_k)\,X_1X_2\cdots X_k\,\G^q_u(x;y)
+ =\prod_{i=1}^k\frac1{1+\beta y_{u(i)}}
+  \sum_{\substack{w\in E(u,k)\\ \Left(u,w;k)=\varnothing}}
+   \beta^{s(u,w;k)}q^{D(u,w;k)}\,\G^q_w(x;y).
+\end{equation}
+\end{theorem}
+
+The polynomial $(1-\beta^2q_k)X_1\cdots X_k=F^k_k$ represents, in
+$QK_T(Fl_N)$ with the identifications used in the proof of
+Lemma~\ref{lem:line-chevalley}, the class of the line bundle
+$\mathcal O(-\varpi_k)$: by \cite[Section~3.1]{maeno2024presentation2},
+$[\mathcal O(-\varpi_k)]$ is the quantum product of
+$[\mathcal O(-\epsilon_1)],\frac1{1-Q_1}[\mathcal O(-\epsilon_2)],
+\ldots,\frac1{1-Q_{k-1}}[\mathcal O(-\epsilon_k)]$, and
+$\frac{1}{1-Q_{j-1}}[\mathcal O(-\epsilon_j)]$ is represented by
+$\frac{1-\beta^2q_j}{1-\beta^2q_{j-1}}X_j$. So \eqref{eq:a-zero} is a
+chain-indexed form of the equivariant quantum $K$-Chevalley formula
+for $\mathcal O(-\varpi_k)$, with the equivariant weight
+$\prod_{i\leq k}(1+\beta y_{u(i)})^{-1}$ independent of the endpoint.
+We prove it from the single-variable formula
+(Lemma~\ref{lem:line-chevalley}) by the junction identity, and we
+record the combinatorial lemmas separately, since they are also the
+ingredients of the general case.
+
+\paragraph{Left-free chains.}
+Call an admissible $k$-chain, or its endpoint, \emph{Left-free} if
+$\Left(u,w;k)=\varnothing$. Recall that $\prec$ is the total order on
+labels with $(a,b)\prec(c,d)$ if $b>d$, or $b=d$ and $a<c$.
+
+\begin{lemma}[Left-free chains]\label{lem:left-free}
+An admissible $k$-chain is Left-free if and only if its label sequence
+is strictly increasing for $\prec$. Conversely, every directed path in
+the quantum Bruhat graph from $u$ whose labels $(a_i,b_i)$ satisfy
+$a_i\leq k<b_i$ and are strictly increasing for $\prec$ is an
+admissible $k$-chain, and it is Left-free.
+\end{lemma}
+
+\begin{proof}
+For an admissible chain the upper indices are weakly decreasing, so
+the sequence is strictly $\prec$-increasing exactly when there is no
+index $i$ with $b_i=b_{i+1}$ and $a_i>a_{i+1}$, that is, no descent in
+the sense of the proof of Lemma~\ref{lem:h-left}. That proof shows
+that the descents are in bijection with $\Left(u,w;k)$. For the
+converse, a strictly $\prec$-increasing sequence has distinct labels
+and weakly decreasing upper indices, and condition~4 of
+Definition~\ref{def:chain} holds for every index, repeated lower index
+or not. Hence the path is an admissible chain, and it is Left-free by
+the first part.
+\end{proof}
+
+Left-free chains are therefore the paths of the quantum alcove model
+for the reflection order $\prec$ on the roots $\epsilon_a-\epsilon_b$,
+$a\leq k<b$, which is consistent with the Chevalley interpretation of
+\eqref{eq:a-zero}.
+
+\paragraph{Three lemmas on rotated paths.}
+Fix $u\in S_R$ and $k$, and let $\vartheta=u(k+1)$ and
+$\rho=\rho_\vartheta$ be as in Lemma~\ref{lem:rotation}. For
+$v\in S_R$ and $1\leq j<R$ put
+$\sigma_j(v)=\#\{i\leq j:\ v(i)\leq\vartheta\}$.
+
+\begin{lemma}[Degree along rotated paths]\label{lem:sigma}
+Let $u=v_0\to v_1\to\cdots\to v_s=w$ be a directed path in the quantum
+Bruhat graph with labels $(a_i,b_i)$, $a_i\leq k<b_i$, such that every
+edge of the rotated path $\rho v_0\to\cdots\to\rho v_s$ is a Bruhat
+edge. Then $D_j=\sigma_j(w)-\sigma_j(u)$ for every $j$, where $D_j$ is
+the number of quantum edges of the path with $a_i\leq j<b_i$.
+\end{lemma}
+
+\begin{proof}
+An edge $(a,b)$ with $a\leq j<b$ applied to $v$ changes $\sigma_j$ by
+$+1$ if $v(b)\leq\vartheta<v(a)$, by $-1$ if $v(a)\leq\vartheta<v(b)$,
+and not at all otherwise. By Corollary~\ref{cor:cyclic}, since the
+rotated edge is Bruhat, the second case does not occur, and the first
+case occurs exactly when the edge is quantum. Edges with both
+positions at most $j$ or both greater than $j$ do not change
+$\sigma_j$ and are not counted by $D_j$. Summing along the path gives
+the claim.
+\end{proof}
+
+\begin{lemma}[Commuting a right edge]\label{lem:commute}
+Let $x\in S_R$ and $a<k<b'<b$. Then
+$x\lessdot xt_{kb}\lessdot xt_{kb}t_{ab'}$ is a chain of Bruhat covers
+if and only if $x\lessdot xt_{ab'}\lessdot xt_{ab'}t_{kb}$ is. The two
+chains have the same endpoint.
+\end{lemma}
+
+\begin{proof}
+The transpositions commute, so the endpoints agree. Write
+$A=x(a)$, $K=x(k)$, $B'=x(b')$ and $B=x(b)$. Recall that
+$y\lessdot yt_{ij}$ means $y(i)<y(j)$ and that no value at a position
+strictly between $i$ and $j$ lies in the interval $(y(i),y(j))$. The
+positions strictly between $k$ and $b$ other than $b'$, and the
+positions strictly between $a$ and $b'$ other than $k$, carry the same
+values in all four permutations involved, so only the four values
+$A,K,B',B$ matter. The first chain is a chain of covers if and only if
+\[
+ K<B,\quad B'\notin(K,B),\quad A<B',\quad B\notin(A,B')
+\]
+together with the conditions on the other positions, and the second
+if and only if
+\[
+ A<B',\quad K\notin(A,B'),\quad K<B,\quad A\notin(K,B)
+\]
+together with the same conditions on the other positions. Assume the
+first set. If $B'<K$, then $K\notin(A,B')$ and $A<B'<K$ give
+$A\notin(K,B)$. If $B'>B$, then $B\in(K,B')$ and $B\notin(A,B')$ force
+$A>B>K$, so again $K\notin(A,B')$ and $A\notin(K,B)$. Conversely assume
+the second set. If $K<A$, then $A\notin(K,B)$ forces $A>B$, so
+$B<A<B'$, whence $B\notin(A,B')$ and $B'\notin(K,B)$. If $K>B'$, then
+$B'<K$ gives $B'\notin(K,B)$ and $B>K>B'$ gives $B\notin(A,B')$.
+\end{proof}
+
+For a sequence $\gamma$ of labels $(a,b)$ with $a\leq k<b$ let
+$\operatorname{sort}(\gamma)$ be the sequence obtained by moving all
+labels with lower index $k$ to the end, preserving the relative order
+of these labels and of the remaining labels.
+
+\begin{lemma}[Sorting]\label{lem:sort}
+Let $\gamma$ be a strictly $\prec$-increasing sequence of labels
+$(a,b)$ with $a\leq k<b$, and let $x\in S_R$. Then $\gamma$ is a chain
+of Bruhat covers from $x$ if and only if $\operatorname{sort}(\gamma)$
+is, and the two chains have the same endpoint.
+\end{lemma}
+
+\begin{proof}
+If a label $(k,b)$ precedes a label $(a,b')$ with $a<k$ in $\gamma$,
+then $(k,b)\prec(a,b')$ forces $b'<b$, since $b'=b$ would require
+$k<a$. The sorted sequence is obtained from $\gamma$ by repeatedly
+interchanging an adjacent pair $(k,b),(a,b')$ with $a<k$ into
+$(a,b'),(k,b)$; the pairs interchanged are always in their original
+relative order, so $b'<b$ holds at each step. Each step preserves the
+endpoint and, by Lemma~\ref{lem:commute} applied to the permutation
+reached before the pair, the property of being a chain of covers.
+\end{proof}
+
+\begin{lemma}[Rotation of sorted words]\label{lem:rotate-sorted}
+Let $\omega=\gamma'\,(k,b_1)\cdots(k,b_r)$ be a directed path in the
+quantum Bruhat graph from $u$, where the labels of $\gamma'$ have
+lower index at most $k-1$ and upper index at least $k+1$, are
+pairwise distinct with weakly decreasing upper indices, and
+$b_1>\cdots>b_r>k$. Then every edge of the rotated path
+$\rho u\to\cdots$ is a Bruhat edge.
+\end{lemma}
+
+\begin{proof}
+The labels of $\gamma'$ satisfy the hypotheses of
+Lemma~\ref{lem:rotation}, so the rotated edges of $\gamma'$ are
+Bruhat. Work in the rotated order, with $N=\rho(\vartheta)$ the
+largest value, initially at position $k+1$. Let
+$(c_1,k+1),\ldots,(c_m,k+1)$ be the labels of $\gamma'$ with upper
+index $k+1$; they are its last $m$ labels. As in the proof of
+Lemma~\ref{lem:rotation}, put $e_0=N$ and let $e_h$ be the value at
+position $c_h$ just before $(c_h,k+1)$; then $e_0>e_1>\cdots>e_m$,
+after $\gamma'$ the value at position $k+1$ is $e_m$, and $e_{h-1}$
+sits at position $c_h$. Position $k$ is touched by no label of
+$\gamma'$; let $x$ be its value. Since $c_h<k<k+1$, the Bruhat
+condition for $(c_h,k+1)$ gives $x\notin(e_h,e_{h-1})$ for each $h$,
+and $x$ differs from all $e_h$. Hence $x\notin(e_m,N)$, and as $x<N$
+we get $x<e_m$.
+
+Let $y_0=x$ and let $y_i$ be the value at position $k$ after the edge
+$(k,b_i)$. We show by induction on $i$ that $(k,b_i)$ is Bruhat and
+that $e_m>y_i$ whenever $b_i\neq k+1$; the induction hypothesis is
+$e_m>y_{i-1}$, true for $i=1$. Position $k+1$ still carries $e_m$ when
+$(k,b_i)$ is applied, because $b_1,\ldots,b_{i-1}>b_i\geq k+1$. If
+$(k,b_i)$ were quantum, every value at a position strictly between
+$k$ and $b_i$ would lie in $(v(b_i),y_{i-1})$, and $v(b_i)<y_{i-1}$;
+for $b_i>k+1$ this puts $e_m$ below $y_{i-1}$, and for $b_i=k+1$ it
+says $e_m=v(b_i)<y_{i-1}$; both contradict $e_m>y_{i-1}$. So the edge
+is Bruhat, $y_i=v(b_i)>y_{i-1}$, and if $b_i>k+1$ the Bruhat condition
+gives $e_m\notin(y_{i-1},y_i)$, whence $e_m>y_i$. If $b_i=k+1$ it is
+the last right edge.
+\end{proof}
+
+\begin{corollary}[Sorting bijection]\label{cor:sort-bijection}
+Let $w\in S_R$. The map $\gamma\mapsto\operatorname{sort}(\gamma)$ is
+a bijection from the Left-free admissible $k$-chains from $u$ to $w$
+onto the directed paths from $u$ to $w$ of the form
+$\omega=\gamma'\,(k,b_1)\cdots(k,b_r)$, where $\gamma'$ is a Left-free
+admissible $(k-1)$-chain from $u$ none of whose labels has upper index
+$k$, and $b_1>\cdots>b_r>k$. It preserves the number of edges and the
+quantum degree $D$.
+\end{corollary}
+
+\begin{proof}
+Let $\gamma$ be a Left-free $k$-chain from $u$ to $w$. By
+Lemma~\ref{lem:rotation} the rotated path is a chain of Bruhat covers
+from $\rho u$ to $\rho w$; by Lemma~\ref{lem:left-free} its labels are
+strictly $\prec$-increasing, so by Lemma~\ref{lem:sort}
+$\operatorname{sort}(\gamma)$ is a chain of Bruhat covers from
+$\rho u$ to $\rho w$, and by Corollary~\ref{cor:cyclic} it is a
+directed path from $u$ to $w$ in the quantum Bruhat graph. Its labels
+with lower index less than $k$ form a strictly $\prec$-increasing
+directed path $\gamma'$ from $u$ with upper indices greater than $k$,
+hence a Left-free $(k-1)$-chain by Lemma~\ref{lem:left-free}, and its
+labels $(k,b)$ appear in $\prec$-order, that is with decreasing $b$.
+Both $\gamma$ and $\operatorname{sort}(\gamma)$ have all rotated
+edges Bruhat, so by Lemma~\ref{lem:sigma} they have the same $D$, and
+they have the same number of edges.
+
+Conversely let $\omega$ be a path of the stated form. By
+Lemma~\ref{lem:rotate-sorted} its rotated edges are Bruhat. Let
+$\gamma$ be the $\prec$-increasing rearrangement of its labels, so
+that $\operatorname{sort}(\gamma)=\omega$; the labels are distinct
+since $\gamma'$ has distinct labels and the $(k,b_i)$ are distinct
+from them. By Lemma~\ref{lem:sort} $\gamma$ is a chain of Bruhat
+covers from $\rho u$ to $\rho w$, hence a directed path from $u$ to
+$w$, and by Lemma~\ref{lem:left-free} a Left-free $k$-chain. The two
+constructions are inverse to each other.
+\end{proof}
+
+\paragraph{Proof of Theorem~\ref{thm:a-zero}.}
+We induct on $k$, reading the right side of \eqref{eq:a-zero} as
+$\G^q_u$ for $k=0$, where the statement is trivial. Let $k\geq1$ and
+assume \eqref{eq:a-zero} at level $k-1$. Since
+$(1-\beta^2q_{k-1})F^k_k=T_kF^{k-1}_{k-1}$, the induction hypothesis
+and Lemma~\ref{lem:line-chevalley} give
+\[
+ (1-\beta^2q_{k-1})F^k_k\,\G^q_u
+ =\prod_{i=1}^{k-1}\frac1{1+\beta y_{u(i)}}
+  \sum_{\gamma}\beta^{s(\gamma)}q^{D(\gamma)}\,
+  \mathcal T_k\,\G^q_{\operatorname{end}(\gamma)},
+\]
+the sum over Left-free $(k-1)$-chains $\gamma$ from $u$ (one for each
+Left-free endpoint, by Corollary~\ref{cor:rotation}). Expanding
+$\mathcal T_k$ by \eqref{eq:line-operator}, the coefficient of
+$\G^q_w$ on the right is a sum over \emph{composites} $(\gamma,\pi)$,
+with $\pi$ a line path at $k$ from $\operatorname{end}(\gamma)$ to $w$,
+of the weights
+\[
+ \beta^{s(\gamma)}q^{D(\gamma)}\,
+ (-\beta)^{s(\pi)}\beta^{t(\pi)}q^{D(\pi)}\,
+ \frac1{1+\beta y_{v(\pi)(k)}} .
+\]
+Since the $\G^q_w$ are linearly independent and $1-\beta^2q_{k-1}$ is
+a nonzero polynomial, \eqref{eq:a-zero} at level $k$ is equivalent to
+the identity, for every $w$,
+\begin{equation}\label{eq:a-zero-junction}
+\begin{split}
+ &\sum_{(\gamma,\pi)\colon u\to w}
+ \beta^{s(\gamma)}q^{D(\gamma)}
+ (-\beta)^{s(\pi)}\beta^{t(\pi)}q^{D(\pi)}
+ \frac1{1+\beta y_{v(\pi)(k)}}\\
+ &\qquad=\frac{1-\beta^2q_{k-1}}{1+\beta y_{u(k)}}\,
+  \beta^{s(u,w;k)}q^{D(u,w;k)}\,
+  [\,w\in E(u,k)\text{ Left-free}\,],
+\end{split}
+\end{equation}
+which is the junction identity \eqref{eq:junction-coeff} at $a=0$.
+We prove \eqref{eq:a-zero-junction} by grouping composites by their
+underlying path.
+
+\emph{Words and cuts.}
+A composite $(\gamma,\pi)$ determines the concatenated label sequence
+$\omega=\gamma\pi$, which we call its \emph{word}; it is a directed
+path from $u$ to $w$. By Lemma~\ref{lem:left-free} the labels of
+$\gamma$ are $\prec$-increasing, so its labels with upper index $k$,
+which have the largest possible $\prec$-value, form a terminal
+segment of $\gamma$ with increasing lower indices; the left edges of
+$\pi$ have upper index $k$ and decreasing lower indices. Hence
+\[
+ \omega=\gamma_{>k}\ (a_1',k)\,(a_2',k)\cdots(a_m',k)\ (k,b_1)\cdots(k,b_r),
+\]
+where $\gamma_{>k}$ consists of the labels of $\gamma$ with upper
+index greater than $k$, the middle part is the \emph{block} of
+$\omega$, and $b_1>\cdots>b_r>k$. The composite is recovered from
+$\omega$ by the \emph{cut} $j\in\{0,\ldots,m\}$, the number of block
+labels belonging to $\gamma$. Conversely, given a directed path
+$\omega$ of this shape from $u$ to $w$, the cut $j$ yields a composite
+exactly when $\gamma_{>k}(a_1',k)\cdots(a_j',k)$ is a Left-free
+$(k-1)$-chain and $(a_{j+1}',k)\cdots(a_m',k)(k,b_1)\cdots(k,b_r)$ is
+a line path, that is, by Lemma~\ref{lem:left-free} and
+Definition~\ref{def:line-path}, exactly when
+\[
+ a_1'<a_2'<\cdots<a_j'
+ \qquad\text{and}\qquad
+ a_{j+1}'>a_{j+2}'>\cdots>a_m' .
+\]
+All composites with word $\omega$ have the same endpoint, the same
+quantum degree $D(\omega)$, the same total number $|\omega|$ of
+labels, and the same value $v(\pi)(k)$, namely the value $c(\omega)$
+at position $k$ after the block, since position $k$ is touched only
+by the block and the right edges. The weight of the composite with cut
+$j$ is therefore
+\[
+ (-1)^{m-j}\,\beta^{|\omega|}q^{D(\omega)}\,\frac1{1+\beta y_{c(\omega)}} .
+\]
+
+\emph{Words with two valid cuts cancel.}
+Let $m\geq1$. If $j$ is a valid cut with $1\leq j<m$, the largest
+block entry is $a_j'$ or $a_{j+1}'$; if $j$ and $j'>j$ are both valid,
+then $a_{j+1}',\ldots,a_{j'}'$ lie both in an increasing prefix and in
+a decreasing suffix, so $j'=j+1$. Thus a word has at most two valid
+cuts, and if it has two, they are consecutive and their weights
+cancel. If $j$ is valid, then $j+1$ is valid exactly when
+$a_j'<a_{j+1}'$, and $j-1$ is valid exactly when $a_j'>a_{j+1}'$
+(for $1\leq j<m$; for $j=0$ or $j=m$ the block is monotone and the
+cut $1$, respectively $m-1$, is valid as well). Hence a word with
+exactly one valid cut $j$ has $1\leq j<m$ and $a_j'=a_{j+1}'$: the
+same label $(a_j',k)$ is traversed twice in succession. Two
+consecutive traversals of a label $(a,k)$ form a Bruhat edge followed
+by a quantum edge or vice versa, which forces
+$1=2(k-a)-1$, that is $a=k-1$. So a word with a single valid cut has
+block
+\begin{equation}\label{eq:single-cut-block}
+ a_1'<\cdots<a_{j-1}'<k-1,\qquad a_j'=a_{j+1}'=k-1,\qquad
+ k-1>a_{j+2}'>\cdots>a_m' .
+\end{equation}
+
+\emph{Moving the backtrack.}
+From any permutation, $(k-1,k)$ is an edge (Bruhat if the value at
+$k-1$ is smaller, quantum otherwise), and the pair
+$(k-1,k)(k-1,k)$ returns to the starting permutation with quantum
+degree $q_{k-1}$. Hence the pair can be inserted into or removed from
+a word at any point without affecting the other edges. For a word
+with block \eqref{eq:single-cut-block} and $m\geq3$, let $p$ be the
+larger of the block entries adjacent to the pair ($a_{j-1}'$ or
+$a_{j+2}'$, or the only one present), and move the pair to the other
+side of $p$. The result is again a directed path to $w$ with a block
+of the form \eqref{eq:single-cut-block}, with the same $|\omega|$,
+$D(\omega)$ and $c(\omega)$, and its unique cut differs from $j$ by
+one, so the two weights cancel. This is an involution without fixed
+points on the words with a single valid cut and $m\geq3$.
+
+\emph{Surviving words.}
+What remains are the words with empty block,
+$\omega=\gamma_{>k}(k,b_1)\cdots(k,b_r)$, and the words
+$\omega=\gamma_{>k}(k-1,k)(k-1,k)(k,b_1)\cdots(k,b_r)$. Inserting or
+removing the pair is a bijection between the two kinds, the second
+kind having weight $-\beta^2q_{k-1}$ times the first (one more chain
+label, one more left edge, degree $q_{k-1}$). In both kinds position
+$k$ is untouched before the right edges, so $c(\omega)=u(k)$. The
+left side of \eqref{eq:a-zero-junction} is therefore
+\[
+ \frac{1-\beta^2q_{k-1}}{1+\beta y_{u(k)}}
+ \sum_{\omega}\beta^{|\omega|}q^{D(\omega)},
+\]
+the sum over directed paths $\omega=\gamma'(k,b_1)\cdots(k,b_r)$ from
+$u$ to $w$ with $\gamma'$ a Left-free $(k-1)$-chain without upper
+index $k$ and $b_1>\cdots>b_r>k$. By
+Corollary~\ref{cor:sort-bijection} this sum equals
+$\sum_\gamma\beta^{s(\gamma)}q^{D(\gamma)}$ over the Left-free
+$k$-chains from $u$ to $w$, which by Corollary~\ref{cor:rotation} is
+$\beta^{s(u,w;k)}q^{D(u,w;k)}$ if $w\in E(u,k)$ is Left-free and $0$
+otherwise. This proves \eqref{eq:a-zero-junction}, hence
+\eqref{eq:a-zero} at level $k$, and Theorem~\ref{thm:a-zero}. \qed
+
+\begin{remark}
+For $k=1$ the argument has no block and recovers
+Proposition~\ref{prop:k-one} at $z=1/\beta$. The proof shows more
+precisely that in the junction identity at $a=0$ the only composites
+that do not cancel are the sorted composite
+$\gamma_{>k}\,\big|\,(k,b_1)\cdots(k,b_r)$ of each Left-free endpoint
+and its backtrack $\gamma_{>k}(k-1,k)\,\big|\,(k-1,k)(k,b_1)\cdots(k,b_r)$.
+This is the pattern observed numerically for the moved case in
+Section~\ref{sec:special} below; the general case differs in that
+cut-sliding leaves residues proportional to $a$ (Lemma~\ref{lem:peel})
+and in that chains with $\Left\neq\varnothing$ contribute.
+\end{remark}
+
+\begin{remark}[The specialization of Maeno--Naito--Sagaki]
+A second one-point specialization of Theorem~\ref{prop:top} is in the
+literature. Let
+\[
+ u=(n{-}k{+}1,\,n{-}k{+}2,\,\ldots,\,n{+}1,\ n{-}k,\,\ldots,\,2,\,1)\in S_{n+1},
+\]
+so that positions $1,\ldots,k+1$ carry the $k+1$ largest values in
+increasing order and the remaining values follow in decreasing order.
+The admissible $k$-chains from $u$ are exactly
+\[
+ \gamma_j=(k,k{+}1),\,(k{-}1,k{+}1),\,\ldots,\,(j,k{+}1),
+ \qquad 1\leq j\leq k+1,
+\]
+with $\gamma_{k+1}$ the empty chain. Indeed, a first label $(a,b)$
+with $b\geq k+2$ is neither Bruhat, as $u(a)>u(b)$, nor quantum, as
+the value $n+1$ at position $k+1$ is not in $(u(b),u(a))$; so all
+labels have upper index $k+1$, and after
+$\gamma_j$ the only label $(a,k+1)$ with $a<j$ that is an edge is
+$(j{-}1,k{+}1)$, because the value at $a$ is smaller than the value
+$n-k+j$ at $k+1$, excluding a quantum edge, while the values at
+positions $a+1,\ldots,j-1$ lie between them unless $a=j-1$. For $j\geq2$
+position $1$ is untouched, so $u(1)\in\Fix$ and the coefficient
+carries the factor $z+\overline y_{u(1)}=(1-a\,t_{u(1)})/(\beta t_{u(1)})$,
+$t_c=1+\beta y_c$, which vanishes at $a=t_{u(1)}^{-1}$. For $j=1$ the
+endpoint is
+\[
+ w=(n{-}k{+}2,\,\ldots,\,n{+}1,\ n{-}k{+}1,\ n{-}k,\,\ldots,\,1),
+\]
+with $\Left=\{u(2),\ldots,u(k)\}$, $\Out=\{u(1)\}$, $s=k$, $D=0$, and
+coefficient $a^{k-1}t_{u(1)}^{-1}=t_{u(1)}^{-k}$ at $a=t_{u(1)}^{-1}$.
+Since $\beta^kB_k^q=\sum_p(-a)^{k-p}F^k_p$, Theorem~\ref{prop:top}
+predicts
+\[
+ \sum_{p=0}^k(-1)^{p}\,t_{u(1)}^{\,p}\,F^k_p\,\G^q_u=\G^q_w
+ \qquad(\beta=-1),
+\]
+which is \cite[Proposition~2.3]{maeno2024presentation2} transported to
+$QK_T(Fl_{n+1})$ as in their Section~3.1 (with $1-y_c=\mathbf e^{-\epsilon_c}$,
+$u=w_{k+1}$ and $w=w_k$ in their notation), the key step in their
+proof that quantum double Grothendieck polynomials represent Schubert
+classes. Their proof of this special case expands each term of
+$F^k_p$ by the general Chevalley formula for the weight
+$w_0\epsilon_J$, $J\subseteq\{1,\ldots,k\}$.
+\end{remark}
 
 \subsection{The cancellation mechanism: cut composites and local moves}
 \label{sec:mechanism}
@@ -1012,7 +1802,8 @@ $\kappa$, giving $C^{(k-1)}_{u,v'}=\beta\kappa C^{(k-1)}_{u,v}$. The
 line weights of $\pi$ and $\pi'$ differ by the factor $(-\beta)\kappa$,
 so the two terms are negatives of each other.
 
-(3) Here position $k-1$ is untouched by $\gamma$, so no label of
+(3) Here $v(k-1)=u(k-1)$, so by Corollary~\ref{cor:rotation}(2)
+position $k-1$ is untouched by $\gamma$: no label of
 $\gamma$ has first entry $k-1$, and $\gamma$ is admissible at level
 $k-2$ with the same data; this gives the factorization of
 $C^{(k-1)}_{u,v}$ as in \eqref{eq:diag-step}. In $v'$ the value
@@ -1058,11 +1849,15 @@ agree.
 
 \begin{proof}
 The identity $t_{k-1,k}t_{ak}=t_{a,k-1}t_{k-1,k}$ holds in $S_\infty$.
-Both sequences are paths of length two between the same vertices,
-and $v^{-1}vt_{k-1,k}t_{ak}$ is a $3$-cycle, so neither endpoint is
-reachable in fewer than two steps; by Postnikov's lemma all shortest
-paths between two vertices of the quantum Bruhat graph have the same
-weight. The label $(a,k-1)$ is admissible at level $k-2$ since
+For the weights write $x=v(a)$, $y=v(k-1)$, $z=v(k)$. The adjacent
+transposition $(k-1,k)$ is always an edge, quantum exactly when the
+larger value is on the left. If $x<y$, the edge $(a,k)$ from
+$vt_{k-1,k}$ is Bruhat, and its cover condition applied to the
+intermediate position $k-1$, which holds $z$, gives $z\notin(x,y)$;
+hence $[y>z]=[x>z]$, and both paths have weight $q_{k-1}^{[y>z]}$.
+If $x>y$, the edge $(a,k)$ from $vt_{k-1,k}$ is quantum, so
+$y<z<x$, and both paths have weight $q_aq_{a+1}\cdots q_{k-1}$.
+The label $(a,k-1)$ is admissible at level $k-2$ since
 $a\leq k-2<k-1$, and second entries remain weakly decreasing because
 $k-1$ is the least possible value. The chain gains one edge
 (a factor $\beta$ when $m$ is unchanged) while the line path loses
@@ -1144,6 +1939,388 @@ pattern: there $P_{k-2}=0$, every nonempty line path is a single
 up-path, and the matching is the identity. The complete case analysis
 for $k\geq2$ is not carried out in this version.
 
+\subsection{Special cases}
+\label{sec:special}
+
+Two specializations isolate the two difficulties of the junction
+identity from each other.
+
+\paragraph{The classical case \texorpdfstring{$q=0$}{q=0}.}
+Set all $q_j=0$. Then all edges are Bruhat covers, the level-$(k-2)$
+part of the junction input and the drop term vanish (both carry
+$q_{k-1}$), and \eqref{eq:junction} reduces to
+\begin{equation}\label{eq:junction-classical}
+ \beta\,P_k(u)=\mathcal T_kP_{k-1}(u)-a\,P_{k-1}(u),
+\end{equation}
+the expansion of $\beta B_k+aB_{k-1}=(1+\beta x_k)B_{k-1}$ by the
+classical equivariant $K$-Chevalley formula. The diagonal case is
+then vacuous:
+
+\begin{lemma}\label{lem:classical-diagonal}
+Let $q=0$ and $w(k)=u(k)$. There is no admissible $(k-1)$-chain
+$\gamma$ from $u$ to some $v$ together with a nonempty line path at
+$k$ from $v$ to $w$. Consequently \eqref{eq:junction-classical} holds
+at every such $w$, by \eqref{eq:diag-step}.
+\end{lemma}
+
+\begin{proof}
+Follow the value in position $k$ along the composite path. Every
+label $(a,k)$, whether in $\gamma$ or in the left part of the line
+path, is a Bruhat cover, so it replaces the value in position $k$ by
+a strictly smaller one; every right edge $(k,b)$ replaces it by a
+strictly larger value coming from a position $b>k$. Suppose first
+that some label $(a,k)$ occurs, and let $(\alpha,k)$ be the first.
+It moves $u(k)$ to position $\alpha$, which is touched afterwards
+only by a left edge $(\alpha,k)$ of the line path; that edge would
+have to be a Bruhat cover with $u(k)=v(\alpha)<v(k)$, whereas every
+value occupying position $k$ after $(\alpha,k)$ is smaller than
+$u(k)$. Hence $u(k)$ never returns to position $k$, and the right
+edges, which only import values from positions beyond $k$, cannot
+return it either. If no label $(a,k)$ occurs, the line path consists
+of right edges only, and the first of them moves $u(k)$ to a position
+$b>k$ that is never touched again. In all cases $w(k)\neq u(k)$.
+\end{proof}
+
+For the moved case at $q=0$ the computations of
+Section~\ref{sec:mechanism} show that only cut sliding is needed,
+together with the end braid $t_{k-1,k}t_{kb}=t_{k-1,b}t_{k-1,k}$,
+which converts a right edge following a junction edge $(k-1,k)$ into
+two $(k-1)$-chain labels; the residues \eqref{eq:peel-residue} cancel
+the term $-aC^{(k-1)}_{u,w}$ of \eqref{eq:junction-coeff} exactly as
+in the example $u=21435$, $k=3$, $w=24315$, where the pair
+$u\,\big|\,(2,3),(3,4)$ and $ut_{23}\,\big|\,(3,4)$ leaves the residue
+$a\beta(z+\overline y_2)t_1^{-1}=aC^{(2)}_{u,w}$.
+
+The word-and-cut bookkeeping of Section~\ref{sec:a-zero} organizes
+the classical case completely at the level of individual words. We
+normalize the coefficients by
+\[
+ \widehat C^{(j)}_{u,v}:=\beta^{j}C^{(j)}_{u,v}
+ =\beta^{s}\prod_{i=1}^{j}\phi_i(u,v;j),
+ \qquad
+ \phi_i=\begin{cases}
+  t_{u(i)}^{-1}-a& u(i)\in\Fix,\\
+  a& u(i)\in\Left,\\
+  t_{u(i)}^{-1}& u(i)\in\Out,
+ \end{cases}
+\]
+with $t_c=1+\beta y_c$; this is \eqref{eq:coefficient} at $q=0$ written
+with $z+\overline y_c=(t_c^{-1}-a)/\beta$ and $m+|\Fix|=j$. In this
+notation the classical junction identity \eqref{eq:junction-classical}
+at the endpoint $w$ reads
+\begin{equation}\label{eq:classical-junction-hat}
+ \widehat C^{(k)}_{u,w}+a\,\widehat C^{(k-1)}_{u,w}
+ =\sum_{(\gamma,\pi)\colon u\to w}
+   \beta^{s(\gamma)}(-\beta)^{s(\pi)}\beta^{t(\pi)}\,
+   t_{v(\pi)(k)}^{-1}\prod_{i<k}\phi_i(u,\operatorname{end}\gamma;k-1),
+\end{equation}
+the sum over composites of an admissible $(k-1)$-chain $\gamma$ and a
+line path $\pi$ of Bruhat edges. As in Section~\ref{sec:a-zero}, a
+composite has a word
+$\omega=\gamma_{>k}\,(a_1',k)\cdots(a_m',k)\,(k,b_1)\cdots(k,b_r)$ and a
+cut $j$; now the chain part may contain descents, so the valid cuts
+are no longer determined by monotonicity alone. Call the block entry
+$a_r'$ \emph{fresh} if position $a_r'$ is touched neither by
+$\gamma_{>k}$ nor by $a_1',\ldots,a_{r-1}'$, and write
+$\Sigma(\omega)$ for the sum of the weights of all composites with
+word $\omega$.
+
+\begin{proposition}[Classical word lemma]\label{prop:classical-word}
+Let $q=0$ and let $\omega$ be the word of a composite, with block
+$(a_1',\ldots,a_m')$, and let $S$ be the length of the longest
+strictly decreasing suffix $a_{m-S+1}'>\cdots>a_m'$ of the block
+($S=0$ if $m=0$). Then:
+\begin{enumerate}
+\item The block entries are pairwise distinct.
+\item The valid cuts form the interval $m-S\leq j\leq J$, where $J$ is
+ the least index $r<m$ such that $a_r'$ is not fresh and
+ $a_r'>a_{r+1}'$, or $J=m$ if there is no such $r$.
+\item $\Sigma(\omega)\neq0$ if and only if $J=m$ and all entries
+ $a_{m-S+1}',\ldots,a_m'$ of the decreasing suffix are fresh. In that
+ case
+ \[
+  \Sigma(\omega)
+  =\beta^{|\omega|}\,t_{c(\omega)}^{-1}\,a^{S}
+   \prod_{i\notin\{a_1',\ldots,a_m'\}}\phi_i^{0}
+   \prod_{r\leq m-S}\psi_r ,
+ \]
+ where $c(\omega)$ is the value at position $k$ after the block,
+ $\phi_i^0=\phi_i(u,u\gamma_{>k};k-1)$, and for $r\leq m-S$:
+ $\psi_r=\phi^0_{a_r'}$ if $a_r'$ is not fresh, $\psi_r=a$ if $a_r'$ is
+ fresh and $a_r'>a_{r+1}'$, and $\psi_r=t_{u(a_r')}^{-1}$ if $a_r'$ is
+ fresh and either $a_r'<a_{r+1}'$ or $r=m-S$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(1) A Bruhat edge $(a,k)$ requires the value at $a$ to be smaller
+than the value at $k$, and it moves the smaller value to $k$; so along
+the block the value at position $k$ strictly decreases. If $(a,k)$
+occurred at two block indices $r<r'$, the value placed at $a$ by the
+first occurrence would still be there at the second, and it exceeds
+every later value at $k$; so the second occurrence is not a Bruhat
+edge.
+
+(2) By (1), an entry $a_r'$ is fresh exactly when position $a_r'$ is
+not touched by $\gamma_{>k}$. The line part $(a_{j+1}',k)\cdots(a_m',k)(k,b_1)\cdots(k,b_r)$ is a
+line path exactly when $a_{j+1}'>\cdots>a_m'$, that is $j\geq m-S$. The
+chain part $\gamma_{>k}(a_1',k)\cdots(a_j',k)$ has distinct labels by
+(1) and weakly decreasing upper indices, and condition~4 of
+Definition~\ref{def:chain} is automatic inside $\gamma_{>k}$ and at
+its last label. At a block index $r<j$ the lower index $a_r'$ is
+repeated exactly when $a_r'$ is not fresh, since at level $k-1$ a
+window position is touched only by labels with that lower index, and
+then condition~4 requires $(a_r',k)\prec(a_{r+1}',k)$, that is
+$a_r'<a_{r+1}'$. Hence the chain part is admissible exactly when
+$j\leq J$.
+
+(3) Fix a valid cut $j$ and let $v_j$ be the endpoint of the chain
+part. We determine the status of each window position $i<k$ in $v_j$,
+starting from its status in $v_0=u\gamma_{>k}$. Let $x_r$ be the value
+at $a_r'$ just before $(a_r',k)$; after this label $x_r$ is at $k$, and
+after $(a_{r+1}',k)$ (if $r<j$) it is at $a_{r+1}'$, where it stays,
+since by (1) position $a_{r+1}'$ is not touched again by the block.
+If $a_r'$ is fresh then $x_r=u(a_r')$, so position $a_r'$ has status
+$\Out$ if $r=j$, status $\Left$ if $r<j$ and $a_{r+1}'<a_r'$, and status
+$\Out$ if $r<j$ and $a_{r+1}'>a_r'$; before the label, for $r>j$, its
+status is $\Fix$. If $a_r'$ is not fresh, then $x_r\neq u(a_r')$, and
+we claim that the status of every value is unchanged by the block
+labels of the chain part other than the fresh ones just described.
+Indeed, a value $c=u(i)$ with status $\Left$ in $v_0$ sits at a position
+$p<i$ reached by a descent $(i,b),(p,b)$ of $\gamma_{>k}$, and a chain
+part containing $(p,k)$ would contain the subsequence
+$(i,b),(p,b),(p,k)$ with $p<i\leq k-1<k<b$, which the prohibition
+lemma \cite[Lemma~2.9]{lenart2007pieri} excludes for an admissible
+chain. A value with status $\Out$ at a window position $p$ is moved
+by $(p,k)$ to position $k$, and by the next label, if any, to
+$a_{r+1}'$ with $a_{r+1}'>p$ by condition~4, since $p$ is a repeated
+lower index; so it keeps status $\Out$. Values at positions
+greater than $k$ are not moved by the block. This proves that the
+weight of the composite with cut $j$ is
+\[
+ \beta^{|\omega|}(-1)^{m-j}\,t_{c(\omega)}^{-1}
+ \prod_{i\notin\{a_r'\}}\phi_i^0
+ \prod_{a_r'\text{ not fresh}}\phi^0_{a_r'}
+ \prod_{a_r'\text{ fresh}}\phi_r^{(j)},
+\]
+where
+\[
+ \phi_r^{(j)}=\begin{cases}
+  a& r<j,\ a_{r+1}'<a_r',\\
+  t_{u(a_r')}^{-1}& r<j,\ a_{r+1}'>a_r',\ \text{or } r=j,\\
+  t_{u(a_r')}^{-1}-a& r>j,
+ \end{cases}
+\]
+the sign coming from the $m-j$ left edges of the line part.
+
+Now sum over $j\in[m-S,J]$. If $J<m-S$ there is no valid cut and
+$\Sigma(\omega)=0$; note that $J\neq m-S$ when $m-S\geq1$, since
+$a_{m-S}'$ is an ascent by the maximality of $S$. For $r<m-S$ we have
+$r<j$ throughout, so
+$\phi^{(j)}_r=\psi_r$ is independent of $j$; for $r=m-S\geq1$, the
+entry $a_{m-S}'$ is an ascent, so
+$\phi^{(j)}_{m-S}=t_{u(a_{m-S}')}^{-1}$ both for $j=m-S$ and for
+$j>m-S$. If $m-S<J<m$, the entries $a_r'$ with $m-S<r<J$ are fresh
+descents, $a_J'$ is not fresh, and the factors for $r>J$ do not depend
+on $j$. Writing $\tau_i=t_{u(a_{m-S+i}')}^{-1}$ and
+$T_l=a^{l}\prod_{l<i<L+1}(\tau_i-a)$ for $0\leq l\leq L:=J-(m-S)-1$,
+the remaining sum is, up to a common factor,
+\begin{multline*}
+ \sum_{j=m-S}^{J}(-1)^{m-j}\prod_{m-S<r<J}\phi_r^{(j)}\\
+ =\pm\Bigl(T_0-(T_0+T_1)+(T_1+T_2)-\cdots
+     +(-1)^{L}(T_{L-1}+T_L)+(-1)^{L+1}T_L\Bigr)=0,
+\end{multline*}
+because the cut $j=m-S+l$ with $1\leq l\leq L$ contributes
+$a^{l-1}\tau_l\prod_{i>l}(\tau_i-a)=T_{l-1}+T_l$, the cut $j=m-S$
+contributes $T_0$, and the cut $j=J$ contributes $a^L=T_L$. If $J=m$
+and some suffix entry is not fresh, it must be $a_m'$ (the others are
+descents), its factor $\phi^0_{a_m'}$ is constant, and the same
+telescoping with $L=S-1$ gives $0$. If $J=m$ and all suffix entries
+are fresh, the same computation with $L=S$, where now the cut $j=m$
+contributes $a^{S-1}\tau_S=T_{S-1}+T_S$, gives $T_S=a^S$. Collecting
+the constant factors yields the stated formula.
+\end{proof}
+
+Thus at $q=0$ a word contributes either nothing or a single product.
+In the surviving words every entry of the decreasing suffix of the
+block is a fresh position whose value, after the block, has moved to
+the left (status $\Left$ at level $k$), and the suffix contributes
+exactly the factor $a^S$ of \eqref{eq:coefficient} for these values.
+What remains for the classical case is the matching: for every $w$,
+the words with $\Sigma(\omega)\neq0$ and endpoint $w$ must have total
+weight $\widehat C^{(k)}_{u,w}+a\widehat C^{(k-1)}_{u,w}$. We have
+verified for all $u\in S_5$ and all $k\leq5$ that there is in fact
+\emph{at most one} such word for each $w$, and that its $\Sigma(\omega)$
+equals the right side; in the examples the surviving word is obtained
+from the $k$-chain, or from the $(k-1)$-chain when $w\in E(u,k-1)$,
+by commutations of disjoint transpositions as in
+Lemma~\ref{lem:commute} and braid relations such as
+$t_{kb}t_{ab}=t_{ak}t_{kb}$ and $t_{ab}t_{ak}=t_{ak}t_{kb}$, which
+convert labels into junction labels $(a,k)$ and right edges $(k,b)$.
+We have not proved this matching.
+
+There is also a second route in the classical case, which has no
+quantum analogue. Since $\prod_{j\leq k}(x_j+z)$ is symmetric in
+$x_i,x_{i+1}$ for $i\neq k$, the isobaric divided difference
+$\pi_i^x$ commutes with multiplication by it, and
+$\pi^x_i\G_u=\G_{us_i}$ when $us_i<u$, $\pi^x_i\G_w=-\beta\G_w$ when
+$ws_i>w$. Hence the classical coefficients must satisfy
+\begin{equation}\label{eq:x-recursion}
+ C_{us_i,w'}
+ =\begin{cases}
+   C_{u,w's_i}-\beta\,C_{u,w'}& w's_i>w',\\
+   0& w's_i<w',
+  \end{cases}
+ \qquad(us_i<u,\ i\neq k,\ q=0).
+\end{equation}
+We have verified that the closed form \eqref{eq:coefficient} at $q=0$
+satisfies \eqref{eq:x-recursion} for all $u\in S_4$ and all $k$ (1200
+instances). The identity is suggestive: when a window value $c$ moves
+from position $i+1$ to position $i$, the two terms on the right
+combine as $(1+\beta y_c)^{-1}-\beta(z+\overline y_c)=1-\beta z$,
+which is the origin of the factor $(1-\beta z)^{|\Left|}$. Granting
+\eqref{eq:x-recursion} for the chain combinatorics, the classical
+theorem for all $u$ follows by descending induction in the right weak
+order from the case of $k$-Grassmannian $u$ (no descents outside
+position $k$). For such $u$ the product is symmetric in
+$x_1,\ldots,x_k$ and in the remaining variables, all endpoints are
+again $k$-Grassmannian (checked for all $u\in S_6$), and the statement
+is an equivariant $K$-theoretic Pieri rule for the Grassmannian,
+multiplying by $\prod_{j\le k}(x_j+z)=(1-\beta z)^k\prod_j(x_j\oplus z')$
+with $z'=z/(1-\beta z)$; the expansion of this product into the
+classes $\G_{c[k,p]}$ is the case $u=e$ of Theorem~\ref{prop:top}.
+
+\paragraph{The case \texorpdfstring{$k=2$}{k=2}.}
+For $k=2$ a line path has at most one left edge, namely $(1,2)$, and
+the level-$0$ part of the junction input is $a\beta q_1\G_u$. The
+cut composites are the sequences
+\[
+ (1,b_1),\ldots,(1,b_r)\ \big|\ [(1,2)]\ (2,c_1),\ldots,(2,c_t),
+\]
+with the junction edge $(1,2)$ possibly absent, present on one side of
+the cut, or present on both sides. The last possibility is a
+\emph{backtrack}: a chain ending with a quantum edge $(1,2)$ followed
+by the same edge reversed as a Bruhat line edge, or vice versa. Its
+contribution relative to the composite without the two edges is
+$\beta\cdot(-\beta)\cdot q_1=-\beta^2q_1$, and this is exactly how the
+factor $1-\beta^2q_1$ on the left of \eqref{eq:junction} is
+produced. For instance, for $u=21345$ and $w=32145\in E(u,2)$, the
+only terms are $u t_{13}\,\big|\,(2,3)$, with value $\beta t_1^{-1}t_2^{-1}$,
+and the backtrack $u t_{13}t_{12}\,\big|\,(1,2),(2,3)$, with value
+$-\beta^3q_1t_1^{-1}t_2^{-1}$, whose sum is
+$\beta(1-\beta^2q_1)C^{(2)}_{u,w}$. For $w=23145$ the backtrack
+$ut_{12}\,\big|\,(1,2),(2,3)$ has value $-\beta^2q_1t_1^{-1}t_2^{-1}$ and the
+level-$0$ composite $u\,\big|\,(2,3)$ has value $a\beta^2q_1t_1^{-1}$;
+their sum is $-\beta^3q_1(z+\overline y_2)t_1^{-1}=-\beta^2q_1\,\beta C^{(2)}_{u,w}$,
+again by $(1+\beta y_2)^{-1}-a=\beta(z+\overline y_2)$. Thus for
+$k=2$ all three mechanisms---cut sliding, backtracks, and the
+absorption of residues by the level-$0$ terms---are visible, while
+the braid move of Lemma~\ref{lem:braid} cannot occur. We have
+verified \eqref{eq:junction-coeff} for $k=2$ termwise for all
+$u\in S_5$. The diagonal case can be settled completely.
+
+\begin{proposition}[Diagonal case for $k=2$]\label{prop:k2-diag}
+Let $k=2$ and $w(2)=u(2)$. Then \eqref{eq:diag-cancel} holds; hence
+\eqref{eq:junction-coeff} holds at $w$.
+\end{proposition}
+
+\begin{proof}
+We classify the nonempty cut composites ending at $w$. Position $2$
+is touched by every edge of a line path at $2$. A right edge $(2,c)$
+sends the value in position $2$ to the position $c>2$, which is never
+touched again, so if the line path contains a right edge, the final
+value in position $2$ is not $u(2)$ unless $u(2)$ was brought to
+position $c$ earlier---impossible, as $c$ is touched only once. Hence
+the line path is $\pi=(1,2)$, and the value $u(2)$ sits in position
+$1$ of $v$, so the chain $\gamma$ to $v$ contains the label $(1,2)$.
+For a level-$1$ chain this label is the last one, as $2$ is the least
+admissible second entry, and $(1,2)$ moves $u(2)$ to position $1$ only
+if it is the first label whose second entry is $2$; since labels are
+distinct, $\gamma=\gamma_0\cdot(1,2)$ with $(1,2)\notin\gamma_0$, and
+$w=vt_{12}=u\gamma_0$. Thus $\gamma_0$ is the unique $1$-chain from $u$
+to $w$ (Proposition~\ref{prop:k-one}), and there is exactly one
+level-$1$ composite, the backtrack $\gamma_w\cdot(1,2)\,\big|\,(1,2)$.
+There is no level-$0$ composite, because a line path from $u$ cannot
+restore $u(2)$ either. Write $\kappa,\kappa'$ for the weights of the
+two traversals of $(1,2)$, so $\kappa\kappa'=q_1$.
+
+If $w\neq u$, the window value $u(1)$ is in $\Out$ for both $w$ and
+$wt_{12}$ (it has left position $1$ and $w(1)\neq u(1)$), so by
+Lemma~\ref{lem:peel}(2) $C^{(1)}_{u,wt_{12}}=\beta\kappa C^{(1)}_{u,w}$,
+and the backtrack contributes
+$(-\beta)\kappa'(1+\beta y_{u(2)})^{-1}\beta\kappa C^{(1)}_{u,w}
+=-\beta^2q_1(1+\beta y_{u(2)})^{-1}C^{(1)}_{u,w}$,
+while the drop term is $\beta q_1(1+\beta y_{u(2)})^{-1}\beta C^{(1)}_{u,w}$
+because $C^{(0)}_{u,w}=0$. They cancel.
+
+If $w=u$, then $\gamma_0$ is empty, $C^{(1)}_{u,u}=z+\overline y_{u(1)}$,
+and $u(1)$ passes from $\Fix$ to $\Out$ in $ut_{12}$, so
+$C^{(1)}_{u,ut_{12}}=\kappa(1+\beta y_{u(1)})^{-1}$ and the backtrack
+contributes $-\beta q_1(1+\beta y_{u(1)})^{-1}(1+\beta y_{u(2)})^{-1}$.
+The drop term is
+$\beta q_1(1+\beta y_{u(2)})^{-1}\bigl(\beta(z+\overline y_{u(1)})+a\bigr)
+=\beta q_1(1+\beta y_{u(1)})^{-1}(1+\beta y_{u(2)})^{-1}$. They cancel.
+\end{proof}
+
+The moved case for $k=2$ requires in addition the classification of
+$2$-chains: their labels form segments $(1,b)$, $(2,b)$, $(1,b)(2,b)$
+or $(2,b)(1,b)$ for strictly decreasing $b$, the last form being
+allowed only at the first occurrence of the lower index $2$. The
+computations through $S_5$ exhibit the following pattern, which is
+what a proof must establish. If $w\in E(u,2)$ and its $2$-chain has
+no segment of the form $(2,b)(1,b)$, then sorting the chain, all
+labels $(1,b)$ first and all labels $(2,c)$ afterwards, gives a cut
+composite $\gamma^\ast\,\big|\,\pi^\ast$ whose term is
+$\beta C^{(2)}_{u,w}$, and its backtrack
+$\gamma^\ast(1,2)\,\big|\,(1,2)\pi^\ast$ contributes
+$-\beta^3q_1C^{(2)}_{u,w}$; for instance $u=24135$, $w=31524$, with
+chain $(2,5),(1,4),(2,3)$ and composite $(1,4)\,\big|\,(2,5),(2,3)$.
+A segment $(2,b)(1,b)$ is where a window value moves left, and it is
+resolved by $t_{2b}t_{1b}=t_{1b}t_{12}$: for $u=e$ and $w=231$, with
+chain $(2,3),(1,3)$, the composites are $(1,2)\,\big|\,(2,3)$ with term
+$\beta t_1^{-2}$ and $\varnothing\,\big|\,(1,2),(2,3)$ with term
+$-\beta^2(z+\overline y_1)t_1^{-1}$, a cut sliding pair of type (3)
+whose residue $\beta a t_1^{-1}$ is exactly $\beta C^{(2)}_{e,231}$:
+the factor $1-\beta z$ attached to a value in $\Left$ is produced by
+$(1+\beta y_c)^{-1}-\beta(z+\overline y_c)=1-\beta z$. The level-$0$
+composite $e\,\big|\,(1,2),(2,3)$, with term $-a\beta^3q_1t_1^{-1}$,
+then cancels the part $\beta^3q_1C^{(2)}_{e,231}$ of the left side.
+When the $1$-chain to $w$ ends with $(1,2)$, the term
+$-a(1-\beta^2q_1)C^{(1)}_{u,w}$ is cancelled by the residue of the
+pair $u\,\big|\,(1,2)\pi'$, $ut_{12}\,\big|\,\pi'$ together with the
+level-$0$ composite $u\,\big|\,(1,2)\pi'$, using
+$t_{12}t_{2c_1}\cdots t_{2c_t}=t_{1c_1}\cdots t_{1c_t}t_{12}$ and
+Postnikov's lemma for the equality of weights. The outstanding point
+is the validity in the quantum Bruhat graph of the sorted and braided
+sequences; Lemma~\ref{lem:sort} settles the sorting for chains
+without descents, and Lemma~\ref{lem:commute} is the local step for
+moving a right edge past a label with smaller upper index in general,
+but the braided segments $(2,b)(1,b)$ are not covered, and we have
+not completed this case analysis.
+
+\paragraph{The \texorpdfstring{$y$}{y}-recursion.}
+Finally, there is a reduction that is valid for all $q$ and does not
+use the Chevalley formula at all. The quantization map commutes with
+the isobaric divided differences $\pi^y_i$ in the second alphabet,
+and $\pi^y_i\G^q_w=\G^q_{s_iw}$ if $s_iw<w$, $\pi^y_i\G^q_w=-\beta\G^q_w$
+otherwise. Applying $\pi^y_i$ to \eqref{eq:main} for $s_iu>u$ and
+using $\pi_i(fg)=(1+\beta y_{i+1})\partial_i(f)g+s_i(f)\pi_i(g)$ shows
+that the theorem for $s_iu$ implies the theorem for $u$ provided the
+coefficients satisfy
+\begin{equation}\label{eq:y-recursion}
+ C_{u,w}=\pi^y_i\bigl(C_{s_iu,w}\bigr)
+ +\begin{cases}
+   s_i\bigl(C_{s_iu,\,s_iw}\bigr)& s_iw>w,\\
+   \beta\,s_i\bigl(C_{s_iu,w}\bigr)& s_iw<w.
+  \end{cases}
+\end{equation}
+We have verified \eqref{eq:y-recursion} for the closed form, with
+$q$ arbitrary, for all $u\in S_5$ and $k\leq3$. It reduces the
+theorem for all $u\in S_n$ to the single permutation $u=w_0^{(n)}$,
+for which the chains are indexed by subsets of $\{1,\ldots,k\}$ in the
+classical case; the quantum case of this base is not simpler than the
+general one, which is why we rely on the Chevalley induction instead.
+
 \section{A small example and specializations}
 
 \begin{example}\label{ex:s1}
@@ -1190,9 +2367,9 @@ When all $y_a=0$, the coefficient becomes
 In addition setting $z=0$ leaves only endpoints with $\Fix=\varnothing$,
 and the surviving coefficient is $q^D\beta^{s-k}$.
 At $\beta=-1$ it is $(-1)^{s-k}q^D$.
-This is the specialization to compare with the quantum
-Grothendieck Pieri formula of Naito--Sagaki \cite{naito2024pieri}; identifying
-the indexing sets precisely is part of that comparison.
+This specialization is Theorem~\ref{thm:noneq}, derived from the quantum
+Grothendieck Pieri formula of Naito--Sagaki \cite{naito2024pieri}
+through the uniqueness of chains and Lemma~\ref{lem:h-left}.
 
 \paragraph{Cohomological specialization.}
 At $\beta=0$, terms with $s>m$ vanish. Those with $s=m$ have coefficient
