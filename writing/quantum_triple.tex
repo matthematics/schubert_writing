@@ -74,7 +74,7 @@ We prove a triple quantum Pieri formula: the product of a quantum double Schuber
 
 {\bf Keywords}: quantum double Schubert polynomial, structure constant, Littlewood-Richardson rule, Pieri formula, quantum Bruhat graph, Peterson--Woodward comparison formula
 
-{\bf Mathematics classification codes}: 05E05, 05A05, 05A15, 14N10
+{\bf Mathematics Subject Classification (2020)}: Primary 05E05; Secondary 05A05, 14N15, 14N35.
 
 \section{Introduction}
 
@@ -144,7 +144,7 @@ is the quantum Schubert polynomial. In particular, at $q=0$ these recover the or
 \subsubsection*{The stable setting}
 The polynomials $\qsch_w(x;y)$ are stable \cite{kirillov2000quantum}: for $w\in S_n$, $\qsch_w(x;y)$ involves only $x_1,\ldots,x_{n-1}$, $y_1,\ldots,y_{n-1}$ and $q_1,\ldots,q_{n-2}$, and it does not change when $w$ is regarded as an element of $S_{n+1}$ under the standard inclusion $S_n\subset S_{n+1}$. (This is also immediate from the description $\qsch_w(x;y)=\mathcal Q(\sch_w(x;y))$ in the proof of Lemma \ref{lemma:quantumtoordinary} below, since the quantization map $\mathcal Q$ does not depend on $n$.) From now on we therefore let the number of variables be infinite,
 $$x=(x_1,x_2,\ldots),\qquad y=(y_1,y_2,\ldots),\qquad z=(z_1,z_2,\ldots),\qquad q=(q_1,q_2,\ldots),$$
-index the polynomials by $S_\infty=\bigcup_nS_n$, and work in the polynomial ring $\mathbb Z[q][x,y,z]$ in these (countably many) variables, where $\mathbb Z[q]=\mathbb Z[q_1,q_2,\ldots]$. A \emph{degree} is an element $d=(d_1,d_2,\ldots)$ of $\bigoplus_{i\geq1}\mathbb Z_{\geq0}$, i.e.\ a weak composition with finitely many nonzero parts, and $q^d=\prod_iq_i^{d_i}$; in Section \ref{section:definitions:parabolic} degrees will be regarded as effective elements of the coroot lattice. As a module over $\mathbb{Z}[q][y]$, the quantum double Schubert polynomials $\qsch_w(x;y)$, $w\in S_\infty$, form a basis of $\mathbb{Z}[q][x,y]$: the quantization map $\mathcal Q$ of Lemma \ref{lemma:quantumtoordinary} is a $\mathbb Z[q][y]$-linear bijection of $\mathbb Z[q][x,y]$ onto itself, since it preserves the degree, is the identity modulo $q$, and maps each finite-rank $\mathbb Z$-module of homogeneous elements of fixed degree in $q_1,\ldots,q_{m-1}$, $x_1,\ldots,x_m$, $y_1,\ldots,y_m$ into itself, and it carries the basis $\{\sch_w(x;y)\}$ to $\{\qsch_w(x;y)\}$. We may therefore write
+index the polynomials by $S_\infty=\bigcup_nS_n$, and work in the polynomial ring $\mathbb Z[q][x,y,z]$ in these (countably many) variables, where $\mathbb Z[q]=\mathbb Z[q_1,q_2,\ldots]$. A \emph{degree} is an element $d=(d_1,d_2,\ldots)$ of $\bigoplus_{i\geq1}\mathbb Z_{\geq0}$, i.e.\ a weak composition with finitely many nonzero parts, and $q^d=\prod_iq_i^{d_i}$; in Section \ref{section:definitions:parabolic} degrees will be regarded as effective elements of the coroot lattice. As a module over $\mathbb{Z}[q][y]$, the quantum double Schubert polynomials $\qsch_w(x;y)$, $w\in S_\infty$, form a basis of $\mathbb{Z}[q][x,y]$: the quantization map $\mathcal Q$ of Lemma \ref{lemma:quantumtoordinary} is a $\mathbb Z[q][y]$-linear bijection of $\mathbb Z[q][x,y]$ onto itself, since $\mathcal Q-\mathrm{id}$ lowers the total $x$-degree by at least two and is therefore locally nilpotent, so that $\sum_{r\geq0}(-1)^r(\mathcal Q-\mathrm{id})^r$ is a well-defined inverse on every polynomial. It carries the basis $\{\sch_w(x;y)\}$ to $\{\qsch_w(x;y)\}$. We may therefore write
 $$\qsch_u(x;y)\qsch_v(x;z)=\sum_{w,d}q^dc_{u,v}^{w,d}(y;z)\qsch_w(x;y),$$
 the sum being over $w\in S_\infty$ and all degrees $d$, with only finitely many nonzero terms. The coefficients $c_{u,v}^{w,d}(y;z)$ are the \emph{triple quantum Schubert structure constants}, which are polynomials in $y$ and $z$ with integer coefficients.
 
@@ -207,8 +207,9 @@ Unlike ordinary cohomology or equivariant cohomology, quantum cohomology and equ
 	$$\qsch^P_w(x;y)=(-1)^{\ell(w(w_0^P)^{-1})}\partial_{w(w_0^P)^{-1}}^{(y)}\prod_{j=1}^k\ \prod_{i=n-N_{j+1}+1}^{n-N_j} \Delta^P_j(-y_i;x),$$
 	where $w_0^P$ is the longest element of $W^P$. For $P=\emptyset$ the product is $\prod_{j=1}^{n-1}\Delta_j(-y_{n-j}\mid x_1,\ldots,x_j)=\qsch_{w_0}(x;y)$.
 	
-	Taken as defined, when we vary $n$ these polynomials are not stable under inclusion and do not form a basis of $\mathbb{Z}[q][x_1,\ldots,x_n;y]$ as a module over $\mathbb{Z}[q][y]$. To obtain stability and a basis, instead we fix $n$ and choose $N>n$ as large as we would like, maintaining $N_{k+1}=n$ and setting $n_{k+2} = N-n$. From a cohomological perspective, this introduces ``extraneous'' polynomials that are indexed by elements not in $W^P$. The full indexing set is $W^{\pcomp{P}}\subset S_\infty$, where
+	Taken as defined, when we vary $n$ these polynomials are not stable under inclusion and do not form a basis of $\mathbb{Z}[q][x_1,\ldots,x_n;y]$ as a module over $\mathbb{Z}[q][y]$. To obtain stability and a basis, instead we fix $n$ and choose $N>n$ as large as we would like, maintaining $N_{k+1}=n$ and setting $n_{k+2} = N-n$. The added quantum parameter $q_{k+1}$ has degree $n_{k+1}+N-n$, which tends to infinity; hence it cannot occur in any polynomial or product of fixed degree once $N$ is sufficiently large. The remaining parameters are the original $q_1,\ldots,q_k$. From a cohomological perspective, this introduces ``extraneous'' polynomials that are indexed by elements not in $W^P$. The full indexing set is $W^{\pcomp{P}}\subset S_\infty$, where
 	$$\pcomp{P} = P \cup \{s_{n+1},s_{n+2},\ldots\}$$
+		The notation $W^{\pcomp P}$ specifies the stable indexing set only. Any use of longest elements below is made in a finite symmetric group, with the enlarged parabolic generated by $\pcomp P\cap\{s_1,\ldots,s_{N-1}\}$.
 \end{definition}
 
 \begin{example}
@@ -252,8 +253,8 @@ q_1(\alpha_1\alpha_2+\alpha_1\alpha_3+\alpha_2\alpha_3+\alpha_2^2)\,\qsch_{132}^
 
  \begin{method}[Checking the Peterson-Woodward lift property]
  While backing out a Peterson-Woodward lift is difficult, going in the other direction is not. Suppose $d\in Q^\vee$ and $P$ is parabolic. If there is any $i$ with $s_i\in P$ such that $\langle d\rangle_i\notin\{0,-1\}$, then $d$ is not a Peterson-Woodward lift. If this condition does hold, let $I_1,\ldots,I_m$ be the maximal intervals of consecutive indices $i$ with $s_i\in P$. Since $\langle d\rangle_{ij}=\sum_{l=i}^{j-1}\langle d\rangle_l$, the condition $\langle d\rangle_{ij}\in\{0,-1\}$ for all $i<j$ with $s_i,\ldots,s_{j-1}\in P$ holds if and only if each interval $I_r$ contains at most one index $l$ with $\langle d\rangle_l=-1$. If and only if this is the case, $d$ is the Peterson-Woodward lift of a unique $d_P\in Q^\vee/Q^\vee_P$, namely its image $d+Q^\vee_P$, which we denote by $\pi_P(d)$. In that case we let
-$$z_P(d)=\{\,i\mid s_i\in P,\ \langle d\rangle_i=0\,\}$$
-and write $w_{z_P(d)}$ for the longest element of the parabolic subgroup generated by $\{s_i\mid i\in z_P(d)\}$, and $w_P$ for the longest element of $W_P$. 
+$$z_P(d)=\{\,i\mid s_i\in P,\ \langle d\rangle_i=0\,\}.$$
+When $P\subseteq\{s_1,\ldots,s_{N-1}\}$ is finite, write $w_{z_P(d)}$ for the longest element of the parabolic subgroup generated by $\{s_i\mid i\in z_P(d)\}$, and $w_P$ for the longest element of $W_P\subseteq S_N$.
  \end{method}
 
  \begin{example}
@@ -264,20 +265,22 @@ and write $w_{z_P(d)}$ for the longest element of the parabolic subgroup generat
 
  The parabolic triple quantum Schubert structure constants $c_{u,v}^{w,d_P}(y;z)$ are defined by
 $$\qsch^P_u(x;y)\qsch^P_v(x;z)=\sum_{w\in W^{\pcomp P},\,d_P}q^{d_P}\,c_{u,v}^{w,d_P}(y;z)\,\qsch^P_w(x;y).$$
-We prove the following result in Section \ref{section:pw}, as a consequence of the Peterson--Woodward comparison formula of Huang and Li \cite{huang2015equivariant} and Lemma \ref{lemma:quantumtoordinary}.
+We use the same notation for the finite-rank structure constants of $QH_T^*(SL_N/P)$ when the ambient rank is specified. We prove the following finite-rank result in Section \ref{section:pw}, as a consequence of the Peterson--Woodward comparison formula of Huang and Li \cite{huang2015equivariant} and Lemma \ref{lemma:quantumtoordinary}, and then apply it to the stabilized polynomial coefficients.
 
  \begin{proposition} \label{prop:parabolic}
-Let $W_P$ be a parabolic subgroup of $S_\infty$ with $P=\pcomp{P}$ and let $u,v,w\in W^{P}$. Then for any $d_P\in Q^\vee/Q_P^\vee$ with Peterson--Woodward lift $d$, we have that
+Fix $N$ and a parabolic subgroup $W_P\subseteq S_N$ generated by $P\subseteq\{s_1,\ldots,s_{N-1}\}$, and let $u,v,w\in W^{P}$. For the structure constants of $QH_T^*(SL_N/P)$ and $QH_T^*(\mathrm{Fl}_N)$, and any $d_P\in Q^\vee/Q_P^\vee$ with Peterson--Woodward lift $d$, we have
 $$c_{u,v}^{w,d_P}(y;z) = c_{u,v}^{ww_Pw_{z_P(d)},d}(y;z).$$
 \end{proposition}
+
+For the stabilized polynomial coefficients, start with the block sizes of Definition \ref{def:parabolic} and apply Proposition \ref{prop:parabolic} after adjoining a final block of size $N-n$, with $N$ sufficiently large to contain all permutations in the product expansion. At fixed total degree the added parameter has degree too large to occur, so its degree coordinate is zero. The Peterson--Woodward lift for the original blocks, extended by zero in positions $i\geq n$, is also the lift for the enlarged parabolic: its root pairings on the added block are zero. Thus the longest element of that block occurs in both $w_P$ and $w_{z_P(d)}$ and cancels in their product. The twisted output permutation and the lift are consequently independent of further enlargement, and the finite-rank comparison gives the comparison for the stabilized coefficients. No longest element of $W_{\pcomp P}$ is required.
 
 Thus, though we lack a simple functoriality property, we can reduce the computation of parabolic triple quantum Schubert structure constants completely to the complete flag variety case with an efficient algorithm. We obtain a nontrivial corollary from this.
 
 \begin{corollary}[Triple quantum Schubert positivity for the parabolic case] \label{corollary:parabolicpositivity}
-Let $W_P$ be a parabolic subgroup with $P=\pcomp P$ and let $u,v,w\in W^P$. Then for every $d_P$ the parabolic structure constant $c_{u,v}^{w,d_P}(y;z)$ exhibits triple Schubert positivity. In particular this holds when $u,v,w$ are $k$-Grassmannian and $P$ is the corresponding maximal parabolic subgroup ($n_1=k$, $n_2=n-k$).
+Let $W_P\subseteq S_N$ be a parabolic subgroup and let $u,v,w\in W^P$. Then for every $d_P$ the parabolic structure constant $c_{u,v}^{w,d_P}(y;z)$ exhibits triple Schubert positivity. The same holds for the stabilized polynomial coefficients. In particular this holds when $u,v,w$ are $k$-Grassmannian and $P$ is the corresponding maximal parabolic subgroup ($n_1=k$, $n_2=N-k$).
 \end{corollary}
 \begin{proof}
-By Proposition \ref{prop:parabolic}, $c_{u,v}^{w,d_P}(y;z)$ equals a structure constant $c_{u,v}^{w',d}(y;z)$ of the complete flag variety, which lies in $\mathbb Z_{\geq0}[y_i-z_j]$ by Theorem \ref{theorem:positivity}.
+By Proposition \ref{prop:parabolic}, $c_{u,v}^{w,d_P}(y;z)$ equals a structure constant $c_{u,v}^{w',d}(y;z)$ of the complete flag variety, which lies in $\mathbb Z_{\geq0}[y_i-z_j]$ by Theorem \ref{theorem:positivity}. The stabilized assertion follows by the finite-rank interpretation just explained.
 \end{proof}
 
 \begin{remark}[The Grassmannian case] \label{remark:grassmannian}
@@ -303,7 +306,7 @@ for all $i$
 \item $w=ut_{a_1b_1}\cdots t_{a_pb_p}$
 \end{enumerate}
 In contrast to the non-quantum case, $u\tom{k} w$ does not imply that $\ell(u) \leq \ell(w)$, as the final condition can cause the length of the permutation to drop. For intuition, the condition $\ell(ut_{ab}) = \ell(u) - 2(b - a) + 1$ means that if we write the reflection $t_{ab}$ as
-$$s_{b}s_{b-1}\cdots s_{a+1}s_as_{a+1}\cdots s_{b-1}s_b$$
+$$s_{b-1}\cdots s_{a+1}s_as_{a+1}\cdots s_{b-1}$$
 then each simple reflection in this word cancels a corresponding simple reflection in a reduced word for $u$, as opposite to the length-increase case where there is a word for which precisely one simple reflection is inserted, regardless of the length of the reflection as a permutation.
 
 If $u\tom{k} w$, define 
@@ -317,7 +320,7 @@ $$q_k(u,w)=q_k(u,w')q_{a_pb_p}$$
 
 Suppose $y$ and $z$ are sets of variables and $0\leq p\leq k$ are integers. We define $E_{p,k}(y;z)$ to be the factorial elementary symmetric polynomial in $y$ and $z$. For specificity, this is the double Schubert polynomial $\sch_{c[p,k]}(y;z)$ where
 $$c[p,k] = s_{k-p+1}\cdots s_{k-1}s_k$$
-If $p=0$, the polynomial is identically $1$. If $p=k$, $E_{k,k}(y;z)$ can be simply written as
+If $p=0$, the polynomial is identically $1$, and we set $E_{p,k}=0$ for $p<0$. If $p=k$, $E_{k,k}(y;z)$ can be simply written as
 $$E_{k,k}(y;z)=\prod_{i=1}^k(y_i-z_1)$$
 An explicit formula can be written for general $p$ without too much trouble as well, using e.g. \cite{molev1999littlewood}:
 $$E_{p,k}(y;z)=\sum_{1\leq i_1<\cdots<i_p\leq k}\prod_{j=1}^p(y_{i_j}-z_{i_j-j+1})$$
@@ -536,7 +539,7 @@ This is the routine \texttt{double\_elem\_sym\_q} of \cite{schubmult}.
 
 \begin{lemma}[Correctness of \textbf{\textsc{doublepieri}}] \label{lemma:doublepieri}
 The pairs $\big((v,t_1,\mathbf q_1),(w,t_2,\mathbf q_2)\big)$ with $(w,t_2,\mathbf q_2)\in L(v,t_1,\mathbf q_1)$ returned by $\textbf{\textsc{doublepieri}}(u,p_1,p_2,k)$ are in bijection with the compatible pairs $u\tom kv\tom kw$ with $n_k(u,v)\leq p_1$ and $n_k(v,w)\leq p_2$, with $t_1=n_k(u,v)$, $t_2=n_k(v,w)$, $\mathbf q_1\mathbf q_2=q_k(u,v)q_k(v,w)$. Consequently, for $0\leq p_1'\leq p_1$ and $0\leq p_2'\leq p_2$ and two alphabets $z,z'$,
-$$\qsch_u(x;y)\,\qelem_{p_1',p_2';k}(x;z,z')=\sum_{\substack{(w,t_2,\mathbf q_2)\in L(v,t_1,\mathbf q_1)\\ t_1\leq p_1',\ t_2\leq p_2'}}\mathbf q_1\mathbf q_2\,E_{p_1'-t_1,\,k-t_1}\big(y_{\fx_k(u,v)};z\big)\,E_{p_2'-t_2,\,k-t_2}\big(y_{\fx_k(v,w)};z'\big)\,\qsch_w(x;y).$$
+$$\qsch_u(x;y)\,\qelem_{p_1',p_2';k}(x;z,z')=\sum_{\substack{(v,t_1,\mathbf q_1)\in T_1\\ (w,t_2,\mathbf q_2)\in L(v,t_1,\mathbf q_1)\\ t_1\leq p_1',\ t_2\leq p_2'}}\mathbf q_1\mathbf q_2\,E_{p_1'-t_1,\,k-t_1}\big(y_{\fx_k(u,v)};z\big)\,E_{p_2'-t_2,\,k-t_2}\big(y_{\fx_k(v,w)};z'\big)\,\qsch_w(x;y).$$
 \end{lemma}
 \begin{proof}
 By Lemma \ref{lemma:qpieri} the pairs examined in step 2 are in bijection with the pairs of chains $u\tom kv\tom kw$ with $n_k(u,v)\leq p_1$, $n_k(v,w)\leq p_2$, with the stated $t$'s and $\mathbf q$'s. The rejection test is the negation of Definition \ref{def:compatible}: a cycle $d$ of $v^{-1}w$ whose top $\max d$ is the top of a cycle $c$ of $u^{-1}v$ must satisfy $c\cap d=\{\max d\}$, i.e.\ no non-top element of $d$ may lie in $c$ (it cannot equal $\max d=\max c$), and cycles of $v^{-1}w$ whose top is not a top of $u^{-1}v$ are unrestricted. The formula is Corollary \ref{corollary:lowerdegrees} with $(p_1',p_2')$ in place of $(p_1,p_2)$.
@@ -764,7 +767,7 @@ A \emph{pivot chain} of $\sigma$ is a sequence $t_1,\ldots,t_N$ ($N=\sum_ip_i$) 
 \begin{lemma}[Tightness] \label{lemma:tight}
 Let $u,\sigma\in S_\infty$, let $t_1,\ldots,t_N$ be a pivot chain of $\sigma$, and put $u_0=u$, $u_j=u_{j-1}t_j$.
 \begin{enumerate}
-\item[(i)] If $t_j=t_{a_{i,l}b_i}$ then $u_{j-1}(a_{i,l})=u(a_{i,l})$ and $u_{j-1}(b_i)=u(a_{i,l-1})$ (with $a_{i,0}=b_i$). Thus the $j$-th step exchanges the values $u(a_{i,l})$ and $u(a_{i,l-1})$, and $a_{i,l}\in\desc_u(c_i)$ exactly when the larger of the two sits at the larger position $b_i$ before the step.
+\item[(i)] If $t_j=t_{a_{i,l}b_i}$ then $u_{j-1}(a_{i,l})=u(a_{i,l})$ and $u_{j-1}(b_i)=u(a_{i,l-1})$ (with $a_{i,0}=b_i$). Thus the $j$-th step exchanges the values $u(a_{i,l})$ and $u(a_{i,l-1})$, and $a_{i,l}\in\desc_u(c_i)$ exactly when the larger of the two sits at the smaller position $a_{i,l}$ before the step.
 \item[(ii)] $\ell(u\sigma)-\ell(u)\geq\Lw_u(\sigma)$.
 \item[(iii)] $\sigma$ is $u$-tight if and only if $u_{j-1}\lup u_j$ for every $j$. In that case the $j$-th step is a classical cover if $a_{i,l}\notin\desc_u(c_i)$ and a quantum cover if $a_{i,l}\in\desc_u(c_i)$, and $\prod_j\kappa(u_{j-1},t_j)=\qw_u(\sigma)$.
 \item[(iv)] If $\sigma=\rho\tau$ where $\rho$ and $\tau$ are the products of two complementary sets of cycles of $\sigma$, then $\sigma$ is $u$-tight if and only if $\rho$ is $u$-tight and $\tau$ is $u\rho$-tight. Moreover $\Lw_u(\tau)=\Lw_{u\rho}(\tau)$ and $\qw_u(\tau)=\qw_{u\rho}(\tau)$.
@@ -1040,7 +1043,7 @@ and $\fx_{k-1}(u,wt_{ak})=\fx_{k-1}(u,w)\setminus\{u(a)\}=\fx_{k-2}(u,w)$ as in 
 We now record the recurrence satisfied by the quantum factorial elementary polynomials, which drives the induction.
 
 \begin{lemma} \label{lemma:elemrecursion}
-For all integers $k$ we have
+For all integers $k\geq2$ we have
 $$\qelem_{k,k}(x;z)=(x_k-z_1)\qelem_{k-1,k-1}(x;z)+q_{k-1}\qelem_{k-2,k-2}(x;z),$$
 with the conventions $\qelem_{0,0}=1$ and $\qelem_{k,k}=0$ if $k<0$. Moreover, the ordinary polynomials $\wte(y_A;z)=\prod_{i\in A}(y_i-z_1)$ satisfy, for any set $A$ and any $c\notin A$, the single-variable identity
 $$\wte(y_{A\cup\{c\}};z)=(y_c-z_1)\,\wte(y_A;z).$$
@@ -1309,7 +1312,7 @@ For $u\in S_\infty$ and $k\geq1$,
 Thus the doubled formula is obtained from the iterated formula \eqref{eq:allk} by \emph{omitting} the incompatible pairs, exactly as the quantization $\qsch_{d_2[k]}$ of the product $E_{k,k}(x;z_1)E_{k,k}(x;z_2)$ omits terms from the product $\qelem_{k,k}(x;z_1)\qelem_{k,k}(x;z_2)$ of the quantizations. This is the rule implemented by the routine \texttt{double\_elem\_sym\_q} of \cite{schubmult}, and it is the ``paired step'' of the quantum algorithm of Section \ref{section:algorithms}. We have verified the theorem by computer for all $u\in S_4$ and all $k\leq3$; in these cases the unrestricted sum \eqref{eq:allk} fails to equal the left-hand side in roughly half of the instances, so the compatibility condition is essential.
 
 \begin{example}[Compatible and incompatible pairs] \label{example:doubled}
-(a) $k=1$. A step $u\tom1v$ is either trivial or a single cover $t_{1b}$, so a cycle of $u^{-1}v$ and a cycle of $v^{-1}w$ with a common top $B$ sharing the element $1$ are both equal to $(1,B)$, i.e.\ $v=ut_{1B}$ and $w=u$; and $t_{1B}$ can be a cover of both $u$ and $ut_{1B}$ only when $B=2$ (if $B\geq3$, the classical cover among the two requires no intermediate value in the interval between $u(1)$ and $u(B)$, while the quantum cover requires every intermediate value to lie in it). Thus the incompatible pairs are exactly the round trips $u\tom1us_1\tom1u$, in which one step is a classical and the other a quantum cover, both fixed sets are empty, and $\omega_1(u,us_1,u)=q_1$. Theorem \ref{theorem:doubledpieri} for $k=1$ therefore says that $\qsch_u\,\qsch_{312}(x;z)$ is obtained from $\qsch_u\,\qelem_{1,1}(x;z_1)\,\qelem_{1,1}(x;z_2)$ by deleting the term $q_1\qsch_u$, in agreement with $\qsch_{312}(x;z)=\mathcal Q\big((x_1-z_1)(x_1-z_2)\big)=(x_1-z_1)(x_1-z_2)-q_1$, which is the case $k=1$ of the recurrence of Lemma \ref{lemma:thetaPP} below. For $u=21$ the six compatible pairs and the rejected round trip $21\tom112\tom121$ are listed in Example \ref{example:algorithm}.
+(a) $k=1$. A step $u\tom1v$ is either trivial or a single cover $t_{1b}$, so a cycle of $u^{-1}v$ and a cycle of $v^{-1}w$ with a common top $B$ sharing the element $1$ are both equal to $(1,B)$, i.e.\ $v=ut_{1B}$ and $w=u$; and $t_{1B}$ can be a cover of both $u$ and $ut_{1B}$ only when $B=2$ (if $B\geq3$, the classical cover among the two requires no intermediate value in the interval between $u(1)$ and $u(B)$, while the quantum cover requires every intermediate value to lie in it). Thus the incompatible pairs are exactly the round trips $u\tom1us_1\tom1u$, in which one step is a classical and the other a quantum cover, both fixed sets are empty, and $\omega_1(u,us_1,u)=q_1$. Theorem \ref{theorem:doubledpieri} for $k=1$ therefore says that $\qsch_u\,\qsch_{312}(x;z)$ is obtained from $\qsch_u\,\qelem_{1,1}(x;z_1)\,\qelem_{1,1}(x;z_2)$ by deleting the term $q_1\qsch_u$, in agreement with $\qsch_{312}(x;z)=\mathcal Q\big((x_1-z_1)(x_1-z_2)\big)=(x_1-z_1)(x_1-z_2)-q_1$, which is the case $k=1$ of the recurrence of Lemma \ref{lemma:thetaPP} below. For $u=21$ the seven compatible pairs and the rejected round trip $21\tom112\tom121$ are listed in Example \ref{example:algorithm}.
 
 (b) $k=2$, $u=1324$. The steps $u\tom2v$ are: the trivial one; the single covers $t_{13}$ (classical, $v=2314$), $t_{23}$ (quantum, weight $q_2$, $v=1234$) and $t_{24}$ (classical, $v=1423$); and the two-step chains $t_{24}t_{13}$ ($v=2413$) and $t_{13}t_{23}$ (weight $q_2$, $v=2134$). Consider first $w=3124$. Exactly two pairs $u\tom2v\tom2w$ exist, namely
 $$1324\xrightarrow{t_{13}}2314\xrightarrow{t_{23}t_{13}}3124\qquad\text{and}\qquad1324\xrightarrow{t_{13}t_{23}}2134\xrightarrow{t_{13}}3124,$$
@@ -1664,7 +1667,7 @@ Now apply the reversal of Lemma \ref{lemma:reversal} to whole configurations: it
 
 \section{Proof of the parabolic reduction} \label{section:pw}
 
-In this section we prove Proposition \ref{prop:parabolic}. Peterson's comparison formula expresses the Gromov--Witten invariants of $G/P$ in terms of those of $G/B$; it was proved by Woodward \cite{woodward2005d} and extended to equivariant quantum cohomology by Huang and Li \cite{huang2015equivariant}, whose form we use. We use the notation of Section \ref{section:definitions}: $W_P$ is a parabolic subgroup of $S_n$ with $P=\pcomp P$, $\omega_P=w_P$ is its longest element, and for $\lambda_P\in Q^\vee/Q^\vee_P$ we write $\lambda_B\in Q^\vee$ for its Peterson--Woodward lift. In the language of roots, $\lambda_B$ is the unique lift with $\langle\alpha,\lambda_B\rangle\in\{0,-1\}$ for all positive roots $\alpha$ of the Levi subgroup of $P$; in type $A$ these are the roots $\alpha_i+\cdots+\alpha_{j-1}$ with $s_i,\ldots,s_{j-1}\in P$, and $\langle\alpha_i+\cdots+\alpha_{j-1},d\rangle=\langle d\rangle_{ij}$, so this is the condition of Definition \ref{def:pwlift}.
+In this section we prove Proposition \ref{prop:parabolic} in finite rank. Peterson's comparison formula expresses the Gromov--Witten invariants of $G/P$ in terms of those of $G/B$; it was proved by Woodward \cite{woodward2005d} and extended to equivariant quantum cohomology by Huang and Li \cite{huang2015equivariant}, whose form we use. We use the notation of Section \ref{section:definitions}: $W_P$ is a parabolic subgroup of $S_N$ generated by $P\subseteq\{s_1,\ldots,s_{N-1}\}$, $\omega_P=w_P$ is its longest element, and for $\lambda_P\in Q^\vee/Q^\vee_P$ we write $\lambda_B\in Q^\vee$ for its Peterson--Woodward lift. In the language of roots, $\lambda_B$ is the unique lift with $\langle\alpha,\lambda_B\rangle\in\{0,-1\}$ for all positive roots $\alpha$ of the Levi subgroup of $P$; in type $A$ these are the roots $\alpha_i+\cdots+\alpha_{j-1}$ with $s_i,\ldots,s_{j-1}\in P$, and $\langle\alpha_i+\cdots+\alpha_{j-1},d\rangle=\langle d\rangle_{ij}$, so this is the condition of Definition \ref{def:pwlift}.
 
 \begin{proposition}[{\cite[Proposition~2.10]{huang2015equivariant}}] \label{prop:huangli}
 Let $W_P$ be a parabolic subgroup of $W$ and $u,v,w\in W^P$. Then for any $\lambda_P\in Q^\vee/Q_P^\vee$, we have that
@@ -1686,7 +1689,7 @@ $$\sum_{v_1\cdot v_2=v}c_{u,v_2}^{w\omega_P\omega_{P'},\lambda_B}(y;y)\,\sch_{v_
 \end{proof}
 
 \begin{proof}[Proof of Proposition \ref{prop:parabolic}]
-Let $d_P\in Q^\vee/Q^\vee_P$ with Peterson--Woodward lift $d=\lambda_B$. In type $A$, $\langle\alpha_i,d\rangle=2d_i-d_{i-1}-d_{i+1}=\langle d\rangle_i$, so the parabolic subgroup $P'$ of Proposition \ref{prop:huangli} is generated by $\{s_i\in P\mid\langle d\rangle_i=0\}$, that is, by $\{s_i\mid i\in z_P(d)\}$, and $\omega_P\omega_{P'}=w_Pw_{z_P(d)}$. The claim is therefore Corollary \ref{corollary:pwz}. (The passage from $S_n$ to $S_\infty$, i.e.\ from $P$ to $\pcomp P$, is the stability discussed after Definition \ref{def:parabolic}.)
+Let $d_P\in Q^\vee/Q^\vee_P$ with Peterson--Woodward lift $d=\lambda_B$. In type $A$, $\langle\alpha_i,d\rangle=2d_i-d_{i-1}-d_{i+1}=\langle d\rangle_i$, so the parabolic subgroup $P'$ of Proposition \ref{prop:huangli} is generated by $\{s_i\in P\mid\langle d\rangle_i=0\}$, that is, by $\{s_i\mid i\in z_P(d)\}$, and $\omega_P\omega_{P'}=w_Pw_{z_P(d)}$. The claim is therefore Corollary \ref{corollary:pwz}. Its application to stabilized polynomial coefficients is explained immediately after Proposition \ref{prop:parabolic}.
 \end{proof}
 
 \appendix

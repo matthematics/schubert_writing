@@ -1,0 +1,1218 @@
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[margin=1in]{geometry}
+\usepackage[hidelinks]{hyperref}
+
+\newtheorem{proposition}{Proposition}
+\newtheorem{theorem}[proposition]{Theorem}
+\newtheorem{lemma}[proposition]{Lemma}
+\newtheorem{conjecture}[proposition]{Conjecture}
+\newtheorem{definition}[proposition]{Definition}
+\newtheorem{remark}[proposition]{Remark}
+\newtheorem{example}[proposition]{Example}
+\newcommand{\G}{\mathfrak{G}}
+\newcommand{\Q}{\mathcal{Q}}
+\newcommand{\Fix}{\operatorname{Fix}}
+\newcommand{\Left}{\operatorname{Left}}
+\newcommand{\Out}{\operatorname{Out}}
+\newcommand{\ellength}{\ell}
+\newcommand{\qdeg}{\operatorname{qdeg}}
+\DeclareMathOperator{\supp}{supp}
+
+\title{Triple quantum K-theory of flag varieties}
+\author{Matt Samuel}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We prove a triple quantum K-Pieri formula expanding the product of a
+quantum double Grothendieck polynomial and a quantized top block. Its
+coefficients are indexed by endpoints of admissible chains in the
+quantum Bruhat graph.
+\end{abstract}
+
+\section{Polynomial conventions}
+
+Let $S_\infty$ denote the permutations of the positive integers with
+finite support. We use one-line notation, let $\ellength(w)$ be the
+inversion number of $w$, and write $t_{ab}$ for the transposition
+interchanging positions $a<b$. Thus $wt_{ab}$ is obtained from $w$
+by interchanging $w(a)$ and $w(b)$.
+
+Let $\beta$, $z$, and the entries of $x=(x_1,x_2,\ldots)$,
+$y=(y_1,y_2,\ldots)$, and $q=(q_1,q_2,\ldots)$ be independent
+indeterminates. Put
+\[
+ X_i=1+\beta x_i,\qquad Q_i=\beta^2q_i,\qquad
+ \overline y_a=-\frac{y_a}{1+\beta y_a}.
+\]
+Our formal group law is $a\oplus b=a+b+\beta ab$, so that
+$a\oplus\overline a=0$. In particular,
+$z+\overline y_a$ below denotes an \emph{ordinary} sum, not
+$z\oplus\overline y_a$.
+
+We normalize the double Grothendieck polynomials by
+\[
+ \G_{w_0^{(n)}}(x;y)
+   =\prod_{\substack{i,j\geq 1\\i+j\leq n}}(x_i\oplus y_j),
+\]
+and the isobaric divided-difference recursion
+\[
+ \G_{ws_i}(x;y)=\pi_i^\beta\G_w(x;y)
+ \quad\text{if }\ellength(ws_i)<\ellength(w),\qquad
+ \pi_i^\beta f
+ =\frac{(1+\beta x_{i+1})f-(1+\beta x_i)s_i f}
+        {x_i-x_{i+1}}.
+\]
+Here $s_i$ interchanges $x_i,x_{i+1}$ and fixes all other variables.
+In this convention $\G_{21}=x_1+y_1+\beta x_1y_1$, and
+$\G_w|_{\beta=0}$ is the double Schubert polynomial with second
+alphabet $-y$.
+
+For $0\leq r\leq j$ define
+\begin{equation}\label{eq:quantum-elementary}
+ F_r^j(X;q,\beta)
+ =\sum_{\substack{J\subseteq\{1,\ldots,j\}\\|J|=r}}
+    \left(\prod_{a\in J}X_a\right)
+    \left(\prod_{\substack{a\in J\\a+1\notin J}}
+                     (1-\beta^2q_a)\right).
+\end{equation}
+In particular $F_0^j=1$.
+The Lenart--Maeno quantization map $\Q$ is linear over the coefficient
+parameters and is specified on standard elementary monomials by
+\begin{equation}\label{eq:quantization}
+ \Q\left(\prod_{j=1}^{N-1}e_{r_j}(X_1,\ldots,X_j)\right)
+   =\prod_{j=1}^{N-1}F_{r_j}^j(X;q,\beta),
+ \qquad 0\leq r_j\leq j.
+\end{equation}
+One takes $N$ sufficiently large for the polynomial being quantized.
+The standard elementary monomials form a basis of the space with
+$\deg_{X_i}\leq N-i$, $1\leq i<N$; this specifies the map on that
+space. The map is not asserted to be an algebra homomorphism.
+We set
+\[
+ \G_u^q(x;y)=\Q\bigl(\G_u(x;y)\bigr).
+\]
+At $\beta=-1$ this is the usual quantum double Grothendieck normalization
+associated with Lenart--Maeno quantization
+\cite{naito2024pieri,maeno2024presentation2}.
+
+The top block appearing in our formula is
+\begin{equation}\label{eq:top-block}
+ B_k^q(x;z)
+ :=\Q\left(\prod_{i=1}^{k}(x_i+z)\right)
+ =\beta^{-k}\sum_{r=0}^{k}
+       \bigl(-(1-\beta z)\bigr)^{k-r}F_r^k(X;q,\beta).
+\end{equation}
+The apparent negative powers of $\beta$ in this expression cancel.
+At $\beta=0$ the block is understood by polynomial specialization,
+not by separately substituting into $\beta^{-k}$.
+We set $B_0^q=1$.
+Notice that \eqref{eq:top-block} quantizes the ordinary factors
+$x_i+z$, not the formal-group factors $x_i\oplus z$.
+
+\section{Chains and endpoint factors}
+
+Fix $u\in S_\infty$ and $k\geq 1$. Choose a finite rank $R>k$ with
+$u\in S_R$. The directed quantum Bruhat graph on $S_R$ has an edge
+\[
+ v\xrightarrow{(a,b)}vt_{ab}\qquad(1\leq a<b\leq R)
+\]
+when either
+\begin{align*}
+ \ellength(vt_{ab})&=\ellength(v)+1
+       &&\text{(a Bruhat edge)},\\
+ \ellength(vt_{ab})&=\ellength(v)-2(b-a)+1
+       &&\text{(a quantum edge)}.
+\end{align*}
+A Bruhat edge has weight $1$; a quantum edge labeled $(a,b)$ has
+weight $q_aq_{a+1}\cdots q_{b-1}$.
+Order labels by
+\[
+ (a,b)\prec(c,d)
+ \quad\Longleftrightarrow\quad
+ b>d\ \text{ or }\ (b=d\text{ and }a<c).
+\]
+
+\begin{definition}\label{def:chain}
+An admissible $k$-chain from $u$ in $S_R$ is a directed path
+\[
+ \gamma:\quad
+ u=v_0\xrightarrow{(a_1,b_1)}v_1
+       \xrightarrow{(a_2,b_2)}\cdots
+       \xrightarrow{(a_s,b_s)}v_s=w
+\]
+in the quantum Bruhat graph satisfying:
+\begin{enumerate}
+ \item $a_i\leq k<b_i$ for every $i$;
+ \item all labels $(a_i,b_i)$ are distinct;
+ \item $b_1\geq b_2\geq\cdots\geq b_s$;
+ \item if $i<s$ and $a_i=a_j$ for some $j<i$, then
+       $(a_i,b_i)\prec(a_{i+1},b_{i+1})$.
+\end{enumerate}
+The empty path, with endpoint $u$, is included.
+Let $E_R(u,k)$ be the set of endpoints of these paths.
+Write $s(\gamma)$ for the number of edges, and define
+$D(\gamma)=(D_1,\ldots,D_{R-1})$ by
+\[
+ D_j(\gamma)
+ =\#\{\,i:\text{the $i$th edge is quantum and }a_i\leq j<b_i\,\}.
+\]
+Thus the weight of $\gamma$ is
+$q^{D(\gamma)}=\prod_{j=1}^{R-1}q_j^{D_j(\gamma)}$.
+\end{definition}
+
+ Directly from the edge definitions, every such path satisfies
+ \begin{equation}\label{eq:length-degree}
+  s(\gamma)=\ellength(w)-\ellength(u)
+                +2\sum_{j=1}^{R-1}D_j(\gamma).
+ \end{equation}
+
+ For an endpoint $w$ define three disjoint sets of \emph{values}
+ from the initial window $u(1),\ldots,u(k)$:
+\begin{align*}
+ \Fix(u,w;k)
+   &=\{u(i):1\leq i\leq k,\ w(i)=u(i)\},\\
+ \Left(u,w;k)
+   &=\{u(i):1\leq i\leq k,\
+                      w^{-1}(u(i))<i\},\\
+ \Out(u,w;k)
+   &=\{u(i):1\leq i\leq k\}
+                        \setminus\bigl(\Fix(u,w;k)\cup\Left(u,w;k)\bigr).
+\end{align*}
+Set
+\[
+ m(u,w;k)=|\Left(u,w;k)|+|\Out(u,w;k)|
+          =k-|\Fix(u,w;k)|.
+\]
+The name $\Out$ includes values that move right while remaining in
+the window, as well as values that leave the window.
+
+ \section{The triple quantum K-Pieri formula}
+
+ We state the triple quantum K-Pieri formula, expanding a quantum
+ double Grothendieck polynomial in the $y$-equivariant basis times a
+ quantized top block carrying a second parameter $z$.
+
+ \begin{theorem}[Triple quantum K-Pieri formula]
+\label{prop:top}
+ Let $k\geq1$ and $u\in S_\infty$. Set
+ \[
+  R_0=\max\{\max(\{2\}\cup\supp(u)),\,k+1\}+k,
+  \qquad E=E_{R_0}(u,k).
+ \]
+ For each endpoint $w\in E$, all admissible chains from $u$ to $w$
+ have the same quantum degree $D(u,w;k)$ and length $s(u,w;k)$.
+ Moreover, $s(u,w;k)\geq m(u,w;k)$, and
+ \begin{equation}\label{eq:main}
+   B_k^q(x;z)\,\G_u^q(x;y)
+     =\sum_{w\in E}
+        C_{u,w}^{(k)}(y,z,q,\beta)\,\G_w^q(x;y),
+ \end{equation}
+ where
+ \begin{equation}\label{eq:coefficient}
+ \boxed{\begin{aligned}
+ C_{u,w}^{(k)}
+   ={}&q^{D(u,w;k)}\beta^{s(u,w;k)-m(u,w;k)}
+       \prod_{a\in\Fix(u,w;k)}
+          \left(z-\frac{y_a}{1+\beta y_a}\right)\\
+     &\quad{}\times(1-\beta z)^{|\Left(u,w;k)|}
+       \prod_{a\in\Out(u,w;k)}(1+\beta y_a)^{-1}.
+ \end{aligned}}
+ \end{equation}
+ Here $B_k^q(x;z)=\Q(\prod_{i=1}^k(x_i+z))$ is defined in
+ \eqref{eq:top-block}; $D$ records the quantum edges in a chain;
+ $s$ is its number of edges; and
+ $m=|\Left|+|\Out|=k-|\Fix|$. The sets $\Fix,\Left,\Out$ record
+  whether each value among $u(1),\ldots,u(k)$ stays fixed, moves to an
+  earlier position, or otherwise moves (to a later position or out of
+  the first $k$ positions). The admissible chains and their quantum
+  weights are defined above.
+ \end{theorem}
+
+ The formula is indexed by endpoints, so each endpoint appears once.
+ The chain-independence of $D$ and $s$ is part of the theorem.
+
+ \begin{remark}[Rank and polynomial setting]
+ The rank $R_0$ just makes the endpoint set finite; it does not impose
+ relations from a finite flag variety. For $k=0$ the formula reduces
+ to $\G_u^q=\G_u^q$.
+ \end{remark}
+
+ \begin{remark}[A useful degree check]
+ Let $|D|=\sum_jD_j$. By \eqref{eq:length-degree}, the prefactor in
+ \eqref{eq:coefficient} can also be written as
+ \[
+ q^D\beta^{s-m}
+   =Q^D\beta^{\ellength(w)-\ellength(u)-m}.
+\]
+The first expression is preferable for specialization at $\beta=0$,
+since the inequality $s\geq m$ makes nonnegativity of the
+power explicit. With
+$\deg x_i=\deg y_i=\deg z=1$, $\deg\beta=-1$, and $\deg q_i=2$,
+the coefficient has degree $k+\ellength(u)-\ellength(w)$.
+\end{remark}
+
+\section{Proof calculations}
+\label{sec:proof}
+
+The arguments below establish the rank bound, polynomiality of the
+top block, the full formula for $k=1$, and an all-$k$ non-equivariant
+marked-chain expansion. The remaining step for the general equivariant
+formula is specified at the end of the section; that step is not
+proved here.
+
+\subsection{Finiteness and the power of \texorpdfstring{$\beta$}{beta}}
+
+\begin{proposition}\label{prop:rank}
+Put $n(u)=\max(\{1\}\cup\supp(u))$ and
+$M=\max\{n(u),k\}+1$.
+Every label in an admissible $k$-chain from $u$ has second
+entry at most $M$. Consequently its endpoint set stabilizes
+in every rank containing $u$ and $\{1,\ldots,M\}$.
+For every such chain $\gamma$ with endpoint $w$,
+\[
+ s(\gamma)\geq m(u,w;k).
+\]
+\end{proposition}
+
+\begin{proof}
+The first label has maximal second entry, by the ordering condition.
+Suppose it were $(a,b)$ with $b>M$. Then $a\leq k<b-1$,
+$u(b)=b$, $u(b-1)=b-1$, and $u(a)<b-1$.
+The intermediate value $u(b-1)$ prevents $(a,b)$ from giving a
+Bruhat cover. Since $u(a)<u(b)$, the edge cannot be quantum either.
+This contradiction proves the rank bound.
+Adding fixed positions after $M$ changes neither the relevant
+inversion differences nor the permitted paths, proving stabilization.
+
+Every position $i\leq k$ with $w(i)\ne u(i)$ must occur in at least
+one transposition of the path. Each transposition involves exactly
+one position in $\{1,\ldots,k\}$. There are
+$k-|\Fix(u,w;k)|=m(u,w;k)$ changed positions, so at least this
+many edges are required.
+\end{proof}
+
+This proves that the displayed power $\beta^{s-m}$ is nonnegative
+for each path, without presupposing independence of the path.
+It does not prove independence of $s$ or $D$ for a fixed endpoint.
+
+\subsection{An explicit polynomial top block}
+
+Write $a=1-\beta z$. For $S\subseteq\{1,\ldots,k\}$ with no two
+consecutive elements, put
+\[
+ \epsilon(S)=
+ \begin{cases}1&k\in S,\\0&k\notin S,\end{cases}
+ \qquad
+ U(S)=\{1,\ldots,k\}\setminus\bigl(S\cup(S+1)\bigr),
+ \quad S+1=\{j+1:j\in S\}.
+\]
+
+\begin{proposition}\label{prop:block-polynomial}
+The top block has the polynomial expression
+\begin{equation}\label{eq:block-matchings}
+ B_k^q(x;z)=
+ \sum_{\substack{S\subseteq\{1,\ldots,k\}\\
+                  S\text{ has no consecutive elements}}}
+ (-\beta)^{\epsilon(S)}
+ a^{|S|-\epsilon(S)}
+ \left(\prod_{j\in S}q_jX_j\right)
+ \left(\prod_{i\in U(S)}(x_i+z)\right).
+\end{equation}
+In particular, no inverse power of $\beta$ is needed.
+For $k\geq2$ it satisfies
+\begin{equation}\label{eq:block-recurrence}
+\begin{split}
+ (1-\beta^2q_{k-1})B_k^q
+ ={}&
+ \bigl(x_k+z+\beta(q_{k-1}-q_k)
+       -\beta^2(q_kx_k+zq_{k-1})\bigr)B_{k-1}^q\\
+ &+(1-\beta z)q_{k-1}(1-\beta^2q_k)X_k B_{k-2}^q,
+\end{split}
+\end{equation}
+with $B_0^q=1$ and
+$B_1^q=x_1+z-\beta q_1X_1$.
+\end{proposition}
+
+\begin{proof}
+Multiply \eqref{eq:top-block} by $\beta^k$ and substitute
+\eqref{eq:quantum-elementary}. In each product of factors
+$1-Q_j$, choose the term $-Q_j$ for a set $S$ of indices.
+Such a choice forces $j\in J$ and $j+1\notin J$ for each
+$j\in S$, so two elements of $S$ cannot be consecutive.
+Conversely these are the only restrictions on the remaining
+choices of $J$.
+
+Each forced selected position contributes $X_j$.
+Each forced unselected position $j+1\leq k$ contributes $-a$.
+At every other position, summing the selected and unselected
+possibilities gives $X_i-a$. Thus the contribution for $S$ to
+$\beta^kB_k^q$ is
+\[
+ (-1)^{|S|}Q^S
+ \left(\prod_{j\in S}X_j\right)
+ (-a)^{|S|-\epsilon(S)}
+ \prod_{i\in U(S)}(X_i-a),
+ \qquad Q^S=\prod_{j\in S}Q_j.
+\]
+Since $|U(S)|=k-2|S|+\epsilon(S)$,
+$Q_j=\beta^2q_j$, and $X_i-a=\beta(x_i+z)$, this expression is
+$\beta^k$ times the summand in \eqref{eq:block-matchings}.
+This proves both that formula and polynomiality.
+
+For the recurrence, introduce the auxiliary polynomials
+\[
+ H_0=1,\qquad H_1=x_1+z,\qquad
+ H_j=(x_j+z)H_{j-1}+a q_{j-1}X_{j-1}H_{j-2}\quad(j\geq2).
+\]
+They enumerate tilings of $\{1,\ldots,j\}$ by single positions
+of weight $x_i+z$ and adjacent pairs $\{i,i+1\}$ of weight
+$a q_iX_i$. Separating the terms of
+\eqref{eq:block-matchings} according to whether $k\in S$ gives
+\begin{equation}\label{eq:block-auxiliary}
+ B_j^q=H_j-\beta q_jX_jH_{j-1}\qquad(j\geq1).
+\end{equation}
+Set $T_j=(1-\beta^2q_j)X_j$.
+The recurrence for $H_j$, together with
+$\beta(x_j+z-\beta q_jX_j)+a=T_j$, gives
+\[
+ B_k^q=(x_k+z-\beta q_kX_k)B_{k-1}^q
+               +q_{k-1}X_{k-1}T_kH_{k-2}.
+\]
+For $k\geq3$, the same calculation at $k-1$ gives
+\[
+ \beta B_{k-1}^q
+       =T_{k-1}H_{k-2}-aB_{k-2}^q.
+\]
+For $k=2$ this last identity follows directly from $B_1^q$.
+Multiplying the preceding expression for $B_k^q$ by
+$1-\beta^2q_{k-1}$ and using this identity yields
+\[
+ (1-\beta^2q_{k-1})B_k^q
+   =\frac{T_k-a(1-\beta^2q_{k-1})}{\beta}\,B_{k-1}^q
+       +a q_{k-1}T_kB_{k-2}^q.
+\]
+Expanding the numerator gives exactly
+\eqref{eq:block-recurrence}; it is divisible by $\beta$.
+\end{proof}
+
+At $\beta=0$, this becomes
+\[
+ B_k^q=(x_k+z)B_{k-1}^q+q_{k-1}B_{k-2}^q,
+\]
+the elementary quantum cohomological recurrence. The additional
+terms in \eqref{eq:block-recurrence} are therefore essential
+K-theoretic corrections, not changes in notation.
+
+\subsection{Passing from finite flags to polynomial identities}
+
+We will use the equivariant quantum Chevalley formula, which is
+initially an identity of classes on a finite flag variety.
+The following observation explains the passage back to polynomials.
+
+\begin{proposition}[Stable detection]\label{prop:stable-detection}
+At $\beta=-1$, let $P$ be a polynomial in finitely many $x_i$ and
+$q_i$, with coefficients rational in finitely many $y_a$.
+If its image in the localized equivariant quantum K-theory
+presentation is zero in every sufficiently large rank, then $P=0$
+as a polynomial.
+\end{proposition}
+
+\begin{proof}
+Suppose $P\ne0$, and choose its least nonzero total quantum degree.
+In the quantum-adic expansion of its image, the coefficient of each
+monomial of that degree is the ordinary equivariant K-theory class
+of the corresponding coefficient polynomial $f(x;y)$.
+Indeed, all smaller quantum-degree coefficient polynomials of $P$
+are zero. The quantum K-theory module is free on the Schubert
+classes, so each such ordinary class must vanish.
+
+Let $x_1,\ldots,x_r$ include the variables occurring in $f$, and
+let $d$ bound its degree in each of these variables.
+Choose a rank $N>d+r$ containing all parameters in question.
+Restricting a vanishing ordinary class to every torus fixed point
+gives
+\[
+ f(\overline y_{\sigma(1)},\ldots,
+   \overline y_{\sigma(r)};y)=0
+ \qquad(\sigma\in S_N).
+\]
+Work over the rational function field in the equivariant parameters.
+The $N$ numbers $\overline y_a$ are distinct. After fixing distinct
+values for $r-1$ variables, the remaining variable has
+$N-r+1>d$ possible values. Polynomial interpolation says that
+every coefficient in that variable vanishes. Repeating this
+argument in the other variables proves $f=0$, a contradiction.
+\end{proof}
+
+We use here the presentation and Schubert representatives of
+\cite{maeno2024presentation2}. Localizing the equivariant coefficient ring does not
+affect the conclusion, since clearing its denominators is injective.
+
+\subsection{The line Chevalley formula}
+\label{sec:line-chevalley}
+
+The proof of Theorem~\ref{prop:top} is an induction on $k$ driven by
+multiplication by the single line class
+\[
+ T_k=(1-\beta^2q_k)X_k=(1-\beta^2q_k)(1+\beta x_k),
+\]
+exactly as the proof of the quantum Schubert Pieri formula is driven
+by multiplication by $x_k-z$. The following lemma is the
+$K$-theoretic single-variable Monk formula.
+
+\begin{definition}[Line paths]\label{def:line-path}
+Let $k\geq1$ and $u\in S_\infty$, and put $M=\max\{n(u),k\}+1$ as in
+Proposition~\ref{prop:rank}. A \emph{line path at $k$ from $u$} is a
+directed path $\pi$ in the quantum Bruhat graph with labels
+\[
+ (a_1,k),\,(a_2,k),\,\ldots,(a_s,k),\qquad
+ (k,b_1),\,(k,b_2),\,\ldots,(k,b_t),
+\]
+where $s,t\geq0$, $k>a_1>a_2>\cdots>a_s\geq1$, and
+$M\geq b_1>b_2>\cdots>b_t>k$. Write $s(\pi)$ and $t(\pi)$ for the two
+lengths, $v(\pi)$ for the permutation reached after the first
+$s(\pi)$ edges, $\operatorname{end}(\pi)$ for the final permutation,
+and $D(\pi)$ for the quantum degree, defined edgewise as in
+Definition~\ref{def:chain}. The empty path is allowed, with
+$v(\pi)=\operatorname{end}(\pi)=u$.
+\end{definition}
+
+\begin{lemma}[Line Chevalley formula]\label{lem:line-chevalley}
+For every $k\geq1$ and $u\in S_\infty$,
+\begin{equation}\label{eq:line-chevalley}
+ T_k\,\G_u^q(x;y)
+ =\sum_{\pi}
+   (-\beta)^{s(\pi)}\beta^{t(\pi)}q^{D(\pi)}\,
+   \frac{1}{1+\beta y_{v(\pi)(k)}}\,
+   \G_{\operatorname{end}(\pi)}^q(x;y),
+\end{equation}
+the sum running over all line paths at $k$ from $u$.
+\end{lemma}
+
+\begin{proof}
+Set $\beta=-1$ first and write $Y_a=(1-y_a)^{-1}$, so that the
+claimed coefficient is $(-1)^{t(\pi)}q^{D(\pi)}Y_{v(\pi)(k)}$.
+Work in $QK_T(Fl_N)$ for $N$ large, with the presentation and
+Schubert representatives of \cite{maeno2024presentation2}: the residue class of $T_k$ is
+the line bundle class $[\mathcal O(-\epsilon_k)]$ with
+$\epsilon_k=\varpi_k-\varpi_{k-1}$, $\G_w^q$ represents the opposite
+Schubert class $[\mathcal O^w]$, and the equivariant parameters are
+identified by $1-y_a=\mathbf e^{-\epsilon_a}$.
+
+Kato's isomorphism $\Phi$ onto the equivariant $K$-group of the
+semi-infinite flag manifold sends $\mathbf e^{\mu}[\mathcal O^w]Q^\xi$
+to $\mathbf e^{-\mu}[\mathcal O_{\mathbf Q}(wt_\xi)]$, and by
+\cite[Section~3.1]{maeno2024presentation2}, quoting \cite[Proposition~5.2]{maeno2023presentation1}, it
+intertwines quantum multiplication by $[\mathcal O(-\epsilon_k)]$ with
+$(1-\mathbf t_{k-1})\,[\mathcal O_{\mathbf Q}(w_0\epsilon_k)]\otimes(-)$,
+where $\mathbf t_{k-1}$ corresponds to $Q_{k-1}$ and $\mathbf t_0=0$.
+The tensor product with $[\mathcal O_{\mathbf Q}(w_0\epsilon_k)]$ is
+computed by the general Chevalley formula of Lenart--Naito--Sagaki
+\cite[Theorem~33]{lenart2024chevalley}, in the form recalled in
+\cite[Section~5.1]{maeno2024presentation2}, for the weight $\lambda=-\epsilon_k$ and
+any reduced $\lambda$-chain. We use the chain of
+\cite[Section~5.2]{maeno2024presentation2}: the alcove path from $A_\circ$ to
+$A_{\epsilon_k}$ crosses exactly the hyperplanes
+\[
+ H_{\epsilon_a-\epsilon_k,\,0}\ (a=k-1,\ldots,1),\qquad
+ H_{\epsilon_k-\epsilon_b,\,1}\ (b=N,\ldots,k+1),
+\]
+in this order. The first group is crossed in the negative direction,
+so the corresponding roots of the chain are the positive roots
+$\epsilon_a-\epsilon_k$; the second group is crossed in the positive
+direction, so the corresponding roots are the negative roots
+$-(\epsilon_k-\epsilon_b)$. An admissible subset is therefore a line
+path $\pi$, and the statistic $n(A)$ counting negative roots is
+$t(\pi)$. The affine reflections of the first group are linear, while
+those of the second group fix $\epsilon_k$, because
+$\epsilon_k\in H_{\epsilon_k-\epsilon_b,1}$; hence the weight
+statistic is $-v(\pi)\epsilon_k=-\epsilon_{v(\pi)(k)}$. Finally,
+$\langle-\epsilon_k,\alpha_{k-1}^\vee\rangle=1$ and all other pairings
+of $-\epsilon_k$ with simple coroots are nonpositive, so the auxiliary
+sum over partitions in the general formula is a geometric series
+contributing $(1-\mathbf t_{k-1})^{-1}$, which cancels the factor
+$1-\mathbf t_{k-1}$ above. Transporting back through $\Phi$, which
+negates the exponent of $\mathbf e$ and converts $t_\xi$ into
+$Q^\xi$, gives
+\[
+ T_k\star[\mathcal O^u]
+ =\sum_\pi(-1)^{t(\pi)}Q^{D(\pi)}\mathbf e^{\epsilon_{v(\pi)(k)}}
+       [\mathcal O^{\operatorname{end}(\pi)}]
+ =\sum_\pi(-1)^{t(\pi)}q^{D(\pi)}Y_{v(\pi)(k)}
+       [\mathcal O^{\operatorname{end}(\pi)}]
+\]
+in $QK_T(Fl_N)$. For $k=1$ there are no left edges and this is the
+first fundamental weight case of the Chevalley formula in
+\cite[Section~5]{lenart2024chevalley}, after the substitution
+$[\mathcal O^{s_1}]=1-\mathbf e^{-\varpi_1}T_1$.
+
+The bound $b_1\leq M$ is proved as in Proposition~\ref{prop:rank}:
+$v(\pi)$ agrees with $u$ outside $\{1,\ldots,k\}$, so if $b_1>M$ then
+$v(\pi)(b_1)=b_1$, $v(\pi)(b_1-1)=b_1-1$ and $v(\pi)(k)<b_1-1$, and
+$(k,b_1)$ is neither a Bruhat nor a quantum edge. Thus the right side
+of \eqref{eq:line-chevalley} is independent of $N$, and
+Proposition~\ref{prop:stable-detection} upgrades the identity in
+$QK_T(Fl_N)$ to a polynomial identity at $\beta=-1$. The
+homogenization to general $\beta$ is the scaling used in
+Proposition~\ref{prop:k-one} below: with $c=-\beta$ and
+$(x,y,q)\mapsto(cx,cy,\beta^2q)$ one has $T_k\mapsto T_k$,
+$Y_a\mapsto(1+\beta y_a)^{-1}$, $\G^q_w\mapsto c^{\ell(w)}\G^q_w$,
+and
+\[
+ c^{\ell(\operatorname{end}(\pi))-\ell(u)}\beta^{2|D(\pi)|}(-1)^{t(\pi)}
+ =(-\beta)^{s(\pi)}\beta^{t(\pi)}
+\]
+by the length--degree identity
+$\ell(\operatorname{end}(\pi))-\ell(u)=s(\pi)+t(\pi)-2|D(\pi)|$.
+\end{proof}
+
+We record the operator form in which the lemma is used. For a formal
+combination $\Theta=\sum_v\theta_v\,\G_v^q$ whose coefficients are
+free of $x$, put
+\begin{equation}\label{eq:line-operator}
+ \mathcal T_k\Theta
+ :=\sum_v\theta_v\sum_{\pi\text{ from }v}
+    (-\beta)^{s(\pi)}\beta^{t(\pi)}q^{D(\pi)}\,
+    \frac{\G^q_{\operatorname{end}(\pi)}}{1+\beta y_{v(\pi)(k)}},
+\end{equation}
+so that Lemma~\ref{lem:line-chevalley} reads
+$T_k\Theta=\mathcal T_k\Theta$ as polynomials.
+
+\subsection{Proof of the triple formula for \texorpdfstring{$k=1$}{k=1}}
+
+\begin{proposition}\label{prop:k-one}
+Theorem~\ref{prop:top} holds for $k=1$ and arbitrary
+$u\in S_\infty$.
+\end{proposition}
+
+\begin{proof}
+Take $k=1$ in Lemma~\ref{lem:line-chevalley}. There are no left
+edges, so $v(\pi)=u$ for every line path, the equivariant factor is
+the constant $(1+\beta y_{u(1)})^{-1}$, and
+\begin{equation}\label{eq:first-line-beta}
+ (1-\beta^2q_1)X_1\G_u^q
+   =\frac{1}{1+\beta y_{u(1)}}
+       \sum_{\gamma}\beta^{s(\gamma)}
+           q^{D(\gamma)}\G_{\operatorname{end}(\gamma)}^q,
+\end{equation}
+where $\gamma$ runs over directed paths with labels forming a
+subsequence of $(1,M),(1,M-1),\ldots,(1,2)$.
+These are exactly the admissible chains of
+Definition~\ref{def:chain} for $k=1$: all lower indices are $1$, and
+distinctness and weak decrease of the upper indices make them
+strictly decreasing.
+There is at most one such path to a given endpoint.
+In fact, a nonempty product
+$t_{1b_1}\cdots t_{1b_s}$ with distinct $b_i$ is a single
+cycle on $\{1,b_1,\ldots,b_s\}$.
+The cycle of $u^{-1}w$ determines the ordered list of these
+indices. It also shows that a nonempty path cannot have endpoint
+$u$, and that the value $u(1)$ has moved out of position $1$.
+Consequently a nonempty path has $m=1$,
+$\Fix=\Left=\varnothing$, and $\Out=\{u(1)\}$.
+
+Finally, $\beta B_1^q=(1-\beta^2q_1)X_1-(1-\beta z)$.
+Subtract the second term from \eqref{eq:first-line-beta}.
+The empty-path coefficient, after division by $\beta$, is
+\[
+ \frac{(1+\beta y_{u(1)})^{-1}-(1-\beta z)}{\beta}
+       =z-\frac{y_{u(1)}}{1+\beta y_{u(1)}}.
+\]
+Every nonempty path has coefficient
+\[
+ q^{D(\gamma)}
+       \frac{\beta^{s(\gamma)-1}}{1+\beta y_{u(1)}}.
+\]
+These are precisely \eqref{eq:coefficient} in the two cases.
+All exponents are nonnegative, so clearing equivariant
+denominators extends the result to $\beta=0$ as well.
+\end{proof}
+
+For later use we make the scaling in the proof of
+Lemma~\ref{lem:line-chevalley} explicit. Put $c=-\beta$ and replace
+$(x,y,z,q)$ at $\beta=-1$ by $(cx,cy,cz,\beta^2q)$. The defining
+divided differences and the quantization map give
+\begin{equation}\label{eq:scaling}
+ \G_w^{\,\beta^2q}(cx;cy)\big|_{\beta=-1}
+       =c^{\ellength(w)}\G_w^q(x;y),
+\end{equation}
+where on the left the quantum arguments are $\beta^2q$ and the
+Grothendieck parameter is fixed at $-1$. The scaling takes place with
+$\beta$ inverted; whenever both sides of a resulting identity have no
+negative powers of $\beta$, it holds before that inversion as well.
+
+\subsection{What the published marked-chain formula proves for all \texorpdfstring{$k$}{k}}
+
+There is also an unconditional all-$k$ calculation, but it is
+non-equivariant and initially indexed by paths rather than endpoints.
+For a nonempty admissible chain $\gamma$, let
+$r(\gamma)$ be the number of distinct lower indices $a_i$.
+Let $F(\gamma)$ be the following set of edge indices:
+\begin{itemize}
+ \item every $i$ in the maximal initial segment with
+       $b_1=\cdots=b_i$ and $a_1>\cdots>a_i$;
+ \item every $i<s(\gamma)$ for which
+       $(a_i,b_i)\succ(a_{i+1},b_{i+1})$.
+\end{itemize}
+Put $h(\gamma)=|F(\gamma)|$.
+These are exactly the indices forced to be marked in the
+Naito--Sagaki marking rule; in particular $h(\gamma)\geq1$.
+
+\begin{proposition}\label{prop:marked-block}
+For every $k\geq1$ and $u\in S_\infty$,
+\begin{equation}\label{eq:marked-block}
+\begin{split}
+ B_k^q(x;z)\G_u^q(x;0)
+  ={}&z^k\G_u^q(x;0)\\
+   &+\sum_{\substack{\gamma\text{ admissible}\\s(\gamma)>0}}
+       q^{D(\gamma)}
+       \beta^{s(\gamma)-r(\gamma)}
+       z^{k-r(\gamma)}
+       (1-\beta z)^{h(\gamma)-1}
+       \G_{\operatorname{end}(\gamma)}^q(x;0).
+\end{split}
+\end{equation}
+This statement does not require uniqueness of a path to its endpoint.
+\end{proposition}
+
+\begin{proof}
+For $1\leq p\leq k$, let
+$c[k,p]=(k-p+1,k-p+2,\ldots,k+1)$, in cycle notation.
+The single Grothendieck polynomial of this cycle is
+\[
+ \G_{c[k,p]}(x;0)
+   =\sum_{j=p}^k
+       \binom{j-1}{p-1}\beta^{j-p}e_j(x_1,\ldots,x_k).
+\]
+The binomial theorem, coefficient by coefficient in $e_j$, gives
+\[
+ \prod_{i=1}^k(x_i+z)
+  =z^k+\sum_{p=1}^k
+       z^{k-p}(1-\beta z)^{p-1}\G_{c[k,p]}(x;0).
+\]
+Indeed the coefficient of $e_j$ on the right is
+$z^{k-j}\bigl((1-\beta z)+\beta z\bigr)^{j-1}=z^{k-j}$.
+Applying the \emph{linear} map $\Q$ gives
+\begin{equation}\label{eq:block-cyclic}
+ B_k^q=z^k+\sum_{p=1}^k
+       z^{k-p}(1-\beta z)^{p-1}\G_{c[k,p]}^q(x;0).
+\end{equation}
+No multiplicativity of $\Q$ is used.
+
+Naito--Sagaki's Pieri theorem \cite[Theorem~2.13]{naito2024pieri},
+homogenized from $\beta=-1$, says that the contribution of
+$\gamma$ to
+$\G_u^q\G_{c[k,p]}^q$ is
+\[
+ q^{D(\gamma)}\beta^{s(\gamma)-p}
+       \#\operatorname{Mark}_p(\gamma).
+\]
+A mark may occur only at a first occurrence of a lower index.
+All indices in $F(\gamma)$ must be marked; the remaining first
+occurrences can be chosen freely. The admissibility conditions
+ensure that forced indices are first occurrences.
+Thus, as also recorded in \cite[Remark~2.14]{naito2024pieri},
+\[
+ \#\operatorname{Mark}_p(\gamma)
+       =\binom{r(\gamma)-h(\gamma)}{p-h(\gamma)}.
+\]
+Here $1\leq h(\gamma)\leq r(\gamma)\leq k$.
+
+Fix a nonempty chain, and abbreviate its statistics by $s,r,h,D$.
+Its coefficient after multiplying \eqref{eq:block-cyclic} by
+$\G_u^q$ is therefore
+\begin{align*}
+ &q^D\sum_{p=h}^r
+       \binom{r-h}{p-h}
+       \beta^{s-p}z^{k-p}(1-\beta z)^{p-1}\\
+ &\qquad=
+ q^D\beta^{s-r}z^{k-r}(1-\beta z)^{h-1}
+ \sum_{p=h}^r\binom{r-h}{p-h}
+       (\beta z)^{r-p}(1-\beta z)^{p-h}\\
+ &\qquad=
+ q^D\beta^{s-r}z^{k-r}(1-\beta z)^{h-1}.
+\end{align*}
+The last sum is $1$ by the binomial theorem.
+The separate term $z^k\G_u^q$ supplies the empty path.
+This proves \eqref{eq:marked-block}.
+Homogenization is justified by the same scaling and
+length--degree identity used in Proposition~\ref{prop:k-one};
+the exponents $s-p$ are nonnegative.
+\end{proof}
+
+\subsection{Reduction of level \texorpdfstring{$k$}{k} to levels \texorpdfstring{$k-1$}{k-1} and \texorpdfstring{$k-2$}{k-2}}
+\label{sec:reduction}
+
+We now set up the induction on $k$. Throughout, $a=1-\beta z$ and
+$H_j$ denotes the tiling polynomial introduced in the proof of
+Proposition~\ref{prop:block-polynomial}:
+\[
+ H_0=1,\qquad H_1=x_1+z,\qquad
+ H_j=(x_j+z)H_{j-1}+a\,q_{j-1}X_{j-1}H_{j-2}\quad(j\geq2),
+\]
+and $B_j^q=H_j-\beta q_jX_jH_{j-1}$ for $j\geq1$ by
+\eqref{eq:block-auxiliary}. We use the convention $q_0=0$ and
+$B_{-1}^q=0$.
+
+\begin{lemma}[Two-step block identities]\label{lem:two-step}
+For every $k\geq1$,
+\begin{align}
+ \beta B_k^q+aB_{k-1}^q&=T_kH_{k-1},\label{eq:step-one}\\
+ (1-\beta^2q_{k-1})H_{k-1}&=B_{k-1}^q+a\beta q_{k-1}B_{k-2}^q.
+ \label{eq:step-two}
+\end{align}
+Consequently
+\begin{equation}\label{eq:step-combined}
+ (1-\beta^2q_{k-1})\bigl(\beta B_k^q+aB_{k-1}^q\bigr)
+ =T_k\bigl(B_{k-1}^q+a\beta q_{k-1}B_{k-2}^q\bigr).
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Substituting $B_k^q=H_k-\beta q_kX_kH_{k-1}$,
+$B_{k-1}^q=H_{k-1}-\beta q_{k-1}X_{k-1}H_{k-2}$ and the recurrence for
+$H_k$,
+\[
+ \beta B_k^q+aB_{k-1}^q
+ =\bigl(\beta(x_k+z)+a-\beta^2q_kX_k\bigr)H_{k-1}
+ =(1-\beta^2q_k)X_kH_{k-1},
+\]
+since $\beta(x_k+z)+a=1+\beta x_k=X_k$; the two terms involving
+$a\beta q_{k-1}X_{k-1}H_{k-2}$ cancel. This is \eqref{eq:step-one}.
+For \eqref{eq:step-two} with $k\geq3$, expand both sides using the
+recurrence for $H_{k-1}$ and the expressions of $B_{k-1}^q,B_{k-2}^q$
+through $H$: the right side is
+\[
+ H_{k-1}+\beta q_{k-1}(a-X_{k-1})H_{k-2}
+   -a\beta^2q_{k-1}q_{k-2}X_{k-2}H_{k-3},
+\]
+and $\beta(a-X_{k-1})=-\beta^2(x_{k-1}+z)$, so this equals
+$H_{k-1}-\beta^2q_{k-1}\bigl((x_{k-1}+z)H_{k-2}+aq_{k-2}X_{k-2}H_{k-3}\bigr)
+=(1-\beta^2q_{k-1})H_{k-1}$. For $k=2$ the same computation applies
+without the last term, and for $k=1$ both sides equal $1$.
+Multiplying \eqref{eq:step-one} by $1-\beta^2q_{k-1}$ and
+substituting \eqref{eq:step-two} gives \eqref{eq:step-combined}.
+\end{proof}
+
+At $\beta=0$, \eqref{eq:step-combined} reduces to
+$B_k=(x_k+z)B_{k-1}+q_{k-1}B_{k-2}$, the recurrence used for the
+quantum Schubert Pieri formula. At $\beta=-1$ it reads
+$(1-q_{k-1})\bigl(AB_{k-1}-B_k\bigr)=T_k\bigl(B_{k-1}-Aq_{k-1}B_{k-2}\bigr)$
+with $A=1+z$.
+
+\paragraph{The target identity.}
+For $j\geq0$ and $u\in S_\infty$ write
+\[
+ P_j(u):=\sum_{w\in E(u,j)}C_{u,w}^{(j)}\,\G_w^q,
+ \qquad P_0(u)=\G_u^q,\qquad P_{-1}(u)=0,
+\]
+for the right side of \eqref{eq:main} at level $j$, with
+$C^{(j)}_{u,w}$ given by \eqref{eq:coefficient}. Here the endpoint
+data $(s,D)$ entering $C^{(j)}_{u,w}$ are assumed well defined; this
+is part of what must be proved at each level, see
+Remark~\ref{rem:well-defined} below.
+
+\begin{proposition}[Reduction]\label{prop:reduction}
+Let $k\geq1$ and suppose Theorem~\ref{prop:top} holds at levels
+$k-1$ and $k-2$ for the permutation $u$, that is,
+$B_{k-1}^q\G_u^q=P_{k-1}(u)$ and $B_{k-2}^q\G_u^q=P_{k-2}(u)$.
+Then Theorem~\ref{prop:top} holds at level $k$ for $u$ if and only if
+\begin{equation}\label{eq:junction}
+ \beta(1-\beta^2q_{k-1})\,P_k(u)
+ =\mathcal T_k\bigl(P_{k-1}(u)+a\beta q_{k-1}P_{k-2}(u)\bigr)
+   -a(1-\beta^2q_{k-1})\,P_{k-1}(u),
+\end{equation}
+with $\mathcal T_k$ the line operator \eqref{eq:line-operator}.
+\end{proposition}
+
+\begin{proof}
+By \eqref{eq:step-combined} and the hypotheses,
+\[
+ (1-\beta^2q_{k-1})\bigl(\beta B_k^q\G_u^q+aP_{k-1}(u)\bigr)
+ =T_k\bigl(P_{k-1}(u)+a\beta q_{k-1}P_{k-2}(u)\bigr),
+\]
+and the right side equals
+$\mathcal T_k\bigl(P_{k-1}(u)+a\beta q_{k-1}P_{k-2}(u)\bigr)$ by
+Lemma~\ref{lem:line-chevalley}. Hence
+$\beta(1-\beta^2q_{k-1})B_k^q\G_u^q$ equals the right side of
+\eqref{eq:junction}. Since the $\G_w^q$ are linearly independent over
+the coefficient field and $\beta(1-\beta^2q_{k-1})$ is a nonzero
+element of the integral domain of coefficients,
+$B_k^q\G_u^q=P_k(u)$ holds if and only if \eqref{eq:junction} does.
+\end{proof}
+
+For $k=1$ the identity \eqref{eq:junction} is
+$\beta P_1(u)=\mathcal T_1\G_u^q-a\G_u^q$, which is exactly the
+computation in the proof of Proposition~\ref{prop:k-one}. Thus
+Theorem~\ref{prop:top} follows, by induction on $k$, from
+\eqref{eq:junction} for all $k\geq2$ and all $u$. We call
+\eqref{eq:junction} the \emph{junction identity}; it is the
+$K$-theoretic counterpart of the recurrence
+$\mathcal E_{k,k}=(x_k-z_1)\mathcal E_{k-1,k-1}+q_{k-1}\mathcal E_{k-2,k-2}$ for quantum factorial elementary polynomials
+expanded by the single-variable Monk formula in the quantum Schubert
+case.
+
+\paragraph{Coefficient form.}
+Extracting the coefficient of $\G_w^q$ in \eqref{eq:junction}, and
+writing $\pi\colon v\to w$ for a line path at $k$ from $v$ with
+endpoint $w$, the junction identity reads
+\begin{equation}\label{eq:junction-coeff}
+\begin{split}
+ \beta(1-\beta^2q_{k-1})\,C^{(k)}_{u,w}
+ ={}&\sum_{v}\ \sum_{\pi\colon v\to w}
+     \frac{(-\beta)^{s(\pi)}\beta^{t(\pi)}q^{D(\pi)}}
+          {1+\beta y_{v(\pi)(k)}}
+     \Bigl(C^{(k-1)}_{u,v}+a\beta q_{k-1}C^{(k-2)}_{u,v}\Bigr)\\
+   &-a(1-\beta^2q_{k-1})\,C^{(k-1)}_{u,w},
+\end{split}
+\end{equation}
+where $C^{(j)}_{u,v}=0$ for $v\notin E(u,j)$ and $C^{(-1)}=0$.
+A line path $\pi\colon v\to w$ is determined by its label sequence,
+and $v=w\,t_{kb_t}\cdots t_{kb_1}t_{a_sk}\cdots t_{a_1k}$; the path
+must be directed from $v$ in the quantum Bruhat graph. The term
+$\pi=\varnothing$, $v=w$, is the diagonal term, with equivariant
+factor $(1+\beta y_{w(k)})^{-1}$; the paths with $s(\pi)=0$ are the
+up-neighbours $v=wt_{kb_t}\cdots t_{kb_1}$, and the paths with
+$t(\pi)=0$ are the down-neighbours $v=wt_{a_sk}\cdots t_{a_1k}$. In
+the quantum Schubert case only single edges occur and
+\eqref{eq:junction-coeff} becomes the four-term expansion of that
+proof; here a path may combine several down edges followed by several
+up edges, and each term carries a $K$-theoretic sign and an
+equivariant denominator determined by the intermediate permutation
+$v(\pi)$.
+
+\begin{remark}[Well-definedness]\label{rem:well-defined}
+The identity \eqref{eq:junction-coeff} is to be proved for each
+endpoint $w$. If some $w$ were reached by two admissible $k$-chains
+with different $(s,D)$, the left side would be ambiguous. Hence a
+proof of \eqref{eq:junction-coeff} must also show that, for each $w$,
+the right side is a single monomial in $q$ times the expected
+endpoint factors; this establishes the well-definedness claimed in
+Theorem~\ref{prop:top} at level $k$ along the way. The same situation
+occurs in the quantum Schubert proof, where path-independence of the
+quantum weight is proved through the cycle structure of $u^{-1}w$.
+\end{remark}
+
+\paragraph{The diagonal case.}
+Suppose $u(k)=w(k)$. Position $k$ is touched by a $k$-chain only
+through labels $(k,b)$, and once touched it never regains its
+original value: the value $u(k)$ moves to a position $b>k$ that is
+never touched again, because later labels have second entry at most
+$b$ and distinct labels cannot repeat $(k,b)$. Hence the admissible
+$k$-chains from $u$ to $w$ are exactly the admissible $(k-1)$-chains
+from $u$ to $w$ all of whose labels have second entry at least $k+1$,
+and for these chains the conditions of Definition~\ref{def:chain} at
+levels $k$ and $k-1$ coincide. The same argument at level $k-1$ shows
+that the $(k-1)$-chains to $w$ with some label $(a,k)$ have
+$w(k)\neq u(k)$. Therefore
+\[
+ \Fix(u,w;k)=\Fix(u,w;k-1)\sqcup\{u(k)\},\qquad
+ \Left,\ \Out,\ s,\ D\ \text{unchanged},
+\]
+and
+\begin{equation}\label{eq:diag-step}
+ C^{(k)}_{u,w}=\Bigl(z-\frac{y_{u(k)}}{1+\beta y_{u(k)}}\Bigr)
+               C^{(k-1)}_{u,w}
+ =\frac{(1+\beta y_{u(k)})^{-1}-a}{\beta}\,C^{(k-1)}_{u,w}.
+\end{equation}
+Inserting \eqref{eq:diag-step} into \eqref{eq:junction-coeff}, the
+diagonal term $\pi=\varnothing$ together with the last term produce
+exactly $\beta C^{(k)}_{u,w}$ plus
+$\frac{a\beta q_{k-1}}{1+\beta y_{u(k)}}C^{(k-2)}_{u,w}$,
+and what remains to be shown in the case $u(k)=w(k)$ is the
+cancellation
+\begin{equation}\label{eq:diag-cancel}
+ \sum_{v}\ \sum_{\substack{\pi\colon v\to w\\ \pi\neq\varnothing}}
+     \frac{(-\beta)^{s(\pi)}\beta^{t(\pi)}q^{D(\pi)}}
+          {1+\beta y_{v(\pi)(k)}}
+     \Bigl(C^{(k-1)}_{u,v}+a\beta q_{k-1}C^{(k-2)}_{u,v}\Bigr)
+ +\frac{\beta q_{k-1}}{1+\beta y_{u(k)}}
+     \Bigl(\beta C^{(k-1)}_{u,w}+aC^{(k-2)}_{u,w}\Bigr)=0,
+\end{equation}
+where we used $\beta(z+\overline y_{u(k)})+a=(1+\beta y_{u(k)})^{-1}$
+to combine the two multiples of $q_{k-1}C^{(k-1)}_{u,w}$.
+This is the $K$-theoretic form of the reflection--drop cancellation
+of the quantum Schubert proof: there the nonempty paths are single
+edges $t_{ak}$, $t_{kb}$ and the drop term is $q_{k-1}c_{k-2}(u,w)$.
+Note the combination $\beta C^{(k-1)}_{u,w}+aC^{(k-2)}_{u,w}$, the
+coefficient analogue of $\beta B_{k-1}^q+aB_{k-2}^q=T_{k-1}H_{k-2}$.
+
+\subsection{The cancellation mechanism: cut composites and local moves}
+\label{sec:mechanism}
+
+Every term of \eqref{eq:junction-coeff} is a \emph{cut composite}:
+a directed path in the quantum Bruhat graph
+\[
+ u=v_0\to v_1\to\cdots\to v_r=v\ \big|\ v\to\cdots\to w,
+\]
+whose first part is an admissible chain at level $k-1$ or $k-2$ and
+whose second part is a line path at $k$; the bar marks the cut. The
+term attached to it is the product of the chain coefficient
+$C^{(j)}_{u,v}$ (times $a\beta q_{k-1}$ when $j=k-2$) and the line
+weight $(-\beta)^{s}\beta^{t}q^{D}(1+\beta y_{v(\pi)(k)})^{-1}$.
+The whole edge sequence from $u$ to $w$ determines $q^{D}$ for the
+chain and the path together, and it determines $v(\pi)$; only the
+position of the cut and the level distinguish the bookkeeping. The
+cancellation in \eqref{eq:junction-coeff} is realized by two moves
+on cut composites, which we now make precise, together with the
+identity $\beta(z+\overline y_c)+a=(1+\beta y_c)^{-1}$ used in
+\eqref{eq:diag-step}.
+
+\begin{lemma}[Cut sliding]\label{lem:peel}
+Let $\gamma$ be an admissible $(k-1)$-chain from $u$ to $v$, let
+$\pi=(k-1,k)\cdot\pi'$ be a line path at $k$ from $v$ whose first
+edge is $(k-1,k)$, and put $v'=vt_{k-1,k}$ and
+$\kappa\in\{1,q_{k-1}\}$ for the weight of the edge $v\to v'$. Then:
+\begin{enumerate}
+\item $\gamma'=\gamma\cdot(k-1,k)$ is an admissible $(k-1)$-chain
+ from $u$ to $v'$ if and only if $(k-1,k)\notin\gamma$, and $\pi'$
+ is a line path at $k$ from $v'$ with $v(\pi')=v(\pi)$,
+ $s(\pi')=s(\pi)-1$, $t(\pi')=t(\pi)$ and $q^{D(\pi)}=\kappa\,q^{D(\pi')}$.
+\item If $v(k-1)\neq u(k-1)$ and $v(k)\neq u(k-1)$, then
+ $\Fix,\Left,\Out$ computed for $v$ and for $v'$ agree, so that
+ $C^{(k-1)}_{u,v'}=\beta\kappa\,C^{(k-1)}_{u,v}$, and the two terms of
+ \eqref{eq:junction-coeff} indexed by $(v,\pi)$ and $(v',\pi')$
+ cancel exactly.
+\item If $v(k-1)=u(k-1)$, then $\gamma$ is also an admissible
+ $(k-2)$-chain to $v$, $C^{(k-1)}_{u,v}=(z+\overline y_{u(k-1)})C^{(k-2)}_{u,v}$,
+ and the two terms indexed by $(v,\pi)$ and $(v',\pi')$ sum to
+ \begin{equation}\label{eq:peel-residue}
+  a\kappa\,(-\beta)^{s(\pi')}\beta^{t(\pi')}q^{D(\pi')}\,
+   \frac{C^{(k-2)}_{u,v}}{1+\beta y_{v(\pi)(k)}}.
+ \end{equation}
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(1) The edge $(k-1,k)$ joins adjacent positions, so it is always an
+edge of the quantum Bruhat graph, Bruhat if $v(k-1)<v(k)$ and quantum
+with weight $q_{k-1}$ otherwise; it is the same edge in $\gamma'$ and
+in $\pi$, whence the statement about weights. In $\gamma'$ the second
+entries remain weakly decreasing since $k$ is the least possible
+value, and the only condition of Definition~\ref{def:chain} that
+involves the new last label is distinctness; condition~4 for the
+previous label $(a_r,b_r)$ is automatic, because $b_r>k$, or $b_r=k$
+and $a_r\neq k-1$. Removing the first edge of a line path leaves a
+line path with the same left-part endpoint $v(\pi)$.
+
+(2) Passing from $v$ to $v'$ exchanges the values $c=v(k-1)$ and
+$d=v(k)$. The value $c$ leaves the window $\{1,\ldots,k-1\}$: it
+cannot lie in $\Left$ (a value in position $k-1$ cannot have moved
+left), and if it lies in $\Out$ or is not a window value of $u$ at
+all, its status is unchanged. The value $d$ enters position $k-1$:
+if $d=u(i)$ with $i\leq k-2$ it was in $\Out$ and remains there, and
+otherwise it is not a window value. Hence $m$ is unchanged while the
+chain length grows by one and the quantum weight is multiplied by
+$\kappa$, giving $C^{(k-1)}_{u,v'}=\beta\kappa C^{(k-1)}_{u,v}$. The
+line weights of $\pi$ and $\pi'$ differ by the factor $(-\beta)\kappa$,
+so the two terms are negatives of each other.
+
+(3) Here position $k-1$ is untouched by $\gamma$, so no label of
+$\gamma$ has first entry $k-1$, and $\gamma$ is admissible at level
+$k-2$ with the same data; this gives the factorization of
+$C^{(k-1)}_{u,v}$ as in \eqref{eq:diag-step}. In $v'$ the value
+$c=u(k-1)$ has moved to position $k$, so it passes from $\Fix$ to
+$\Out$ while $d$ behaves as in (2); thus
+$C^{(k-1)}_{u,v'}=\kappa\,(1+\beta y_c)^{-1}(z+\overline y_c)^{-1}C^{(k-1)}_{u,v}$.
+Writing $X=(-\beta)^{s(\pi')}\beta^{t(\pi')}q^{D(\pi')}(1+\beta y_{v(\pi)(k)})^{-1}$,
+the term of $(v,\pi)$ is $X(-\beta)\kappa C^{(k-1)}_{u,v}$ and the term
+of $(v',\pi')$ is $X\kappa(1+\beta y_c)^{-1}(z+\overline y_c)^{-1}C^{(k-1)}_{u,v}$.
+Their sum is
+\[
+ X\kappa\,\frac{(1+\beta y_c)^{-1}-\beta(z+\overline y_c)}{z+\overline y_c}\,
+   C^{(k-1)}_{u,v}
+ =X\kappa a\,C^{(k-2)}_{u,v},
+\]
+which is \eqref{eq:peel-residue}.
+\end{proof}
+
+The case $v(k)=u(k-1)$, in which a fixed window value would enter
+position $k-1$, does not occur in a cut composite whose endpoint
+satisfies $w(k)=u(k)$: it did not appear in any of the verified
+ranges below, and we do not use it. The residue
+\eqref{eq:peel-residue} has exactly the shape of a level-$(k-2)$ term
+of \eqref{eq:junction-coeff}, up to the factor $\beta q_{k-1}$: the
+missing $q_{k-1}$ appears either through $\kappa=q_{k-1}$ or through a
+factor $q_{k-1}$ inside $q^{D(\pi')}$, and the missing $\beta$ through
+the line path $\pi'$ being one edge shorter. This is why the junction input
+is $P_{k-1}(u)+a\beta q_{k-1}P_{k-2}(u)$ and not $P_{k-1}(u)$ alone.
+
+\begin{lemma}[Braid move]\label{lem:braid}
+Let $a<k-1$. For any permutation $v$, the two-edge sequences
+$(k-1,k),(a,k)$ and $(a,k-1),(k-1,k)$ from $v$ have the same endpoint
+$vt_{k-1,k}t_{ak}=vt_{a,k-1}t_{k-1,k}$, and if both are directed paths
+in the quantum Bruhat graph they have the same quantum weight.
+Consequently, if $\gamma$ is an admissible $(k-2)$-chain to $v$ with
+$\gamma\cdot(a,k-1)$ admissible, and $\pi=(k-1,k)\cdot(a,k)\cdot\pi''$
+is a line path from $v$, then $(k-1,k)\cdot\pi''$ is a line path from
+$vt_{a,k-1}$ with the same $v(\pi)$, and the terms indexed by
+$(v,\pi)$ and $(vt_{a,k-1},(k-1,k)\cdot\pi'')$ at level $k-2$ cancel
+exactly whenever the window statistics of $v$ and $vt_{a,k-1}$
+agree.
+\end{lemma}
+
+\begin{proof}
+The identity $t_{k-1,k}t_{ak}=t_{a,k-1}t_{k-1,k}$ holds in $S_\infty$.
+Both sequences are paths of length two between the same vertices,
+and $v^{-1}vt_{k-1,k}t_{ak}$ is a $3$-cycle, so neither endpoint is
+reachable in fewer than two steps; by Postnikov's lemma all shortest
+paths between two vertices of the quantum Bruhat graph have the same
+weight. The label $(a,k-1)$ is admissible at level $k-2$ since
+$a\leq k-2<k-1$, and second entries remain weakly decreasing because
+$k-1$ is the least possible value. The chain gains one edge
+(a factor $\beta$ when $m$ is unchanged) while the line path loses
+one left edge (a factor $-\beta$), and the quantum weights agree, so
+the two terms cancel.
+\end{proof}
+
+When the window statistics change in Lemma~\ref{lem:braid} (the value
+$v(a)$ or $v(k-1)$ is a fixed window value), a residue of the same
+kind as \eqref{eq:peel-residue} is produced instead.
+
+\paragraph{The drop term.}
+The diagonal term of \eqref{eq:junction-coeff}, $\pi=\varnothing$ and
+$v=w$, contributes $(1+\beta y_{w(k)})^{-1}\bigl(C^{(k-1)}_{u,w}+a\beta q_{k-1}C^{(k-2)}_{u,w}\bigr)$,
+and after \eqref{eq:diag-step} what is left of it is the drop term
+in \eqref{eq:diag-cancel}. In the language of cut composites it is
+the composite with an empty line path, and Lemma~\ref{lem:peel}
+pairs it with the composite
+$u\xrightarrow{\gamma_w}w\xrightarrow{(k-1,k)}wt_{k-1,k}\ \big|\ (k-1,k)$,
+for which the move of (1) is blocked because the label $(k-1,k)$ would
+be repeated. Its term is $-\beta\kappa'\,(1+\beta y_{u(k)})^{-1}C^{(k-1)}_{u,wt_{k-1,k}}$ with
+$\kappa\kappa'=q_{k-1}$, and by the computation in the proof of
+Lemma~\ref{lem:peel} it equals
+$-\beta^2q_{k-1}(1+\beta y_{u(k)})^{-1}C^{(k-1)}_{u,w}$ when
+$w(k-1)\neq u(k-1)$, and
+$-\beta q_{k-1}(1+\beta y_{u(k)})^{-1}(1+\beta y_{u(k-1)})^{-1}C^{(k-2)}_{u,w}
+ =-\beta q_{k-1}(1+\beta y_{u(k)})^{-1}\bigl(\beta C^{(k-1)}_{u,w}+aC^{(k-2)}_{u,w}\bigr)$
+when $w(k-1)=u(k-1)$, using \eqref{eq:diag-step} at level $k-1$. In
+both cases it is the negative of the drop term, provided
+$C^{(k-2)}_{u,w}=0$ in the first case.
+
+\paragraph{A worked class.}
+Take $u=21345$, $k=3$ and the endpoint $w=12345$, which is not in
+$E(u,3)$, so the right side of \eqref{eq:junction-coeff} must vanish.
+The nonzero terms are indexed by three cut composites of the single
+edge sequence $(1,3),(2,3),(1,3)$ from $u$ to $w$ at level $2$, its
+braid image at level $1$, and the drop:
+\[
+\begin{array}{lll}
+ \text{level }2:& (1,3)\,\big|\,(2,3),(1,3) & \beta^2q_1q_2\,(z+\overline y_1)\,t_2^{-1}t_3^{-1},\\
+ \text{level }2:& (1,3),(2,3)\,\big|\,(1,3) & -\beta q_1q_2\,t_1^{-1}t_2^{-1}t_3^{-1},\\
+ \text{level }1:& (1,3)\,\big|\,(2,3),(1,3) & a\beta^3q_1q_2^2\,t_2^{-1}t_3^{-1},\\
+ \text{level }1:& (1,3),(1,2)\,\big|\,(2,3) & -a\beta^3q_1q_2^2\,t_2^{-1}t_3^{-1},\\
+ \text{drop}:& & a\beta q_1q_2\,t_2^{-1}t_3^{-1},
+\end{array}
+\]
+with $t_c=1+\beta y_c$. The two level-$1$ terms are a braid pair
+(Lemma~\ref{lem:braid}) and cancel. The two level-$2$ terms are a cut
+sliding pair of type (3) in Lemma~\ref{lem:peel}, since the slid
+value $v(2)=1=u(2)$ is fixed; their sum is the residue
+$-a\beta q_1q_2t_2^{-1}t_3^{-1}$, which cancels the drop term. The
+residue is absorbed by the drop rather than by a level-$1$ path term
+because the relevant level-$1$ endpoint is $w$ itself.
+
+\paragraph{Status.}
+Lemmas~\ref{lem:peel} and~\ref{lem:braid} are proved. What remains
+for the diagonal case is the global statement: the cut composites
+with a given endpoint $w$, $w(k)=u(k)$, decompose into classes
+generated by the two moves, and within each class the exact
+cancellations and the residues of types \eqref{eq:peel-residue} sum
+to zero against the level-$(k-2)$ terms and the drop. We have
+verified this termwise, with the symbolic coefficients, for all
+$u\in S_5$ and all $k$, and for a sample of $u\in S_6$ with
+$k\leq5$; the identity \eqref{eq:diag-cancel} holds for every
+endpoint $w$ in these ranges, including endpoints outside $E(u,k)$,
+where it asserts the vanishing of the right side. A proof of the
+global statement, and of its analogue for the moved cases below,
+would complete the induction.
+
+\paragraph{The moved cases.}
+Suppose $u(k)\neq w(k)$. Then $C^{(k-1)}_{u,w}$ and
+$C^{(k-2)}_{u,w}$ need not vanish, in contrast to the quantum
+Schubert case: a $(k-1)$-chain may move position $k$ through a label
+$(a,k)$. The identity \eqref{eq:junction-coeff} must then be
+established by matching each $k$-chain to $w$ with a $(k-1)$- or
+$(k-2)$-chain to some $v$ followed by a line path $v\to w$, and by
+cancelling all remaining terms in pairs. The $k=1$ case shows the
+pattern: there $P_{k-2}=0$, every nonempty line path is a single
+up-path, and the matching is the identity. The complete case analysis
+for $k\geq2$ is not carried out in this version.
+
+\section{A small example and specializations}
+
+\begin{example}\label{ex:s1}
+Take $u=21$ and $k=1$. The endpoints are $21,312,132$, and the
+identity permutation $e$. Their chain data $(s,D)$ are respectively
+\[
+ (0,0),\qquad(1,0),\qquad(2,(1,0,\ldots)),\qquad
+ (1,(1,0,\ldots)).
+\]
+For instance, the path to $132$ is
+\[
+ 213\xrightarrow{(1,3)}312\xrightarrow{(1,2)}132,
+\]
+whose second edge is quantum. Since
+$B_1^q=x_1+z-\beta q_1(1+\beta x_1)$,
+the formula reads
+\begin{equation}\label{eq:example}
+\begin{split}
+ \bigl(x_1+z-\beta q_1(1+\beta x_1)\bigr)\G_{21}^q
+ ={}&
+ \left(z-\frac{y_2}{1+\beta y_2}\right)\G_{21}^q\\
+ &+\frac{\G_{312}^q+\beta q_1\G_{132}^q+q_1}
+              {1+\beta y_2}.
+\end{split}
+\end{equation}
+Here $\G_e^q=1$, and all polynomials have alphabets $(x;y)$.
+This particular identity can be verified by expanding the four
+quantum double Grothendieck polynomials and clearing the denominator.
+\end{example}
+
+\paragraph{Classical specialization.}
+When all $q_i=0$, only paths without quantum edges contribute.
+The multiplier becomes $\prod_{i=1}^k(x_i+z)$, giving the
+classical double Grothendieck top-block formula as a specialization
+of Theorem~\ref{prop:top}. In particular, the
+equivariant classical specialization is itself new, rather than
+an appeal to a previously published top-block formula.
+
+\paragraph{Non-equivariant specialization.}
+When all $y_a=0$, the coefficient becomes
+\[
+ q^D\beta^{s-m}z^{|\Fix|}(1-\beta z)^{|\Left|}.
+\]
+In addition setting $z=0$ leaves only endpoints with $\Fix=\varnothing$,
+and the surviving coefficient is $q^D\beta^{s-k}$.
+At $\beta=-1$ it is $(-1)^{s-k}q^D$.
+This is the specialization to compare with the quantum
+Grothendieck Pieri formula of Naito--Sagaki \cite{naito2024pieri}; identifying
+the indexing sets precisely is part of that comparison.
+
+\paragraph{Cohomological specialization.}
+At $\beta=0$, terms with $s>m$ vanish. Those with $s=m$ have coefficient
+\[
+ q^D\prod_{a\in\Fix}(z-y_a).
+\]
+The corresponding comparison is with the top quantum double
+Schubert block in coefficient alphabet $-y$.
+
+\paragraph{Usual K-theory variables.}
+At $\beta=-1$ the multiplicative equivariant variables in these
+conventions may be written
+\[
+ Y_a=\frac1{1-y_a}.
+\]
+Thus comparisons with formulas in the $Y$ variables use
+$y_a=1-Y_a^{-1}$. This change of variables does not alter the
+permutation indices or the quantum parameters $q_i$.
+
+\bibliographystyle{acm}
+\bibliography{quantum_k_pieri}
+
+\end{document}
