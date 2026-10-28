@@ -114,9 +114,15 @@ We set
 \[
  \G_u^q(x;y)=\Q\bigl(\G_u(x;y)\bigr).
 \]
-At $\beta=-1$ this is the usual quantum double Grothendieck normalization
-associated with Lenart--Maeno quantization
-\cite{naito2024pieri,maeno2024presentation2}.
+This is a definition, not an identification to be proved: at
+$\beta=-1$ one has $X_i=1-x_i$ and $Q_i=q_i$, the polynomials
+$F^j_r$ are the quantum elementary polynomials of Lenart--Maeno
+\cite{lenart2006quantum}, and $\G^q_u(x;y)$ is the quantum double
+Grothendieck polynomial obtained by applying their quantization map to
+the double Grothendieck polynomial normalized as above, which is the
+object studied in \cite{naito2024pieri,maeno2024presentation2}. The
+identifications with the conventions of those papers that the proofs
+actually use are collected in Remark~\ref{rem:dictionary} below.
 
 The top block appearing in our formula is
 \begin{equation}\label{eq:top-block}
@@ -131,6 +137,29 @@ not by separately substituting into $\beta^{-k}$.
 We set $B_0^q=1$.
 Notice that \eqref{eq:top-block} quantizes the ordinary factors
 $x_i+z$, not the formal-group factors $x_i\oplus z$.
+
+\begin{remark}[Dictionary with the cited conventions]\label{rem:dictionary}
+Results from the literature enter the proof at three points: the
+single-variable Chevalley formula (Lemma~\ref{lem:line-chevalley}),
+the Pieri formula of Naito--Sagaki
+(Proposition~\ref{prop:marked-block}), and the interpretation of
+Theorem~\ref{thm:a-zero} as a Chevalley formula for
+$\mathcal O(-\varpi_k)$. All three are stated in the sources at
+$\beta=-1$, with $X_i=1-x_i$ and $Q_i=q_i$, and with $\G^q_w(x;y)$
+representing the opposite Schubert class $[\mathcal O^w]$ in
+$QK_T(Fl_N)$ under the identification
+$1-y_a=\mathbf e^{-\epsilon_a}$ of the equivariant parameters
+\cite[Section~3.1]{maeno2024presentation2}; we write
+$Y_a=(1-y_a)^{-1}$ for $\mathbf e^{\epsilon_a}$. The passage from
+$\beta=-1$ to general $\beta$ is the scaling \eqref{eq:scaling}
+below, under which $Y_a\mapsto(1+\beta y_a)^{-1}$,
+$(1-q_k)(1-x_k)\mapsto(1-\beta^2q_k)(1+\beta x_k)$ and
+$\G^q_w\mapsto c^{\ellength(w)}\G^q_w$ with $c=-\beta$; the powers of
+$\beta$ that result are computed from the length--degree identity
+\eqref{eq:length-degree} at each use. Beyond linearity and this
+homogeneity, no property of the quantization map, in particular no
+multiplicativity, is used in the proof of Theorem~\ref{prop:top}.
+\end{remark}
 
 \section{Chains and endpoint factors}
 
@@ -308,6 +337,16 @@ below $k-1$ is fresh (Theorem~\ref{thm:F-minimal}), and then in
 general (Theorem~\ref{thm:block}), which completes the proof of
 Theorem~\ref{prop:top} (Corollary~\ref{cor:main}).
 
+\begin{remark}[Computer checks]\label{rem:checks}
+Several remarks below report that an intermediate identity has been
+verified by computer in a finite range of $u$ and $k$. These checks
+were used to find the correct statements and are retained as
+consistency checks only: no step of the proof depends on them, and
+every statement used in the proof of Theorem~\ref{prop:top} is
+either proved here for all $u$ and $k$ or quoted from the literature
+with a reference.
+\end{remark}
+
 \subsection{Finiteness and the power of \texorpdfstring{$\beta$}{beta}}
 
 \begin{proposition}\label{prop:rank}
@@ -329,8 +368,16 @@ $u(b)=b$, $u(b-1)=b-1$, and $u(a)<b-1$.
 The intermediate value $u(b-1)$ prevents $(a,b)$ from giving a
 Bruhat cover. Since $u(a)<u(b)$, the edge cannot be quantum either.
 This contradiction proves the rank bound.
-Adding fixed positions after $M$ changes neither the relevant
-inversion differences nor the permitted paths, proving stabilization.
+Since the upper indices decrease weakly, every label then has
+$b_i\leq b_1\leq M$, so no position beyond $M$ is ever touched by a
+chain. Whether $(a,b)$ is a Bruhat edge, a quantum edge, or no edge
+from $v$ depends only on the relative order of the values at the
+positions $a,\ldots,b$ (see the length formulas in the proof of
+Lemma~\ref{lem:arc} below), which is unaffected by adjoining fixed
+points beyond $M$; and the argument just given excludes a first label
+with $b>M$ in every rank. Hence the admissible chains from $u$, their
+weights and their endpoints are the same in every rank containing
+$u$ and $\{1,\ldots,M\}$, proving stabilization.
 
 Every position $i\leq k$ with $w(i)\ne u(i)$ must occur in at least
 one transposition of the path. Each transposition involves exactly
@@ -920,16 +967,24 @@ denominators extends the result to $\beta=0$ as well.
 
 For later use we make the scaling in the proof of
 Lemma~\ref{lem:line-chevalley} explicit. Put $c=-\beta$ and replace
-$(x,y,z,q)$ at $\beta=-1$ by $(cx,cy,cz,\beta^2q)$. The defining
-divided differences and the quantization map give
+$(x,y,z,q)$ at $\beta=-1$ by $(cx,cy,cz,\beta^2q)$. Then
 \begin{equation}\label{eq:scaling}
  \G_w^{\,\beta^2q}(cx;cy)\big|_{\beta=-1}
        =c^{\ellength(w)}\G_w^q(x;y),
 \end{equation}
 where on the left the quantum arguments are $\beta^2q$ and the
-Grothendieck parameter is fixed at $-1$. The scaling takes place with
-$\beta$ inverted; whenever both sides of a resulting identity have no
-negative powers of $\beta$, it holds before that inversion as well.
+Grothendieck parameter is fixed at $-1$. Indeed, the normalization of
+$\G_{w_0}$ and the operators $\pi^\beta_i$ make $\G_w(x;y)$
+homogeneous of degree $\ellength(w)$ for $\deg x_i=\deg y_a=1$,
+$\deg\beta=-1$, which gives \eqref{eq:scaling} for the classical
+polynomials; the substitution fixes every $X_i=1+\beta x_i$, hence
+every standard elementary monomial, so by uniqueness of the expansion
+in that basis it multiplies each coefficient by $c^{\ellength(w)}$;
+and $F^j_r$ depends on $(q,\beta)$ only through $\beta^2q$, so
+applying $\Q$ to both sides gives \eqref{eq:scaling}. The scaling
+takes place with $\beta$ inverted; whenever both sides of a resulting
+identity have no negative powers of $\beta$, it holds before that
+inversion as well.
 
 \subsection{What the published marked-chain formula proves for all \texorpdfstring{$k$}{k}}
 
@@ -1853,10 +1908,12 @@ Their sum is
 which is \eqref{eq:peel-residue}.
 \end{proof}
 
-The case $v(k)=u(k-1)$, in which a fixed window value would enter
-position $k-1$, does not occur in a cut composite whose endpoint
-satisfies $w(k)=u(k)$: it did not appear in any of the verified
-ranges below, and we do not use it. The residue
+Lemma~\ref{lem:peel} makes no assertion in the case $v(k)=u(k-1)$,
+in which a fixed window value would enter position $k-1$. We do not
+need it: wherever parts (2) and (3) are applied below
+(Proposition~\ref{prop:k2-diag}, Proposition~\ref{prop:backtrack-known}
+and Lemma~\ref{lem:first-family}), the hypothesis $v(k)\neq u(k-1)$
+holds, as is noted there. The residue
 \eqref{eq:peel-residue} has exactly the shape of a level-$(k-2)$ term
 of \eqref{eq:junction-coeff}, up to the factor $\beta q_{k-1}$: the
 missing $q_{k-1}$ appears either through $\kappa=q_{k-1}$ or through a
@@ -1943,20 +2000,27 @@ $-a\beta q_1q_2t_2^{-1}t_3^{-1}$, which cancels the drop term. The
 residue is absorbed by the drop rather than by a level-$1$ path term
 because the relevant level-$1$ endpoint is $w$ itself.
 
-\paragraph{Status.}
-Lemmas~\ref{lem:peel} and~\ref{lem:braid} are proved. What remains
-for the diagonal case is the global statement: the cut composites
-with a given endpoint $w$, $w(k)=u(k)$, decompose into classes
-generated by the two moves, and within each class the exact
-cancellations and the residues of types \eqref{eq:peel-residue} sum
-to zero against the level-$(k-2)$ terms and the drop. We have
-verified this termwise, with the symbolic coefficients, for all
-$u\in S_5$ and all $k$, and for a sample of $u\in S_6$ with
-$k\leq5$; the identity \eqref{eq:diag-cancel} holds for every
-endpoint $w$ in these ranges, including endpoints outside $E(u,k)$,
-where it asserts the vanishing of the right side. A proof of the
-global statement, and of its analogue for the moved cases below,
-would complete the induction.
+\paragraph{Status of the local analysis.}
+Lemmas~\ref{lem:peel} and~\ref{lem:braid} are proved. To complete the
+diagonal case in this language one would still need a global
+statement: that the cut composites with a given endpoint $w$,
+$w(k)=u(k)$, decompose into classes generated by the two moves, and
+that within each class the exact cancellations and the residues of
+type \eqref{eq:peel-residue} sum to zero against the level-$(k-2)$
+terms and the drop. We do not prove this global statement in this
+form, and the proof of Theorem~\ref{prop:top} does not use it.
+Instead, Section~\ref{sec:backtrack} reorganizes the junction
+identity: the right edges are discarded
+(Lemma~\ref{lem:right-paths}), the $y$-dependence is shown to be
+rigid (Proposition~\ref{prop:left-rigidity}), and what remains is
+the backtrack identity \eqref{eq:backtrack}, proved in
+Sections~\ref{sec:block} and~\ref{sec:ybe}; the diagonal case
+$w(k)=u(k)$ is then handled together with the moved case. (As a
+consistency check in the sense of Remark~\ref{rem:checks}, we have
+verified \eqref{eq:diag-cancel} termwise, with symbolic coefficients,
+for all $u\in S_5$ and all $k$, and for a sample of $u\in S_6$ with
+$k\leq5$, including endpoints $w\notin E(u,k)$, where it asserts the
+vanishing of the right side.)
 
 \paragraph{The moved cases.}
 Suppose $u(k)\neq w(k)$. Then $C^{(k-1)}_{u,w}$ and
@@ -1967,11 +2031,13 @@ established by matching each $k$-chain to $w$ with a $(k-1)$- or
 $(k-2)$-chain to some $v$ followed by a line path $v\to w$, and by
 cancelling all remaining terms in pairs. The $k=1$ case shows the
 pattern: there $P_{k-2}=0$, every nonempty line path is a single
-up-path, and the matching is the identity. The complete case analysis
-for $k\geq2$ is carried out below only at $q=0$
+up-path, and the matching is the identity. In this language the case
+analysis for $k\geq2$ is carried out at $a=0$ above
+(Theorem~\ref{thm:a-zero}) and at $q=0$ below
 (Theorem~\ref{thm:classical}), where the matching is obtained by
-counting rather than by an explicit bijection, and at $a=0$
-(Theorem~\ref{thm:a-zero}).
+counting rather than by an explicit bijection; the general case is
+treated, after the reorganization just described, in
+Sections~\ref{sec:backtrack}--\ref{sec:ybe}.
 
 \subsection{Special cases}
 \label{sec:special}
@@ -2452,7 +2518,8 @@ restore $u(2)$ either. Write $\kappa,\kappa'$ for the weights of the
 two traversals of $(1,2)$, so $\kappa\kappa'=q_1$.
 
 If $w\neq u$, the window value $u(1)$ is in $\Out$ for both $w$ and
-$wt_{12}$ (it has left position $1$ and $w(1)\neq u(1)$), so by
+$wt_{12}$ (it has left position $1$ and $w(1)\neq u(1)$; also
+$w(2)=u(2)\neq u(1)$, so the hypotheses of the lemma hold), so by
 Lemma~\ref{lem:peel}(2) $C^{(1)}_{u,wt_{12}}=\beta\kappa C^{(1)}_{u,w}$,
 and the backtrack contributes
 $(-\beta)\kappa'(1+\beta y_{u(2)})^{-1}\beta\kappa C^{(1)}_{u,w}
@@ -2473,8 +2540,10 @@ The moved case for $k=2$ requires in addition the classification of
 $2$-chains: their labels form segments $(1,b)$, $(2,b)$, $(1,b)(2,b)$
 or $(2,b)(1,b)$ for strictly decreasing $b$, the last form being
 allowed only at the first occurrence of the lower index $2$. The
-computations through $S_5$ exhibit the following pattern, which is
-what a proof must establish. If $w\in E(u,2)$ and its $2$-chain has
+computations through $S_5$ exhibit the following pattern, which we
+record because it illustrates the three mechanisms; the case $k=2$ is
+proved in full, by a different route, in
+Proposition~\ref{prop:backtrack-known}. If $w\in E(u,2)$ and its $2$-chain has
 no segment of the form $(2,b)(1,b)$, then sorting the chain, all
 labels $(1,b)$ first and all labels $(2,c)$ afterwards, gives a cut
 composite $\gamma^\ast\,\big|\,\pi^\ast$ whose term is
@@ -2538,8 +2607,8 @@ present, and show that the bootstrap of Theorem~\ref{thm:classical}
 goes through verbatim once a single identity is available. That
 identity involves no right edges, no endpoint set $E(u,k)$ and no
 equivariant bootstrap; it is proved below for $k=2$, which completes
-the proof of Theorem~\ref{prop:top} for $k=2$, it holds at $a=0$ and
-at $q=0$, and it has been verified for all $u\in S_5$ and all $k$.
+the proof of Theorem~\ref{prop:top} for $k=2$, and at $a=0$ and at
+$q=0$ (Proposition~\ref{prop:backtrack-known}).
 Section~\ref{sec:block} reduces it further, to an identity on
 permutations of $k$ letters, and proves it in one of the two
 resulting cases; Section~\ref{sec:ybe} proves the other case, first
@@ -2815,7 +2884,9 @@ Lemma~\ref{lem:peel}(1) one of the following holds.
 
 If $\gamma_v$ exists, does not contain $(1,2)$, and is nonempty, then
 $\gamma_{v'}=\gamma_v(1,2)$, and $(\gamma_{v'},(1,2))$ is the only
-composite with a repeated label. By Lemma~\ref{lem:peel}(2),
+composite with a repeated label. Here $u(1)$ sits at a position
+$\geq3$ in $v$ and $v(2)=u(2)$, so the hypotheses of
+Lemma~\ref{lem:peel}(2) hold, and it gives
 $\widehat C^{(1)}_{u,v'}=\beta\kappa'\widehat C^{(1)}_{u,v}$, so
 $M_{u,v}=t^{-1}_{v(2)}\widehat C^{(1)}_{u,v}(1-\beta^2q_1)
  =(1-\beta^2q_1)A_{u,v}$.
@@ -2834,7 +2905,9 @@ Lemma~\ref{lem:peel}(3), and the three composites give
 If $\gamma_v=\gamma'(1,2)$ with $\gamma'\neq\varnothing$, then
 $\gamma_{v'}=\gamma'$, both composites are distinct, and
 $\widehat C^{(1)}_{u,v}=\beta\kappa\widehat C^{(1)}_{u,v'}$ by
-Lemma~\ref{lem:peel}(2) makes their weights cancel: $M_{u,v}=A_{u,v}=0$.
+Lemma~\ref{lem:peel}(2), applied at $v'$ (where $u(1)$ sits at a
+position $\geq3$ and $v'(2)=u(2)$), makes their weights cancel:
+$M_{u,v}=A_{u,v}=0$.
 
 If $v=ut_{12}$, the composites are $((1,2),\varnothing)$,
 $(\varnothing,(1,2))$ at level $1$, and $(\varnothing,(1,2))$ at
@@ -3231,9 +3304,17 @@ status factors $\phi_i(u,x;j)$ of the indices $i\leq j$ with
 $i\notin F$, which by Lemma~\ref{lem:inert} equal $\phi_i(u,x_0;k-1)$
 at every chain endpoint $x$, and which for $j=k-2$ run over the same
 set of indices because $k-1\in F$; the factor $t^{-1}_{v(k)}$ is the
-same on both sides, and so is distinctness. Summing over the prefixes
-$\eta$ for which $u\eta$ agrees with $v$ outside positions $1,\ldots,k$
-(block chains do not move the other positions) gives
+same on both sides, and so is distinctness. Every left composite
+$(\gamma,\lambda)$ has exactly one prefix, namely the initial segment
+of $\gamma$ formed by its labels of upper index greater than $k$ (an
+initial segment by condition~3), so the left composites with endpoint
+$v$ are partitioned according to their prefix $\eta$. Those with
+prefix $\eta$ exist only if $u\eta$ agrees with $v$ outside positions
+$1,\ldots,k$, since block chains and left paths do not move the other
+positions, and for such $\eta$ they correspond bijectively, by what
+was just shown, to the block composites for $(\xi_\eta,F_\eta)$ with
+endpoint $v'$, with weights related by the factor $c_\eta$. Summing
+over $\eta$ gives
 $M_{u,v}=\sum_\eta c_\eta M^{F_\eta}_{\xi_\eta,v'}$ and likewise for
 $A$, so \eqref{eq:block} for all $(\xi_\eta,F_\eta)$ implies
 \eqref{eq:backtrack}, and Theorem~\ref{thm:backtrack-implies} applies.
@@ -3248,10 +3329,12 @@ $u\eta$ restricted to positions $\leq k$ has the relative order of
 $\xi$, with fresh set $F$.
 \end{proof}
 
-We have verified \eqref{eq:block} for every $\xi\in S_k$ and every
-$F$ for $k\leq5$, and for a random sample of configurations with
-$k=6$; by Proposition~\ref{prop:block-reduction} this covers all
-$u\in S_\infty$ for $k\leq5$.
+As a consistency check (Remark~\ref{rem:checks}), we have verified
+\eqref{eq:block} for every $\xi\in S_k$ and every $F$ for $k\leq5$,
+and for a random sample of configurations with $k=6$; by
+Proposition~\ref{prop:block-reduction} this covers all
+$u\in S_\infty$ for $k\leq5$. The proof for all $k$ occupies the rest
+of this section and the next.
 
 \begin{proposition}[The block identity when position $k-1$ is not fresh]
 \label{prop:block-notfresh}
@@ -3588,15 +3671,23 @@ traversals have weights with product $q_a$. For $b-a\geq2$, a Bruhat
 edge $(a,b)$ requires the values at the positions strictly between $a$
 and $b$ to lie outside the interval spanned by the two exchanged
 values, while the reverse quantum edge would require them to lie
-inside it. We have also checked (1)--(3) directly for $k\leq6$.
+inside it.
 \end{proof}
 
-Since each $P[w]\G_x$ is either $0$ or a single monomial times a
-single basis vector, \eqref{eq:ybe-C} with $(a,b,c)=(a,k-1,k)$ says:
+Each $P[w]\G_x$ is either $0$ or a monomial in the $q_i$ with
+coefficient $1$ times a single basis vector, and the three words in
+\eqref{eq:ybe-C} have the same product of transpositions, hence the
+same endpoint. Applied to $\G_x$, the right side of \eqref{eq:ybe-C}
+is therefore a sum of two terms with nonnegative coefficients, which
+cannot cancel against each other, while the left side is $0$ or a
+single monomial. Hence \eqref{eq:ybe-C} with $(a,b,c)=(a,k-1,k)$ says:
 for every $x$, the path $(a,k-1)(k-1,k)$ is directed from $x$ if and
 only if exactly one of $(k-1,k)(a,k)$ and $(a,k)(a,k-1)$ is, and then
 the weights agree. This sharpens Lemma~\ref{lem:braid}: the braid
 move fails exactly when the wild pattern $(a,k)(a,k-1)$ is directed.
+The same cancellation-free bookkeeping, valid because every nonzero
+coefficient is a monomial with coefficient $1$, is used again in
+Lemma~\ref{lem:telescoping} and Proposition~\ref{prop:right-side}.
 
 \begin{lemma}[Wild chains]\label{lem:wild-char}
 Let $c=\mu\nu$ be a level-$(k-2)$ block chain with endpoint $x$. Then
@@ -3884,9 +3975,10 @@ $Z_n(\mu,\nu)=E\,P[\mu\nu]\G_\xi$ is the chain followed by $(k-1,k)$.
 \begin{lemma}[Telescoping]\label{lem:telescoping}
 For every pair $(\mu,\nu)$ and $1\leq l\leq n$,
 $Z_l(\mu,\nu)-Z_{l-1}(\mu,\nu)=W_l(\mu,\nu)$. Consequently exactly one
-of the following holds: all $W_l$ vanish and $Z_0=Z_n$; or $Z_0=0$,
-$Z_n\neq0$, and exactly one $W_l$ is nonzero, equal to $Z_n$; or
-$Z_0=Z_n=0$ and all $W_l$ vanish.
+of the following holds: $Z_0=Z_n\neq0$ and all $W_l$ vanish; or
+$Z_0=0$, $Z_n\neq0$, and exactly one $W_l$ is nonzero, equal to
+$Z_n$; or $Z_0=Z_n=0$ and all $W_l$ vanish. In particular $Z_0\neq0$
+implies $Z_0=Z_n$.
 \end{lemma}
 
 \begin{proof}
@@ -3899,10 +3991,14 @@ Lemma~\ref{lem:ybe}(1). Hence
   +P[\tilde\nu_{>l}]L_c\,P[\nu_{<l}]\,K_c\,P[\mu]\G_\xi
  =Z_{l-1}+W_l .
 \end{align*}
-Each of $Z_0$, $Z_n$, $W_l$ is zero or a single monomial in $q$ times
-a basis vector, and $Z_0$, $Z_n$ have the same endpoint; so in
-$Z_n=Z_0+\sum_lW_l$ a nonzero $Z_0$ forces all $W_l$ to vanish, and a
-nonzero $Z_n$ with $Z_0=0$ forces exactly one $W_l$ to be nonzero.
+Each of $Z_0$, $Z_n$, $W_l$ is zero or a single monomial in $q$ with
+coefficient $1$ times a basis vector, and all of them have the same
+endpoint, the words having the same product of transpositions. Hence
+in $Z_n-Z_0=\sum_lW_l$ the right side has nonnegative coefficients.
+If $Z_0\neq0$, this forces $Z_n=Z_0$ (a nonzero $Z_n\neq Z_0$, or
+$Z_n=0$, would give a negative coefficient on the left), and then all
+$W_l$ vanish; if $Z_0=0$ and $Z_n\neq0$, it forces exactly one $W_l$
+to be nonzero, equal to $Z_n$; and if $Z_0=Z_n=0$ all $W_l$ vanish.
 \end{proof}
 
 The proof uses only the Yang--Baxter relations, so the lemma and its
@@ -4847,12 +4943,12 @@ $\beta q_{k-1}P[c]\G_\xi$, $c\in\mathcal T(S)\sqcup\mathcal W_B(S)$,
 occur on both sides, and the terms $\beta q_{k-1}P[c']\G_\xi$,
 $c'\in\mathcal W_A(S)$, of the left side are matched with the terms
 $E\,P[c]\G_\xi$, $c\in\mathcal W_B(S)$, of the right side through
-$\Phi$. We have checked the identities
-\eqref{eq:chain-form-S}, and the statements of
-Lemmas~\ref{lem:after-quantum}--\ref{lem:typeB} and
-Propositions~\ref{prop:right-side}--\ref{prop:families-general}, by
-computer for every $\xi\in S_k$, every $F\ni k-1$ and every
-$S\subseteq F'$ with $k\leq7$.
+$\Phi$. As a consistency check (Remark~\ref{rem:checks}), we have
+verified by computer the identities \eqref{eq:chain-form-S}, the
+statements of Lemmas~\ref{lem:after-quantum}--\ref{lem:typeB} and
+Propositions~\ref{prop:right-side}--\ref{prop:families-general}, for
+every $\xi\in S_k$, every $F\ni k-1$ and every $S\subseteq F'$ with
+$k\leq7$, and the relations of Lemma~\ref{lem:ybe} for $k\leq6$.
 \end{remark}
 
 \section{A small example and specializations}
@@ -4907,7 +5003,35 @@ Grothendieck Pieri formula of Naito--Sagaki \cite{naito2024pieri}
 through the uniqueness of chains and Lemma~\ref{lem:h-left}.
 
 \paragraph{Cohomological specialization.}
-At $\beta=0$, terms with $s>m$ vanish. Those with $s=m$ have coefficient
+At $\beta=0$ the polynomials in \eqref{eq:main} are quantum double
+Schubert polynomials, not Grothendieck polynomials: $\G^q_w$ has no
+negative powers of $\beta$, and
+\[
+ \G^q_w(x;y)\big|_{\beta=0}=\mathfrak S^q_w(x;-y)
+\]
+is the quantum double Schubert polynomial \cite{kirillov2000quantum},
+the image of $\G_w|_{\beta=0}=\mathfrak S_w(x;-y)$ under the
+cohomological quantization map
+$e_r(x_1,\ldots,x_j)\mapsto E^j_r(x;q)$ of Fomin--Gelfand--Postnikov
+\cite{fomin1997quantum}, applied in the $x$-variables. For $y=0$ this
+is \cite[Proposition~3.22]{lenart2006quantum}, read through the
+scaling \eqref{eq:scaling}. In general, expand
+$\G_w(x;y)=\sum_va_{v,w}(y;\beta)\,\G_v(x)$ with
+$a_{v,w}\in\mathbb Z[\beta][y]$, which is possible because
+$\{\G_v(x):v\in S_N\}$ is a $\mathbb Z[\beta]$-basis of the
+polynomials with $\deg_{x_i}\leq N-i$ (each $\G_v(x)$ is
+$\mathfrak S_v(x)$ plus terms of higher $x$-degree). Both quantization
+maps are linear over $y$ and $\beta$, so
+$\G^q_w(x;y)=\sum_va_{v,w}(y;\beta)\,\G^q_v(x)$ has no negative powers
+of $\beta$, and at $\beta=0$ it becomes
+$\sum_va_{v,w}(y;0)\,\mathfrak S^q_v(x)$, the cohomological
+quantization of $\sum_va_{v,w}(y;0)\,\mathfrak S_v(x)=\mathfrak S_w(x;-y)$.
+The block $B^q_k$ is a polynomial in $\beta$ by
+Proposition~\ref{prop:block-polynomial}, and each coefficient
+\eqref{eq:coefficient} is regular at $\beta=0$ because $s\geq m$
+(Proposition~\ref{prop:rank}). Hence \eqref{eq:main} specializes
+termwise: terms with $s>m$ vanish, and those with $s=m$ have
+coefficient
 \[
  q^D\prod_{a\in\Fix}(z-y_a).
 \]
