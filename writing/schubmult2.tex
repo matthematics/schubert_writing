@@ -1,0 +1,1672 @@
+% Revised from the author-supplied schubmult.tex snapshot, 1 November 2026.
+% The original manuscript is not modified.
+\documentclass{amsart}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[margin=1in]{geometry}
+\usepackage[hidelinks]{hyperref}
+\hypersetup{
+ pdftitle={Input-parameter bounds for (quantum) single and double Schubert multiplication by elementary expansions},
+ pdfauthor={Matthew J. Samuel}
+}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{method}[theorem]{Method}
+\newtheorem{example}[theorem]{Example}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\numberwithin{equation}{section}
+\newcommand{\Sch}{\mathfrak S}
+\newcommand{\code}{\mathfrak c}
+\newcommand{\id}{\mathrm{id}}
+\newcommand{\Des}{\mathrm{Des}}
+\newcommand{\fall}[2]{(#1)_{\underline{#2}}}
+\newcommand{\alg}{\texttt{schubmult}}
+
+\title[Input-parameter bounds for Schubert multiplication]{Input-parameter bounds for (quantum) single and double Schubert multiplication by elementary expansions}
+\author{Matthew J. Samuel}
+\email{matthematics@gmail.com}
+\date{November 1, 2026}
+\subjclass[2020]{05E05, 05E14, 14N15, 68Q25}
+\keywords{Schubert polynomial, double Schubert polynomial, Pieri rule,
+Lehmer code, quantum cohomology, arithmetic complexity}
+
+\begin{document}
+\begin{abstract}
+We bound the complexity of the elementary-expansion algorithm of \alg,
+which computes entire products of Schubert polynomials, in parameters
+read from the input: the ambient permutation size $n$, the lengths
+$r_u,r_v$ of the trimmed Lehmer codes, and the total inversion number $d$.
+A single analysis covers ordinary Schubert multiplication, double
+Schubert multiplication, the \emph{triple} product
+$\Sch_u(x;y)\Sch_v(x;z)$ with independent coefficient alphabets, and
+the quantum version of each.
+With $r=\max(r_u,r_v)$ and $h=r_v$, the full triple product uses at most
+$O(2^{2r}n^{2r+2h+4})$ elementary and coefficient-ring operations.
+This is $2^{O(n\log n)}$ in general and polynomial in $n$ for fixed code
+lengths, and it is the same bound we obtain for ordinary products.
+When $u$ and $v$ are Grassmannian with descent at $k$, every $u$-side
+state of the classical computation is $k$-Grassmannian.
+
+This uniformity is a feature of the method.
+It does not follow from specialization, and reducing triple
+coefficients to ordinary ones monomial by monomial would multiply the
+cost by the size of the expanded output.
+The factorial elementary expansion of $\Sch_v(x;z)$ is indexed by
+exactly the same column paths as the ordinary elementary expansion of
+$\Sch_v(x)$.
+The double Pieri rule is indexed by exactly the same chains as the
+ordinary one, each carrying a single factorial elementary coefficient.
+The two extra alphabets therefore enlarge neither the state space nor
+the label graphs; they cost $O(h^2)$ ring operations per matched pair.
+
+For the quantum triple product, and hence for equivariant and ordinary
+quantum Littlewood--Richardson coefficients of complete flag varieties,
+the bound has the same form. It is again $2^{O(n\log n)}$ in general and
+polynomial in $n$ when $r_u$, $r_v$, and the number $L$ of nonzero
+entries of the code of $v^{-1}$ are fixed.
+The key observations are that the Fomin--Gelfand--Postnikov quantization
+commutes with the filtered expansion when column heights are distinct,
+and that each quantum Pieri step can raise the last descent by at most
+one, at a cost in $q$-degree.
+
+Coefficients are represented by arithmetic circuits; no claim about
+expanded monomial output, symbolic zero testing, or polynomiality in
+the binary encoding of code entries is made.
+We compare these full-product bounds with Pak and Slonim's
+bounded-range algorithm for a single ordinary Schubert coefficient.
+\end{abstract}
+\maketitle
+
+\section{Introduction}
+
+For permutations $u,v$ with finite support, consider the expansion
+\begin{equation}\label{eq:product}
+ \Sch_u(x;y)\Sch_v(x;z)
+   =\sum_w c_{u,v}^w(y;z)\Sch_w(x;y).
+\end{equation}
+Here $x,y,z$ are independent infinite alphabets, and the coefficients belong
+to $\mathbb Z[y,z]$.
+We call \eqref{eq:product} the \emph{triple} product.
+At $z=y$ its coefficients are the equivariant Schubert structure
+constants of complete flag varieties.
+At $y=z=0$ they are the ordinary Schubert structure constants, which
+are nonnegative integers.
+For $y\ne z$ the coefficients are more general than both.
+The problem in this paper is to compute all the coefficients in
+\eqref{eq:product}, not just a coefficient specified by a third permutation.
+
+The \alg\ package \cite{schubmult} computes such products by matching two
+computations. An elementary-symmetric expansion of the second factor
+provides a graph of signed labels. Pieri's rule multiplies the first factor
+by each elementary factor. Dynamic programming combines these operations
+without expanding the final coefficients into monomials.
+The expansion formulas and correctness of this architecture are established
+in \cite[Section~4 and Section~7]{samuelquantum}.
+Here we give an input-only complexity analysis, with the non-quantum
+algorithm specified precisely enough to account for every search node.
+We use ``classical'' only to mean ``non-quantum''; it includes the
+double and triple products.
+
+The analysis does not use the number of nonzero output coefficients,
+a worst-case output size, or the support of a different product as a
+complexity parameter.
+We use the distinct-position column paths of
+\cite[Definition~4.4 and Theorem~4.5]{samuelquantum};
+their restriction is justified by the cancellation theorem proved there,
+not inferred from an endpoint count.
+The arithmetic-circuit model and the choice of elementary-weight evaluator
+are distinguished from literal symbolic implementation costs in
+Section~\ref{sec:implementation}.
+
+\subsection{Parameters and main bound}
+
+Permutations are composed as functions, with $(ab)(i)=a(b(i))$.
+Write
+\[
+ \code_i(w)=\#\{j>i:w(j)<w(i)\},\qquad
+ \ell(w)=\sum_i\code_i(w),\qquad
+ r_w=\max\{i:\code_i(w)>0\},
+\]
+where $r_{\id}=0$. Thus $r_w$ is the length of the Lehmer code
+\emph{after deleting trailing zeros}, not the number of nonzero entries.
+It is also the last descent position of $w$.
+We take $n\geq2$ to be the least integer for which $u,v\in S_n$,
+apart from this harmless lower bound of $2$.
+It can be recovered from the input codes:
+\[
+ n=\max\bigl(\{2\}\cup\{i+\code_i(u):\code_i(u)>0\}
+                     \cup\{i+\code_i(v):\code_i(v)>0\}\bigr).
+\]
+Put $r=\max(r_u,r_v)$, $h=r_v$, and $d=\ell(u)+\ell(v)$.
+The case $v=\id$ requires no multiplication and will be set aside.
+
+Section~\ref{sec:completion} constructs a dominant completion with column
+heights $\theta_1\geq\cdots\geq\theta_L>0$.
+It satisfies $\theta_1=h$ and $L\leq n-1$.
+Define the following quantities, all determined or bounded by the input:
+\begin{equation}\label{eq:parameters}
+ \begin{split}
+ M&=n+L,\\
+ U&=\min\left\{\fall{M}{r},\binom{d+r}{r}\right\},\\
+ V&=\fall{n}{h},\qquad
+ Q_h(n)=\sum_{b=0}^{h}\fall{n-1}{b}.
+ \end{split}
+\end{equation}
+Here $\fall{a}{b}=a!/(a-b)!$ and $\fall{a}{0}=1$.
+The quantities $U$ and $V$ are explicit bounds on state spaces,
+not observed support sizes.
+
+\begin{theorem}[Input-parameter bound]\label{thm:main}
+For $v\ne\id$, Method~\ref{method:product} computes the entire triple
+product \eqref{eq:product}, with coefficient arithmetic circuits, in
+\begin{equation}\label{eq:main}
+ O\left(n^3+L M^3 U^2 V Q_h(n)\right)
+\end{equation}
+elementary and coefficient-ring operations.
+The same bound, with the same proof, holds for the double ($z=y$) and
+ordinary ($y=z=0$) products; see Proposition~\ref{prop:uniform}.
+In particular, the bound is
+\begin{equation}\label{eq:coarse}
+ O\left(2^{2r}n^{2r+2h+4}\right)
+   =2^{O(n\log n)}.
+\end{equation}
+For fixed $r_u,r_v$ it is polynomial in $n$.
+If $v$ is dominant, the bound improves to
+$O(n^3+L M^3 U^2)$.
+\end{theorem}
+
+The proof is in Section~\ref{sec:complexity}.
+The leading constant in the general exponent is not claimed to be
+optimal: \eqref{eq:coarse} gives at most $4n\log_2 n+O(n)$.
+In particular, we do not retain a more precise exponent without
+establishing every support and branching estimate needed for it.
+
+\subsection{Quantum multiplication}
+
+The same architecture computes the triple quantum product
+\eqref{eq:qproduct} of quantum double Schubert polynomials, whose
+specializations are the equivariant and ordinary quantum
+Littlewood--Richardson coefficients of complete flag varieties.
+Two further input parameters enter.
+Let $L$ be the number of nonzero entries of $\code(v^{-1})$; it is
+the number of columns of the completion above.
+Let $\tilde h$ be the largest part of the strict completion
+(Method~\ref{method:strict}).
+It is computed from $v$ in $O(n^3)$ operations and, by
+Lemma~\ref{lem:strict}, satisfies
+\[
+ \max(r_v,L)\leq\tilde h\leq\min(n-1,\ r_v+L-1).
+\]
+Put $\rho=\max(r_u,\tilde h)$, $\widetilde V=\fall{n}{\tilde h}$, and
+define $R_q\leq2\rho$ and $U_q$ as in Section~\ref{sec:quantum}.
+
+\begin{theorem}[Quantum input-parameter bound]\label{thm:quantum}
+For $v\neq\id$, Method~\ref{method:qproduct} computes every
+coefficient $c_{u,v}^{w,\delta}(y;z)$ in \eqref{eq:qproduct}, as
+arithmetic circuits over $\mathbb Z[q][y,z]$, in
+\begin{equation}\label{eq:qmain}
+ O\left(n^3+LM^3U_q^2\widetilde VQ_{\tilde h}(n)\right)
+\end{equation}
+elementary and coefficient-ring operations.
+Every $w$ that occurs lies in $S_{n+L}$, and every $q^\delta$
+that occurs involves only $q_1,\ldots,q_{n+L-1}$; hence the
+coefficients at $z=y$ are the equivariant quantum
+Littlewood--Richardson coefficients of $Fl_N$ for every $N\geq n+L$.
+The bound is
+\begin{equation}\label{eq:qcoarse}
+ O\left(2^{2R_q}n^{2R_q+2\tilde h+4}\right)
+ \subseteq O\left(2^{4\rho}n^{6\rho+4}\right)
+ =2^{O(n\log n)},
+\end{equation}
+and it is polynomial in $n$ for fixed $r_u,r_v,L$.
+The same bounds hold for the equivariant ($z=y$) and ordinary
+($y=z=0$) quantum products, again with the same state space.
+\end{theorem}
+
+Unlike Theorem~\ref{thm:main}, the polynomial case requires $L$ to be
+fixed. For $\Sch_v=x_1^m$ one has $r_v=1$ but $\tilde h=m$;
+see Section~\ref{sec:quantum}.
+
+\subsection{One bound for ordinary, double, triple, and quantum products}
+\label{sec:uniform}
+
+Theorems~\ref{thm:main} and \ref{thm:quantum} are stated for the most
+general products, but the bounds are not weakened by that generality.
+The ordinary product is not analyzed separately and then lifted.
+Instead, the triple computation and its ordinary specialization build
+the same label graphs, make Pieri searches over the same chains, and
+are bounded by the same state counts.
+The two coefficient alphabets add only the cost of evaluating one
+factorial elementary polynomial per matched pair
+(Proposition~\ref{prop:uniform}).
+
+This depends on two properties of the method.
+\begin{enumerate}
+\item The factorial elementary expansion of $\Sch_v(x;z)$
+(Theorem~\ref{thm:elementary}) is indexed by the same filtered column
+paths as the ordinary elementary expansion of $\Sch_v(x)$.
+The alphabet $z$ enters only through the weight attached to each path.
+\item The double Pieri rule \eqref{eq:pieri} is indexed by the same
+canonical chains as Sottile's ordinary Pieri rule.
+Each chain carries a single factorial elementary polynomial in a fixed
+alphabet, rather than a sum over additional combinatorial data.
+\end{enumerate}
+The quantum Pieri rule \eqref{eq:qpieri} has the same feature, with
+a $q$-monomial attached to each chain.
+Its chains follow the quantum Pieri formula of Postnikov
+\cite{postnikov1999quantum} and Ciocan-Fontanine
+\cite{ciocan1999partial} rather than Sottile's rule.
+Quantum covers add paths: they need not increase length, and the
+strict completion can be taller than the ordinary one.
+The extra paths are absorbed by the same counting, with $\tilde h$ and
+$R_q$ in place of $h$ and $r$, so the asymptotic bound is essentially
+unchanged (Theorem~\ref{thm:quantum}).
+
+Neither property is a formal consequence of specialization.
+Ordinary structure constants do determine the triple coefficients, but
+the resulting reduction does not give a uniform bound.
+By Hwang's coefficient lifting \cite[Theorem~1.2]{hwang2026lifting},
+the coefficient of $y^\alpha$ in $c_{u,v}^w(y;z)$ is the single
+coefficient $c_{\hat u,\hat v}^{\hat w}(0;z)$ for an explicit
+block-lifted triple $(\hat u,\hat v,\hat w)$ in $S_{n+|\alpha|}$, where
+$|\alpha|\leq\ell(u)+\ell(v)-\ell(w)$.
+(Hwang expands in the Schubert basis of the second factor's alphabet,
+so the two factors of \eqref{eq:product} are exchanged in his
+notation; in ours the lifted alphabet $y$ is that of the output basis.)
+The Cauchy formula then writes the coefficient of each monomial
+$y^\alpha z^\beta$ as $\pm$ a sum of products of ordinary structure
+constants \cite[Section~5.2]{hwang2026lifting}.
+Thus an algorithm for $c_{u,v}^w$ does yield $c_{u,v}^w(y;z)$, but not
+parsimoniously.
+The reduction runs separately for each monomial and each Cauchy term.
+Each run uses permutations whose rank exceeds $n$ by up to the degree of
+the monomial.
+Its cost is therefore multiplied by the expanded size of the triple
+coefficients, and its input parameters grow.
+Here, by contrast, the double and triple coefficients come at no extra
+asymptotic cost because they are produced as arithmetic circuits along
+the same paths as their ordinary specializations.
+The circuit representation is essential to this statement, and we make
+no comparable claim for expanded monomial output.
+
+\subsection{Prior work and the encoding distinction}\label{sec:prior}
+
+Pieri formulas for ordinary Schubert polynomials were established by
+Sottile \cite{sottile}; we proved the double Pieri formula used here in
+\cite[Theorem~7.1]{samuelmolev}.
+The Cauchy identity and dominant factorization are standard
+\cite{notes}.
+We studied the triple coefficients in this generality in
+\cite{samuelmolev}.
+Hwang \cite{hwang2026lifting} recently showed that each of their
+monomial coefficients is determined by ordinary structure constants
+through an explicit block lift; Section~\ref{sec:uniform} compares that
+reduction with the present method.
+In earlier work \cite{samuelquantum}, we established the ordinary-double
+expansion \cite[Theorem~4.5]{samuelquantum} and gave the corresponding
+algorithms \cite[Methods~4.9--4.11]{samuelquantum}.
+We also established the quantum and doubled Pieri formulas and the
+quantum expansions \cite[Theorems~4.6--4.7]{samuelquantum}, which we use
+in Section~\ref{sec:quantum}.
+The contribution of the present paper is an explicit accounting of the
+full-product algorithms in parameters obtainable from their inputs.
+
+Pak and Slonim \cite[Theorem~1.4]{pakslonim} prove that a
+\emph{single ordinary} coefficient $c_{u,v}^w$, for three permutations in
+$S_n$ supplied by their range-restricted codes, can be computed in time
+\begin{equation}\label{eq:pak}
+ \exp\bigl(O(\psi^{5/2})\bigr)
+       (\log n)^{O(\psi^2\log\psi)}.
+\end{equation}
+Here $\psi$ is their total-range parameter.
+The bound is polynomial in $\log n$ for fixed $\psi$.
+Their method expresses a coefficient as an alternating sum of
+lattice-point counts and applies Barvinok's algorithm in bounded
+dimension. The same polyhedral construction proves eventual
+quasi-polynomiality of stretched Schubert coefficients
+\cite[Theorem~1.1]{pakslonim}.
+
+Our parameter $r$ measures a different feature: how far the nonzero
+Lehmer code extends from its first position.
+It must not be identified with the number of nonzero entries, the number
+of descents, or a translated window of width $\psi$.
+We quote \eqref{eq:pak} with the parameter conventions of its source,
+rather than deriving a formula relating $\psi$ to $r$.\footnote{The
+version of \cite{pakslonim} consulted defines its range using exceedances
+$w(i)>i$ and also states that the code vanishes off the exceedance set.
+These two supports are not generally identical: $321$ has code $(2,1,0)$
+and exceedance set $\{1\}$.
+Our parameters and proofs use the Lehmer code directly and do not use
+that identification.}
+
+There are three important differences between \eqref{eq:pak} and
+Theorem~\ref{thm:main}.
+The former returns one integer.
+The latter returns every coefficient of the triple product, each a
+polynomial in two alphabets, within the same bound that it gives for
+the ordinary integer coefficients.
+The former is a bit-complexity statement for compressed input; the latter
+initially counts arithmetic and elementary operations.
+Finally, polynomial dependence on $n$ is much weaker than polynomial
+dependence on $\log n$.
+Thus the new bound does not subsume the bounded-range theorem.
+At the unrestricted extreme our $2^{O(n\log n)}$ bound is smaller in
+order than the bound obtained by substituting $\psi$ of order $n$
+in \eqref{eq:pak}; this comparison of upper bounds is not a lower bound
+on their algorithm or a claim about practical performance.
+
+Encoding also matters for hardness statements.
+Narayanan proves that Littlewood--Richardson coefficient computation is
+$\#P$-complete for partitions encoded in binary
+\cite{narayanan2006complexity}.
+The associated Grassmannian Lehmer codes have a polynomial-size binary
+encoding, so this gives $\#P$-hardness for the correspondingly compressed
+Schubert problem.
+It does not automatically give hardness for one-line permutations:
+writing down a permutation associated with a large binary partition
+part can require exponentially many entries.
+Pak and Robichaux discuss this distinction and the unresolved
+unary-input hardness question \cite{pak2024vanishing}.
+Their subsequent result places Schubert vanishing in probabilistic
+polynomial time \cite{pakrobichaux2025bpp}, improving the earlier
+polynomial-hierarchy result.
+Neither vanishing nor a single-coefficient hardness statement is used
+in our running-time proof.
+
+\section{Dominant completion and a justified label filter}\label{sec:completion}
+
+A permutation is \emph{dominant} if its code is a partition.
+Its Rothe diagram is then a Young diagram.
+If $\theta=\code(\tau^{-1})$ is its list of column heights, the
+dominant factorization is
+\begin{equation}\label{eq:dominant}
+ \Sch_\tau(x;t)=\prod_{i=1}^{L}\prod_{j=1}^{\theta_i}(x_j-t_i).
+\end{equation}
+In particular, the polynomial on the right is indexed by $\tau$,
+not by $\tau^{-1}$. This distinction is essential.
+
+\begin{method}[Completion]\label{method:completion}
+Start with $\mu=v^{-1}$.
+While its code has a strict adjacent ascent
+$\code_i(\mu)<\code_{i+1}(\mu)$, choose the largest such $i$
+and replace $\mu$ by $\mu s_i$.
+At termination put $\theta=\code(\mu)$ with trailing zeros deleted,
+$\tau=\mu^{-1}$, and $a_*=v\mu$.
+\end{method}
+
+\begin{lemma}\label{lem:completion}
+The completion remains in $S_n$ and terminates at a dominant permutation.
+It satisfies
+\[
+ \ell(a_*)=\ell(\tau)-\ell(v),\qquad
+ \Des(\tau)=\Des(v),\qquad
+ \theta_1=r_v,\qquad L\leq n-1
+\]
+when $v\ne\id$.
+It can be constructed in $O(n^3)$ elementary operations.
+\end{lemma}
+\begin{proof}
+For an adjacent code ascent, right multiplication by $s_i$ changes
+the two code entries $(a,b)$ to $(b+1,a)$ and increases length by one.
+Thus there are at most $\binom n2$ steps and the final code is weakly
+decreasing.
+The successive right multiplications give a length-additive
+factorization $\mu=v^{-1}a_*$, proving the length identity.
+
+To check the descent assertion, consider the inverses before and after
+one step. They differ by interchanging the consecutive values $i,i+1$.
+Their positions are $\mu(i),\mu(i+1)$, with $\mu(i)<\mu(i+1)$.
+These positions cannot be adjacent: if they were, the two code entries
+of $\mu$ would be equal. Swapping consecutive values in nonadjacent
+positions does not change any adjacent comparison.
+The descent set of the inverse therefore stays unchanged throughout.
+For a dominant permutation the number of nonzero rows of the diagram
+is its last descent; transposing the diagram identifies this number
+with $\theta_1$.
+Finally, the diagram of any permutation in $S_n$ is contained in the
+staircase, so $L\leq n-1$.
+Maintaining the code, scanning for the next ascent, and updating the
+permutation costs $O(n)$ per step.
+\end{proof}
+
+For $0\leq i\leq L$ define the dominant permutation $\tau_i$ by
+\[
+ \code(\tau_i^{-1})=(\theta_1,\ldots,\theta_i),\qquad
+ F_i(x;t)=\Sch_{\tau_i}(x;t).
+\]
+Here $\tau_0=\id$, and
+$F_i=F_{i-1}\prod_{j=1}^{\theta_i}(x_j-t_i)$.
+All these permutations are in $S_n$.
+Use the signed double-Schubert basis in the auxiliary variables
+\[
+ T_a(t;z)=(-1)^{\ell(a)}\Sch_a(t;z).
+\]
+We say $\sigma\leq_L\tau$ if $\tau=\rho\sigma$ with
+$\ell(\tau)=\ell(\rho)+\ell(\sigma)$.
+
+\begin{lemma}[Cauchy filter]\label{lem:filter}
+Set
+\[
+ A_i=\{a\in S_n:\ell(a\tau_i)=\ell(\tau_i)-\ell(a)\}.
+\]
+Then
+\begin{equation}\label{eq:filter}
+ F_i(x;t)=\sum_{a\in A_i}\Sch_{a\tau_i}(x;z)T_a(t;z).
+\end{equation}
+Consequently $A_0=\{\id\}$, $a_*\in A_L$, and the coefficient of
+$T_{a_*}$ in $F_L$ is $\Sch_v(x;z)$.
+Moreover,
+\begin{equation}\label{eq:labelcount}
+ |A_i|\leq \fall{n}{h}=V.
+\end{equation}
+\end{lemma}
+\begin{proof}
+The double Cauchy identity and the interchange-of-alphabets identity give
+\[
+ \Sch_{\tau_i}(x;t)
+ =\sum_{\substack{\rho\sigma=\tau_i\\ \ell(\rho)+\ell(\sigma)=\ell(\tau_i)}}
+       \Sch_\sigma(x;z)\Sch_\rho(z;t),\qquad
+ \Sch_\rho(z;t)=(-1)^{\ell(\rho)}\Sch_{\rho^{-1}}(t;z).
+\]
+Set $a=\rho^{-1}$. Then $\sigma=a\tau_i$ and these are exactly
+the terms in \eqref{eq:filter}.
+The claims about $a_*$ follow from Lemma~\ref{lem:completion}.
+
+For the count, the map $a\mapsto a\tau_i$ is a bijection from $A_i$
+onto the left weak interval $[\id,\tau_i]_L$.
+If $\sigma\leq_L\tau_i$, every right descent of $\sigma$ is a
+right descent of $\tau_i$: writing $\tau_i=\rho\sigma$,
+a descent of $\sigma$ gives
+$\ell(\tau_i s_j)\leq\ell(\rho)+\ell(\sigma)-1$.
+The diagram of $\tau_i$ has at most $h$ rows, so these permutations
+have no descent after position $h$.
+A permutation in $S_n$ with an increasing suffix after position $h$
+is determined by its ordered first $h$ values.
+There are exactly $\fall{n}{h}$ such permutations.
+\end{proof}
+
+The filter is a polynomial identity, not an assertion that each discarded
+path has zero weight. Coefficients of labels outside $A_i$ can vanish by
+cancellation. They may be discarded \emph{at a column boundary} because
+their entire coefficient is zero and subsequent multiplication is linear.
+In particular, this does not justify pruning the interior of a column
+merely because an intermediate path node fails the boundary test.
+
+\section{A column expansion with a direct proof}\label{sec:columns}
+
+For an ordered alphabet $Y=(Y_1,\ldots,Y_m)$ define
+\begin{equation}\label{eq:elementary}
+ E_{p,m}(Y;Z)=
+ \sum_{1\leq j_1<\cdots<j_p\leq m}
+       \prod_{q=1}^p (Y_{j_q}-Z_{j_q-q+1}),
+ \qquad 0\leq p\leq m .
+\end{equation}
+Only the first $m-p+1$ entries of $Z$ are used when $p>0$.
+Set $E_{0,m}=1$ and $E_{p,m}=0$ for $p>m$.
+Repeated entries in $Z$ are allowed.
+
+A \emph{pivot-$i$ path} of length $b$ is a sequence
+$P=(a_0,\ldots,a_b)$ with
+\[
+ a_j=a_{j-1}t_{i,c_j},\qquad c_j\ne i,\qquad
+ \ell(a_j)=\ell(a_{j-1})+1.
+\]
+No distinctness condition is imposed on the $c_j$.
+Associate to it
+\[
+ \varepsilon(P)=(-1)^{\#\{j:c_j<i\}},\qquad
+ Z(P)=(z_{a_0(i)},z_{a_1(i)},\ldots,z_{a_b(i)}).
+\]
+
+\begin{lemma}[Unrestricted column formula]\label{lem:column}
+For $C_i=\prod_{j=1}^k(x_j-t_i)$,
+\begin{equation}\label{eq:column}
+ C_i T_a(t;z)=
+ \sum_{b=0}^k\ \sum_{P:a_0=a}
+   \varepsilon(P)E_{k-b,k}(x_1,\ldots,x_k;Z(P))T_{a_b}(t;z).
+\end{equation}
+\end{lemma}
+\begin{proof}
+The equivariant single-variable Monk formula, in the signed basis, is
+\begin{equation}\label{eq:monk}
+ (X-t_i)T_a=(X-z_{a(i)})T_a
+   +\sum_{\substack{j>i\\ \ell(at_{ij})=\ell(a)+1}}T_{at_{ij}}
+   -\sum_{\substack{j<i\\ \ell(at_{ji})=\ell(a)+1}}T_{at_{ji}} .
+\end{equation}
+It follows by subtracting the formulas for multiplication by
+$t_1+\cdots+t_i$ and $t_1+\cdots+t_{i-1}$.
+Apply \eqref{eq:monk} successively with $X=x_1,\ldots,x_k$.
+Fix the subsequence of non-diagonal steps, namely a path $P$ of length $b$.
+Its sign is $\varepsilon(P)$.
+Choose the $k-b$ diagonal positions
+$j_1<\cdots<j_{k-b}$ among the $k$ factors.
+Before the diagonal position $j_q$ there have been $j_q-q$
+non-diagonal steps, so its contribution is
+$x_{j_q}-z_{a_{j_q-q}(i)}$.
+Summing over the diagonal positions gives exactly
+$E_{k-b,k}(x;Z(P))$ in \eqref{eq:elementary}.
+\end{proof}
+
+\begin{lemma}[Distinct-position cancellation]\label{lem:cancellation}
+The sum in \eqref{eq:column} is unchanged if it is restricted to paths
+whose nonpivot positions $c_1,\ldots,c_b$ are pairwise distinct.
+For these paths $Z(P)$ consists of the values
+\[
+ D_i(a_0,a_b)=\{a_0(i)\}\cup
+              \{a_0(j):a_0(j)\ne a_b(j)\},
+\]
+each once, and its order is immaterial.
+\end{lemma}
+\begin{proof}
+This is the cancellation underlying
+\cite[Lemma~7.5 and Theorem~7.6]{samuelquantum}.
+We explain how it applies to the signed-basis convention used here.
+In a path with a repetition, take the segment ending at the first
+repeated nonpivot position, starting at its earlier occurrence.
+The rotation lemma pairs its valid cyclic rotations with starting
+positions on opposite sides of the pivot.
+The resulting involution fixes the two endpoints, the path length,
+and the multiset of values encountered at the pivot, and reverses
+$\varepsilon(P)$.
+By \cite[Lemma~7.3]{samuelquantum},
+$E_{k-b,k}(x;Z)$ is symmetric in the $b+1$ entries of $Z$.
+The two weights therefore cancel.
+The sign convention in the cited skew-divided-difference formula
+differs by $(-1)^b$, which is constant on each such pair.
+
+On a distinct-position path the pivot successively carries
+$a_0(i),a_0(c_1),\ldots,a_0(c_b)$.
+These are exactly the values in $D_i(a_0,a_b)$.
+The same symmetry gives the last assertion.
+\end{proof}
+
+\begin{theorem}[Filtered elementary expansion]\label{thm:elementary}
+Start at label $\id$ and, for $i=1,\ldots,L$, take a pivot-$i$
+path $P_i$ of length $b_i\leq\theta_i$ with pairwise distinct
+nonpivot positions within that path.
+Its starting label is the previous path's endpoint.
+Require the endpoint at column $i$ to belong to $A_i$ and the final
+endpoint to be $a_*$.
+Then
+\begin{equation}\label{eq:expansion}
+ \Sch_v(x;z)=
+ \sum_{(P_1,\ldots,P_L)}
+ \prod_{i=1}^L
+   \varepsilon(P_i)E_{\theta_i-b_i,\theta_i}(x;Z(P_i)).
+\end{equation}
+\end{theorem}
+\begin{proof}
+Apply Lemmas~\ref{lem:column} and \ref{lem:cancellation}
+to the factors of $F_L$.
+At each column boundary, Lemma~\ref{lem:filter} permits deleting all
+labels outside $A_i$.
+Extracting $T_{a_*}$ gives \eqref{eq:expansion}.
+A path reaching $a_*\in S_n$ never leaves $S_n$, since all its
+steps increase Bruhat order and the interval below a permutation in
+$S_n$ is contained in $S_n$.
+Before imposing the boundary filters, this is precisely
+\cite[Theorem~4.5]{samuelquantum}.
+\end{proof}
+
+Setting $z=0$ in \eqref{eq:expansion} replaces $E_{p,m}$ by
+$e_p(x_1,\ldots,x_m)$ and preserves the paths and their signs.
+This is a statement about the \emph{path-indexed} expansion.
+It is not a way of recovering the double polynomial from a collected
+ordinary expansion after its path labels and alphabets have been erased.
+No uniqueness or minimality of an elementary representation is needed.
+
+\begin{method}[Backward construction of the label graphs]\label{method:labels}
+Start with the singleton set $\{a_*\}$ at boundary $L$.
+For $i=L,L-1,\ldots,1$ and each currently retained upper label,
+enumerate all descending pivot-$i$ Bruhat paths of lengths
+$0,\ldots,\theta_i$, never reusing a nonpivot position in a path.
+Retain a path if its lower endpoint is in $A_{i-1}$.
+Reverse it to obtain a forward edge, storing its two endpoints,
+length, sign, and ordered alphabet indices.
+Collect the distinct lower endpoints to seed the next boundary.
+Do not prune internal path nodes using the endpoint filter.
+\end{method}
+
+This construction gives exactly the paths in Theorem~\ref{thm:elementary}
+that can reach the required final label; it does not enumerate every
+permutation in $A_i$.
+Each stored edge represents an entire column path, not a single Bruhat cover.
+The product of distinct pivot transpositions is a cycle, from which
+their order can be recovered, so at most one such path has a specified
+pair of endpoints.
+This is the \texttt{kdown}/\texttt{vpaths} construction of
+\cite[Methods~4.9--4.10]{samuelquantum}.
+In its implementation, a nonpivot position is eligible exactly when it
+still holds its value from the start of the path: distinct pivot swaps
+change every position already used and leave all others untouched.
+
+\section{Pieri multiplication and coefficient construction}\label{sec:pieri}
+
+For a permutation $w$ and an integer $k$, a canonical elementary
+Pieri chain consists of Bruhat covers
+$w_j=w_{j-1}t_{a_j b_j}$ with $a_j\leq k<b_j$,
+whose moved-in values $w_{j-1}(b_j)$ are strictly decreasing.
+The elementary Pieri rule identifies chains of length $a$ with the
+terms of $e_a(x_1,\ldots,x_k)\Sch_w(x)$, each with multiplicity one
+\cite{sottile}.
+In particular, distinct canonical chains from a fixed $w$ have distinct
+endpoints, including across different lengths.
+No left position can be used twice: a second ascent there would require
+a moved-in value greater than the first, contrary to the ordering.
+
+Write $w\longrightarrow_k w'$ for such an endpoint and let
+$a=\ell(w')-\ell(w)$.
+The fixed alphabet is
+\[
+ Y(w,w';k)=(y_{w(j)}:1\leq j\leq k,\ w(j)=w'(j)),
+\]
+listed in increasing order of $j$; it has $k-a$ entries.
+The double Pieri formula \cite[Theorem~7.1]{samuelmolev} is
+\begin{equation}\label{eq:pieri}
+ \Sch_w(x;y)E_{p,k}(x;Z)
+ =\sum_{\substack{w\longrightarrow_k w'\\ a\leq p}}
+     E_{p-a,k-a}(Y(w,w';k);Z)\Sch_{w'}(x;y).
+\end{equation}
+Since this is a polynomial identity in the coefficient alphabet,
+it remains valid when entries of $Z$ coincide, as they may in
+Lemma~\ref{lem:column}.
+
+\begin{method}[Pieri enumeration]\label{method:pieri}
+Maintain a frontier $(w,\beta)$, initially $(w,+\infty)$.
+To extend it, test $a\leq k<b$ for
+\[
+ w(a)<w(b)<\beta,\qquad
+ \nexists c\ (a<c<b,\ w(a)<w(c)<w(b)).
+\]
+For each successful test append $(wt_{ab},w(b))$ to the next frontier.
+Return the initial permutation and every endpoint through the requested
+maximum degree $p\leq k$, recording its degree.
+\end{method}
+
+\begin{proposition}\label{prop:pieriwork}
+If all generated permutations lie in $S_M$ and $B$ endpoints are
+returned, Method~\ref{method:pieri} costs $O(M^3B)$ elementary operations.
+\end{proposition}
+\begin{proof}
+A frontier node has at most $k(M-k)$ candidate transpositions.
+Testing the Bruhat-cover condition and copying a permutation each cost
+$O(M)$.
+Multiplicity-freeness of the canonical Pieri chains bounds the total
+number of processed nodes by the number of returned endpoints.
+\end{proof}
+
+\begin{lemma}[Polynomial-cost elementary weights]\label{lem:weight}
+A factor $E_{p,m}(Y;Z)$ can be built as an arithmetic circuit using
+$O((m+1)^2)$ ring operations.
+\end{lemma}
+\begin{proof}
+Separating subsets according to whether they contain the last index gives
+\begin{equation}\label{eq:weightrec}
+ E_{p,m}(Y;Z)=E_{p,m-1}(Y_1,\ldots,Y_{m-1};Z)
+ +(Y_m-Z_{m-p+1})
+     E_{p-1,m-1}(Y_1,\ldots,Y_{m-1};Z).
+\end{equation}
+Use $E_{0,t}=1$ and $E_{q,t}=0$ for $q>t$, and memoize the
+subproblems $(q,t)$ reached from $(p,m)$.
+There are at most $(m+1)^2$ of them, each costing a bounded number
+of operations.
+Every nontrivial reached subproblem has $t-q\leq m-p$,
+so no coefficient variable beyond $Z_{m-p+1}$ is requested.
+The circuit shares subexpressions rather than copying expression trees.
+\end{proof}
+
+An unmemoized divide-and-conquer evaluation is another valid choice:
+split $Y$ after $s=\lfloor m/2\rfloor$ and use
+\[
+ E_{p,m}(Y;Z)=\sum_a E_{a,s}(Y';Z)
+     E_{p-a,m-s}(Y'';Z^{[s-a]}),\qquad
+ Z^{[c]}_j=Z_{j+c},
+\]
+where the sum is over feasible degrees.
+Its recursion gives an upper bound $m^{O(\log m)}$.
+That is an evaluation-strategy cost, not an intrinsic lower bound
+for factorial elementary polynomials.
+Theorem~\ref{thm:main} uses \eqref{eq:weightrec}.
+
+\begin{method}[Classical \alg]\label{method:product}
+Construct the completion and the label graphs.
+The coefficient ring is $\mathbb Z[y,z]$.
+Initialize a table $H$ with $H(u,\id)=1$.
+At column $i$ put $k=\theta_i$ and create a fresh table $H'$.
+\begin{enumerate}
+\item Group the keys of $H$ by their first component $w$.
+For each distinct $w$ enumerate its Pieri endpoints once, through degree
+$\min(k,d-\ell(w))$.
+Reuse this list for all labels paired with $w$.
+\item For each table entry $H(w,a)$, each label edge $P:a\to a'$
+of length $b$, and each Pieri endpoint $w'$ of degree $a_u$,
+use the pair only if $a_u+b\leq k$.
+Accumulate
+\[
+ H'(w',a')\mathrel{+}=
+  H(w,a)\varepsilon(P)
+  E_{k-a_u-b,k-a_u}\bigl(Y(w,w';k);Z(P)\bigr).
+\]
+\item Replace $H$ by $H'$ and continue.
+After column $L$, return $H(w,a_*)$ as the coefficient of $\Sch_w(x;y)$.
+\end{enumerate}
+In the ordinary specialization keep only $a_u+b=k$;
+the elementary weight is then $1$.
+\end{method}
+
+\begin{theorem}[Correctness]\label{thm:correct}
+Method~\ref{method:product} computes \eqref{eq:product}.
+\end{theorem}
+\begin{proof}
+Multiply the expansion in Theorem~\ref{thm:elementary} by
+$\Sch_u(x;y)$ and apply \eqref{eq:pieri} at each column.
+The displayed update is exactly the product of the column sign,
+the running coefficient, and the Pieri coefficient.
+Dynamic programming merely combines contributions with equal endpoint
+pairs.
+The final label condition is precisely that in
+Theorem~\ref{thm:elementary}.
+
+It remains to justify the degree cap.
+Along a complete label path,
+$\sum_i b_i=\ell(a_*)=\ell(\tau)-\ell(v)$ and
+$\sum_i\theta_i=\ell(\tau)$.
+Every admissible paired path has
+$\sum_i a_{u,i}\leq\sum_i(\theta_i-b_i)=\ell(v)$.
+All $a_{u,i}$ are nonnegative, so no contributing prefix can reach
+a permutation of length greater than $d$.
+Thus the cap discards no contribution.
+Specialization to $y=z=0$ annihilates every elementary weight of
+positive degree and leaves precisely the stated ordinary update.
+\end{proof}
+
+\section{Input bounds for every enumerated state}\label{sec:states}
+
+\begin{lemma}[Pieri ambient size]\label{lem:ambient}
+If $w\in S_m$ and $k<m$, a canonical elementary Pieri chain from
+$w$ stays in $S_{m+1}$.
+\end{lemma}
+\begin{proof}
+Before any position beyond $m$ is used, a Bruhat cover cannot have
+right endpoint $b\geq m+2$: position $m+1$ has value $m+1$,
+strictly between $w(a)\leq m$ and $w(b)=b$.
+The only possible new value is therefore $m+1$.
+If it is moved in, it must be the first moved-in value, since all
+previously available values are at most $m$ and the sequence decreases.
+All subsequent moved-in values are smaller; no larger new position
+can be used.
+\end{proof}
+
+\begin{lemma}[Code-length and degree bounds]\label{lem:states}
+Every $u$-side permutation enumerated by Method~\ref{method:product},
+including nodes of Pieri searches that do not survive into the next
+table, lies in $S_M$, has no descent after $r$, and has length at most $d$.
+There are at most $U$ such permutations.
+\end{lemma}
+\begin{proof}
+The ambient claim follows by applying Lemma~\ref{lem:ambient} once
+per column, starting in $S_n$.
+The degree cap in Method~\ref{method:product} bounds every partial
+Pieri chain by $d$.
+
+For the descent claim, let $w$ have no descent after $r$.
+Since $k\leq h\leq r$, the polynomial
+\[
+ e_a(x_1,\ldots,x_k)\Sch_w(x)
+\]
+involves only $x_1,\ldots,x_r$.
+For $j>r$ its divided difference $\partial_j$ is zero.
+For a Schubert basis element, $\partial_j\Sch_b=\Sch_{bs_j}$
+if $j\in\Des(b)$; otherwise its divided difference is zero.
+Distinct $b$ with descent $j$ give distinct $bs_j$.
+Linear independence of the Schubert basis therefore implies that no
+permutation in this product has a descent after $r$.
+Every canonical chain of length $a$ is a term of this ordinary Pieri
+product with coefficient one, so this argument applies to
+every enumerated endpoint, before any double-coefficient cancellation.
+Induction starts with $u$.
+
+Permutations of $S_M$ with an increasing suffix after $r$ number
+$\fall{M}{r}$.
+Alternatively, their Lehmer codes have length at most $r$ and sum
+at most $d$. There are $\binom{d+r}{r}$ nonnegative $r$-tuples with
+that sum bound, by stars and bars.
+Taking the smaller estimate proves the assertion.
+\end{proof}
+
+\begin{lemma}[Cost of the label construction]\label{lem:labelwork}
+Method~\ref{method:labels} stores at most $L V Q_h(n)$ column paths
+and costs $O(n^3+L n^3 V Q_h(n))$ elementary operations.
+This estimate charges paths rejected by the endpoint filter.
+\end{lemma}
+\begin{proof}
+There are at most $V$ retained upper labels at a boundary, by
+Lemma~\ref{lem:filter}.
+From each upper label, a descending pivot path has depth at most
+$\theta_i\leq h$ and uses each nonpivot position at most once.
+There are at most $\fall{n-1}{b}$ possible position sequences of
+length $b$, even before testing the Bruhat conditions.
+The entire search tree, including rejected nodes, consequently has
+at most $Q_h(n)$ nodes.
+Every node is in $S_n$.
+Scanning candidates, testing Bruhat covers, computing the endpoint
+length test, and recording a path take polynomial work bounded by
+$O(n^3)$ per node.
+Summing over boundaries and upper labels proves the claim.
+Constructing the prefixes $\tau_i$ and the completion fits the
+additional $O(n^3)$ term.
+\end{proof}
+
+These estimates avoid two potentially misleading shortcuts:
+counting only retained endpoints does not bound the work of a search
+that explores rejected paths, and controlling final support does not
+by itself control intermediate states.
+Both kinds of work have been bounded explicitly.
+
+\section{Complexity and its interpretation}\label{sec:complexity}
+
+\subsection{Arithmetic model}
+
+A coefficient is stored as a directed acyclic arithmetic circuit over
+$\mathbb Z[y,z]$; addition and multiplication create gates pointing to
+existing gates.
+The elementary routine shares its dynamic-programming subexpressions.
+We count these ring operations and elementary operations on permutation
+entries separately from bit costs.
+Permutation entries have $O(\log M)$ bits.
+Deterministic dictionaries may be implemented by balanced trees:
+comparing two keys costs $O(M)$ elementary operations, and a table
+has at most $UV$ keys.
+Since $\log(UV)=O(M\log M)$, this bookkeeping is absorbed by the
+$M^3$ factor below.
+No unit-cost polynomial identity test is assumed.
+
+The returned table is an exact expansion but need not be a
+minimal-support list.
+An identically zero coefficient can be left as a circuit computing zero.
+Removing all such entries, expanding coefficients into monomials, and
+canonical symbolic simplification are different output requirements
+and are not included in the theorem.
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}]
+The label preprocessing costs
+$O(n^3+L n^3 VQ_h(n))$ by Lemma~\ref{lem:labelwork}.
+At a product boundary there are at most $U$ distinct $u$-side
+permutations and at most $V$ labels.
+At one column the Pieri enumeration is called at most $U$ times,
+each returning at most $U$ endpoints by Lemma~\ref{lem:states}.
+Proposition~\ref{prop:pieriwork} bounds this work by $O(M^3U^2)$.
+
+Count matched pairs by iterating over all column edges, rather than
+assuming a bound on the forward outdegree of each label.
+There are at most $VQ_h(n)$ such edges in a column.
+For each there are at most $U$ possible source permutations,
+and each source has at most $U$ Pieri endpoints.
+Thus there are at most $U^2VQ_h(n)$ pairs.
+Forming the fixed alphabet takes $O(M)$ work.
+Lemma~\ref{lem:weight} builds its elementary coefficient in
+$O((h+1)^2)$ ring operations; the remaining update takes a bounded
+number of ring operations.
+Permutation and dictionary work, as well as this arithmetic, is
+bounded by $O(M^3)$ per pair.
+Summing over $L$ columns and absorbing the preprocessing and
+Pieri terms gives \eqref{eq:main}.
+
+For the coarse estimate use
+\[
+ L\leq n-1,\quad M\leq2n-1,\quad U\leq(2n)^r,\quad
+ V\leq n^h,\quad Q_h(n)\leq2n^h .
+ \]
+The last bound follows by comparing $\fall{n-1}{b}$ with $(n-1)^b$
+and summing the geometric series for $n\geq3$, and
+for $n=2$ because $h\leq1$.
+Substitution gives \eqref{eq:coarse}.
+Since $h\leq r\leq n-1$, its logarithm is at most
+$4n\log_2 n+O(n)$.
+
+If $v$ is dominant, $\mu=v^{-1}$ and $a_*=\id$.
+No descending path of positive length starts at the identity.
+Every label graph therefore consists of the single degree-zero edge
+$\id\to\id$, and the entire product calculation has one label.
+Replacing $VQ_h(n)$ by $1$ gives the dominant-input estimate.
+By Proposition~\ref{prop:uniform}, the double and ordinary products
+satisfy the same bound.
+\end{proof}
+
+\subsection{Uniformity across coefficient rings}
+
+The ordinary specialization of Method~\ref{method:product} keeps only
+pairs with $a_u+b=k$. In the double specialization, set $z=y$.
+
+\begin{proposition}[Uniformity]\label{prop:uniform}
+Fix $u,v$ with $v\ne\id$.
+Compare the triple computation of Method~\ref{method:product} with its
+double and ordinary specializations.
+\begin{enumerate}
+\item All three use the same completion and the same label graphs.
+\item Every table key and every Pieri call made by the ordinary
+computation is made by the triple computation, with the same arguments.
+Every matched pair used by the ordinary computation is used by the
+triple computation.
+The triple computation's additional pairs are those with $a_u+b<k$.
+\item Per matched pair, the triple and double computations perform
+$O((h+1)^2)$ ring operations and $O(M)$ elementary operations beyond
+the ordinary computation.
+\end{enumerate}
+In particular, all three computations satisfy \eqref{eq:main}.
+The same statements hold for Method~\ref{method:qproduct}, with
+$t+b=k$ in place of $a_u+b=k$ and $\tilde h$ in place of $h$, except
+that a $\mathtt{qpieri}$ call of the triple computation may have a
+larger depth $p_w$. Its returned list then contains that of the
+ordinary call.
+\end{proposition}
+\begin{proof}
+The completion and the label graphs depend only on $v$.
+The recorded alphabet indices $Z(P)$ are used only to form weights,
+never to accept or reject a path.
+Step~(1) of Method~\ref{method:product} depends only on $w$, $k$, and $d$.
+Step~(2) accepts a pair according to $a_u$ and $b$ alone.
+By induction over columns, the ordinary keys at each boundary therefore
+form a subset of the triple keys, and the ordinary pairs form a subset
+of the triple pairs.
+The additional work for a triple pair is the formation of $Y(w,w';k)$
+and the circuit of Lemma~\ref{lem:weight}.
+In the ordinary computation the weight is $1$.
+The proofs of Lemmas~\ref{lem:filter}, \ref{lem:states}, and
+\ref{lem:labelwork} never use the coefficient ring, so they apply to all
+three computations.
+For the quantum method, the same argument applies with
+Lemmas~\ref{lem:strict} and \ref{lem:qstates}.
+A $\mathtt{qpieri}$ search of depth $p$ is a prefix of one of larger
+depth, and Lemma~\ref{lem:qstates} bounds every chain that the
+triple computation enumerates.
+\end{proof}
+
+The proposition is an upper-bound statement.
+The ordinary computation can be cheaper in practice, since it discards
+pairs with $a_u+b<k$.
+The point is that the worst-case analysis does not distinguish the
+three problems, and the bound for the triple product is not obtained by
+paying for its extra generality.
+
+\begin{corollary}[Ordinary bit costs]\label{cor:bits}
+For unit initial coefficient, the ordinary algorithm has
+bit complexity bounded by \eqref{eq:main} times a polynomial in $n$.
+It therefore still has complexity $2^{O(n\log n)}$, and polynomial
+complexity in $n$ for fixed $r_u,r_v$.
+\end{corollary}
+\begin{proof}
+Each surviving matched pair contributes the running integer with
+sign $+1$ or $-1$.
+The absolute value of any intermediate sum is bounded by the number
+of complete or partial paired paths.
+A state has at most $UVQ_h(n)$ successors counted with multiplicity,
+so that number is at most $(2UVQ_h(n))^L$.
+Its bit length is
+\[
+ O\bigl(1+L\log(2UVQ_h(n))\bigr)=O(n^2\log n).
+ \]
+Integer additions and permutation operations consequently incur only
+a polynomial bit overhead.
+This argument bounds intermediate signed sums as well as final
+nonnegative coefficients; it does not rely on positivity preventing
+intermediate cancellation.
+\end{proof}
+
+\subsection{What bounded code length does and does not imply}
+
+The number of code entries is a useful parameter because the
+$u$-side count can be replaced by $\binom{d+r}{r}$ when degree
+is more restrictive than the ambient permutation size.
+No weak-order interval enumeration is needed for this refinement.
+The $v$-side bound depends on $h=r_v$, reflecting the fact that the
+second factor supplies the elementary expansion.
+For ordinary multiplication the roles may be interchanged and the
+smaller of the two bounds used.
+For \eqref{eq:product}, such an interchange also changes which
+coefficient alphabet indexes the output basis and is not automatic.
+
+An input code with $r_w$ entries has encoding length
+$O(r_w\log n)$, whereas the algorithm explicitly works with
+permutations and has polynomial dependence on $n$ for fixed $r$.
+This is a pseudo-polynomial feature relative to binary code entries.
+For example, $\Sch_{\operatorname{uncode}(0,A)}(x_1,x_2)=h_A(x_1,x_2)$,
+and
+\[
+ h_A(x_1,x_2)^2
+   =\sum_{j=0}^{A}s_{(2A-j,j)}(x_1,x_2).
+\]
+The two input codes have constant length and $O(\log(A+1))$ bits,
+but an explicit Schubert-basis list has $A+1$ terms.
+This example explains why a full-product algorithm and a single-coefficient
+algorithm have fundamentally different output obligations; it is not
+used as a running-time parameter.
+
+Under scaling of the entries of fixed Lehmer codes by a factor $N$,
+the code lengths remain fixed and $n=O(N)$.
+Theorem~\ref{thm:main} hence gives a polynomial-in-$N$ bound for these
+full products.
+This does not yield the polylogarithmic dependence available from
+\eqref{eq:pak} in its fixed-range regime, nor does it prove eventual
+quasi-polynomiality.
+Finite computations or interpolation without a proved threshold and
+period do not establish that conclusion.
+
+\begin{corollary}[Grassmannian inputs]\label{cor:grass}
+Let $u,v\in S_n$, $v\ne\id$, have no descents other than at $k$.
+Then every column of the completion has height $k$, and every $u$-side
+permutation enumerated by Method~\ref{method:product}, including
+Pieri search nodes, is $k$-Grassmannian.
+Every label $a\in A_i$ has $a\tau_i$ $k$-Grassmannian.
+Consequently $U$ and $V$ in \eqref{eq:main} may be replaced by
+\[
+ U_k=\min\left\{\binom{M}{k},\binom{d+k}{k}\right\},\qquad
+ V_k=\binom nk ,
+\]
+giving
+\[
+ O\left(n^3+LM^3U_k^2V_kQ_k(n)\right)
+ =O\left(n^{4}\binom{2n}{k}^{2}\binom nk n^{k}\right).
+\]
+Uniformly in $k$ this is $O(4^kn^{4k+4}/(k!)^3)$, and in general it is
+$2^{O(n)}n^{k+4}$.
+\end{corollary}
+\begin{proof}
+By Lemma~\ref{lem:completion}, $\Des(\tau)=\Des(v)=\{k\}$.
+A dominant permutation whose only descent is at $k$ has a rectangular
+diagram with $k$ rows, so its transpose $\theta$ has all parts equal to
+$k$.
+For the labels, $a\tau_i\leq_L\tau_i$, so as in the proof of
+Lemma~\ref{lem:filter} its descents lie in $\Des(\tau_i)=\{k\}$;
+there are at most $\binom nk$ such permutations in $S_n$.
+
+Let $w$ be $k$-Grassmannian. Then $\Sch_w(x)$ is symmetric in
+$x_1,\ldots,x_k$ and involves no other $x$-variables, so the same
+holds for $e_a(x_1,\ldots,x_k)\Sch_w(x)$.
+Hence $\partial_j$ annihilates it for every $j\ne k$.
+The argument of Lemma~\ref{lem:states} shows that every permutation in
+this ordinary Pieri product, and so every canonical chain endpoint,
+has no descent other than at $k$.
+Induction from $u$ covers all enumerated states, including those of
+the double computation, whose Pieri chains are the same.
+A $k$-Grassmannian permutation in $S_M$ is determined by its first $k$
+values, as a set, giving $\binom Mk$.
+Alternatively, its code is a partition with at most $k$ parts,
+read in reverse, and of size at most $d$; there are at most
+$\binom{d+k}{k}$ of these.
+The displayed estimate follows from the proof of Theorem~\ref{thm:main},
+with $M\leq 2n$ and $Q_k(n)\leq 2n^k$.
+\end{proof}
+
+Thus Grassmannian multiplication works entirely with partitions in a
+$k\times(M-k)$ box on the $u$-side, with
+$L=\code_k(v)\leq n-k$ columns.
+The remaining non-exponential factor $n^{k}$ comes from the label
+search $Q_k(n)$, which counts rejected distinct-position paths.
+Sharpening that count would make the Grassmannian bound $2^{O(n)}$.
+
+\section{Quantum multiplication}\label{sec:quantum}
+
+We now prove Theorem~\ref{thm:quantum}, directly for the triple quantum
+product.
+The architecture is unchanged: a filtered elementary expansion of the
+second factor is paired with a Pieri rule for the first.
+Two ingredients change.
+The factors must be quantized one column at a time, which forces
+pairwise distinct column heights; and the quantum Pieri rule has
+length-decreasing steps, which requires new state estimates.
+
+\subsection{Quantization and the strict completion}
+
+Let $X_j=(x_1,\ldots,x_j)$.
+A \emph{standard elementary monomial} is a product
+$\prod_j e_{c_j}(X_j)$ in which each height $j$ occurs at most once and
+$0\leq c_j\leq j$.
+These monomials form a $\mathbb Z$-basis of $\mathbb Z[x]$.
+The quantization map of Fomin, Gelfand, and Postnikov
+\cite{fomin1997quantum} is the $\mathbb Z[q]$-linear map, extended
+linearly over all coefficient alphabets, sending
+$\prod_j e_{c_j}(X_j)$ to $\prod_j e^q_{c_j}(X_j)$, where
+$e^q_c(X_j)$ are the quantum elementary polynomials.
+It sends $\Sch_w(x;y)$ to the quantum double Schubert polynomial
+$\widetilde\Sch_w(x;y)$ \cite{fomin1997quantum,kirillov2000quantum},
+\cite[Lemma~2.1]{samuelquantum}.
+These polynomials, indexed by $S_\infty$, form a
+$\mathbb Z[q][y]$-basis of $\mathbb Z[q][x,y]$, so we may write
+\begin{equation}\label{eq:qproduct}
+ \widetilde\Sch_u(x;y)\widetilde\Sch_v(x;z)
+  =\sum_{w,\delta}q^\delta c_{u,v}^{w,\delta}(y;z)\,
+     \widetilde\Sch_w(x;y).
+\end{equation}
+At $z=y$ the coefficient $c_{u,v}^{w,\delta}(y;y)$ is the
+equivariant quantum Littlewood--Richardson coefficient of $Fl_N$ for every
+$N$ such that every occurring $w$ lies in $S_N$ and every occurring degree
+has $\delta_i=0$ for $i\geq N$
+\cite{kim1996equivariant,lam2014quantum,mihalcea2006equivariant},
+\cite[Section~2]{samuelquantum}.
+At $y=z=0$ it is the ordinary quantum structure constant.
+Grading $\deg q_i=2$ makes \eqref{eq:qproduct} homogeneous.
+Put
+\[
+ \widetilde E_{p,k}(x;Z)=\mathcal Q\bigl(E_{p,k}(x;Z)\bigr),
+\]
+where $\mathcal Q$ is the quantization map.
+Expanding the definition, $E_{p,k}(x;Z)$ is a $\mathbb Z[Z]$-linear
+combination of $e_c(X_k)$ with $c\leq k$, so $\widetilde E_{p,k}$ is
+the corresponding combination of $e^q_c(X_k)$
+\cite[Lemma~7.3]{samuelquantum}.
+
+The classical completion of Section~\ref{sec:completion} usually has
+repeated column heights, and $\mathcal Q$ is not multiplicative on
+$e_a(X_k)e_b(X_k)$.
+We therefore use the strict completion of
+\cite[Definition~4.1]{samuelquantum}.
+Call $\mu$ \emph{strict dominant} if it is dominant and its nonzero
+code entries are strictly decreasing.
+
+\begin{method}[Strict completion]\label{method:strict}
+Start with $\mu=v^{-1}$.
+While $\mu$ is not strict dominant, choose the largest $i$ with
+$\code_{i+1}(\mu)\neq0$ and $\code_i(\mu)\leq\code_{i+1}(\mu)$,
+and replace $\mu$ by $\mu s_i$.
+At termination put $\tilde\theta=\code(\mu)$ with trailing zeros
+deleted, $\tilde\tau=\mu^{-1}$, $\tilde a_*=v\mu$, and
+$\tilde h=\tilde\theta_1$.
+\end{method}
+
+\begin{lemma}[Strict height]\label{lem:strict}
+Let $v\ne\id$ and let $L$ be the number of nonzero entries of
+$\code(v^{-1})$.
+The strict completion stays in $S_n$, uses $O(n^3)$ elementary
+operations, and satisfies
+$\ell(\tilde a_*)=\ell(\tilde\tau)-\ell(v)$.
+Its shape has exactly $L$ parts,
+$\tilde\theta_1>\cdots>\tilde\theta_L>0$,
+and the classical completion also has exactly $L$ columns.
+Finally,
+\begin{equation}\label{eq:strictheight}
+ \max(r_v,L)\leq\tilde h\leq
+ \min\bigl(n-1,\ r_v+L-1\bigr).
+\end{equation}
+\end{lemma}
+\begin{proof}
+A step at $i$ has $\code_i(\mu)\leq\code_{i+1}(\mu)$, so
+$\mu(i)<\mu(i+1)$; it replaces the entries $(a,b)$ by $(b+1,a)$ and
+increases length by one.
+Since $b\neq0$, we have $i+1\leq m-1$ whenever $\mu\in S_m$, so
+$\mu s_i\in S_m$.
+This proves the ambient claim for $m=n$, termination, the length identity,
+and the $O(n^3)$ cost as in Lemma~\ref{lem:completion}.
+The replacement $(a,b)\mapsto(b+1,a)$ with $b\neq0$ preserves the
+number of nonzero entries. The same holds for the classical steps,
+which have $a<b$.
+Hence both shapes have $L$ parts, and the termination condition gives
+strictly decreasing parts.
+
+A strictly decreasing sequence of $L$ positive integers has first entry at
+least $L$.
+For the other lower bound, $\tilde\tau=x^{-1}v$ is length-additive,
+so, as in the proof of Lemma~\ref{lem:filter}, every right descent of
+$v$ is one of $\tilde\tau$.
+The permutation $\tilde\tau$ is the inverse of a dominant permutation,
+hence dominant, and its last descent is the number of rows of its
+diagram, namely $\tilde\theta_1$.
+Thus $r_v\leq\tilde h$.
+
+For the upper bound let $\mu$ be the classical completion, with shape
+$\theta$, and put $m=\max_j(\theta_j+j)$.
+A dominant permutation with shape $\theta$ lies in $S_m$:
+its code satisfies $\code_j\leq m-j$.
+Since $\mu=v^{-1}x$ with lengths adding, $v^{-1}$ is a prefix of a
+reduced word of $\mu$ and so lies in $S_m$.
+Applying the first paragraph with this $m$ shows that the strict
+completion lies in $S_m$, whence $\tilde h=\code_1\leq m-1$.
+Finally, $\theta_j\leq\theta_1=r_v$ and $j\leq L$ give
+$m\leq r_v+L$. The bound $\tilde h\leq n-1$ is the case $m=n$.
+\end{proof}
+
+Both inequalities in \eqref{eq:strictheight} can be sharp.
+For $v=(m+1)12\cdots m$, which has $\Sch_v=x_1^m$, one has $r_v=1$,
+$L=m$, $\theta=(1^m)$, and $\tilde\theta=(m,m-1,\ldots,1)$.
+In finite checks through $S_8$ we also observed
+$\tilde h=\max_j(\theta_j+j)-1$ for every nonidentity $v$.
+We do not use this equality.
+
+\subsection{Quantum filtered expansion}
+
+Define $\tilde\tau_i$, $\tilde F_i$, $\tilde A_i$, and the label graphs
+exactly as in Sections~\ref{sec:completion} and \ref{sec:columns},
+with $\tilde\theta$ in place of $\theta$, and put
+\[
+ \widetilde V=\fall{n}{\tilde h}.
+\]
+The proofs of Lemmas~\ref{lem:filter} and \ref{lem:labelwork} use only
+that the completion is dominant, lies in $S_n$, and satisfies
+the length identity, and that its first column has height
+equal to the number of rows of the diagram of each $\tilde\tau_i$.
+They therefore give $|\tilde A_i|\leq\widetilde V$, and a label
+construction with at most $L\widetilde VQ_{\tilde h}(n)$ edges
+costing $O(n^3+Ln^3\widetilde VQ_{\tilde h}(n))$.
+Likewise, the proof of Theorem~\ref{thm:elementary} gives
+\begin{equation}\label{eq:strictexpansion}
+ \Sch_v(x;z)=
+ \sum_{(P_1,\ldots,P_L)}
+ \prod_{i=1}^L
+   \varepsilon(P_i)E_{\tilde\theta_i-b_i,\tilde\theta_i}(x;Z(P_i)),
+\end{equation}
+summed over the filtered distinct-position paths ending at
+$\tilde a_*$.
+
+\begin{theorem}[Filtered quantum expansion]\label{thm:qexpansion}
+With the same index set as \eqref{eq:strictexpansion},
+\begin{equation}\label{eq:qexpansion}
+ \widetilde\Sch_v(x;z)=
+ \sum_{(P_1,\ldots,P_L)}
+ \prod_{i=1}^L
+   \varepsilon(P_i)\widetilde E_{\tilde\theta_i-b_i,\tilde\theta_i}
+     (x;Z(P_i)).
+\end{equation}
+\end{theorem}
+\begin{proof}
+Apply $\mathcal Q$ to \eqref{eq:strictexpansion}.
+On the left this gives $\widetilde\Sch_v(x;z)$.
+Each factor in a summand is a $\mathbb Z[z]$-combination of
+$e_c(X_{\tilde\theta_i})$, and the heights $\tilde\theta_i$ are
+pairwise distinct.
+Expanding a summand therefore gives a $\mathbb Z[z]$-combination of
+standard elementary monomials.
+Hence $\mathcal Q$ maps the summand to the product of the quantized
+factors.
+\end{proof}
+
+Without the filters, \eqref{eq:qexpansion} is
+\cite[Theorem~4.6]{samuelquantum}.
+The proof shows more: for \emph{any} set of complete distinct-height
+column paths, the sum of quantized weights is the quantization of
+the sum of classical weights.
+Thus every boundary filter justified classically is automatically
+justified in quantum cohomology, without a new cancellation argument.
+
+\subsection{The quantum Pieri step}
+
+A \emph{quantum cover} of $w$ is a transposition $t_{ab}$, $a<b$, with
+$\ell(wt_{ab})=\ell(w)+1$, or with $w(a)>w(b)$ and
+$\ell(wt_{ab})=\ell(w)+1-2(b-a)$.
+The latter is equivalent to every $w(c)$, $a<c<b$, lying strictly
+between $w(b)$ and $w(a)$, and it carries the weight
+$q_a\cdots q_{b-1}$.
+The routine $\mathtt{qpieri}(w,p,k)$ of
+\cite[Method~4.12]{samuelquantum} is Method~\ref{method:pieri} with
+quantum covers in place of Bruhat covers, with $a\leq k<b$, with each
+left position used at most once, and with the right positions $b$
+weakly decreasing along a chain.
+It returns triples $(w',t,q^{\delta'})$, one for every node of its
+search tree.
+By \cite[Lemma~4.13]{samuelquantum} it returns each endpoint once and,
+for $p'\leq p\leq k$,
+\begin{equation}\label{eq:qpieri}
+ \widetilde\Sch_w(x;y)\widetilde E_{p',k}(x;Z)
+ =\sum_{\substack{(w',t,q^{\delta'})\\ t\leq p'}}
+   q^{\delta'}E_{p'-t,k-t}\bigl(Y(w,w';k);Z\bigr)
+   \widetilde\Sch_{w'}(x;y).
+\end{equation}
+Here $t$ is the number of transpositions in the chain, and
+$Y(w,w';k)$ is as in Section~\ref{sec:pieri}.
+Since left positions are used once, it has $k-t$ entries.
+Multiplicity-freeness gives the analogue of
+Proposition~\ref{prop:pieriwork}: if all nodes lie in $S_M$ and $B$
+triples are returned, the call costs $O(M^3B)$ elementary operations
+and $O(MB)$ ring operations for the $q$-monomials.
+
+\begin{method}[Quantum \alg]\label{method:qproduct}
+Construct the strict completion and its label graphs.
+The coefficient ring is $\mathbb Z[q][y,z]$.
+Initialize $H(u,\id)=1$.
+At column $i$ put $k=\tilde\theta_i$ and create a fresh table $H'$.
+\begin{enumerate}
+\item Group the keys of $H$ by their first component $w$.
+For each such $w$ let $p_w$ be the maximum of $k-b$ over all label
+edges, of length $b$, leaving labels paired with $w$.
+Call $\mathtt{qpieri}(w,p_w,k)$ once.
+\item For each table entry $H(w,a)$, each edge $P:a\to a'$ of length $b$,
+and each returned triple $(w',t,q^{\delta'})$ with $t+b\leq k$, accumulate
+\[
+ H'(w',a')\mathrel{+}=
+  H(w,a)\,\varepsilon(P)\,q^{\delta'}\,
+  E_{k-t-b,k-t}\bigl(Y(w,w';k);Z(P)\bigr).
+\]
+\item Replace $H$ by $H'$.
+After column $L$, return $H(w,\tilde a_*)$; its coefficient of
+$q^\delta$ is $c_{u,v}^{w,\delta}(y;z)$.
+\end{enumerate}
+In the ordinary quantum specialization keep only $t+b=k$.
+\end{method}
+
+\begin{proposition}\label{prop:qcorrect}
+Method~\ref{method:qproduct} computes \eqref{eq:qproduct}.
+\end{proposition}
+\begin{proof}
+Multiply \eqref{eq:qexpansion} by $\widetilde\Sch_u(x;y)$ and apply
+\eqref{eq:qpieri} at each column, with $p'=k-b$.
+The coefficients in \eqref{eq:qpieri} involve only $q,y,z$, so they
+commute with the remaining factors.
+The proof of Theorem~\ref{thm:correct} applies verbatim, and no
+contribution is lost since $p'\leq p_w$.
+\end{proof}
+
+\subsection{States of the quantum computation}
+
+Write $D(w)=r_w$ for the last descent.
+Put
+\[
+ \rho=\max(r_u,\tilde h),\qquad
+ s(d)=\max\{j\geq0:j(j+1)\leq d\},\qquad
+ R_q=\min\bigl(M-1,\ \rho+\min(L,s(d))\bigr),
+\]
+and
+\[
+ U_q=\min\left\{\fall{M}{R_q},\binom{d+R_q}{R_q}\right\},
+ \qquad M=n+L.
+\]
+
+\begin{lemma}[Quantum descent steps]\label{lem:qdescent}
+Let $t_{ab}$ be a quantum cover of $w$ with $a\leq k<b$.
+If it is a Bruhat cover then $D(wt_{ab})\leq\max(D(w),k)$.
+If it is length-decreasing then $b\leq D(w)+1$ and
+$D(wt_{ab})\leq\max(D(w),b)$.
+In particular, a single quantum cover raises $D$ by at most one.
+\end{lemma}
+\begin{proof}
+Put $w'=wt_{ab}$ and $D=D(w)$.
+The entries of $w$ after position $D$ increase.
+Only positions $a$ and $b$ change, so a descent of $w'$ after
+$\max(D,k)$ can only occur at $b-1$ or $b$ with $b>D$.
+
+For a Bruhat cover, $w'(b)=w(a)<w(b)<w(b+1)$, so there is no descent at
+$b$.
+If $b-1=a$ there is no descent at $b-1$ because $w'(a)=w(b)>w(a)$.
+Otherwise $w(b-1)<w(b)$, and the cover condition forces
+$w(b-1)<w(a)=w'(b)$.
+
+For a length-decreasing cover, suppose $b\geq D+2$.
+If $a<b-1$ then $w(b-1)$ lies between $w(b)$ and $w(a)$, so
+$w(b-1)>w(b)$; but $b-1>D$.
+If $a=b-1$ then $a>D$ and $w(a)<w(b)$.
+Either case is a contradiction, so $b\leq D+1$.
+The entries after position $b$ are unchanged and increasing,
+so $D(w')\leq\max(D,b)$.
+\end{proof}
+
+\begin{lemma}[Quantum state bounds]\label{lem:qstates}
+Every permutation produced by a $\mathtt{qpieri}$ call in
+Method~\ref{method:qproduct} lies in $S_M$, has length at most $d$,
+and has no descent after $R_q$.
+There are at most $U_q$ such permutations.
+Every monomial $q^\delta$ that occurs involves only
+$q_1,\ldots,q_{M-1}$ and has $|\delta|\leq d/2$.
+\end{lemma}
+\begin{proof}
+\emph{Ambient size.}
+Let $w\in S_N$ and $k<N$.
+For $c>N$, $w(c)=c$.
+Hence a first transposition with $b\geq N+2$ is not a quantum cover:
+the value $N+1$ at position $N+1$ lies strictly between $w(a)$ and
+$w(b)=b$, which is forbidden for a Bruhat cover, and $w(a)<w(b)$
+rules out a length-decreasing cover.
+Since the values $b$ weakly decrease, the call stays in $S_{N+1}$.
+At column $i$ the height is $k\leq\tilde h\leq n-1$, so induction
+gives $S_{n+i}\subseteq S_M$.
+In particular, every quantum factor $q_a\cdots q_{b-1}$ has
+$b\leq M$.
+
+\emph{Length and $q$-degree.}
+Classical covers add one to $\ell$; a length-decreasing cover $t_{ab}$
+changes $\ell$ by $1-2(b-a)$ and multiplies by a monomial of degree
+$b-a$.
+Hence, along any chain of covers starting at $u$,
+\begin{equation}\label{eq:qbalance}
+ \ell(w)+2|\delta|=\ell(u)+T,
+\end{equation}
+where $T$ is the total number of transpositions.
+Consider a sequence of pairs reaching a key $(w,a)$ at boundary $i$, with
+chain lengths $t_j$ and label edge lengths $b_j$.
+Then $t_j\leq\tilde\theta_j-b_j$, and the labels are length-additive,
+so
+\[
+ T=\sum_{j\leq i}t_j\leq|\tilde\theta_{\leq i}|-\ell(a),\qquad
+ |\tilde\theta_{\leq i}|=\sum_{j\leq i}\tilde\theta_j.
+\]
+The label $a$ lies on a complete label path to $\tilde a_*$, whose
+later edges have total length at most $\sum_{j>i}\tilde\theta_j$.
+Lemma~\ref{lem:strict} gives
+$\ell(\tilde a_*)=|\tilde\theta|-\ell(v)$, so
+$\ell(a)\geq|\tilde\theta_{\leq i}|-\ell(v)$ and $T\leq\ell(v)$.
+A node produced from $w$ in column $i+1$ has $t\leq p_w=k-b$ for an
+edge $a\to a'$ leaving a label paired with $w$.
+Concatenating with a sequence reaching $(w,a)$ gives
+$T+t\leq|\tilde\theta_{\leq i+1}|-\ell(a')\leq\ell(v)$, by the same
+argument at boundary $i+1$.
+By \eqref{eq:qbalance} that node has length at most $d$, and the
+monomial along this sequence has degree at most $d/2$.
+All monomials attached to the node come from such sequences.
+
+\emph{Descents.}
+Fix such a sequence ending at a node $w$.
+All heights satisfy $k\leq\tilde h\leq\rho$, and $D(u)\leq\rho$.
+By Lemma~\ref{lem:qdescent}, a cover applied to a permutation with
+$D\leq\rho+j-1$ produces one with $D\leq\rho+j$, and the bound
+$D\leq\rho+j$ is reached from $D=\rho+j-1$, for $j\geq1$, only by a
+length-decreasing cover with $b=\rho+j$.
+Since $a\leq k\leq\rho$, that cover has $q$-degree $b-a\geq j$.
+If $D(w)=\rho+e$ with $e>0$, the sequence therefore contains covers
+of $q$-degrees at least $1,2,\ldots,e$, so $e(e+1)/2\leq|\delta|\leq d/2$.
+Furthermore, suppose a call first raises $\max(D,\rho)$ to $\rho+j$.
+This happens through a cover with $b=\rho+j$.
+All later covers in that call have $b\leq\rho+j$, and by
+Lemma~\ref{lem:qdescent} they keep $D\leq\rho+j$.
+Hence each call raises $\max(D,\rho)$ by at most one.
+A sequence through column $i$ makes $i\leq L$ calls.
+This proves $D(w)\leq R_q$; the bound $D(w)\leq M-1$ is automatic.
+
+The count $U_q$ follows as in Lemma~\ref{lem:states}.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:quantum}]
+Correctness is Proposition~\ref{prop:qcorrect}.
+The cost is counted exactly as in the proof of Theorem~\ref{thm:main},
+with $U,V,h,\theta$ replaced by $U_q,\widetilde V,\tilde h,\tilde\theta$,
+using Lemmas~\ref{lem:strict} and \ref{lem:qstates} and the strict
+label bound above.
+The table has at most $U_q\widetilde V$ keys because
+monomials in $q$ are part of the coefficient.
+The ambient and degree assertions are in Lemma~\ref{lem:qstates}.
+For the coarse bound, use $L\leq\tilde h\leq n-1$, $M\leq2n-1$,
+$U_q\leq(2n)^{R_q}$, $\widetilde V\leq n^{\tilde h}$,
+$Q_{\tilde h}(n)\leq2n^{\tilde h}$, and $R_q\leq\rho+L\leq2\rho$.
+The final claims follow from \eqref{eq:strictheight}.
+\end{proof}
+
+\subsection{Remarks on the quantum bound}
+
+\emph{Dependence on $L$.}
+Classically $h=r_v$, so fixing code lengths suffices.
+In the quantum algorithm the factor $\tilde h$ also requires $L$ to be
+bounded.
+This is not a weakness of the state estimate alone: the example
+$\Sch_v=x_1^m$ has $r_v=1$ and $\tilde h=m$.
+The difference comes from the distinct-height condition in
+Theorem~\ref{thm:qexpansion}.
+Both $L$ and $\tilde h$ are computed from the input code of $v$, and
+$L\leq\min(\ell(v),n-1)$.
+For ordinary quantum multiplication one may interchange $u$ and $v$.
+
+\emph{The worst-case parameters are pessimistic.}
+For $u=v=(m+1)12\cdots m$, $2\leq m\leq8$, the measured numbers of
+distinct $u$-side states per column were $m^2+m+1$, and the label sets
+had $m$ elements. The corresponding bounds $U_q$ and $\widetilde V$ grow
+superpolynomially.
+We do not know whether polynomial bounds in $n$, for fixed code
+lengths, hold for the strict label graphs.
+
+\emph{The implemented medium shape.}
+The package's fast quantum kernels use the medium shape
+$\bar\theta$ of \cite[Definition~4.1]{samuelquantum}, which allows
+certain pairs of equal heights and has $\bar\theta_1\leq\tilde h$
+\cite[Proposition~4.3]{samuelquantum}.
+Pairs are processed by the doubled Pieri rule
+\cite[Methods~4.14--4.15]{samuelquantum}.
+The termwise-quantization argument also applies to these shapes.
+Write $X_{k+1}=X_k\cup\{x_{k+1}\}$.
+Splitting $e_c(X_{k+1})=e_c(X_k)+x_{k+1}e_{c-1}(X_k)$ and reindexing
+proves
+\[
+ e_a(X_k)e_b(X_k)
+ =\sum_{c\leq b}e_c(X_{k+1})e_{a+b-c}(X_k)
+  -\sum_{c>a}e_c(X_{k+1})e_{a+b-c}(X_k).
+\]
+In a medium shape the column before a pair of height $k$ has height
+at least $k+2$, so the heights $k,k+1$ are not used elsewhere.
+Thus $\mathcal Q$ maps each filtered medium summand to the product of
+its single quantized factors and its doubled factors
+\cite[(4.1)]{samuelquantum}.
+This gives a filtered version of \cite[Theorem~4.7]{samuelquantum}.
+A doubled step must, however, retain the intermediate permutation of
+its two chains, so the same accounting gives a bound with $U_q^3$ in
+place of $U_q^2$.
+We do not analyze the implementation's additional degree cap.
+
+\emph{Prior work.}
+Quantum Schubert polynomials \cite{fomin1997quantum}, the quantum Pieri
+rule \cite{postnikov1999quantum}, and equivariant quantum Schubert calculus
+\cite{mihalcea2006equivariant,lam2014quantum} give algorithms
+for these coefficients.
+We are not aware of a previous explicit bound for computing an entire
+quantum product on complete flag varieties in terms of input
+parameters.
+Since the $q^0$ part of \eqref{eq:qproduct} is \eqref{eq:product},
+the hardness remarks in Section~\ref{sec:prior} apply to it.
+
+\section{Relation to the implementation and scope}\label{sec:implementation}
+
+The package's ordinary and double kernels use the same main data flow,
+as Proposition~\ref{prop:uniform} predicts:
+compute the dominant code of $v^{-1}$, construct backward label graphs,
+enumerate Pieri endpoints once per first-component state, and
+accumulate matched contributions.
+Methods~\ref{method:labels} and \ref{method:product} follow the classical
+algorithm of \cite[Methods~4.9--4.11]{samuelquantum}.
+In particular, the package's \texttt{kdown\_perms} restriction to positions
+still holding their original value is the distinct-position condition
+justified by Lemma~\ref{lem:cancellation}.
+The Cauchy filter in Lemma~\ref{lem:filter} separately explains which
+column endpoints may be passed to the next layer.
+Neither assertion relies on empirical cancellation.
+
+The remaining distinction concerns arithmetic evaluation.
+The package's elementary-weight routine uses an unmemoized
+divide-and-conquer expression construction.
+The circuit implementation analyzed in Theorem~\ref{thm:main} uses
+the shared recurrence
+\eqref{eq:weightrec}.
+For a literal recursive implementation, a conservative upper bound
+is obtained by multiplying \eqref{eq:main} by
+$(h+1)^{O(\log(h+1))}$.
+This leaves the general $2^{O(n\log n)}$ bound and fixed-code-length
+polynomiality unchanged, but is not the same operation count.
+
+Arithmetic-circuit complexity is also not a wall-clock bound for
+a computer algebra system that canonicalizes expressions, copies
+subtrees, or performs automatic simplification.
+Probabilistic removal of zero coefficients is not part of the
+algorithm analyzed here.
+Theorems~\ref{thm:main} and \ref{thm:quantum} apply to the explicitly
+specified algorithms: the triple Method~\ref{method:product} and the
+strict-shape quantum Method~\ref{method:qproduct}, together with their
+double and ordinary specializations.
+They do not cover Grothendieck kernels, the medium-shape quantum kernel
+with its doubled Pieri steps (see Section~\ref{sec:quantum}),
+merged-column implementations, or every released optimization.
+The package's reference quantum routines use the strict shape and
+single-column steps, as Method~\ref{method:qproduct} does.
+
+As finite checks, the specified update was compared with the
+ordinary Python kernel on all $616$ pairs from $S_2,S_3,S_4$.
+The double update was checked on all pairs from $S_3$ at three
+integer specializations and on $40$ additional pairs from $S_4$,
+both against the double Python kernel and using independent
+divided-difference evaluation of the Schubert polynomials on both
+sides of \eqref{eq:product}.
+The dominant-completion and descent assertions were also checked
+through $S_6$, and the boundary counts on $528$ weak intervals
+through $S_5$.
+The label graphs and their coefficient alphabets were compared with
+the implementation on all $148$ nonidentity inputs from $S_2$ through $S_5$.
+The distinct-position enumeration was compared with
+\texttt{kdown\_perms}, and with the unrestricted weighted path sum,
+on $2728$ column instances through $S_5$.
+The elementary recurrence was checked in all $91$ degrees
+$0\leq p\leq m\leq12$, including repeated coefficient parameters.
+For Corollary~\ref{cor:grass}, the rectangular completion and the
+Grassmannian property of every enumerated $u$-side state were checked
+on $4233$ pairs of Grassmannian permutations through $S_7$.
+
+For the quantum section, Method~\ref{method:qproduct} was implemented
+independently, with $\mathtt{qpieri}$ written from the definition of a
+quantum cover and compared with \texttt{elem\_sym\_perms\_q} on every
+call.
+Its ordinary specialization agreed with both package quantum kernels,
+the strict-shape reference and the medium-shape fast kernel, on all
+$584$ pairs with $v\neq\id$ from $S_2,S_3,S_4$ and on $149$ random
+pairs from $S_5$.
+The triple coefficients agreed with both quantum double kernels at
+random integer specializations of $y,z,q$ on all $30$ such pairs from
+$S_3$ and $60$ random pairs from $S_4$.
+At $z=y$ the computed coefficients satisfied
+$c_{u,v}^{w,\delta}=c_{v,u}^{w,\delta}$ on $555$ pairs through $S_4$.
+In all these runs the assertions of Lemma~\ref{lem:qstates} and the label
+bound $|\tilde A_i|\leq\widetilde V$ were checked for every
+enumerated state.
+Lemma~\ref{lem:strict} was checked on all $5906$ nonidentity
+permutations through $S_7$.
+These checks supplement the proofs; they neither certify symbolic
+identities in all ranks nor prove equivalence of all optimized routines.
+
+\section{Further questions}
+
+The estimates deliberately separate correctness from sharp counting.
+Several improvements remain meaningful without introducing output size
+as a parameter.
+One is to replace $Q_h(n)$ by a smaller count exploiting the
+Bruhat-cover conditions, beyond the distinct-position restriction
+already justified by \cite{samuelquantum}.
+For Grassmannian inputs this is the only obstruction to a $2^{O(n)}$
+bound in Corollary~\ref{cor:grass}.
+Another is to exploit the degree cap and the actual dominant column
+heights simultaneously, instead of replacing all column heights by $h$.
+
+In the quantum case the main question is whether the dependence on
+$L$ is necessary.
+The example $x_1^m$ in Section~\ref{sec:quantum} has quadratically many
+$u$-side states and linearly many labels, while
+Theorem~\ref{thm:quantum} allows exponentially many.
+A bound polynomial in $n$ for fixed $r_u,r_v$ would require either a
+quantization argument tolerating repeated column heights, such as the
+doubled factors of the medium shape, or a direct count of strict label
+graphs.
+A sharper bound on the descent excess in Lemma~\ref{lem:qstates} would
+also help; in random tests through $S_9$ it never exceeded $2$.
+
+The fixed-code-length bound also suggests a practical division of labor.
+Explicit multiplication can generate whole tables for moderate numerical
+code entries, while the bounded-range lattice-point method of
+Pak and Slonim is designed for compressed single-coefficient inputs.
+No asymptotic crossover or universal practical superiority follows from
+the two available upper bounds alone.
+
+\bibliographystyle{acm}
+\bibliography{schubmult2}
+\end{document}

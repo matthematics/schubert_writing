@@ -1,8 +1,22 @@
 %% References for forest_lr_rule_annals.tex (Annals of Combinatorics submission).
 %% Only works cited in the text are listed. DOIs are given where available, as
 %% required by the journal; arXiv-only preprints follow the Springer Nature
-%% template's "Preprint at <url>" format (@misc with a note field).
-%% Journal abbreviations follow the ISSN LTWA / MathSciNet.
+%% template's "Preprint at <url>" format (misc entries with a note field).
+%% Journal abbreviations follow the ISSN LTWA / MathSciNet. Articles in
+%% journals that use article numbers rather than page ranges are given in the
+%% journal's "article by DOI" form (journal, volume(issue), year, DOI).
+%%
+%% The settings entry below configures the bibliography style: by default
+%% sn-mathphys-num lists references in order of citation; any option other
+%% than "unsort" or "alpha" makes it sort by author names, year and title, as
+%% the journal requires, while keeping numbered citations. (The "alpha" option
+%% sorts by alpha-style labels built from initials, which misorders e.g.
+%% "Axelrod-Freed" before "Assaf".) The entry is activated from the .tex file
+%% and produces no reference-list entry of its own.
+@settings{sn-bst-settings,
+  key     = {settings},
+  options = {sort}
+}
 
 @article{assaf2017slide,
   author  = {Assaf, Sami and Searles, Dominic},
@@ -44,7 +58,6 @@
   title   = {The quasisymmetric flag variety: a toric complex on noncrossing partitions},
   journal = {Forum Math. Pi},
   volume  = {14},
-  pages   = {e18},
   year    = {2026},
   doi     = {10.1017/fmp.2026.10034}
 }
@@ -166,7 +179,6 @@
   journal = {Comb. Theory},
   volume  = {4},
   number  = {2},
-  pages   = {Paper No. 2},
   year    = {2024},
   doi     = {10.5070/C64264232}
 }
@@ -192,7 +204,7 @@
   author = {Samuel, Matthew J.},
   title  = {The {S}chubert bialgebra},
   year   = {2026},
-  note   = {Preprint at \url{https://arxiv.org/abs/2610.22582}. Companion to the present paper}
+  note   = {Submitted for publication. Preprint at \url{https://arxiv.org/abs/2610.22582}}
 }
 
 @article{woodruff2025single,
@@ -201,7 +213,6 @@
   journal = {Electron. J. Combin.},
   volume  = {33},
   number  = {1},
-  pages   = {Paper No. 1.61},
   year    = {2026},
   doi     = {10.37236/13947}
 }

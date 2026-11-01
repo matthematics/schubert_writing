@@ -42,7 +42,17 @@
 \usepackage{stackengine}
 \usepackage{mathrsfs}
 \usepackage{enumitem}
-\usepackage{orcidlink}
+
+% ORCID iD icon for the author line. The class's \orcid command typesets \orcidlogo, which the
+% class expects to load from a graphics file (Orcidlogo.eps) that is not part of the template, and
+% the orcidlink package cannot be used because recent versions of it also define \orcidlogo. We
+% therefore draw the icon with TikZ, which needs no external file or additional package.
+\definecolor{orcidgreen}{HTML}{A6CE39}
+\renewcommand{\orcidlogo}{%
+  \begin{tikzpicture}[baseline=-0.6ex, x=1ex, y=1ex, inner sep=0pt]
+    \fill[orcidgreen] (0,0) circle (0.85);
+    \node[white, font=\sffamily\bfseries\fontsize{1.25ex}{1.25ex}\selectfont] at (0.02,0) {iD};
+  \end{tikzpicture}}
 
 % Concatenation product on \dcoma: a square cup with a + inside (visually `\sqcupplus`).
 \makeatletter
@@ -173,7 +183,7 @@
 
 \title[A Littlewood--Richardson rule for forest polynomials]{A Littlewood--Richardson rule for forest polynomials}
 
-\author*[1]{\fnm{Matthew J.} \sur{Samuel}\,\orcidlink{0009-0000-1833-0890}}\email{matthematics@gmail.com}
+\author*[1]{\fnm{Matthew J.} \sur{Samuel}\,\orcid{https://orcid.org/0009-0000-1833-0890}}\email{matthematics@gmail.com}
 
 \affil*[1]{\orgaddress{\city{Monroe Township}, Middlesex County, \state{NJ}, \country{USA}}}
 
@@ -367,9 +377,10 @@ When $v$ is $n$-Grassmannian, $\RC_n(v)$ is a connected crystal isomorphic to th
 
 We use the \emph{tensor product} of crystals in Kashiwara's convention: for crystals $B_1,B_2$ and $b_1\otimes b_2\in B_1\otimes B_2$,
 \begin{equation}\label{eq:tensorrule}
-f_i(b_1\otimes b_2) = \begin{cases} f_i(b_1)\otimes b_2 & \text{if }\varphi_i(b_1)>\varepsilon_i(b_2),\\ b_1\otimes f_i(b_2) & \text{otherwise,}\end{cases}
-\qquad
-e_i(b_1\otimes b_2) = \begin{cases} e_i(b_1)\otimes b_2 & \text{if }\varphi_i(b_1)\geq\varepsilon_i(b_2),\\ b_1\otimes e_i(b_2) & \text{otherwise.}\end{cases}
+\begin{aligned}
+f_i(b_1\otimes b_2) &= \begin{cases} f_i(b_1)\otimes b_2 & \text{if }\varphi_i(b_1)>\varepsilon_i(b_2),\\ b_1\otimes f_i(b_2) & \text{otherwise,}\end{cases}\\
+e_i(b_1\otimes b_2) &= \begin{cases} e_i(b_1)\otimes b_2 & \text{if }\varphi_i(b_1)\geq\varepsilon_i(b_2),\\ b_1\otimes e_i(b_2) & \text{otherwise.}\end{cases}
+\end{aligned}
 \end{equation}
 With this convention, the plactic product $T_1\cdot T_2$ of semistandard tableaux (concatenation of reading words followed by Knuth equivalence, or equivalently RSK/rectification) is a crystal isomorphism from the connected component of $T_1\otimes T_2$ in $B(\mu_1)\otimes B(\mu_2)$ onto $B(\nu)$, $\nu=\mathrm{shape}(T_1\cdot T_2)$ \cite{kashiwara1993crystal,littelmann1995crystal}. For tensor products of Demazure crystals we use the results of Kouno \cite{kouno2020decomposition} on their decomposition into Demazure crystals; the precise statements needed are recalled where they are used.
 
@@ -1255,6 +1266,12 @@ For the reader's convenience we collect here, in one place, the principal symbol
 
 \end{appendices}
 
+% Activates the bibliography style's alphabetical ordering (see the settings entry in the .bib
+% file). The citation is written to the .aux directly rather than with \nocite because the
+% settings entry deliberately produces no \bibitem, which would otherwise trigger a warning.
+\makeatletter
+\if@filesw\immediate\write\@auxout{\string\citation{sn-bst-settings}}\fi
+\makeatother
 \bibliography{forest_lr_rule_annals}
 
 \end{document}

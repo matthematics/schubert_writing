@@ -1,3 +1,6 @@
+# Local private document and any associated build outputs or backups.
+/confidential_review.*
+
 ## Core latex/pdflatex auxiliary files:
 *.aux
 *.lof
