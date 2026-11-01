@@ -111,13 +111,9 @@ algorithm specified precisely enough to account for every search node.
 We use ``classical'' only to mean ``non-quantum''; it includes the
 double and triple products.
 
-The analysis does not use the number of nonzero output coefficients,
-a worst-case output size, or the support of a different product as a
-complexity parameter.
 We use the distinct-position column paths of
 \cite[Definition~4.4 and Theorem~4.5]{samuelquantum};
-their restriction is justified by the cancellation theorem proved there,
-not inferred from an endpoint count.
+their restriction follows from the cancellation theorem proved there.
 The arithmetic-circuit model and the choice of elementary-weight evaluator
 are distinguished from literal symbolic implementation costs in
 Section~\ref{sec:implementation}.
@@ -131,9 +127,8 @@ Write
  \ell(w)=\sum_i\code_i(w),\qquad
  r_w=\max\{i:\code_i(w)>0\},
 \]
-where $r_{\id}=0$. Thus $r_w$ is the length of the Lehmer code
-\emph{after deleting trailing zeros}, not the number of nonzero entries.
-It is also the last descent position of $w$.
+where $r_{\id}=0$. Thus $r_w$ is the length of the trimmed Lehmer code
+and the last descent position of $w$.
 We take $n\geq2$ to be the least integer for which $u,v\in S_n$,
 apart from this harmless lower bound of $2$.
 It can be recovered from the input codes:
@@ -157,8 +152,6 @@ Define the following quantities, all determined or bounded by the input:
  \end{split}
 \end{equation}
 Here $\fall{a}{b}=a!/(a-b)!$ and $\fall{a}{0}=1$.
-The quantities $U$ and $V$ are explicit bounds on state spaces,
-not observed support sizes.
 
 \begin{theorem}[Input-parameter bound]\label{thm:main}
 For $v\ne\id$, Method~\ref{method:product} computes the entire triple
@@ -180,10 +173,7 @@ $O(n^3+L M^3 U^2)$.
 \end{theorem}
 
 The proof is in Section~\ref{sec:complexity}.
-The leading constant in the general exponent is not claimed to be
-optimal: \eqref{eq:coarse} gives at most $4n\log_2 n+O(n)$.
-In particular, we do not retain a more precise exponent without
-establishing every support and branching estimate needed for it.
+The exponent in \eqref{eq:coarse} is at most $4n\log_2 n+O(n)$.
 
 \subsection{Quantum multiplication}
 
@@ -330,10 +320,8 @@ dimension. The same polyhedral construction proves eventual
 quasi-polynomiality of stretched Schubert coefficients
 \cite[Theorem~1.1]{pakslonim}.
 
-Our parameter $r$ measures a different feature: how far the nonzero
+Our parameter $r$ measures how far the nonzero
 Lehmer code extends from its first position.
-It must not be identified with the number of nonzero entries, the number
-of descents, or a translated window of width $\psi$.
 We quote \eqref{eq:pak} with the parameter conventions of its source,
 rather than deriving a formula relating $\psi$ to $r$.\footnote{The
 version of \cite{pakslonim} consulted defines its range using exceedances
@@ -386,8 +374,6 @@ dominant factorization is
 \begin{equation}\label{eq:dominant}
  \Sch_\tau(x;t)=\prod_{i=1}^{L}\prod_{j=1}^{\theta_i}(x_j-t_i).
 \end{equation}
-In particular, the polynomial on the right is indexed by $\tau$,
-not by $\tau^{-1}$. This distinction is essential.
 
 \begin{method}[Completion]\label{method:completion}
 Start with $\mu=v^{-1}$.
@@ -861,12 +847,6 @@ Constructing the prefixes $\tau_i$ and the completion fits the
 additional $O(n^3)$ term.
 \end{proof}
 
-These estimates avoid two potentially misleading shortcuts:
-counting only retained endpoints does not bound the work of a search
-that explores rejected paths, and controlling final support does not
-by itself control intermediate states.
-Both kinds of work have been bounded explicitly.
-
 \section{Complexity and its interpretation}\label{sec:complexity}
 
 \subsection{Arithmetic model}
@@ -1017,7 +997,7 @@ nonnegative coefficients; it does not rely on positivity preventing
 intermediate cancellation.
 \end{proof}
 
-\subsection{What bounded code length does and does not imply}
+\subsection{Dependence on code length}
 
 The number of code entries is a useful parameter because the
 $u$-side count can be replaced by $\binom{d+r}{r}$ when degree
@@ -1042,9 +1022,6 @@ and
 \]
 The two input codes have constant length and $O(\log(A+1))$ bits,
 but an explicit Schubert-basis list has $A+1$ terms.
-This example explains why a full-product algorithm and a single-coefficient
-algorithm have fundamentally different output obligations; it is not
-used as a running-time parameter.
 
 Under scaling of the entries of fixed Lehmer codes by a factor $N$,
 the code lengths remain fixed and $n=O(N)$.
@@ -1053,8 +1030,6 @@ full products.
 This does not yield the polylogarithmic dependence available from
 \eqref{eq:pak} in its fixed-range regime, nor does it prove eventual
 quasi-polynomiality.
-Finite computations or interpolation without a proved threshold and
-period do not establish that conclusion.
 
 \begin{corollary}[Grassmannian inputs]\label{cor:grass}
 Let $u,v\in S_n$, $v\ne\id$, have no descents other than at $k$.
@@ -1232,9 +1207,8 @@ $m\leq r_v+L$. The bound $\tilde h\leq n-1$ is the case $m=n$.
 Both inequalities in \eqref{eq:strictheight} can be sharp.
 For $v=(m+1)12\cdots m$, which has $\Sch_v=x_1^m$, one has $r_v=1$,
 $L=m$, $\theta=(1^m)$, and $\tilde\theta=(m,m-1,\ldots,1)$.
-In finite checks through $S_8$ we also observed
+Computations through $S_8$ also gave
 $\tilde h=\max_j(\theta_j+j)-1$ for every nonidentity $v$.
-We do not use this equality.
 
 \subsection{Quantum filtered expansion}
 
@@ -1564,7 +1538,6 @@ still holding their original value is the distinct-position condition
 justified by Lemma~\ref{lem:cancellation}.
 The Cauchy filter in Lemma~\ref{lem:filter} separately explains which
 column endpoints may be passed to the next layer.
-Neither assertion relies on empirical cancellation.
 
 The remaining distinction concerns arithmetic evaluation.
 The package's elementary-weight routine uses an unmemoized
@@ -1593,7 +1566,7 @@ merged-column implementations, or every released optimization.
 The package's reference quantum routines use the strict shape and
 single-column steps, as Method~\ref{method:qproduct} does.
 
-As finite checks, the specified update was compared with the
+The specified update was compared with the
 ordinary Python kernel on all $616$ pairs from $S_2,S_3,S_4$.
 The double update was checked on all pairs from $S_3$ at three
 integer specializations and on $40$ additional pairs from $S_4$,
@@ -1632,14 +1605,10 @@ bound $|\tilde A_i|\leq\widetilde V$ were checked for every
 enumerated state.
 Lemma~\ref{lem:strict} was checked on all $5906$ nonidentity
 permutations through $S_7$.
-These checks supplement the proofs; they neither certify symbolic
-identities in all ranks nor prove equivalence of all optimized routines.
 
 \section{Further questions}
 
-The estimates deliberately separate correctness from sharp counting.
-Several improvements remain meaningful without introducing output size
-as a parameter.
+Several refinements of the input-parameter bounds remain.
 One is to replace $Q_h(n)$ by a smaller count exploiting the
 Bruhat-cover conditions, beyond the distinct-position restriction
 already justified by \cite{samuelquantum}.
