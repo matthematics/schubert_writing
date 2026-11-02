@@ -5,7 +5,7 @@
 \usepackage[margin=1in]{geometry}
 \usepackage[hidelinks]{hyperref}
 \hypersetup{
- pdftitle={Input-parameter bounds for (quantum) single and double Schubert multiplication by elementary expansions},
+ pdftitle={schubmult: Software for Schubert multiplication},
  pdfauthor={Matthew J. Samuel}
 }
 \newtheorem{theorem}{Theorem}[section]
@@ -26,18 +26,19 @@
 \newcommand{\fall}[2]{(#1)_{\underline{#2}}}
 \newcommand{\alg}{\texttt{schubmult}}
 
-\title[Input-parameter bounds for Schubert multiplication]{Input-parameter bounds for (quantum) single and double Schubert multiplication by elementary expansions}
+\title[\alg: Schubert multiplication]{\alg: Software for Schubert multiplication}
 \author{Matthew J. Samuel}
 \email{matthematics@gmail.com}
-\date{November 1, 2026}
+\date{November 2, 2026}
 \subjclass[2020]{05E05, 05E14, 14N15, 68Q25}
-\keywords{Schubert polynomial, double Schubert polynomial, Pieri rule,
+\keywords{Mathematical software, Schubert polynomial, double Schubert polynomial, Pieri rule,
 Lehmer code, quantum cohomology, arithmetic complexity}
 
 \begin{document}
 \begin{abstract}
-We bound the complexity of the elementary-expansion algorithm of \alg,
-which computes entire products of Schubert polynomials, in parameters
+We present \alg, a Python package for computing entire products of
+classical and quantum Schubert polynomials, and analyze its
+elementary-expansion algorithms. The complexity bounds use parameters
 read from the input: the ambient permutation size $n$, the lengths
 $r_u,r_v$ of the trimmed Lehmer codes, and the total inversion number $d$.
 A single analysis covers ordinary Schubert multiplication, double
@@ -83,6 +84,10 @@ bounded-range algorithm for a single ordinary Schubert coefficient.
 
 \section{Introduction}
 
+\alg\ \cite{schubmult} is a Python package for classical and quantum
+Schubert calculus. This paper presents its multiplication architecture
+and analyzes its complexity in terms of the input permutations.
+
 For permutations $u,v$ with finite support, consider the expansion
 \begin{equation}\label{eq:product}
  \Sch_u(x;y)\Sch_v(x;z)
@@ -96,18 +101,19 @@ constants of complete flag varieties.
 At $y=z=0$ they are the ordinary Schubert structure constants, which
 are nonnegative integers.
 For $y\ne z$ the coefficients are more general than both.
-The problem in this paper is to compute all the coefficients in
+The basic multiplication task of \alg\ is to compute all the coefficients in
 \eqref{eq:product}, not just a coefficient specified by a third permutation.
 
-The \alg\ package \cite{schubmult} computes such products by matching two
+\alg\ computes such products by matching two
 computations. An elementary-symmetric expansion of the second factor
 provides a graph of signed labels. Pieri's rule multiplies the first factor
 by each elementary factor. Dynamic programming combines these operations
 without expanding the final coefficients into monomials.
 The expansion formulas and correctness of this architecture are established
 in \cite[Section~4 and Section~7]{samuelquantum}.
-Here we give an input-only complexity analysis, with the non-quantum
-algorithm specified precisely enough to account for every search node.
+We analyze this architecture through input-only complexity bounds,
+with the non-quantum algorithm specified precisely enough to account
+for every search node.
 We use ``classical'' only to mean ``non-quantum''; it includes the
 double and triple products.
 
@@ -117,6 +123,40 @@ their restriction follows from the cancellation theorem proved there.
 The arithmetic-circuit model and the choice of elementary-weight evaluator
 are distinguished from literal symbolic implementation costs in
 Section~\ref{sec:implementation}.
+
+\paragraph{Software availability.}
+The package provides Python ring objects and command-line programs,
+with symbolic arithmetic based on SymEngine and SymPy.
+It can be installed with \texttt{pip install schubmult}.
+Source code is available at
+\url{https://github.com/matthematics/schubmult},
+with documentation and usage examples at
+\url{https://matthematics.github.io/schubmult/}.
+
+\paragraph{Buch's \texttt{schubmult} and \texttt{lrcalc}.}
+Buch's Littlewood--Richardson Calculator (\texttt{lrcalc}) \cite{lrcalc}
+is integrated into SageMath \cite{sagemath}. Its main purpose is the
+computation of ordinary Grassmannian Littlewood--Richardson coefficients
+and products of Schur functions. For these tasks its specialized
+routines are far more efficient in practice than the general
+Schubert-multiplication methods studied here.
+
+The \texttt{lrcalc} distribution also includes Buch's earlier C program
+\texttt{schubmult}, which computes products of ordinary Schubert
+polynomials and was for many years the standard tool for doing so.
+It expands one factor into monomials by the transition recursion of
+Lascoux and Sch\"utzenberger \cite{lasschubschur} and multiplies the
+monomials into the other factor one variable at a time by Monk's rule
+\cite{monk}.
+The present Python package is independent and does not include Buch's
+implementation; its main kernels instead match an elementary-symmetric
+expansion of one factor against Pieri multiplication of the other, as
+described below.
+For comparison, our package contains a separately written implementation
+of the same transition--Monk algorithm, together with a heuristic
+choosing between the two methods for ordinary products.
+These routines are available as Python functions, not through the
+command-line interface, and are not analyzed here.
 
 \subsection{Parameters and main bound}
 
@@ -1524,7 +1564,7 @@ parameters.
 Since the $q^0$ part of \eqref{eq:qproduct} is \eqref{eq:product},
 the hardness remarks in Section~\ref{sec:prior} apply to it.
 
-\section{Relation to the implementation and scope}\label{sec:implementation}
+\section{Implementation and computational checks}\label{sec:implementation}
 
 The package's ordinary and double kernels use the same main data flow,
 as Proposition~\ref{prop:uniform} predicts:
@@ -1560,11 +1600,55 @@ Theorems~\ref{thm:main} and \ref{thm:quantum} apply to the explicitly
 specified algorithms: the triple Method~\ref{method:product} and the
 strict-shape quantum Method~\ref{method:qproduct}, together with their
 double and ordinary specializations.
-They do not cover Grothendieck kernels, the medium-shape quantum kernel
+They do not cover Grothendieck kernels, the independent transition--Monk
+kernel, the medium-shape quantum kernel
 with its doubled Pieri steps (see Section~\ref{sec:quantum}),
 merged-column implementations, or every released optimization.
 The package's reference quantum routines use the strict shape and
 single-column steps, as Method~\ref{method:qproduct} does.
+
+\subsection{Parabolic quantum output}
+
+The parabolic quantum ring computes a complete-flag quantum product and
+then applies the Peterson--Woodward comparison term by term. The
+correctness of this reduction, including the triple coefficients, is
+proved in \cite[Section~9]{samuelquantum}. The implementation does not
+construct a lift from a requested parabolic degree. Instead, it splits
+each complete-flag coefficient into its $q$-monomials, tests whether each
+exponent vector is a Peterson--Woodward lift, and, for an accepted
+monomial, multiplies the indexing permutation by the two parabolic
+longest elements, tests minimality, and reindexes the surviving quantum
+variables.
+
+This gives a direct runtime accounting for the projection. Let $N$ be
+the ambient rank used by the projection, let $C$ be the number of
+permutation--$q$-monomial pairs presented to it, and let $F$ be the work
+of splitting the coefficient expressions by their $q$-monomials.
+For each such pair, the exponent tests and reindexing take
+$O(N^2)$ elementary operations. The current \texttt{check\_blocks}
+implementation checks all subinterval sums by nested loops, and the
+longest-element routine constructs the relevant elements by adjacent
+swaps. Each therefore costs at most $O(N^3)$ operations. Permutation
+multiplication, the minimality test, and the ambient-rank test cost at
+most $O(N^2)$ in this bound. Consequently, the projection costs
+\[
+ O(F+N^3 C).
+\]
+Here $F$ is kept separate because \texttt{factor\_out\_q} recursively
+decomposes symbolic expressions and convolves the resulting monomial
+maps at multiplication nodes; its cost is not one operation per
+surviving monomial.
+
+In the path-counting model, each distinct permutation--$q$-monomial
+pair in the complete-flag output has at least one path contribution, so
+$C$ is bounded by the work of the complete-flag computation. Thus the
+comparison adds at most a polynomial-in-$N$ factor to that path-count
+bound, in addition to the explicit symbolic $q$-splitting work $F$.
+This is a postprocessing bound for the implemented reduction, not a
+faster multiplication algorithm: the complete-flag product is still
+computed first, and the projection does not reduce its state space.
+
+\subsection{Computational checks}
 
 The specified update was compared with the
 ordinary Python kernel on all $616$ pairs from $S_2,S_3,S_4$.
