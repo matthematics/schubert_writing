@@ -208,11 +208,11 @@
 %%
 %% This is the end of the preamble.
 %% 
-\title[Dominant permutations and Schubert polynomials]{Dominant permutations, positive mixed variable formulas, and product-coproduct equivalence for (double) Schubert polynomials}
+\title[Dominant permutations and Schubert polynomials]{Dominant permutations, positive mixed variable formulas, and product--splitting equivalence for (double) Schubert polynomials}
 \author{Matthew J. Samuel}
 \email{matthew.samuel.math@gmail.com}
 \subjclass[2020]{05E05, 05A05, 05A15, 14N10}
-\keywords{Double Schubert polynomial, Schubert polynomial, triple Schubert coefficient, triple structure constant, coproduct, Pieri}
+\keywords{Double Schubert polynomial, Schubert polynomial, triple Schubert coefficient, triple structure constant, splitting coefficients, Pieri}
 
 
 %\newcommand{\tomm}[2]{\xrightarrow{#1}_{#2}}
@@ -230,13 +230,12 @@
 %\begin{abstract}
 %In a related paper by the author, ``A Molev-Sagan type formula for double Schubert polynomials,'' Molev-Sagan type coefficients $c_{u,v}^w(y;z)$ in the expansion of a product of two double Schubert polynomials $\sch_u(x;y)\sch_v(x;z)=\sum_w c_{u,v}^w(y;z)\sch_w(x;y)$ with different sets of coefficient variables are defined and conjectured to be positive in a certain sense. A positive formula is found in certain cases, including a generalized ``Pieri case'' where $v$ is a dominant permutation, so that $\sch_v(x;z)$ is a product of factorial elementary symmetric polynomials. Conversely, in this article, we provide a positive formula for $c_{u,v}^w(y;z)$, where $u$ is a dominant permutation and $v$ and $w$ are arbitrary. More generally, we introduce a ``domination'' condition where the formula applies when $u$ dominates $w$, even if $u$ is not necessarily dominant, whereas dominant permutations dominate all other permutations. Unlike in the case where $y=z$, $c_{u,v}^w(y;z)$ has very little to do in general with $c_{v,u}^w(y;z)$, and the computation of one can be easy with the other being difficult. Using some algebra, the formula where $u$ is dominant can be leveraged to find other positive formulas for $c_{u,v}^w(y;z)$ for a wide range of pairs $u$ and $v$. In particular, while the original paper covers the separated descents case where there exists a $p$ such that $\ell(us_i)>\ell(u)$ for all $i<p$ and $\ell(vs_i)>\ell(v)$ for all $i>p$, the present paper allows us to flip that condition, completing the formula where $u$ and $v$ have separated descents in any direction. As to the additional cases, we demonstrate positivity with an algorithm for computing the coefficient in the case where $\sch_u(x;y)$ has at most two $x$ variables, or when $\sch_u(x;y)$ is a factorial elementary symmetric polynomial or a factorial complete symmetric polynomial, with $u$ not necessarily dominant (thus covering all cases in what would normally be called a Pieri formula). We then connect products of double Schubert polynomials to coproducts in the Molev-Sagan case.
 %In a related paper by the author, ``A Molev-Sagan type formula for double Schubert polynomials,'' Molev-Sagan type coefficients $c_{u,v}^w(y;z)$ in the expansion of a product of two double Schubert polynomials in different sets of coefficient variables are defined and conjectured to be positive in a certain sense, and positive formulas are found for some of these coefficients, including the case where $v$ is a dominant permutation. In this paper, we provide some additional formulas, including a ``dual Pieri formula'' for the case where $u$ is dominant, and more generally, a ``domination'' relation is defined between permutations such that the formula applies when $u$ dominates $w$, whereas dominant permutations dominate all other permutations. This allows for ``flipping'' the main result of that article, giving a formula for multiplying pairs $\sch_u(x;y)\sch_v(x;z)$ where there exists a $p$ such that $\ell(us_i)>\ell(u)$ for all $i>p$ and $\ell(vs_i)>\ell(v)$ for all $i<p$. Coproduct TODO
-%In this paper we present a positive combinatorial formula for computing Molev-Sagan type coefficients in mixed-variable products of double Schubert polynomials $\mathfrak{S}_u(x;y)\mathfrak{S}_v(x;z)$ where $u$ is dominant, as opposed to a previous article where the computation was done where $v$ was dominant. More generally, a ``domination'' relation between permutations is introduced where dominant permutations dominate all other permutations, and a positive formula is obtained for $c_{u,v}^w(y;z)$ for all $v$ in the case that $u$ dominates $w$. This allows for a positive formula for $c_{u,v}^w(y;z)$ where $u$ and $v$ have separated descents in either direction. In addition, an equivalence is demonstrated between products and coproducts of double Schubert polynomials that can be used to find products from coproducts and vice versa. In addition to theoretical interest, the product-coproduct equivalence and other formulas assist in simplifying and optimizing the computation of product and coproduct coefficients in a positive, combinatorial manner. We finally construct the bialgebra for which the coproduct induces a product on the dual.
 %\end{abstract}
 
 \begin{abstract}
-	We present new positive combinatorial formulas for triple Schubert coefficients in mixed-variable products of double Schubert polynomials, $\sch_u(x;y)\sch_v(x;z)$, in a case where $u$ is dominant. This result complements earlier results where $v$ was assumed dominant. To generalize further, we introduce a relation on permutations that we call ``domination,'' under which dominant permutations dominate all others. When $u$ dominates $w$, we obtain an explicit positive formula for $c^w_{u,v}(y;z)$, which in particular yields positivity when $u$ and $v$ have separated descents.
+	We present new positive combinatorial formulas for triple Schubert coefficients in mixed-variable products of double Schubert polynomials, $\sch_u(x;y)\sch_v(x;z)$, expressed in the $\sch_w(x;y)$ basis, in the case where $u$ is dominant. This result complements earlier results where $v$ was assumed dominant. To generalize further, we introduce a relation on permutations that we call ``domination,'' under which dominant permutations dominate all others. When $u$ dominates $w$, we obtain an explicit positive formula for $c^w_{u,v}(y;z)$, which in particular yields positivity when $u$ and $v$ have separated descents.
 	
-	In addition to these new positivity results, we establish a product--coproduct equivalence for double Schubert polynomials, which allows products to be obtained from coproducts and vice versa. This equivalence highlights structural symmetries and provides reduction methods for computing coefficients that are otherwise difficult to access. Based on this observation, we construct a natural bialgebra in which the coproduct induces a dual product, offering an algebraic framework for these interactions. Taken together, these results extend the range of Schubert polynomial multiplications for which positivity can be established combinatorially, clarify the interplay between products and coproducts, and yield explicit formulas that can be implemented computationally.
+	In addition to these new positivity results, we establish a product--splitting equivalence for double Schubert polynomials, relating triple Schubert coefficients to splitting coefficients. This equivalence highlights structural symmetries and provides reduction methods for computing coefficients that are otherwise difficult to access. Taken together, these results extend the range of double Schubert polynomial products for which positivity can be established combinatorially and yield explicit formulas that can be implemented computationally.
 
 \end{abstract}
 
@@ -293,9 +292,7 @@ Gao and Xiong proved the positivity conjecture of \cite[Conjecture~1.1]{samuelmo
 
 In this paper, we give explicit positive combinatorial formulas in broad new cases, complementing Gao and Xiong's geometric positivity theorem. We introduce a relation on permutations that we call ``domination,'' extending the classical notion of dominant permutation. We prove that if $u$ dominates $w$, then the coefficient $c^w_{u,v}(y;z)$ has a positive combinatorial formula. This complements the earlier formulas of \cite{samuelmolev} for dominant $v$ and yields positive combinatorial formulas when $u$ and $v$ have separated descents in either orientation.
 
-We also establish an equivalence between products and coproducts of double Schubert polynomials. This equivalence enables us to compute products from coproducts and conversely, thereby exposing structural symmetries and providing practical methods to reduce complex cases to simpler ones. The result extends earlier work of Bergeron and Sottile on ordinary Schubert polynomials and gives a framework for organizing the difficulty of multiplication problems in terms of coproduct computations.
-
-Building on this equivalence, we construct a Schubert bialgebra in which the coproduct naturally induces a dual product. This algebraic setting makes the structural significance of the product–coproduct relationship more transparent and establishes a direct connection between Schubert polynomials and the theories of symmetric and noncommutative symmetric functions. Notably, in the dual algebra, the coproduct has structure constants identical to those of Schubert polynomials, a case where no fully general combinatorial formula is yet known. Our construction, therefore, suggests a potential new path toward discovering such a formula.
+We also establish an equivalence between products and splitting coefficients of double Schubert polynomials. This equivalence enables us to compute products from splitting coefficients and conversely, thereby exposing structural symmetries and providing practical methods to reduce complex cases to simpler ones. The result extends earlier work of Bergeron and Sottile on ordinary Schubert polynomials and gives a framework for organizing the difficulty of multiplication problems in terms of splitting-coefficient computations.
 
 %Although the formulas derived here can be implemented computationally, and indeed have been incorporated into the author's software package \texttt{schubmult}, the main contribution of the paper is the demonstration of explicit combinatorial positivity in new families of Schubert polynomial products. The results expand the class of cases where positivity can be established in a transparent combinatorial manner, provide algebraic structures that explain product--coproduct interactions, and contribute to the broader program of uncovering positive rules in Schubert calculus.
 %This paper has three sections. Section \ref{section:dualpieri} is where we present and prove the dual Pieri formula and derive consequences. In addition, we provide an algorithm for deriving a positive formula for when $u$ is a general Pieri cycle that need not be dominant, both for row and column shape factorial Schur polynomials. Recurrences that are used in later sections are also derived. Section \ref{section:pieri} is where we present a Pieri formula for factorial complete symmetric polynomials as well as a Sottile formula for multiplying by factorial Schur polynomials corresponding to partitions of hook shape. These formulas are positive in terms of $y_i-z_j$, and we combinatorially prove Graham positivity of the result as well. Section \ref{section:coprod} is where we address coproducts of double Schubert polynomials. We prove a duality theorem between products and coproducts in this section, yielding, in particular, Graham positivity for coproducts of double Schubert polynomials expanded in terms of double Schubert polynomials in the same set of coefficient variables. We apply the duality result to ordinary Schubert polynomials as well to set up a hierarchy of multiplication rules that we reduce to multiplying by a special type of Schubert polynomial (corresponding to shuffles).
@@ -308,9 +305,9 @@ All computation in this work was carried out using schubmult \verb|schubmult| \c
 \begin{itemize}
     \item Products of ordinary Schubert polynomials
     \item Products of double Schubert polynomials (both same-variable and mixed-variable)
-    \item Coproducts of Schubert polynomials
-    \item Products of quantum Schubert polynomials
-    \item Conjectural methods for products of quantum double Schubert polynomials (same-variable, mixed-variable, and parabolic cases).
+    \item Splitting coefficients of Schubert polynomials
+    \item Products of quantum/quantum double Schubert polynomials (also same or mixed variable, including parabolic)
+    \item Conjectural equivalents for Grothendieck/double Grothendieck/quantum double Grothendieck polynomials
 \end{itemize}
 Questions, bug reports, or other inquiries about the package can be directed to  \href{mailto:schubmult@gmail.com} {}{schubmult@gmail.com}.
 
@@ -1598,26 +1595,26 @@ for all $i$ with $1\leq i\leq k$. Hence, the induction hypothesis applies to $c_
 \end{proof}
 
 
-\section{Product-coproduct equivalence} \label{section:coprod}
+\section{Product--splitting equivalence} \label{section:coprod}
 
 \subsection{The equivalence theorem}
 
-Proposition \ref{proposition:pullindex} expresses a coproduct of a double Schubert polynomial $\mathbb{Z}[x,y]\to\mathbb{Z}[x,y]\otimes_{\mathbb{Z}[y]}\mathbb{Z}[x_i,y]$. We can also express this coproduct in terms of the double Schubert polynomials $\ mathcal {S} _ u (x;y)$ and $\ mathcal {S} _ v (x;z)$, as defined in the following section.
+Proposition \ref{proposition:pullindex} describes how a double Schubert polynomial expands after splitting its variables. We now express this expansion in terms of double Schubert polynomials in the two sets of variables.
 
-\begin{definition}[The coproduct $\Delta_A$, $\cpcf{u}{v}{w}{A}{y;z}$] \label{definition:coprod}
-Let $A$ be a set of positive integers and let $B$ be its complement. We define a coproduct $\Delta_A:\mathbb{Z}[x,y,z]\to\mathbb{Z}[x,y,z]\otimes_{\mathbb{Z}[y,z]}\mathbb{Z}[x,y,z]$ to be the one we obtain when we express a polynomial $P(x;y,z)$ in terms of $x_A$ in the first factor and $x_B$ in the second factor. That is, if
+\begin{definition}[Splitting coefficients] \label{definition:coprod}
+Let $A$ be a set of positive integers and let $B$ be its complement. We define the $\mathbb{Z}[y,z]$-linear variable-splitting map
+$$\operatorname{sp}_A:\mathbb{Z}[x,y,z]\to\mathbb{Z}[x,y,z]\otimes_{\mathbb{Z}[y,z]}\mathbb{Z}[x,y,z]$$
+by expressing a polynomial $P(x;y,z)$ in terms of $x_A$ in the first factor and $x_B$ in the second factor. That is, if
 $$P(x;y,z)=\sum_i c_i(y,z)P_i(x_A)Q_i(x_B)$$
-Then we define
-$$\Delta_A(P)=\sum_i c_i(y,z)P_i\otimes Q_i$$
-We study this product based on elementary tensors $\sch_u(x;y)\otimes \sch_v(x;z)$ and define structure constants $\cpcf{u}{v}{w}{A}{y;z}$ by
-$$\Delta_A(\sch_w(x;y))=\sum_{u,v}\cpcf{u}{v}{w}{A}{y;z}\sch_u(x;y)\otimes \sch_v(x;z)$$
-Equivalently, these coefficients are determined by the expansion
+then set
+$$\operatorname{sp}_A(P)=\sum_i c_i(y,z)P_i\otimes Q_i.$$
+We define the splitting coefficients $\cpcf{u}{v}{w}{A}{y;z}$ by the expansion
 $$\sch_w(x;y)=\sum_{u,v} \cpcf{u}{v}{w}{A}{y;z}\sch_u(x_A;y)\sch_v(x_B;z)$$
 
-Finally, we note that, in the case of the ordinary Schubert polynomial case ($y=z=0$), this coproduct has a geometric interpretation: it arises from the induced map on cohomology associated with the embedding $Fl(V)\times Fl(W)\hookrightarrow Fl(V\oplus W)$ \cite{coprod}. For double Schubert polynomials in the same set of variables, an analogous construction in equivariant cohomology appears in \cite{anderson2023strong}.
+In the ordinary Schubert polynomial case ($y=z=0$), these splitting coefficients are often called coproduct coefficients in the literature. They have a geometric interpretation as the coefficients of the map on cohomology induced by the embedding $Fl(V)\times Fl(W)\hookrightarrow Fl(V\oplus W)$ \cite{coprod}. For double Schubert polynomials with the same coefficient variables, an analogous construction in equivariant cohomology appears in \cite{anderson2023strong}.
 \end{definition}
 
-We will express the triple structure constants explicitly in the following product-coproduct equivalence theorem. To begin, we give a definition:
+We will express the splitting coefficients explicitly in terms of triple structure constants. To begin, we give a definition:
 
 
 %as a consequence, we have that if $\mu$ is a dominant permutation, then $\code^*(\mu)$ is the conjugate partition of $\code(\mu)$, i.e. $\lambda(\mu)$.
@@ -1630,7 +1627,7 @@ where we define $\code_i^*(\mu_A)=0$ if $i>|A|$.
 
 
 
-\begin{theorem}[Product-coproduct equivalence] \label{theorem:doublecoprodpos}
+\begin{theorem}[Product--splitting equivalence] \label{theorem:doublecoprodpos}
 Suppose $w\in S_\infty$ and let $\mu$ be a dominant permutation such that $\ell(w\mu)=\ell(\mu)-\ell(w)$. Let $A$ be a set of positive integers and let $B=\mathbb{N}\setminus A$. Then
 $$\sch_w(x;y)=\sum_{\substack{u:\ell(u\mu_A)=\ell(\mu_A)-\ell(u)\\v:\ell(v\mu_B)=\ell(\mu_B)-\ell(v)}}c_{u\mu_A,v\mu_B}^{w\mu}(-y;-z)\sch_u(x_A;y)\sch_v(x_B;z)$$
 That is to say, fixing $\mu$, we have that $\cpcf{u}{v}{w}{A}{y;z}=0$ unless $\ell(u\mu_A)=\ell(\mu_A)-\ell(u)$ and $\ell(v\mu_B)=\ell(\mu_B)-\ell(v)$, in which case
@@ -1657,12 +1654,12 @@ $$\cpcf{u}{v}{w}{A}{y;z}=c_{u\mu_A,v\mu_B}^{w\mu}(-y;-z)$$
 	$$c_{\cperm{0,1},\cperm{0,1}}^{\cperm{1,1}}(-y;-z)=1$$
 	For the fifth term, $u=[3,1,2]$, so $u\mu_A$ is the identity, so that the coefficient is $1$, and similarly for the last term where $v=[3,1,2]$.
 	
-	The reader might have noticed that the right-hand side has $z$ variables, but the left-hand side does not. In fact, all of the $z$ variables cancel. Nevertheless, the coproduct coefficients are polynomials in the differences $z_i-y_j$ with nonnegative integer coefficients, as established below.
+	The reader might have noticed that the right-hand side has $z$ variables, but the left-hand side does not. In fact, all of the $z$ variables cancel. Nevertheless, the splitting coefficients are polynomials in the differences $z_i-y_j$ with nonnegative integer coefficients, as established below.
 \end{example}
 
-The product-coproduct equivalence also transfers positivity results to coproduct coefficients. We first address the equivariant case $y=z$, whose Graham positivity was proved in \cite{anderson2023strong}.
+The product--splitting equivalence also transfers positivity results to splitting coefficients. We first address the equivariant case $y=z$, whose Graham positivity was proved in \cite{anderson2023strong}.
 
-\begin{corollary}[Positivity of double Schubert polynomial coproducts]
+\begin{corollary}[Positivity of double Schubert polynomial splitting coefficients]
 Let $w\in S_\infty$, let $A,B\subseteq \mathbb{N}$ be complementary and write
 $$\sch_w(x;y)=\sum_{u,v}\cpcf{u}{v}{w}{A}{y;y}\sch_u(x_A;y)\sch_v(x_B;y)$$
 Then the coefficient $\cpcf{u}{v}{w}{A}{y;y}$ is a polynomial in the positive roots $y_i-y_{i+1}$ with nonnegative integer coefficients.
@@ -1673,17 +1670,17 @@ $$\cpcf{u}{v}{w}{A}{y;y}=c_{u\mu_A,v\mu_B}^{w\mu}(-y;-y)$$
 for some $\mu$, since we can always pick some dominant permutation $\mu$ satisfying $\ell(w\mu)=\ell(\mu)-\ell(w)$. By the main result of \cite{graham2001positivity}, $c_{u\mu_A,v\mu_B}^{w\mu}(y;y)$ is a polynomial in the negative roots $y_{i+1}-y_i$ with nonnegative integer coefficients. Substitution of $-y$ into this gives the result.
 \end{proof}
 
-\begin{corollary}[Positivity of mixed variable double Schubert polynomial coproducts]
+\begin{corollary}[Positivity of mixed-variable double Schubert polynomial splitting coefficients]
 	Let $w\in S_\infty$, let $A,B\subseteq \mathbb{N}$ be complementary and write
 	$$\sch_w(x;y)=\sum_{u,v}\cpcf{u}{v}{w}{A}{y;z}\sch_u(x_A;y)\sch_v(x_B;z)$$
 	Then the coefficient $\cpcf{u}{v}{w}{A}{y;z}$ is a polynomial in the terms $z_i-y_j$ with nonnegative integer coefficients.
 \end{corollary}
 \begin{proof}
-	By Theorem \ref{theorem:doublecoprodpos}, each nonzero coproduct coefficient has the form $c_{u\mu_A,v\mu_B}^{w\mu}(-y;-z)$ for a suitable dominant permutation $\mu$. Gao and Xiong's positivity theorem \cite[Theorem~1.1]{gao2025grahampositivitytripleschubert} states that $c_{u\mu_A,v\mu_B}^{w\mu}(y;z)$ is a polynomial in the differences $y_i-z_j$ with nonnegative integer coefficients. Substituting $(y,z)\mapsto(-y,-z)$ sends each $y_i-z_j$ to $z_j-y_i$, proving the claim.
+	By Theorem \ref{theorem:doublecoprodpos}, each nonzero splitting coefficient has the form $c_{u\mu_A,v\mu_B}^{w\mu}(-y;-z)$ for a suitable dominant permutation $\mu$. Gao and Xiong's positivity theorem \cite[Theorem~1.1]{gao2025grahampositivitytripleschubert} states that $c_{u\mu_A,v\mu_B}^{w\mu}(y;z)$ is a polynomial in the differences $y_i-z_j$ with nonnegative integer coefficients. Substituting $(y,z)\mapsto(-y,-z)$ sends each $y_i-z_j$ to $z_j-y_i$, proving the claim.
 \end{proof}
 
 
-Surprisingly, the proof of Theorem \ref{theorem:doublecoprodpos} is essentially a simple algebraic observation derived from the Cauchy formula. The Cauchy formula for double Schubert polynomials is well-known \cite{notes}, and related analysis in the context of nil-Coxeter algebra and the generating function for Schubert polynomials can be found in \cite{fominstan}. Given the general importance of the following theorem in our proof of product-coproduct equivalence, we note that it was proved for the universal double Schubert polynomials defined by Fulton \cite{fulton1999universal} by Kirillov in \cite{kirillov2004cauchy}. The result then descends immediately to the case of double Schubert polynomials. For completeness, we provide here a direct elementary proof for double Schubert polynomials since it is all that is needed.
+Surprisingly, the proof of Theorem \ref{theorem:doublecoprodpos} is essentially a simple algebraic observation derived from the Cauchy formula. The Cauchy formula for double Schubert polynomials is well-known \cite{notes}, and related analysis in the context of nil-Coxeter algebra and the generating function for Schubert polynomials can be found in \cite{fominstan}. Given the general importance of the following theorem in our proof of the product--splitting equivalence, we note that it was proved for the universal double Schubert polynomials defined by Fulton \cite{fulton1999universal} by Kirillov in \cite{kirillov2004cauchy}. The result then descends immediately to the case of double Schubert polynomials. For completeness, we provide here a direct elementary proof for double Schubert polynomials since it is all that is needed.
 
 \begin{proposition}[The generalized Cauchy formula for double Schubert polynomials]
 Let $w\in S_\infty$ be a permutation and consider an additional infinite set of variables $a=\{a_i\mid i\geq 1\}$. Then we have
@@ -1738,7 +1735,7 @@ as desired.
 %$$c_{u\mu_A,v\mu_B}^{w\mu}(y;z)=c_{u\mu'_A,v\mu'_B}^{w\mu'}(y;z)$$
 %\end{corollary}
 
-To justify calling this an ``equivalence'' theorem, we need to show that products can be obtained from coproducts in this way.
+To justify calling this an ``equivalence'' theorem, we need to show that splitting coefficients can be obtained from product coefficients in this way.
 
 %\begin{lemma} \label{lemma:findA}
 %If $\mu$ is a dominant permutation and $\mu'$ is another dominant permutation such that 
@@ -1782,7 +1779,7 @@ $$\ldom(u,v)_B=\ldom(v)$$
 This can be deduced from Lemma \ref{lemma:domprod} and Lemma \ref{lemma:invdom}. 
 \end{proof}
 
-\begin{theorem}[Every product coefficient occurs as a coproduct coefficient] \label{theorem:allprod}
+\begin{theorem}[Every product coefficient occurs as a splitting coefficient] \label{theorem:allprod}
 Suppose $u,v,w\in S_\infty$. Let $A$ and $B$ be subsets of $\mathbb{N}$ as in Lemma \ref{lemma:cansplit}. Then $c_{u,v}^w(y;z)=0$ unless $\ell(w\ldom(u,v)^{-1})=\ell(\ldom(u,v))-\ell(w)$. In that case, we have that 
 $$c_{u,v}^w(y;z)=\cpcf{u\ldom(u)^{-1}}{v\ldom(v)^{-1}}{w\ldom(u,v)^{-1}}{A}{-y;-z}$$
 \end{theorem}
@@ -1815,9 +1812,9 @@ And we have the result.
 %We then have that $\ell(w'\mu)\leq \ell(w'\ldom(u,v))$ by Proposition \ref{proposition:smallestdom}.
 %\end{example}
 
-The following result illustrates the equivalence between products and coproducts for permutations with a given number of descents.
+The following result illustrates the equivalence between products and splitting coefficients for permutations with a given number of descents.
 
-\begin{theorem}[Descent product-coproduct equivalence] \label{theorem:kstep}
+\begin{theorem}[Descent product--splitting equivalence] \label{theorem:kstep}
 Let $K$ be a set of descents. If $w$ has descents contained in $K$, then there exists a set of descents $K'$ with $|K|=|K'|$ and a $w'\in S_\infty$ with  descents contained in $K'$ as well as $A\subseteq \mathbb{N}$ such that for all $u,v\in S_\infty$ with descents contained in $K$ there exist $u',v'\in S_\infty$ such that
 $$c_{u,v}^w(y;z)=\cpcf{u'}{v'}{w'}{A}{y;z}$$
 
@@ -1835,7 +1832,7 @@ $$\cpcf{u'}{v'}{w'}{A}{y;z}=c_{u'\mu_A,v'\mu_B}^{w'\mu}(y;z)$$
 by Theorem \ref{theorem:doublecoprodpos}. All three indices in the product coefficient have descents contained in $K$. Set $w=w'\mu$, $u=u'\mu_A$, and $v=v'\mu_B$, and the result follows.
 \end{proof}
 
-Thus, a combinatorial formula for products in $k$-step flag varieties is equivalent to a coproduct formula for Schubert polynomials indexed by permutations with $k$ descents. In fact, known results imply combinatorial positivity of coproducts of double Schubert polynomials indexed by permutations with at most two descents, and for coproducts of ordinary Schubert polynomials with at most three descents.
+Thus, a combinatorial formula for products in $k$-step flag varieties is equivalent to a formula for splitting coefficients of Schubert polynomials indexed by permutations with $k$ descents. In fact, known results imply combinatorial positivity of splitting coefficients of double Schubert polynomials indexed by permutations with at most two descents, and of ordinary Schubert polynomials with at most three descents.
 
 \begin{corollary}
 The puzzle rule in \cite{buch2015mutations} computes $\cpcf{u}{v}{w}{A}{y;y}$ Graham-positively for all $u$, $v$, $w$, and $A$ such that $w$ has at most two descents.
@@ -1847,9 +1844,9 @@ The puzzle rule proved in \cite{threestep} computes $\cpcf{u}{v}{w}{A}{0;0}$ pos
 
 \subsection{A historical missed opportunity: separated descents for ordinary Schubert polynomials}
 
-Let $k\geq 1$ be an integer, and consider the coproduct
+Let $k\geq 1$ be an integer, and consider the variable-splitting expansion
 $$\sch_w(x)=\sum_{u,v}d_w^{u,v}(k)\sch_u(x_1,\ldots,x_k)\sch_v(x_{k+1},\ldots,x_n)$$
-The coefficients $d_w^{u,v}(k)$ were computed in $1991$ by Macdonald in \cite[(4.19)]{notes} and shown to be nonnegative. The condition of separated descents was introduced in $2019$ in \cite{kzj}. Recall that permutations $u,v$ are said to have separated descents if there exists a $p>0$ such that $\ell(us_i)>\ell(u)$ for all $i<p$ and $\ell(vs_i)>\ell(v)$ for all $i>p$. We now interpret this condition in terms of Theorem \ref{theorem:allprod}. We begin with the following proposition.
+The coefficients $d_w^{u,v}(k)$ were computed in $1991$ by Macdonald in \cite[(4.19)]{notes} and shown to be nonnegative. This variable-splitting expansion is often called the Schubert polynomial coproduct in the literature. The condition of separated descents was introduced in $2019$ in \cite{kzj}. Recall that permutations $u,v$ are said to have separated descents if there exists a $p>0$ such that $\ell(us_i)>\ell(u)$ for all $i<p$ and $\ell(vs_i)>\ell(v)$ for all $i>p$. We now interpret this condition in terms of Theorem \ref{theorem:allprod}. We begin with the following proposition.
 
 \begin{proposition} \label{proposition:mudescents}
 Let $u\in S_\infty$ and suppose $j>0$ is an integer. Then $\ell(us_j)<\ell(u)$ if and only if $\ell(\ldom(u)s_j)<\ell(\ldom(u))$.
@@ -1871,9 +1868,9 @@ If $p=0$, then $\mu_B=1$, and the result follows immediately. Otherwise, observe
 
 Conversely, suppose $\ell(us_i)>\ell(u)$ for all $i<p$, $\ell(vs_i)>\ell(v)$ for all $i>p$, and $\ldom(u,v)_A=\ldom(u)$ and $\ldom(u,v)_B=\ldom(v)$, then $A$ and $B$ can be chosen to be intervals (one initial and finite, and the other complementary and infinite). Therefore, setting $y=z=0$, to compute $c_{u,v}^w(0;0)$ from Theorem \ref{theorem:allprod}, the coefficients we need are exactly those in Macdonald's coproduct. Thus, a formula for separated descents could already have been obtained in $1991$, $28$ years before its appearance in \cite{kzj}.
 
-We now establish positivity of this coproduct in the equivariant and mixed-variable settings.
+We now establish positivity of these splitting coefficients in the equivariant and mixed-variable settings.
 
-\begin{theorem}[Separated coproduct theorem]
+\begin{theorem}[Separated splitting theorem]
 Let $k>0$ and let $A=[k]$ be the initial interval. Then the coefficients
 \[
 \cpcf{u}{v}{w}{A}{y;z}
@@ -1898,15 +1895,15 @@ Assume first that $A=[k]$ and set $B=\mathbb{N}\setminus [k]$. We have that $\cp
 
 \subsection{Reduction formulas for product coefficients by varying the dominant permutation}
 
-Theorem \ref{theorem:doublecoprodpos} does not depend on which dominant permutation is chosen to define the coefficient in the coproduct. Suppose we wish to compute the product coefficient $c_{u,v}^w(y;z)$. Then, by Theorem \ref{theorem:allprod}, we have that
+Theorem \ref{theorem:doublecoprodpos} does not depend on which dominant permutation is chosen to define the splitting coefficient. Suppose we wish to compute the product coefficient $c_{u,v}^w(y;z)$. Then, by Theorem \ref{theorem:allprod}, we have that
 $$c_{u,v}^w(y;z)=\cpcf{u\ldom(u)^{-1}}{v\ldom(v)^{-1}}{w\ldom(u,v)^{-1}}{A}{-y;-z}$$
-Choosing $\ldom(u,v)$ as the dominant permutation in which to transform this into a coproduct coefficient may, however, be overkill. Write
+Choosing $\ldom(u,v)$ as the dominant permutation in which to transform this into a splitting coefficient may, however, be overkill. Write
 \begin{align*}
 	\widehat{w}&=w\ldom(u,v)^{-1}\\
 	\widehat{u}&=u\ldom(u)^{-1}\\
 	\widehat{v}&=v\ldom(v)^{-1}
 \end{align*}
-We may think of $\widehat{u}$, $\widehat{v}$, and $\widehat{w}$ as the ``base indices'' of this coproduct coefficient. We have that
+We may think of $\widehat{u}$, $\widehat{v}$, and $\widehat{w}$ as the ``base indices'' of this splitting coefficient. We have that
 $$c_{u,v}^w(y;z) = c_{\widehat{u}\ldom(u),\widehat{v}\ldom(v)}^{\widehat{w}\ldom(u,v)}(y;z)$$
 Choose
 $$\mu=\dom(\widehat{w}^{-1})$$
@@ -1939,7 +1936,7 @@ whereas the original product we were trying to compute, $\sch_{\cperm{1,0,2}}(x;
 
 
 
-The \verb|schubmult| Python package can display product and coproduct coefficients in positive form. For the most general algorithms applicable to arbitrary polynomials, obtaining such a presentation is computationally intractable-even in small cases-when approached directly through integer programming without problem-specific optimizations. By contrast, when the reduction formulas introduced in this paper are applied, together with other positive formulas established in prior work, the package frequently produces positive presentations for cases of reasonable size. This statement reflects empirical evidence rather than a quantified result. Notably, such optimizations were essential to render positivity testing of coefficients feasible in the case $n=6$.
+The \verb|schubmult| Python package can display product and splitting coefficients in positive form. For the most general algorithms applicable to arbitrary polynomials, obtaining such a presentation is computationally intractable-even in small cases-when approached directly through integer programming without problem-specific optimizations. By contrast, when the reduction formulas introduced in this paper are applied, together with other positive formulas established in prior work, the package frequently produces positive presentations for cases of reasonable size. This statement reflects empirical evidence rather than a quantified result. Notably, such optimizations were essential to render positivity testing of coefficients feasible in the case $n=6$.
 
 
 \section*{Acknowledgments}
