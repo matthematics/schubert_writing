@@ -132,6 +132,8 @@ Source code is available at
 \url{https://github.com/matthematics/schubmult},
 with documentation and usage examples at
 \url{https://matthematics.github.io/schubmult/}.
+Appendix~\ref{app:grothendieck} describes the Grothendieck interfaces,
+including the conjectural equivariant quantum extension.
 
 \paragraph{Buch's \texttt{schubmult} and \texttt{lrcalc}.}
 Buch's Littlewood--Richardson Calculator (\texttt{lrcalc}) \cite{lrcalc}
@@ -1822,6 +1824,176 @@ code entries, while the bounded-range lattice-point method of
 Pak and Slonim is designed for compressed single-coefficient inputs.
 No asymptotic crossover or universal practical superiority follows from
 the two available upper bounds alone.
+
+\appendix
+\section{Using the conjectural Grothendieck interface}\label{app:grothendieck}
+
+The package provides \texttt{Gx} and \texttt{DGx} for ordinary and double
+Grothendieck polynomials, and \texttt{QDGx} for quantum double
+Grothendieck polynomials. Multiplication in \texttt{QDGx} uses a
+conjectural equivariant quantum $K$-Pieri rule. Its non-equivariant
+specialization at $\beta=-1$ is the Pieri rule of Naito and
+Sagaki~\cite{naito2024pieri}. The Grothendieck kernels are outside the
+scope of the complexity bounds proved in this paper.
+
+\subsection{Python interface and conventions}
+
+The constructor \texttt{QDGx(w, beta=-1)} accepts a permutation in
+one-line notation and uses the coefficient alphabet $y$.
+Its second argument selects another alphabet:
+\texttt{QDGx(w, z, beta=-1)} uses $z$, while
+\texttt{QDGx(w, "0", beta=-1)} gives the non-equivariant version.
+Omitting \texttt{beta} leaves the deformation parameter symbolic;
+$\beta=-1$ is the usual $K$-theory convention.
+The double Grothendieck convention uses
+$a\oplus b=a+b+\beta ab$. Consequently, at $\beta=0$ the quantum double
+basis specializes to $\Sch_w^q(x;-y)$, with the opposite coefficient
+alphabet from the Schubert convention used in the main text.
+
+Elements support linear combinations, multiplication, and coefficient
+access by \texttt{Permutation} keys. The method \texttt{simplify()}
+cancels rational coefficients while retaining the quantum
+Grothendieck basis; \texttt{expand()} instead returns the explicit
+$x$-polynomial using Lenart--Maeno quantization~\cite{lenart2006quantum}.
+For example:
+\begin{verbatim}
+>>> from schubmult import QDGx, Permutation
+>>> from schubmult.abc import z
+>>> g = QDGx([2, 1], "0", beta=-1)
+>>> g.expand()
+q_1 + x_1 - x_1*q_1
+>>> p = (g * g).simplify()
+>>> for w in sorted(p):
+...     print(w, p[w])
+() q_1
+(1, 3, 2) -q_1
+(3, 1, 2) 1
+\end{verbatim}
+Here \texttt{()} indexes the identity. These are stable polynomial
+products: input permutations in $S_n$ do not impose a finite-flag
+quotient, so output labels may lie outside $S_n$.
+Conversion of arbitrary $x$-polynomials to the quantum Grothendieck
+basis and coproducts are not implemented by \texttt{QDGx}.
+
+Independent coefficient alphabets give quantum triple products.
+Both factors must use the same value of $\beta$; the result is in the
+left factor's coefficient alphabet. We print the coefficient dictionary
+to keep the rational expressions readable:
+\begin{verbatim}
+>>> g = QDGx([2, 1], beta=-1)
+>>> h = QDGx([2, 1], z, beta=-1)
+>>> p = (g * h).simplify()
+>>> for w in sorted(p):
+...     print(w, p[w])
+() -q_1*(-1 + z_1)/(1 - y_2)
+(1, 3, 2) q_1*(-1 + z_1)/(1 - y_2)
+(2, 1) (-y_2 + z_1)/(1 - y_2)
+(3, 1, 2) (1 - z_1)/(1 - y_2)
+\end{verbatim}
+Specializing $z=y$ gives the equivariant product, and setting both
+coefficient alphabets to zero gives the non-equivariant product.
+
+\subsection{Multiplicative coefficient variables}
+
+At $\beta=-1$, \texttt{ChangeOfVariables} can replace the default
+coefficient coordinates by $1-y_i^{-1}$, so that the variables $y_i$
+are multiplicative torus characters:
+\begin{verbatim}
+>>> from schubmult import ChangeOfVariables, QuantumDoubleGrothendieckRing
+>>> from schubmult.abc import x, y
+>>> characters = ChangeOfVariables(z, y, lambda i, t: 1 - 1/t[i])
+>>> R = QuantumDoubleGrothendieckRing(x, characters, beta=-1)
+>>> r = (R([2, 1])**2).simplify()
+>>> r[Permutation([])]
+y_2*q_1/y_1
+>>> r[Permutation([2, 1])]
+(y_1 - y_2)/y_1
+\end{verbatim}
+In these coordinates the non-equivariant specialization is $y_i=1$,
+rather than $y_i=0$. No change of quantum parameters is required.
+
+\subsection{Finite flags and parabolic projection}
+
+For parabolic quantum $K$-theory, the Python interface applies
+\texttt{apply\_kato} to the complete-flag product dictionary.
+At $\beta=-1$ this implements Kato's quotient
+map~\cite{kato2019quantum}: it replaces a permutation by its minimal
+right-coset representative and sets the quantum parameters belonging
+to the parabolic subgroup to $1$.
+Unlike the command-line block sizes, the Python argument lists the
+\emph{1-indexed simple reflections} generating that subgroup.
+The argument \texttt{n} specifies the ambient $S_n$; terms indexed
+outside $S_n$ are discarded, and the surviving quantum parameters
+are reindexed consecutively. An empty generator list with an explicit
+\texttt{n} gives the finite complete-flag restriction.
+
+For blocks $(2,2)$, the generators are $[1,3]$ and $n=4$.
+The complete-flag parameter $q_2$ becomes the parabolic parameter $q_1$.
+Here is the mixed-alphabet analogue of the Grassmannian example in
+Section~\ref{sec:examples}:
+\begin{verbatim}
+>>> from schubmult.mult.groth_quantum_double import apply_kato
+>>> a = QDGx([3, 4, 1, 2], beta=-1)
+>>> b = QDGx([1, 3, 2], z, beta=-1)
+>>> coefficients = apply_kato(a * b, [1, 3], n=4, beta=-1)
+>>> parabolic = a.ring.from_dict(coefficients).simplify()
+>>> for w in sorted(parabolic):
+...     print(w, parabolic[w])
+(1, 3, 2) q_1*(-1 + z_1)*(-1 + z_2)/((1 - y_3)*(1 - y_4))
+(3, 4, 1, 2) (-y_3 - y_4 + z_1 + z_2 + y_4*y_3 - z_1*z_2)/((1 - y_3)*(1 - y_4))
+\end{verbatim}
+The inputs are minimal coset representatives. Here \texttt{from\_dict}
+is used only for simplification and display, not to construct a
+parabolic ring. Use the same $\beta$ for multiplication and projection.
+Since individual terms may contain inverse powers of $\beta$,
+a $\beta=0$ specialization must follow symbolic projection and
+coefficient cancellation.
+
+\subsection{Command-line usage}
+
+The four programs are:
+\begin{center}
+\begin{tabular}{ll}
+\texttt{grothmult\_py} & Ordinary Grothendieck products\\
+\texttt{grothmult\_double} & Double and mixed products\\
+\texttt{grothmult\_q} & Non-equivariant quantum products\\
+\texttt{grothmult\_q\_double} & Equivariant and mixed quantum products
+\end{tabular}
+\end{center}
+All accept \texttt{--beta} to specialize the deformation parameter,
+and \texttt{--code} to use Lehmer codes.
+The double programs accept \texttt{--mixed-var} for independent
+coefficient alphabets and \texttt{--simplify} to cancel coefficients.
+The quantum examples above can be computed as follows:
+\begin{verbatim}
+$ grothmult_q 2 1 - 2 1 --beta=-1
+()  q_1
+(1, 3, 2)  -q_1
+(3, 1, 2)  1
+$ grothmult_q_double 2 1 - 2 1 --mixed-var --beta=-1 --simplify
+       ()  (q_1 - z_1*q_1)/(1 - y_2)
+(1, 3, 2)  (-q_1 + z_1*q_1)/(1 - y_2)
+   (2, 1)  (-y_2 + z_1)/(1 - y_2)
+(3, 1, 2)  (1 - z_1)/(1 - y_2)
+\end{verbatim}
+Parabolic inputs must be minimal coset representatives.
+The quantum programs take \emph{block sizes} after
+\texttt{--parabolic} and handle the delayed $\beta=0$
+specialization automatically.
+
+The option \texttt{--multiplicative-variables} selects $\beta=-1$
+and the coordinates $1-y_i^{-1}$ for either double program, also using
+$1-z_i^{-1}$ when \texttt{--mixed-var} is present.
+Thus the parabolic triple product above, in multiplicative
+coordinates, is:
+\begin{verbatim}
+$ grothmult_q_double 3 4 1 2 - 1 3 2 --parabolic 2 2 \
+>     --mixed-var --multiplicative-variables --simplify
+   (1, 3, 2)  y_4*y_3*q_1/(z_1*z_2)
+(3, 4, 1, 2)  (-y_4*y_3 + z_1*z_2)/(z_1*z_2)
+\end{verbatim}
+The quantum double command does not currently implement
+\texttt{--display-positive}.
 
 \bibliographystyle{acm}
 \bibliography{schubmult2}
